@@ -21,50 +21,47 @@
 
 ---
 
-## 1. 登録フォームの受け取り先を作る（Googleスプレッドシート・約3分）
+## 1. 登録フォームの受け取り先（Googleスプレッドシート）
 
-1. Googleスプレッドシートを新しく作る（名前は「事前登録」など）
-2. メニューの「拡張機能」→「Apps Script」を開く
-3. 最初から入っているコードを全部消して、`setup/apps-script.gs` の中身を貼り付けて保存
-4. 右上の「デプロイ」→「新しいデプロイ」
-   - 種類の選択（歯車）→「ウェブアプリ」
-   - 次のユーザーとして実行：**自分**
-   - アクセスできるユーザー：**全員**
-   - 「デプロイ」を押し、Googleアカウントへのアクセスを許可する
-     （「このアプリは確認されていません」と出たら「詳細」→「（安全ではないページ）に移動」）
-5. 表示された「ウェブアプリのURL」（`https://script.google.com/macros/s/…/exec`）をコピーする
-6. そのURLを `public/form-config.js` の `window.FORM_ENDPOINT = "";` の `""` の中に入れる
-   （URLを Claude に渡せば、こちらで入れて保存します）
+受け取り用のスプレッドシート「事前登録（LP 10本）」は作成済み:
+https://docs.google.com/spreadsheets/d/17Rl2FOktvatULDhblsSWhAqPo1OsJzz9bVN6SOHc4gQ/edit
 
-登録があると、スプレッドシートの「登録」シートに1行ずつ追加されます。
-「ページ」「URLパラメータ」の列で、どの広告から来た登録かが分かります（広告のURLに `?utm_source=instagram` などを付ける）。
+1. スプレッドシートを開き、メニューの「拡張機能」→「Apps Script」
+2. 最初から入っているコードを全部消して、`setup/apps-script.gs` の中身を貼り付けて保存
+3. 右上の「デプロイ」→「新しいデプロイ」→ 種類「ウェブアプリ」
+   - 次のユーザーとして実行：**自分** ／ アクセスできるユーザー：**全員**
+   - 「デプロイ」を押し、アクセスを許可する（「確認されていません」と出たら「詳細」→「移動」）
+4. 表示された「ウェブアプリのURL」（`https://script.google.com/macros/s/…/exec`）を
+   `public/form-config.js` の `window.FORM_ENDPOINT = "";` の `""` に入れる（Claude に渡せば入れて保存します）
 
-## 2. Cloudflare Pages で公開する（約5分）
+## 2. GitHub Pages で公開する
 
-1. https://dash.cloudflare.com にログイン（アカウントが無ければ無料で作る）
-2. 左メニュー「Workers & Pages」→「作成」→「Pages」→「Git に接続」
-3. GitHub を連携し、リポジトリ `yusuke9s/side-business-lp` を選ぶ
-4. ビルドの設定
-   - フレームワーク プリセット：**なし**
-   - ビルド コマンド：**空欄**
-   - ビルド出力ディレクトリ：**public**
-5. 「保存してデプロイ」→ `https://<プロジェクト名>.pages.dev/pet` で表示を確認
+`.github/workflows/pages.yml` により、`main` に保存されるたびに `public/` が自動で公開される。
 
-以後、GitHub の `main` に保存されるたびに自動で公開ページが更新されます。
+1. https://github.com/yusuke9s/side-business-lp/settings/pages を開く
+2. 「Build and deployment」の Source を **GitHub Actions** にする
+   - 非公開リポジトリで Pages が使えない（有料プランが必要）と表示された場合は、
+     Settings → General の一番下「Change repository visibility」で Public にする
+3. 「Custom domain」に `lp.site-forge.jp` を入れて Save、準備ができたら「Enforce HTTPS」にチェック
 
-## 3. lp.site-forge.jp をつなぐ
+## 3. lp.site-forge.jp をつなぐ（DNS）
 
-1. Cloudflare Pages のプロジェクト →「カスタムドメイン」→「カスタムドメインを設定」→ `lp.site-forge.jp` を入力
-2. site-forge.jp の DNS を管理しているサービスで、次のレコードを追加する
-   （DNS を Cloudflare で管理している場合は、この手順は自動で行われる）
+site-forge.jp の DNS を管理しているサービスで、次のレコードを1つ追加する。
 
-   | 種類 | 名前（ホスト） | 値（向き先） |
-   |---|---|---|
-   | CNAME | lp | `<プロジェクト名>.pages.dev` |
+| 種類 | 名前（ホスト） | 値（向き先） |
+|---|---|---|
+| CNAME | lp | `yusuke9s.github.io` |
 
-3. 数分〜数時間で `https://lp.site-forge.jp/pet` が開けるようになる（SSL は自動）
+数分〜数時間で `https://lp.site-forge.jp/pet` が開けるようになる。
 
 ## 4. 広告の計測タグ
 
-各LPの `<head>` 内のコメント「計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる」の位置に入れます。
-タグのIDが用意できたら Claude に渡せば、10本まとめて入れます。
+各LPの `<head>` 内のコメント「計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる」の位置に入れる。
+タグのIDを Claude に渡せば、10本まとめて入れます。
+
+---
+
+### 参考：Cloudflare Pages で公開する場合
+
+GitHub Pages の代わりに Cloudflare Pages も使える。Workers & Pages → Pages → Git に接続 → `yusuke9s/side-business-lp`、
+ビルドコマンドは空欄、出力ディレクトリは `public`。カスタムドメイン `lp.site-forge.jp` を追加し、DNS は CNAME `lp` → `<プロジェクト名>.pages.dev`。

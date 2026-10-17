@@ -47,8 +47,10 @@ function getSheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow(HEADERS);
+    // 最初のシートを「登録」として使う（見出し行が無ければ入れる）
+    sheet = ss.getSheets()[0];
+    sheet.setName(SHEET_NAME);
+    if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
     sheet.setFrozenRows(1);
   }
   return sheet;
