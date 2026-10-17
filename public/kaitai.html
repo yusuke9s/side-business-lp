@@ -1014,7 +1014,7 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
 <footer><div class="wrap">
   <span class="fl">解体見積メーカー</span>
   <span>運営：柴田裕将　お問い合わせ：info@site-forge.jp</span>
-  <span><a href="../privacy.html" style="color:inherit">プライバシーポリシー</a></span>
+  <span><a href="privacy.html" style="color:inherit">プライバシーポリシー</a></span>
 </div></footer>
 
 <div class="sticky" id="sticky"><a class="btn on-dark" href="#signup">先行登録する（無料）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></a></div>
@@ -1067,9 +1067,10 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
 })();
 </script>
 
+<script src="form-config.js"></script>
 <script>
 (function () {
-  var FORM_ENDPOINT = "";
+  var FORM_ENDPOINT = window.FORM_ENDPOINT || "";
   var form = document.getElementById("signup-form");
   var err = document.getElementById("signup-error");
   var thanks = document.getElementById("signup-thanks");
@@ -1083,13 +1084,14 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
       return;
     }
     err.hidden = true;
-    var data = { service: "kaitai", email: email, answer: document.getElementById("signup-q").value };
+    var data = { service: "kaitai", email: email, answer: document.getElementById("signup-q").value, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
     var done = function () { form.hidden = true; thanks.hidden = false; };
     if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
     var btn = form.querySelector("button");
     btn.disabled = true; btn.textContent = "送信しています";
-    fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
-      .then(function (r) { if (!r.ok) throw new Error(); done(); })
+    // Google Apps Script は CORS の応答を返さないため no-cors で送る（送信できれば完了扱い）
+    fetch(FORM_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) })
+      .then(function () { done(); })
       .catch(function () {
         btn.disabled = false; btn.textContent = "先行登録する（無料）";
         err.textContent = "送信できませんでした。通信状況を確認して、もう一度お試しください。";

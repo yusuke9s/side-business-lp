@@ -813,7 +813,7 @@ def render_index():
     cards = []
     for lp in LPS:
         price = " / ".join(v for _, v in lp["price"])
-        cards.append(f"""<a class="card" href="lp/{lp['slug']}.html">
+        cards.append(f"""<a class="card" href="public/{lp['slug']}.html">
   <div class="top"><span class="swatch" style="background:{lp['colors']['brand']}"></span><span class="no">{lp['no']:02d}</span><span class="brand">{escape(lp['brand'])}</span></div>
   <span class="idea">{escape(lp['idea'])}</span>
   <span class="hl">{escape(lp['title'].replace('<br>', ''))}</span>
@@ -837,7 +837,7 @@ def render_index():
     <h2>公開前に必要なこと</h2>
     <ul>
       <li>ドメインを取得し、各ページを公開する（Cloudflare Pages や Vercel の無料枠で公開できます）</li>
-      <li>登録フォームの送信先をつなぐ（Formspree などの無料サービス）</li>
+      <li>登録フォームの送信先をつなぐ（Googleスプレッドシート。手順は setup/SETUP.md）</li>
       <li>広告の計測タグを入れる（Googleアナリティクス、Meta・TikTokのピクセル）</li>
       <li>ページで約束している特典（割引クーポン、無料期間など）を、公開時に実際に用意する</li>
     </ul>
