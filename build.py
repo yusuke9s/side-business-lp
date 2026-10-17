@@ -12,8 +12,8 @@ from html import escape
 
 ROOT = Path(__file__).parent
 FORM_ENDPOINT = ""  # 例: "https://formspree.io/f/xxxxxxx"
-OPERATOR = "運営者名（公開前に記入）"
-CONTACT = "連絡先メールアドレス（公開前に記入）"
+OPERATOR = "柴田裕将"
+CONTACT = "info@site-forge.jp"
 
 # ---------------------------------------------------------------------------
 # 商品画像の代わりに置く、各サービスの画面イメージ
@@ -838,7 +838,6 @@ def render_index():
     <ul>
       <li>ドメインを取得し、各ページを公開する（Cloudflare Pages や Vercel の無料枠で公開できます）</li>
       <li>登録フォームの送信先をつなぐ（Formspree などの無料サービス）</li>
-      <li>運営者名と連絡先を入れる（ページ下部）</li>
       <li>広告の計測タグを入れる（Googleアナリティクス、Meta・TikTokのピクセル）</li>
       <li>ページで約束している特典（割引クーポン、無料期間など）を、公開時に実際に用意する</li>
     </ul>
