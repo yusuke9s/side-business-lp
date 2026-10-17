@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ページ見張り番｜見ておきたいページの更新を、LINEに届けます。</title>
+<meta name="description" content="URLを登録するだけ。補助金の公募ページや自治体のお知らせが更新されたら、変わった部分を抜き出してLINEとメールでお知らせします。">
+<meta property="og:title" content="ページ見張り番">
+<meta property="og:description" content="URLを登録するだけ。補助金の公募ページや自治体のお知らせが更新されたら、変わった部分を抜き出してLINEとメールでお知らせします。">
+<meta name="theme-color" content="#0a1128">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<!-- 計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる -->
+<script>
+/* 動きを減らす設定でなければ .js を付ける（アニメーションの初期状態は .js のときだけ） */
+(function (d) { try { if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) d.documentElement.classList.add("js"); } catch (e) {} })(document);
+</script>
+<style>
+:root {
+  --ink: #0a1128; --ink2: #0f1938; --ink3: #16224a; --card: #1a2752; --line: rgba(150,175,255,.16);
+  --rose: #c2255c; --rose-l: #ff7aa8; --rose-d: #8f1742; --sig: #3ee6a0; --sig-d: #0c5c3d;
+  --txt: #eef2ff; --mut: #b2bddf; --paper: #f4f6fd; --pink: #ffe3ee;
+  --fb: "Zen Kaku Gothic New", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  --fm: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gut: max(16px, env(safe-area-inset-left, 0px));
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--ink); color: var(--txt); font-family: var(--fb); font-weight: 500; font-size: 16px; line-height: 1.85; }
+img, svg { max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+p, h1, h2, h3, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { font-weight: 900; line-height: 1.4; word-break: auto-phrase; text-wrap: balance; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: var(--gut); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.dots { background-image: radial-gradient(rgba(160,185,255,.16) 1px, transparent 1.6px); background-size: 24px 24px; }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--sig); outline-offset: 3px; }
+
+/* ---------- 共通 ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; background: var(--rose); color: #fff; font-family: var(--fb); font-weight: 900; font-size: 17px; letter-spacing: .04em; text-decoration: none; padding: 17px 30px; border: 0; border-radius: 999px; cursor: pointer; box-shadow: 0 0 0 0 rgba(255,122,168,.5), 0 10px 30px rgba(194,37,92,.45); transition: transform .2s, box-shadow .2s, background .2s; position: relative; }
+.btn svg { width: 20px; height: 20px; transition: transform .2s; }
+.btn:hover { transform: translateY(-3px); background: #d42d68; box-shadow: 0 0 0 6px rgba(255,122,168,.18), 0 16px 36px rgba(194,37,92,.55); }
+.btn:hover svg { transform: translateX(4px); }
+.btn:active { transform: translateY(1px); }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--fm); font-weight: 600; font-size: 13px; letter-spacing: .18em; color: var(--sig); }
+.kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--sig); box-shadow: 0 0 0 4px rgba(62,230,160,.2); animation: pulse 1.6s ease-out infinite; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(62,230,160,.55); } 100% { box-shadow: 0 0 0 12px rgba(62,230,160,0); } }
+.h2 { font-size: clamp(27px, 3.9vw, 46px); margin-top: 12px; }
+.h2 .band { background: linear-gradient(transparent 58%, rgba(194,37,92,.75) 58%, rgba(194,37,92,.75) 92%, transparent 92%); padding: 0 .1em; }
+.lead { margin-top: 18px; color: var(--mut); font-size: 17px; max-width: 40em; }
+.sec { position: relative; padding-block: clamp(72px, 10vw, 124px); }
+.cut { clip-path: polygon(0 4vw, 100% 0, 100% calc(100% - 4vw), 0 100%); margin-block: -4vw; z-index: 1; padding-block: calc(clamp(72px, 10vw, 124px) + 4vw); }
+.cut-t { clip-path: polygon(0 4vw, 100% 0, 100% 100%, 0 100%); margin-top: -4vw; z-index: 1; padding-top: calc(clamp(72px, 10vw, 124px) + 4vw); }
+.bg2 { background-color: var(--ink2); }
+.ex { display: inline-block; font-family: var(--fb); font-weight: 700; font-size: 12px; color: var(--rose); border: 1.5px solid var(--rose); border-radius: 4px; padding: 0 7px; line-height: 1.6; background: #fff; }
+.note { font-size: 13px; color: var(--mut); margin-top: 14px; }
+.lightpanel { background: var(--paper); color: var(--rose); border-radius: 24px; padding: 22px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
+.lightpanel svg { display: block; width: 100%; height: auto; }
+
+/* ---------- アイコンの器（レーダー風：細いリング＋目盛り＋スイープ＋等幅ラベル） ---------- */
+.wico { --s: 72px; --c: var(--sig); position: relative; display: grid; place-items: center; width: var(--s); aspect-ratio: 1; flex: none; border-radius: 50%; color: var(--c);
+  background: linear-gradient(rgba(62,230,160,.2), rgba(62,230,160,.2)) center / 1px 100% no-repeat, linear-gradient(90deg, rgba(62,230,160,.2), rgba(62,230,160,.2)) center / 100% 1px no-repeat, radial-gradient(circle, #1a2752 0 28%, #0d1632 72%);
+  box-shadow: 0 0 0 1.5px rgba(62,230,160,.75), 0 0 0 6px rgba(10,17,40,.92), 0 0 0 7px rgba(150,175,255,.28), 0 0 24px rgba(62,230,160,.3); }
+.wico::before { content: ""; position: absolute; inset: -11px; border-radius: 50%; pointer-events: none;
+  background: repeating-conic-gradient(from -1deg, rgba(62,230,160,.95) 0 2deg, transparent 2deg 45deg), repeating-conic-gradient(from -.5deg, rgba(178,189,223,.55) 0 1deg, transparent 1deg 15deg);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px)); mask: radial-gradient(closest-side, transparent calc(100% - 4px), #000 calc(100% - 3.5px)); }
+.wico::after { content: ""; position: absolute; inset: 2px; border-radius: 50%; pointer-events: none; background: conic-gradient(from 0deg, transparent 0 280deg, rgba(62,230,160,.38) 360deg); animation: spin 5s linear infinite; }
+.wico svg { position: relative; z-index: 1; display: block; width: 52%; height: 52%; filter: drop-shadow(0 0 6px rgba(62,230,160,.45)); }
+.wico.r { --c: var(--rose-l); }
+.wico.r svg { filter: drop-shadow(0 0 6px rgba(255,122,168,.5)); }
+.wico .wl { position: absolute; z-index: 2; left: 50%; top: calc(100% - 7px); transform: translateX(-50%); font-family: var(--fm); font-weight: 600; font-size: 10px; letter-spacing: .14em; line-height: 1.6; color: var(--c); background: var(--ink); border: 1px solid rgba(62,230,160,.5); border-radius: 3px; padding: 0 6px; white-space: nowrap; }
+.wico.xs { --s: 30px; box-shadow: 0 0 0 1px rgba(62,230,160,.75); }
+.wico.xs::before { display: none; }
+.wico.xs svg { width: 62%; height: 62%; }
+/* 手描きステッカーの部品の動き */
+.wart { overflow: visible; }
+.w-sweep { transform-box: view-box; transform-origin: var(--o); animation: spin var(--sd, 3s) linear infinite; }
+.w-blip { animation: blinkd 1.2s steps(2, start) infinite; }
+.w-wave { animation: wwave 1.8s ease-out infinite; }
+.w-wave.w2 { animation-delay: .3s; } .w-wave.w3 { animation-delay: .6s; }
+.w-dot { transform-box: fill-box; transform-origin: center; animation: wdot 1.6s ease-in-out infinite; }
+@keyframes wwave { 0%, 100% { opacity: .15; } 40% { opacity: 1; } }
+@keyframes wdot { 50% { transform: scale(1.18); } }
+
+/* ---------- ヘッダー ---------- */
+.top { position: relative; z-index: 10; border-bottom: 1px solid var(--line); background: rgba(10,17,40,.85); }
+.top-in { display: flex; align-items: center; gap: 14px; padding-block: 12px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-size: 20px; letter-spacing: .04em; }
+.logo svg { width: 38px; height: 38px; flex: none; }
+.logo .lg-sweep { transform-origin: 20px 20px; animation: spin 3s linear infinite; }
+.badge { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; color: var(--sig); border: 1px solid rgba(62,230,160,.5); padding: 4px 12px; border-radius: 999px; white-space: nowrap; background: rgba(62,230,160,.08); }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--sig); animation: pulse 1.6s ease-out infinite; }
+.top-cta { font-weight: 900; font-size: 14px; text-decoration: none; color: #fff; background: var(--rose); padding: 7px 18px; border-radius: 999px; transition: transform .15s, background .15s; white-space: nowrap; }
+.top-cta:hover { transform: translateY(-2px); background: #d42d68; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- ヒーロー ---------- */
+.hero { position: relative; overflow: hidden; padding-block: clamp(36px, 6vw, 84px) clamp(100px, 10vw, 140px); background:
+  radial-gradient(60% 70% at 78% 40%, rgba(194,37,92,.22), transparent 70%),
+  radial-gradient(50% 60% at 10% 90%, rgba(62,230,160,.08), transparent 70%), var(--ink); }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(160,185,255,.14) 1px, transparent 1.6px); background-size: 24px 24px; -webkit-mask-image: linear-gradient(#000 40%, transparent); mask-image: linear-gradient(#000 40%, transparent); }
+.hero::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 120px; background: linear-gradient(transparent, rgba(62,230,160,.06), transparent); animation: scan 6s linear infinite; pointer-events: none; }
+@keyframes scan { from { transform: translateY(-120px); } to { transform: translateY(900px); } }
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); grid-template-areas: "eb stage" "h1 stage" "body stage"; column-gap: clamp(24px, 4vw, 60px); align-content: center; }
+.eyebrow { grid-area: eb; align-self: end; justify-self: start; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 14px; border: 1px solid var(--line); background: rgba(26,39,82,.7); padding: 5px 14px 5px 6px; border-radius: 999px; }
+.eyebrow b { font-family: var(--fm); font-weight: 600; font-size: 11px; letter-spacing: .14em; background: var(--rose); color: #fff; padding: 2px 10px; border-radius: 999px; }
+.h1 { grid-area: h1; margin-top: 22px; font-size: clamp(30px, 3.7vw, 48px); line-height: 1.32; letter-spacing: .01em; }
+.h1 .l { display: block; white-space: nowrap; }
+.h1 .mk { position: relative; white-space: nowrap; }
+.h1 .mk::before { content: ""; position: absolute; left: -.08em; right: -.08em; bottom: .06em; height: .36em; background: var(--rose); z-index: -1; transform-origin: left; }
+.h1 .mk-g { color: var(--sig); }
+.hero-body { grid-area: body; margin-top: 24px; }
+.sub { color: var(--mut); font-size: 17px; max-width: 30em; }
+.sub strong { color: var(--txt); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.chips span { font-size: 13px; font-weight: 700; border: 1px solid var(--line); padding: 3px 12px 3px 10px; border-radius: 6px; background: rgba(22,34,74,.8); display: inline-flex; gap: 6px; align-items: center; }
+.chips span::before { content: "+"; font-family: var(--fm); color: var(--sig); font-weight: 600; }
+.hero-body .btn { margin-top: 28px; }
+.cta-note { font-size: 13px; color: var(--mut); margin-top: 12px; }
+
+.stage { grid-area: stage; position: relative; width: 100%; max-width: 600px; justify-self: center; align-self: center; aspect-ratio: 1; margin-block: 10px 40px; }
+.radar { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: radial-gradient(circle, rgba(22,34,74,.95) 0%, rgba(13,22,50,.95) 70%); box-shadow: 0 0 0 1px rgba(150,175,255,.25), 0 0 80px rgba(194,37,92,.25), inset 0 0 60px rgba(0,0,0,.5); }
+.radar svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0deg 270deg, rgba(255,122,168,.08) 290deg, rgba(255,122,168,.55) 358deg, rgba(255,200,222,1) 360deg); animation: spin 6s linear .4s infinite; }
+.blip { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--rose-l); opacity: .25; animation: blip 6s linear infinite; animation-delay: var(--pd); }
+@keyframes blip { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,122,168,.8); transform: scale(1.4); } 25% { opacity: .5; box-shadow: 0 0 0 18px rgba(255,122,168,0); transform: scale(1); } 100% { opacity: .25; } }
+.pg { position: absolute; width: 33%; transform: translate(-50%, -50%); z-index: 2; }
+.pg .pc { display: block; border-radius: 9px; animation: ping 6s linear infinite; animation-delay: var(--pd); box-shadow: 0 10px 24px rgba(0,0,0,.45); }
+.pg svg { display: block; width: 100%; height: auto; }
+@keyframes ping { 0% { transform: scale(1.08); box-shadow: 0 0 0 3px var(--rose-l), 0 0 34px rgba(255,122,168,.75); } 14% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,122,168,0), 0 10px 24px rgba(0,0,0,.45); } 100% { transform: scale(1); box-shadow: 0 10px 24px rgba(0,0,0,.45); } }
+.pg-float { animation: floaty 5s ease-in-out infinite; }
+.pg:nth-of-type(2n) .pg-float { animation-delay: -2.5s; }
+@keyframes floaty { 50% { transform: translateY(-8px); } }
+.notif { position: absolute; z-index: 4; left: -14%; bottom: -9%; width: 66%; }
+.notice { background: #fff; color: #1b2140; border-radius: 18px; padding: 14px 16px 14px; box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.4); position: relative; }
+.notice-top { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #59607a; }
+.notice-top b { color: #1b2140; font-weight: 900; }
+.notice-top .app { width: 22px; height: 22px; border-radius: 6px; background: var(--rose); display: grid; place-items: center; flex: none; }
+.notice-top .app svg { width: 15px; height: 15px; }
+.notice-top span:last-child { margin-left: auto; font-family: var(--fm); }
+.notice-title { font-weight: 900; font-size: 14.5px; margin-top: 6px; line-height: 1.5; }
+.notice-diff { font-size: 13px; line-height: 1.55; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
+.plus { flex: none; font-size: 11px; font-weight: 900; background: var(--sig); color: #053a26; border-radius: 4px; padding: 1px 6px; margin-top: 1px; }
+.notice-link { margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--rose); }
+.notice-link::after { content: " →"; }
+.mock-note { font-size: 12px; color: var(--mut); margin-top: 8px; text-align: right; }
+.notif .bell { position: absolute; left: -12%; top: -30%; width: 22%; height: auto; z-index: 5; filter: drop-shadow(0 8px 12px rgba(0,0,0,.4)); animation: ring 6s ease-in-out infinite; animation-delay: var(--pd); transform-origin: 50% 10%; }
+@keyframes ring { 0%, 18%, 100% { transform: rotate(0); } 3% { transform: rotate(18deg); } 6% { transform: rotate(-16deg); } 9% { transform: rotate(12deg); } 12% { transform: rotate(-8deg); } 15% { transform: rotate(4deg); } }
+.f3 { position: absolute; z-index: 3; height: auto; filter: drop-shadow(0 10px 14px rgba(0,0,0,.45)); }
+.f-eyes { width: 23%; left: -6%; top: -2%; animation: floaty 4.4s ease-in-out infinite; }
+.f-ant { width: 21%; right: -5%; top: 66%; animation: floaty 5.2s ease-in-out -1.5s infinite; }
+.f-sat { width: 16%; right: 2%; top: -6%; animation: orbit 9s ease-in-out infinite; }
+@keyframes orbit { 50% { transform: translate(-14px, 10px) rotate(-12deg); } }
+.scan-label { position: absolute; z-index: 3; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--fm); font-size: 11px; letter-spacing: .2em; color: var(--rose-l); background: rgba(10,17,40,.8); padding: 2px 10px; border-radius: 999px; border: 1px solid rgba(255,122,168,.4); white-space: nowrap; }
+.scan-label::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--rose-l); margin-right: 8px; vertical-align: 1px; animation: blinkd 1s steps(2, start) infinite; }
+@keyframes blinkd { to { visibility: hidden; } }
+
+/* ヒーロー入場 */
+.js .eyebrow { animation: up .6s cubic-bezier(.2,.8,.2,1) .05s both; }
+.js .h1 .l { animation: up .8s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(.15s + var(--i) * .14s); }
+.js .h1 .mk::before { animation: grow .7s cubic-bezier(.7,0,.2,1) .9s both; }
+.js .hero-body { animation: up .8s ease .7s both; }
+.js .radar { animation: radarIn 1s cubic-bezier(.2,.8,.2,1) .1s both; }
+.js .pg { animation: pgIn .6s cubic-bezier(.2,.9,.3,1.3) both; animation-delay: calc(.5s + var(--n) * .12s); }
+.js .f3 { animation-name: fIn, var(--lp); animation-duration: .6s, var(--ld); animation-delay: var(--fd), calc(var(--fd) + .6s); animation-iteration-count: 1, infinite; animation-fill-mode: both, none; animation-timing-function: cubic-bezier(.2,.9,.3,1.4), ease-in-out; }
+.f-eyes { --lp: floaty; --ld: 4.4s; --fd: 1s; }
+.f-ant { --lp: floaty; --ld: 5.2s; --fd: 1.15s; }
+.f-sat { --lp: orbit; --ld: 9s; --fd: 1.3s; }
+.js .notif { animation: slideIn .8s cubic-bezier(.2,.9,.25,1.1) 2.75s both; }
+.js .notif .notice-diff, .js .notif .notice-link { animation: up .4s ease both; }
+.js .notif .notice-diff:nth-of-type(3) { animation-delay: 3.35s; }
+.js .notif .notice-diff:nth-of-type(4) { animation-delay: 3.6s; }
+.js .notif .notice-link { animation-delay: 3.85s; }
+@keyframes up { from { opacity: 0; transform: translateY(22px); } }
+@keyframes grow { from { transform: scaleX(0); } }
+@keyframes radarIn { from { opacity: 0; transform: scale(.7) rotate(-40deg); } }
+@keyframes pgIn { from { opacity: 0; transform: translate(-50%, -50%) scale(.4); } }
+@keyframes fIn { from { opacity: 0; transform: scale(.3); } }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-60%) rotate(-4deg); } }
+
+/* ---------- マーキー ---------- */
+.marq { position: relative; z-index: 3; overflow: hidden; padding-block: 16px; margin-block: -34px -10px; }
+.mband { background: var(--rose); transform: rotate(-2deg); width: 110%; margin-left: -5%; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.mband + .mband { background: var(--ink3); transform: rotate(1.2deg); margin-top: -6px; border-block: 1px solid var(--line); }
+.track { display: flex; width: max-content; animation: marq 44s linear infinite; }
+.mband + .mband .track { animation-direction: reverse; animation-duration: 56s; }
+@keyframes marq { to { transform: translateX(-50%); } }
+.track span { font-weight: 900; font-size: clamp(18px, 2.2vw, 26px); color: #fff; padding: 9px 0; white-space: nowrap; }
+.track span::after { content: "／"; margin: 0 .8em; opacity: .55; }
+.mband + .mband .track span { font-family: var(--fm); font-weight: 500; font-size: 14px; color: var(--mut); padding: 7px 0; }
+.mband + .mband .track span b { color: var(--sig); font-weight: 600; margin-right: 6px; }
+.mband + .mband .track span::after { content: "·"; }
+
+/* ---------- お悩み ---------- */
+.pain-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: 46px; }
+.pain-list { display: grid; gap: 16px; }
+.pain { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px; align-items: center; background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--rose); border-radius: 14px; padding: 16px 18px; transition: transform .2s, border-color .2s, background .2s; }
+.pain:hover { transform: translateX(8px); background: #1f2d5e; }
+.pain .pi { width: 46px; height: 46px; border-radius: 12px; background: rgba(194,37,92,.18); display: grid; place-items: center; }
+.pain .pi svg { width: 26px; height: 26px; }
+.pain p { font-weight: 700; font-size: 17px; line-height: 1.55; }
+.pain .st { font-family: var(--fm); font-size: 11px; color: var(--rose-l); border: 1px solid rgba(255,122,168,.45); border-radius: 4px; padding: 0 6px; white-space: nowrap; }
+.pain-ill { position: relative; }
+.pain-ill .lightpanel { transform: rotate(2deg); }
+.pain-ill .lightpanel svg { animation: floaty 6s ease-in-out infinite; }
+
+/* ---------- 差分 ---------- */
+.diff-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 64px); align-items: start; margin-top: 48px; }
+.browser { position: relative; background: var(--paper); color: #1b2140; border-radius: 16px; box-shadow: 0 30px 70px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.2); }
+.b-bar { display: flex; align-items: center; gap: 7px; background: #dfe4f3; border-radius: 16px 16px 0 0; padding: 10px 14px; }
+.b-bar i { width: 11px; height: 11px; border-radius: 50%; background: #ff7aa8; flex: none; }
+.b-bar i:nth-child(2) { background: #ffd166; } .b-bar i:nth-child(3) { background: #8bd3b4; }
+.b-url { margin-left: 8px; flex: 1; min-width: 0; font-family: var(--fm); font-size: 12px; color: #4b5375; background: #fff; border-radius: 999px; padding: 3px 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.b-body { padding: 22px 22px 26px; position: relative; }
+.b-crumb { font-size: 12px; color: #6a7190; }
+.b-h { font-size: 19px; margin-top: 6px; padding-bottom: 10px; border-bottom: 2px solid #1b2140; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.b-list { margin-top: 12px; display: grid; gap: 8px; }
+.b-list li { position: relative; border-radius: 6px; padding: 7px 10px; font-size: 14.5px; line-height: 1.55; }
+.b-list .same { height: 34px; display: flex; align-items: center; gap: 10px; }
+.sk { display: block; height: 9px; border-radius: 5px; background: #cfd6ea; }
+.sk.d { width: 64px; flex: none; background: #e1e6f3; }
+.b-list .add { display: flex; gap: 8px; align-items: flex-start; font-weight: 700; padding-right: 48px; }
+.b-list .add::before { content: ""; position: absolute; inset: 0; border-radius: 6px; background: rgba(62,230,160,.22); border-left: 4px solid #1fb57a; transform-origin: left; z-index: 0; }
+.b-list .add > * { position: relative; z-index: 1; }
+.b-list .add .sign { font-family: var(--fm); font-weight: 600; color: #0c8a59; }
+.b-list mark { background: #ffe3ee; color: var(--rose-d); border-radius: 3px; padding: 0 2px; }
+.type.typing::after { content: ""; display: inline-block; width: 2px; height: 1.05em; background: #1b2140; vertical-align: -2px; margin-left: 2px; animation: blinkd .7s steps(2, start) infinite; }
+.pdf { position: absolute; right: 8px; top: 50%; width: 34px; height: 42px; margin-top: -21px; z-index: 2 !important; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); }
+.kw { position: absolute; z-index: 3; right: -18px; top: -26px; display: flex; align-items: center; gap: 8px; background: var(--ink3); color: var(--txt); border: 1px solid rgba(255,122,168,.5); border-radius: 999px; padding: 6px 14px 6px 6px; font-size: 13px; font-weight: 700; box-shadow: 0 12px 30px rgba(0,0,0,.45); animation: floaty 4s ease-in-out infinite; }
+.kw .wico { margin: 1px 2px 1px 1px; }
+.kw mark { background: none; color: var(--rose-l); }
+.diff-stat { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.diff-stat span { font-family: var(--fm); font-size: 13px; border: 1px solid var(--line); border-radius: 6px; padding: 3px 10px; background: rgba(22,34,74,.8); }
+.diff-stat b { color: var(--sig); font-weight: 600; }
+.js .diffbox .add::before { transform: scaleX(0); transition: transform .6s cubic-bezier(.7,0,.2,1); }
+.js .diffbox .add.on::before { transform: none; }
+.js .diffbox .pdf { opacity: 0; transform: translateY(-140px) rotate(-30deg); }
+.js .diffbox .pdf.drop { animation: drop .9s cubic-bezier(.3,1.4,.5,1) both; }
+@keyframes drop { 0% { opacity: 0; transform: translateY(-140px) rotate(-30deg); } 30% { opacity: 1; } 70% { transform: translateY(6px) rotate(6deg); } 100% { opacity: 1; transform: none; } }
+.feat-list { display: grid; gap: 14px; counter-reset: f; }
+.feat { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; transition: transform .2s, border-color .2s, box-shadow .2s; }
+.feat:hover { transform: translateY(-4px); border-color: rgba(255,122,168,.6); box-shadow: 0 16px 36px rgba(0,0,0,.35); }
+.feat .fn { font-family: var(--fm); font-weight: 600; font-size: 13px; color: var(--ink); background: var(--sig); width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; }
+.feat h3 { font-size: 19px; }
+.feat p { margin-top: 4px; font-size: 15px; color: var(--mut); }
+
+/* ---------- 時計 ---------- */
+.clock-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 80px); align-items: center; margin-top: 40px; }
+.clock { position: relative; max-width: 440px; width: 100%; justify-self: center; }
+.clock svg { display: block; width: 100%; height: auto; overflow: visible; }
+.clock .f-clock { position: absolute; z-index: 2; --s: 21%; right: 1%; top: -2%; filter: drop-shadow(0 10px 14px rgba(0,0,0,.45)); animation: floaty 4s ease-in-out infinite; }
+.cdot { fill: #2c3b78; stroke: var(--sig); stroke-width: 2; transition: fill .2s, r .2s; }
+.cdot.lit { fill: var(--sig); }
+.cdot-halo { fill: none; stroke: var(--sig); stroke-width: 2; opacity: 0; }
+.cdot-halo.lit { animation: halo .9s ease-out; }
+@keyframes halo { from { opacity: .9; r: 9; } to { opacity: 0; r: 24; } }
+.seg { display: inline-flex; gap: 4px; padding: 4px; background: var(--ink3); border: 1px solid var(--line); border-radius: 999px; margin-top: 24px; flex-wrap: wrap; }
+.seg button { font: inherit; font-weight: 700; font-size: 14px; color: var(--mut); background: transparent; border: 0; padding: 7px 16px; border-radius: 999px; cursor: pointer; transition: background .2s, color .2s; }
+.seg button:hover { color: var(--txt); }
+.seg button[aria-pressed="true"] { background: var(--rose); color: #fff; }
+.tl { position: relative; margin-top: 30px; height: 64px; }
+.tl-bar { position: absolute; left: 0; right: 0; top: 18px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #16224a, #26356e 50%, #16224a); }
+.tl-now { position: absolute; top: 8px; width: 2px; height: 26px; background: var(--rose-l); box-shadow: 0 0 10px var(--rose-l); left: 0; }
+.tl-dot { position: absolute; top: 14px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: #2c3b78; border: 2px solid var(--sig); transition: background .2s, transform .2s; }
+.tl-dot.lit { background: var(--sig); transform: scale(1.3); }
+.tl-lbl { position: absolute; top: 38px; font-family: var(--fm); font-size: 12px; color: var(--mut); transform: translateX(-50%); }
+.tl-lbl.s { transform: none; }
+.tl-lbl.e { transform: translateX(-100%); }
+.clock-copy .big { font-weight: 900; font-size: clamp(44px, 7vw, 84px); line-height: 1.1; margin-top: 18px; color: #fff; }
+.clock-copy .big small { font-size: .38em; margin-left: 6px; color: var(--mut); }
+.clock-copy .big span { color: var(--sig); font-family: var(--fm); font-weight: 600; letter-spacing: -.04em; }
+
+/* ---------- 用途 ---------- */
+.uc-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 48px; }
+.uc { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px 18px 22px; overflow: hidden; transition: transform .25s, border-color .25s, box-shadow .25s; }
+.uc:hover { transform: translateY(-6px) rotate(-.6deg); border-color: rgba(62,230,160,.6); box-shadow: 0 20px 40px rgba(0,0,0,.4); }
+.uc .thumb { position: relative; background: var(--paper); border-radius: 10px; padding: 10px; height: 118px; }
+.uc .thumb svg { display: block; width: 100%; height: 100%; }
+.uc .thumb .wico { position: absolute; right: 2px; bottom: -14px; --s: 62px; filter: drop-shadow(0 8px 10px rgba(0,0,0,.35)); transition: transform .3s cubic-bezier(.2,.9,.3,1.5); }
+.uc .thumb .wico .wl { top: auto; bottom: calc(100% + 6px); }
+.uc:hover .thumb .wico { transform: scale(1.12) rotate(-8deg); }
+.uc .new { position: absolute; left: 10px; top: 10px; font-family: var(--fm); font-weight: 600; font-size: 10px; letter-spacing: .1em; background: var(--sig); color: #053a26; border-radius: 4px; padding: 0 6px; animation: newp 2.4s ease-in-out infinite; }
+.uc:nth-child(2) .new { animation-delay: .6s; } .uc:nth-child(3) .new { animation-delay: 1.2s; } .uc:nth-child(4) .new { animation-delay: 1.8s; }
+@keyframes newp { 0%, 100% { box-shadow: 0 0 0 0 rgba(62,230,160,.6); } 50% { box-shadow: 0 0 0 6px rgba(62,230,160,0); } }
+.uc h3 { font-size: 19px; margin-top: 18px; }
+.uc p { font-size: 14px; color: var(--mut); margin-top: 4px; }
+.uc-head { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px; align-items: end; }
+.uc-head .lightpanel { max-width: 380px; justify-self: end; border-radius: 20px 20px 20px 4px; padding: 16px; }
+
+/* ---------- 使い方 ---------- */
+.steps-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 48px; counter-reset: s; }
+.step { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 20px 22px; transition: transform .2s; }
+.step:hover { transform: translateY(-4px); }
+.step:not(:last-child)::after { content: ""; position: absolute; right: -18px; top: 60px; width: 14px; height: 14px; border-top: 3px solid var(--rose-l); border-right: 3px solid var(--rose-l); transform: rotate(45deg); z-index: 2; }
+.step .sn { font-family: var(--fm); font-weight: 600; font-size: 13px; color: var(--rose-l); letter-spacing: .14em; }
+.step h3 { font-size: 19px; margin-top: 4px; }
+.step .vis { margin-top: 16px; background: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 14px; min-height: 104px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+.urlbox { display: flex; gap: 6px; }
+.urlbox span { flex: 1; min-width: 0; font-family: var(--fm); font-size: 12px; background: #fff; color: #1b2140; border-radius: 6px; padding: 6px 8px; white-space: nowrap; overflow: hidden; }
+.urlbox span i { font-style: normal; display: inline-block; vertical-align: bottom; overflow: hidden; white-space: nowrap; }
+.js .urlbox span i { animation: typeurl 4s steps(22) infinite; max-width: 0; }
+@keyframes typeurl { 0% { max-width: 0; } 55%, 100% { max-width: 22ch; } }
+.urlbox b { font-size: 12px; background: var(--rose); color: #fff; border-radius: 6px; padding: 6px 10px; white-space: nowrap; }
+.cond { display: flex; flex-wrap: wrap; gap: 6px; }
+.cond span { font-size: 12.5px; font-weight: 700; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; color: var(--mut); }
+.cond span.on { border-color: var(--sig); color: var(--sig); background: rgba(62,230,160,.1); }
+.js .cond span.on { animation: chip 3s ease-in-out infinite; }
+.cond span.on + span.on { animation-delay: .4s; }
+@keyframes chip { 0%, 100% { transform: none; } 10% { transform: scale(1.1); } 20% { transform: none; } }
+.mini { background: #fff; color: #1b2140; border-radius: 10px; padding: 8px 10px; font-size: 12.5px; line-height: 1.5; display: flex; gap: 8px; align-items: center; box-shadow: 0 6px 16px rgba(0,0,0,.35); }
+.mini .app { width: 20px; height: 20px; border-radius: 6px; background: var(--rose); flex: none; display: grid; place-items: center; }
+.mini .app svg { width: 13px; height: 13px; }
+.js .mini { animation: miniIn 4s ease-in-out infinite; }
+@keyframes miniIn { 0%, 10% { opacity: 0; transform: translateX(30px); } 22%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* ---------- 料金 ---------- */
+.price-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 48px; max-width: 900px; }
+.plan { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px 26px; transition: transform .2s, box-shadow .2s; }
+.plan:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,.35); }
+.plan.hl { border: 2px solid var(--rose-l); background: linear-gradient(160deg, #2a1f55, var(--card) 60%); }
+.plan .pn { font-weight: 700; font-size: 16px; color: var(--mut); }
+.plan .pv { display: block; font-weight: 900; font-size: clamp(40px, 5.4vw, 60px); line-height: 1.2; margin-top: 8px; }
+.plan .pv small { font-size: .38em; margin-right: 4px; color: var(--mut); }
+.plan .tag { position: absolute; right: 18px; top: -14px; font-size: 12px; font-weight: 900; background: var(--rose); color: #fff; padding: 3px 12px; border-radius: 999px; }
+.price-note { margin-top: 16px; font-size: 14px; color: var(--mut); }
+.perk { margin-top: 26px; max-width: 900px; display: flex; align-items: center; gap: 18px; background: linear-gradient(90deg, rgba(194,37,92,.35), rgba(194,37,92,.12)); border: 1px dashed var(--rose-l); border-radius: 16px; padding: 16px 20px; font-weight: 700; font-size: 17px; }
+.perk .wico { --s: 56px; margin: 8px 6px 10px; animation: floaty 3s ease-in-out infinite; }
+.perk b { display: block; font-family: var(--fm); font-size: 12px; letter-spacing: .14em; color: var(--rose-l); }
+
+/* ---------- FAQ ---------- */
+.faq-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 44px; align-items: center; margin-top: 40px; }
+.faq details { background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px; transition: border-color .2s; }
+.faq details[open] { border-color: rgba(62,230,160,.55); }
+.faq summary { cursor: pointer; list-style: none; position: relative; display: flex; gap: 12px; align-items: center; padding: 16px 54px 16px 16px; font-weight: 700; font-size: 17px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; flex: none; width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: var(--rose); color: #fff; font-family: var(--fm); font-weight: 600; }
+.faq summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-family: var(--fm); font-size: 24px; color: var(--sig); transition: transform .25s; }
+.faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq summary:hover { color: #fff; background: rgba(255,255,255,.03); }
+.faq details p { padding: 0 18px 18px 60px; color: var(--mut); font-size: 15.5px; }
+.faq-ill { max-width: 360px; justify-self: center; width: 100%; }
+
+/* ---------- 登録 ---------- */
+.signup { background: radial-gradient(70% 90% at 15% 20%, #e0447c, transparent 70%), linear-gradient(150deg, #c2255c, #8f1742); color: #fff; }
+.signup::before { content: ""; position: absolute; inset: 0; background-image: repeating-radial-gradient(circle at 20% 60%, transparent 0 46px, rgba(255,255,255,.08) 47px 48px); pointer-events: none; }
+.signup .wrap { position: relative; }
+.signup-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(30px, 5vw, 70px); align-items: center; }
+.signup .kicker { color: #fff; }
+.signup .kicker::before { background: #fff; }
+.signup .h2 { font-size: clamp(30px, 4.4vw, 52px); }
+.signup .lead { color: #ffe3ee; }
+.close-vis { position: relative; margin-top: 34px; max-width: 460px; }
+.close-vis .lightpanel { border-radius: 50% 50% 24px 24px; padding: 40px 34px 18px; box-shadow: 0 30px 60px rgba(60,0,20,.45); }
+.close-vis .f3 { width: 22%; }
+.close-vis .c1 { width: 27%; left: -4%; top: 2%; animation: floaty 4s ease-in-out infinite; }
+.close-vis .c2 { right: -2%; top: -6%; animation: ring 3s ease-in-out infinite; transform-origin: 50% 10%; }
+.form-card { background: #fff; color: #1b2140; border-radius: 22px; padding: 30px 26px 26px; box-shadow: 0 30px 70px rgba(60,0,20,.5); position: relative; }
+.form-card::before { content: "ENTRY"; position: absolute; left: 26px; top: -13px; font-family: var(--fm); font-weight: 600; font-size: 12px; letter-spacing: .2em; background: var(--ink); color: var(--sig); padding: 3px 12px; border-radius: 999px; }
+#signup-form label { display: block; font-weight: 700; font-size: 15px; margin-bottom: 18px; }
+#signup-form input, #signup-form select { display: block; width: 100%; margin-top: 8px; font: inherit; font-size: 16px; font-weight: 500; padding: 13px 14px; border: 2px solid #c9cfe3; border-radius: 12px; background: #f7f8fd; color: #1b2140; transition: border-color .2s, background .2s; }
+#signup-form input:focus, #signup-form select:focus { border-color: var(--rose); background: #fff; }
+#signup-form .btn { width: 100%; }
+.err { color: #b3261e; font-weight: 700; font-size: 14px; margin: -6px 0 14px; }
+.privacy { font-size: 12.5px; margin-top: 14px; color: #59607a; }
+.thanks h3 { font-size: 24px; }
+.thanks h3::before { content: ""; display: block; width: 60px; height: 60px; margin-bottom: 12px; border-radius: 50%; background: var(--sig) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23053a26' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 58% no-repeat; }
+.thanks p { margin-top: 8px; }
+.thanks small { display: block; margin-top: 12px; color: #59607a; }
+
+/* ---------- フッター ---------- */
+footer { background: #060b1c; color: var(--mut); font-size: 13px; padding-block: 40px calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+footer .fl { font-weight: 900; font-size: 16px; color: var(--txt); }
+
+.sticky { display: none; }
+
+/* ---------- スクロール出現 ---------- */
+.js .rv { opacity: 0; transform: translateY(34px); transition: opacity .7s ease, transform .8s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+.js .rv.in { opacity: 1; transform: none; }
+.js .rv.sl { transform: translateX(-40px); }
+.js .rv.sl.in { transform: none; }
+.js .rv.zm { transform: scale(.85); }
+.js .rv.zm.in { transform: none; }
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width: 980px) {
+  .uc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .top-cta { display: none; }
+  .hero-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "eb" "h1" "stage" "body"; }
+  .stage { margin: 34px auto 150px; width: 92%; }
+  .notif { left: 4%; right: auto; bottom: -32%; width: 92%; }
+  .notif .bell { left: auto; right: 22%; top: -24%; width: 17%; }
+  .f-eyes { left: -4%; top: -6%; width: 25%; }
+  .f-ant { right: -6%; top: 52%; width: 20%; }
+  .f-sat { right: 0; top: -8%; width: 17%; }
+  .pain-grid, .diff-grid, .clock-grid, .faq-grid, .signup-grid, .uc-head { grid-template-columns: minmax(0, 1fr); }
+  .pain-ill { max-width: 420px; margin: 0 auto; width: 100%; }
+  .uc-head .lightpanel { justify-self: start; }
+  .steps-grid { grid-template-columns: minmax(0, 1fr); }
+  .step:not(:last-child)::after { right: auto; left: 50%; top: auto; bottom: -18px; transform: rotate(135deg); }
+  .price-grid { grid-template-columns: minmax(0, 1fr); }
+  .kw { right: -4px; }
+  .sticky { display: block; position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; padding: 10px max(14px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px)); background: rgba(10,17,40,.92); border-top: 1px solid var(--line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: transform .3s; }
+  .sticky .btn { width: 100%; padding: 14px 18px; }
+  .sticky.hide { transform: translateY(110%); }
+  footer { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 560px) {
+  body { font-size: 15.5px; }
+  .logo { font-size: 17px; }
+  .logo svg { width: 32px; height: 32px; }
+  .badge { font-size: 12px; padding: 3px 10px; }
+  .eyebrow { font-size: 12.5px; }
+  .h1 { font-size: clamp(29px, 8.4vw, 36px); }
+  .sub { font-size: 16px; }
+  .hero-body .btn { width: 100%; }
+  .stage { width: 100%; margin-bottom: 170px; }
+  .notif { left: 2%; width: 96%; bottom: -40%; }
+  .notice-title { font-size: 13.5px; }
+  .notice-diff { font-size: 12.5px; }
+  .uc-grid { grid-template-columns: minmax(0, 1fr); }
+  .b-body { padding: 18px 14px 20px; }
+  .b-list li { font-size: 13.5px; }
+  .b-list .add { padding-right: 42px; }
+  .kw { top: -30px; font-size: 12px; }
+  .pain .st { display: none; }
+  .pain { grid-template-columns: auto minmax(0, 1fr); }
+  .perk { flex-direction: column; align-items: flex-start; }
+  .form-card { padding: 30px 18px 22px; }
+  .faq summary { font-size: 16px; }
+  .faq details p { padding-left: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .sweep { background: conic-gradient(from 0deg, transparent 0deg 280deg, rgba(255,122,168,.05) 295deg, rgba(255,122,168,.42) 358deg, rgba(255,190,214,.95) 360deg); transform: rotate(135deg); }
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="#top" aria-label="ページ見張り番 トップへ">
+    <svg viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18.5" fill="#16224a" stroke="#ff7aa8" stroke-width="1.5"/>
+      <circle cx="20" cy="20" r="11" fill="none" stroke="#ff7aa8" stroke-opacity=".45"/>
+      <g class="lg-sweep"><path d="M20 20 L20 2 A18 18 0 0 1 33 7.5 Z" fill="#ff7aa8" fill-opacity=".55"/></g>
+      <path d="M9 20 Q20 10 31 20 Q20 30 9 20 Z" fill="#fff"/>
+      <circle cx="20" cy="20" r="4.6" fill="#c2255c"/><circle cx="21.6" cy="18.4" r="1.4" fill="#fff"/>
+    </svg>
+    <span>ページ見張り番</span>
+  </a>
+  <span class="badge">事前登録受付中</span>
+  <a class="top-cta" href="#signup">先行登録（無料）</a>
+</div></header>
+
+<main>
+<!-- ================= ヒーロー ================= -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <p class="eyebrow"><b>WATCHING</b>Webページの更新を、LINEでお知らせ</p>
+    <h1 class="h1">
+      <span class="l" style="--i:0">見ておきたいページの</span>
+      <span class="l" style="--i:1"><span class="mk">更新を、</span></span>
+      <span class="l" style="--i:2"><span class="mk-g">LINE</span>に届けます。</span>
+    </h1>
+
+    <div class="stage" aria-label="レーダーが自治体や公募のページを見張り、更新を見つけると通知が届くイメージ">
+      <!-- 写真差し替え候補: スマホで更新通知を受け取る手元の写真 -->
+      <div class="radar" aria-hidden="true">
+        <svg class="rings" viewBox="0 0 400 400">
+          <g fill="none" stroke="#96afff">
+            <circle cx="200" cy="200" r="190" stroke-opacity=".35" stroke-width="1.5"/>
+            <circle cx="200" cy="200" r="182" stroke-opacity=".5" stroke-width="7" stroke-dasharray="1.2 30.57" transform="rotate(-90 200 200)"/>
+            <circle cx="200" cy="200" r="182" stroke-opacity=".85" stroke-width="12" stroke-dasharray="2 283.9" transform="rotate(-90.6 200 200)"/>
+            <circle cx="200" cy="200" r="140" stroke-opacity=".22"/>
+            <circle cx="200" cy="200" r="92" stroke-opacity=".22"/>
+            <circle cx="200" cy="200" r="44" stroke-opacity=".22"/>
+            <path d="M200 10 V390 M10 200 H390" stroke-opacity=".14"/>
+            <path d="M65.6 65.6 L334.4 334.4 M334.4 65.6 L65.6 334.4" stroke-opacity=".07"/>
+          </g>
+          <g fill="#96afff" fill-opacity=".55" font-family="monospace" font-size="10" text-anchor="middle">
+            <text x="200" y="30">00</text><text x="374" y="204">06</text><text x="200" y="380">12</text><text x="26" y="204">18</text>
+          </g>
+        </svg>
+        <div class="sweep"></div>
+        <span class="blip" style="left:73%;top:69%;--pd:2.57s"></span>
+        <span class="blip" style="left:71.9%;top:28.1%;--pd:1.15s"></span>
+        <span class="blip" style="left:28.1%;top:71.9%;--pd:4.15s"></span>
+        <span class="blip" style="left:27%;top:30.7%;--pd:5.57s"></span>
+        <span class="blip" style="left:50%;top:13%;--pd:.4s"></span>
+        <span class="blip" style="left:88%;top:50%;--pd:1.9s"></span>
+      </div>
+      <span class="scan-label" aria-hidden="true">SCANNING</span>
+
+      <!-- 見張っているページ（角度に合わせて、スイープが通るとピンと光る） -->
+      <div class="pg" style="left:73%;top:69%;--pd:2.57s;--n:0"><div class="pg-float"><div class="pc">
+        <svg viewBox="0 0 160 118" role="img" aria-label="〇〇県 公募情報のページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">〇〇県 公募情報</text>
+          <rect x="10" y="46" width="140" height="2" fill="#141b3a"/>
+          <rect x="10" y="56" width="118" height="6" rx="3" fill="#cfd6ea"/>
+          <rect x="10" y="68" width="96" height="6" rx="3" fill="#cfd6ea"/>
+          <rect x="8" y="80" width="144" height="13" rx="3" fill="#3ee6a0" fill-opacity=".35"/>
+          <rect x="12" y="84" width="100" height="5" rx="2.5" fill="#0c8a59"/>
+          <rect x="128" y="82" width="20" height="9" rx="2" fill="#c2255c"/><text x="138" y="89.5" font-size="6.5" font-weight="700" fill="#fff" text-anchor="middle">PDF</text>
+          <rect x="10" y="100" width="70" height="6" rx="3" fill="#cfd6ea"/>
+        </svg>
+      </div></div></div>
+      <div class="pg" style="left:71.9%;top:28.1%;--pd:1.15s;--n:1"><div class="pg-float"><div class="pc">
+        <svg viewBox="0 0 160 118" role="img" aria-label="入札情報のページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">入札情報</text>
+          <g fill="#cfd6ea"><rect x="10" y="50" width="140" height="14" rx="2" fill="#1d2a5c"/><rect x="10" y="68" width="140" height="10" rx="2"/><rect x="10" y="82" width="140" height="10" rx="2"/><rect x="10" y="96" width="140" height="10" rx="2"/></g>
+          <path d="M50 50V106M110 50V106" stroke="#f4f6fd" stroke-width="2"/>
+        </svg>
+      </div></div></div>
+      <div class="pg" style="left:28.1%;top:71.9%;--pd:4.15s;--n:2"><div class="pg-float"><div class="pc">
+        <svg viewBox="0 0 160 118" role="img" aria-label="〇〇市 お知らせのページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">〇〇市 お知らせ</text>
+          <g fill="#cfd6ea"><circle cx="14" cy="55" r="3" fill="#c2255c"/><rect x="22" y="52" width="110" height="6" rx="3"/><circle cx="14" cy="71" r="3"/><rect x="22" y="68" width="90" height="6" rx="3"/><circle cx="14" cy="87" r="3"/><rect x="22" y="84" width="120" height="6" rx="3"/><circle cx="14" cy="103" r="3"/><rect x="22" y="100" width="70" height="6" rx="3"/></g>
+        </svg>
+      </div></div></div>
+      <div class="pg" style="left:27%;top:30.7%;--pd:5.57s;--n:3"><div class="pg-float"><div class="pc">
+        <svg viewBox="0 0 160 118" role="img" aria-label="求人情報のページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">求人情報</text>
+          <g fill="#cfd6ea"><rect x="10" y="48" width="66" height="58" rx="5"/><rect x="84" y="48" width="66" height="58" rx="5"/></g>
+          <g fill="#f4f6fd"><rect x="16" y="88" width="40" height="5" rx="2.5"/><rect x="90" y="88" width="40" height="5" rx="2.5"/><circle cx="43" cy="68" r="10"/><circle cx="117" cy="68" r="10"/></g>
+        </svg>
+      </div></div></div>
+
+      <svg class="wart f3 f-eyes" viewBox="0 0 140 104" aria-hidden="true" focusable="false">
+  <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
+    <rect x="26" y="5" width="22" height="17" rx="4" fill="#2c3b78"/><rect x="92" y="5" width="22" height="17" rx="4" fill="#2c3b78"/>
+    <rect x="16" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/><rect x="82" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/>
+    <rect x="54" y="25" width="32" height="20" rx="8" fill="#2c3b78"/>
+    <rect x="62" y="11" width="16" height="20" rx="4" fill="#ff7aa8"/>
+    <rect x="16" y="40" width="42" height="10" fill="#c2255c"/><rect x="82" y="40" width="42" height="10" fill="#c2255c"/>
+    <circle cx="37" cy="72" r="28" fill="#1a2752"/><circle cx="103" cy="72" r="28" fill="#1a2752"/>
+    <circle cx="37" cy="72" r="20" fill="#0a1128"/><circle cx="103" cy="72" r="20" fill="#0a1128"/>
+  </g>
+  <path d="M66 16 V26 M70 16 V26 M74 16 V26" stroke="#0a1128" stroke-width="2" opacity=".55"/>
+  <path d="M22 28 V36 M88 28 V36" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="37" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M17 72 H57 M37 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:37px 72px;--sd:2.6s" d="M37 72 L37 52 A20 20 0 0 1 54.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="44" cy="64" r="2.6" fill="#ff7aa8"/><path d="M22 66 A16 16 0 0 1 30 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/><circle cx="103" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M83 72 H123 M103 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:103px 72px;--sd:3.4s" d="M103 72 L103 52 A20 20 0 0 1 120.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="110" cy="64" r="2.6" fill="#ff7aa8"/><path d="M88 66 A16 16 0 0 1 96 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/>
+</svg>
+      <svg class="wart f3 f-ant" viewBox="-6 -14 132 152" aria-hidden="true" focusable="false">
+  <path d="M36 134 L46 112 H74 L84 134 Z" fill="#26356e" stroke="#0a1128" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="55" y="86" width="10" height="28" fill="#2c3b78" stroke="#0a1128" stroke-width="3"/>
+  <g transform="translate(0 16) rotate(-32 60 62)">
+    <path d="M60 58 V18 M24 50 L60 16 M96 50 L60 16" stroke="#b2bddf" stroke-width="3" stroke-linecap="round"/>
+    <path d="M12 46 Q60 100 108 46 Q60 64 12 46 Z" fill="#eef2ff" stroke="#0a1128" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M12 46 Q60 64 108 46 Q60 32 12 46 Z" fill="#b2bddf" stroke="#0a1128" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M24 58 Q46 74 76 70" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+    <path d="M36 48 Q60 56 84 48" stroke="#96afff" stroke-width="1.5" fill="none" opacity=".8"/>
+    <circle cx="60" cy="14" r="6" fill="#ff7aa8" stroke="#0a1128" stroke-width="3"/>
+    <g fill="none" stroke="#3ee6a0" stroke-width="3.5" stroke-linecap="round">
+      <path class="w-wave" d="M50 2 Q60 -6 70 2"/>
+      <path class="w-wave w2" d="M43 -6 Q60 -18 77 -6"/>
+      <path class="w-wave w3" d="M36 -14 Q60 -30 84 -14"/>
+    </g>
+  </g>
+  <circle cx="60" cy="86" r="8" fill="#c2255c" stroke="#0a1128" stroke-width="3"/>
+</svg>
+      <svg class="wart f3 f-sat" viewBox="0 0 140 92" aria-hidden="true" focusable="false">
+  <g transform="rotate(-16 70 46)">
+    <rect x="4" y="28" width="42" height="30" rx="2" fill="#2c3b78" stroke="#96afff" stroke-width="2"/><path d="M14.5 28 V58 M25 28 V58 M35.5 28 V58 M4 43 H46" stroke="#96afff" stroke-width="1.2" opacity=".7"/><path d="M6 56 L22 30 H30 L14 56 Z" fill="#3ee6a0" opacity=".22"/><rect x="94" y="28" width="42" height="30" rx="2" fill="#2c3b78" stroke="#96afff" stroke-width="2"/><path d="M104.5 28 V58 M115 28 V58 M125.5 28 V58 M94 43 H136" stroke="#96afff" stroke-width="1.2" opacity=".7"/><path d="M96 56 L112 30 H120 L104 56 Z" fill="#3ee6a0" opacity=".22"/>
+    <path d="M46 43 H56 M84 43 H94" stroke="#b2bddf" stroke-width="4"/>
+    <path d="M70 22 V8" stroke="#b2bddf" stroke-width="2.5"/>
+    <circle class="w-blip" cx="70" cy="7" r="3.5" fill="#ff7aa8"/>
+    <path d="M58 26 Q70 12 82 26 Z" fill="#dfe4f3" stroke="#0a1128" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="56" y="24" width="28" height="38" rx="5" fill="#eef2ff" stroke="#0a1128" stroke-width="3"/>
+    <rect x="56" y="37" width="28" height="9" fill="#c2255c" stroke="#0a1128" stroke-width="2"/>
+    <circle cx="70" cy="54" r="3" fill="#3ee6a0"/>
+  </g>
+</svg>
+
+      <!-- 通知の表示例（スイープが公募情報のページを通ると、横から入ってくる） -->
+      <div class="notif">
+        <svg class="wart bell" style="--pd:2.57s" viewBox="0 0 110 116" aria-hidden="true" focusable="false">
+  <g fill="none" stroke="#3ee6a0" stroke-width="3.5" stroke-linecap="round">
+    <path class="w-wave" d="M12 40 Q4 54 12 68"/><path class="w-wave w2" d="M3 32 Q-8 54 3 76"/>
+    <path class="w-wave" d="M98 40 Q106 54 98 68"/><path class="w-wave w2" d="M107 32 Q118 54 107 76"/>
+  </g>
+  <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
+    <circle cx="55" cy="12" r="6" fill="#ffd166"/>
+    <circle cx="55" cy="100" r="8" fill="#ffd166"/>
+    <path d="M55 16 C34 16 26 34 26 52 V70 L16 84 H94 L84 70 V52 C84 34 76 16 55 16 Z" fill="#c2255c"/>
+    <rect x="12" y="82" width="86" height="10" rx="5" fill="#ff7aa8"/>
+  </g>
+  <path d="M36 70 V53 C36 41 41 31 48 27" stroke="#ff7aa8" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M30 76 H80" stroke="#8f1742" stroke-width="2.5" stroke-linecap="round"/>
+  <circle class="w-dot" cx="82" cy="24" r="10" fill="#3ee6a0" stroke="#0a1128" stroke-width="3"/>
+</svg>
+        <div class="mock mock-notice">
+          <div class="notice">
+            <div class="notice-top"><span class="app"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8 Q8 2 14 8 Q8 14 2 8Z" fill="#fff"/><circle cx="8" cy="8" r="2.4" fill="#c2255c"/></svg></span><b>ページ見張り番</b><span>10:12</span></div>
+            <p class="notice-title">【更新あり】〇〇県 産業支援課「公募情報」</p>
+            <p class="notice-diff"><span class="plus">追加</span>令和9年度 小規模事業者 設備導入補助金（公募要領.pdf）</p>
+            <p class="notice-diff"><span class="plus">追加</span>申請締切：令和9年5月30日</p>
+            <p class="notice-link">変更箇所を見る</p>
+          </div>
+          <p class="mock-note">※通知の表示例です。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-body">
+      <p class="sub"><strong>URLを登録するだけ。</strong>補助金の公募ページや自治体のお知らせが更新されたら、変わった部分を抜き出してLINEとメールでお知らせします。</p>
+      <div class="chips" aria-label="主な機能"><span>変わった部分だけ</span><span>PDFの追加も検知</span><span>キーワードで絞り込み</span></div>
+      <a class="btn" href="#signup">先行登録する（無料）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <p class="cta-note">現在準備中です。公開時にメールでお知らせします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= マーキー ================= -->
+<div class="marq" aria-hidden="true">
+  <div class="mband"><div class="track">
+    <span>補助金・助成金の公募</span><span>入札情報</span><span>自治体のお知らせ</span><span>求人ページ</span><span>PDFの追加</span><span>LINEとメールで通知</span>
+    <span>補助金・助成金の公募</span><span>入札情報</span><span>自治体のお知らせ</span><span>求人ページ</span><span>PDFの追加</span><span>LINEとメールで通知</span>
+  </div></div>
+  <div class="mband"><div class="track">
+    <span><b>+</b>追加された行</span><span><b>~</b>変更された行</span><span><b>.pdf</b>ファイルの追加</span><span><b>KEY</b>「公募」「締切」</span><span><b>INT</b>1〜6時間ごとに確認</span><span><b>URL</b>誰でも見られるページ</span>
+    <span><b>+</b>追加された行</span><span><b>~</b>変更された行</span><span><b>.pdf</b>ファイルの追加</span><span><b>KEY</b>「公募」「締切」</span><span><b>INT</b>1〜6時間ごとに確認</span><span><b>URL</b>誰でも見られるページ</span>
+  </div></div>
+</div>
+
+<!-- ================= お悩み ================= -->
+<section class="sec bg2 dots cut">
+  <div class="wrap">
+    <div class="rv">
+      <p class="kicker">ALERT</p>
+      <h2 class="h2">こんなこと、<span class="band">ありませんか？</span></h2>
+    </div>
+    <div class="pain-grid">
+      <ul class="pain-list">
+        <li class="pain rv sl" style="--d:.05s">
+          <span class="pi"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8" fill="none" stroke="#ff7aa8" stroke-width="2"/><path d="M12 9v4l3 2M9 2h6" fill="none" stroke="#ff7aa8" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <p>補助金の公募に気づくのが遅れた</p><span class="st">MISSED</span>
+        </li>
+        <li class="pain rv sl" style="--d:.17s">
+          <span class="pi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9M20 4v5h-5M20 12a8 8 0 0 1-13.7 5.6L4 15M4 20v-5h5" fill="none" stroke="#ff7aa8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <p>毎日同じページを見に行くのが面倒</p><span class="st">REPEAT</span>
+        </li>
+        <li class="pain rv sl" style="--d:.29s">
+          <span class="pi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z M10 21h4" fill="none" stroke="#ff7aa8" stroke-width="2" stroke-linejoin="round"/><path d="M3 3l18 18" stroke="#ff7aa8" stroke-width="2" stroke-linecap="round"/></svg></span>
+          <p>LINE Notifyが終わって、通知の仕組みがなくなった</p><span class="st">NO SIGNAL</span>
+        </li>
+      </ul>
+      <div class="pain-ill rv zm" style="--d:.2s">
+        <!-- 写真差し替え候補: パソコンの前で情報を探して困っている人の写真 -->
+        <div class="lightpanel"><svg class="ill" aria-hidden="true" focusable="false" data-undraw="alert" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 930.67538 521.87593"><path d="M213.37258,618.97624a158.39338,158.39338,0,0,0,28.72768,33.86154c.254.23174.515.45361.77586.68127l23.73866-14.10511c-.1756-.23879-.36947-.50634-.57728-.79926-12.39459-17.25583-68.37231-132.05609-68.71437-157.47835C197.28,483.24064,177.17769,562.25219,213.37258,618.97624Z" transform="translate(-134.66231 -189.06204)" fill="#e6e6e6"/><path d="M237.51988,655.55937c.36662.16483.741.3251,1.118.478l17.80937-10.582c-.278-.16053-.60252-.3504-.97444-.56327-6.09666-3.56147-24.23716-14.2625-42.09847-25.91685-19.19136-12.52636-38.071-26.1452-41.34715-33.18782C172.70895,587.40853,193.83961,636.659,237.51988,655.55937Z" transform="translate(-134.66231 -189.06204)" fill="#e6e6e6"/><path d="M989.86254,665.2559a158.39406,158.39406,0,0,1-7.4,43.785c-.1.329-.211.653-.319.982h-27.613c.029-.295.059-.624.088-.982,1.841-21.166-8.677-148.453-21.369-170.483C934.36152,540.3449,992.00352,598.00187,989.86254,665.2559Z" transform="translate(-134.66231 -189.06204)" fill="#e6e6e6"/><path d="M987.79049,709.04088c-.231.329-.471.658-.717.982h-20.716c.157-.28.339-.609.55-.982,3.422-6.176,13.551-24.642,22.953-43.785,10.1-20.572,19.374-41.924,18.593-49.652C1008.69548,617.34587,1015.68746,670.4799,987.79049,709.04088Z" transform="translate(-134.66231 -189.06204)" fill="#e6e6e6"/><path d="M582.73018,709.255H263.402a28.57994,28.57994,0,0,1-28.54766-28.54766V217.6097A28.57994,28.57994,0,0,1,263.402,189.062H582.73018a28.57994,28.57994,0,0,1,28.54766,28.54766V680.70738A28.57994,28.57994,0,0,1,582.73018,709.255Z" transform="translate(-134.66231 -189.06204)" fill="#cacaca"/><path d="M583.29225,691.041H262.83992a8.8102,8.8102,0,0,1-8.80013-8.80013V216.07621a8.8102,8.8102,0,0,1,8.80013-8.80013H583.29225a8.81019,8.81019,0,0,1,8.80013,8.80013V682.24087A8.81019,8.81019,0,0,1,583.29225,691.041Z" transform="translate(-134.66231 -189.06204)" fill="#fff"/><circle cx="287.18951" cy="8.74274" r="2.42854" fill="#fff"/><path d="M1064.147,710.938H135.853a1.19068,1.19068,0,1,1,0-2.38136h928.294a1.19068,1.19068,0,1,1,0,2.38136Z" transform="translate(-134.66231 -189.06204)" fill="#cacaca"/><circle cx="288.40115" cy="355.3465" r="31" fill="#e4e4e4"/><path d="M442.47166,484.90854H403.65538L380.22154,370.27817a43.05942,43.05942,0,1,1,85.69153-.05078Z" transform="translate(-134.66231 -189.06204)" fill="#e4e4e4"/><path d="M575.5801,330.82838H717.454a30.15959,30.15959,0,0,1,29.42119,23.52657l71.68609,317.96779a24.3755,24.3755,0,0,1-22.57916,29.70689L650.1348,709.21552a32.20254,32.20254,0,0,1-33.27305-26.43158L576.197,457.97716l-7.692-42.52344-11.35095-62.75164a18.56906,18.56906,0,0,1,18.426-21.8737Z" transform="translate(-134.66231 -189.06204)" fill="#3f3d56"/><path d="M698.77657,337.68294h16.561a20.84257,20.84257,0,0,1,20.36353,16.39964l68.80881,315.37356a12.91479,12.91479,0,0,1-11.77337,15.64015l-145.37556,9.52782A16.72593,16.72593,0,0,1,629.80607,680.899l-58.715-325.96934a14.64977,14.64977,0,0,1,14.41777-17.24675h15.71067a6.91389,6.91389,0,0,1,6.67617,5.11645h0a6.10376,6.10376,0,0,0,5.89388,4.51694h74.58408a10.43362,10.43362,0,0,0,10.40289-9.6334Z" transform="translate(-134.66231 -189.06204)" fill="#fff"/><path d="M772.14887,438.77577a10.52534,10.52534,0,0,1,1.31643,1.00712l48.05635-12.25059L824.8,415.93891l18.14315,2.66086L839.134,439.6876a8,8,0,0,1-7.03474,6.53394L775.988,452.13061a10.49709,10.49709,0,1,1-3.83908-13.35484Z" transform="translate(-134.66231 -189.06204)" fill="#ffb6b6"/><circle cx="603.19202" cy="262.1948" r="31" fill="currentColor"/><path d="M757.26253,391.75684H718.44625L695.01241,277.12647a43.05942,43.05942,0,1,1,85.69153-.05078Z" transform="translate(-134.66231 -189.06204)" fill="currentColor"/><polygon points="711.524 240.061 699.144 250.741 681.824 265.671 674.174 226.531 673.374 222.461 672.744 219.231 690.294 188.661 704.924 189.501 705.924 189.561 705.944 189.781 706.174 191.831 709.174 218.811 709.244 219.461 711.524 240.061" fill="#3f3d56"/><polygon points="630.606 507.736 618.346 507.735 612.513 460.447 630.608 460.448 630.606 507.736" fill="#ffb6b6"/><path d="M768.39448,708.6817l-39.53076-.00146v-.5A15.38731,15.38731,0,0,1,744.2502,692.794h.001l24.144.001Z" transform="translate(-134.66231 -189.06204)" fill="#2f2e41"/><polygon points="758.606 508.736 746.346 508.735 740.513 461.447 758.608 461.448 758.606 508.736" fill="#ffb6b6"/><path d="M896.39448,709.6817l-39.53076-.00146v-.5A15.38731,15.38731,0,0,1,872.2502,693.794h.001l24.144.001Z" transform="translate(-134.66231 -189.06204)" fill="#2f2e41"/><path d="M903.06648,676.9734l-33,5-48.00977-162.48-50.99023,163.48-37-5,48-190v-15l6.5-22.5-.68018-6.09-4.73-42.59-2.04981-18.47-.13285-1.19313a4.05551,4.05551,0,0,1,3.19291-4.41685h0l15.39991-3.24H824.7364l14.8501,4.09,1.02.28.46.13-.23,1.92-3.48,29.18-.18994,1.6-3.3601,28.13-.74,6.17c29,21,30,42,30,42Z" transform="translate(-134.66231 -189.06204)" fill="#2f2e41"/><circle cx="674.44747" cy="148.19876" r="24.56103" fill="#ffb6b6"/><rect x="786.56648" y="443.4734" width="49" height="7" transform="matrix(0.99156, -0.12967, 0.12967, 0.99156, -185.77459, -80.11503)" fill="#3f3d56"/><path d="M721.14887,448.77577a10.52534,10.52534,0,0,1,1.31643,1.00712l48.05635-12.25059L773.8,425.93891l18.14315,2.66086L788.134,449.6876a8,8,0,0,1-7.03474,6.53394L724.988,462.13061a10.49709,10.49709,0,1,1-3.83908-13.35484Z" transform="translate(-134.66231 -189.06204)" fill="#ffb6b6"/><path d="M795.06648,383.9734l-8.5-6.5c-2.29817-.87172-5.44731,1.605-6,4l-12,49,25,18,3.5-5.5Z" transform="translate(-134.66231 -189.06204)" fill="#3f3d56"/><g opacity="0.2"><path d="M843.8365,407.87336a67.67557,67.67557,0,0,1-6.48,2.2c-.69995.21-1.41992.41-2.12988.6a66.019,66.019,0,0,1-14.34033,2.32,45.1399,45.1399,0,0,1-6.25977-.17,35.24271,35.24271,0,0,1-6.58984-1.3c-.07031-.02-.15039-.04-.22021-.06a28.90621,28.90621,0,0,1-11.9502-6.79,23.55972,23.55972,0,0,1-2.10986-2.35,21.23879,21.23879,0,0,1-4.56006-16.53,14.15326,14.15326,0,0,1,.34033-1.57,25.10719,25.10719,0,0,1,1.48975-4.1c.27-.62.57031-1.23.89013-1.82995l11.29981-3.82h21.52l14.8501,4.09,1,.06.02.22.46.13-.23,1.92Z" transform="translate(-134.66231 -189.06204)"/></g><path d="M790.2894,316.92681c-4.59329-.563-9.634-.16485-13.21411,2.76738s-4.73558,9.02781-1.34592,12.17829c3.00083,2.7891,7.69329,2.13322,11.71262,2.92632a15.85418,15.85418,0,0,1,12.38363,15.15657c-.05982,10.17413-9.82411,17.87894-11.578,27.90093-1.197,6.83982,1.68772,14.03819,6.675,18.86966s11.84323,7.44255,18.7509,8.1498,13.8926-.373,20.60575-2.14766c6.74127-1.78215,13.3778-4.31055,19.03424-8.388s10.2931-9.82559,12.10928-16.55777.51227-14.45089-4.16774-19.61986c-5.35905-5.919-14.27436-7.95446-18.90989-14.45565-5.19639-7.28778-3.27352-17.66625-7.4792-25.56731-2.80792-5.27513-8.12457-8.87314-13.79191-10.76857s-11.719-2.26953-17.69212-2.4531c-3.13956-.09649-6.37527-.12863-9.30035,1.016s-5.49633,3.75316-5.648,6.89055S790.2894,316.92681,790.2894,316.92681Z" transform="translate(-134.66231 -189.06204)" fill="#2f2e41"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 差分 ================= -->
+<section class="sec dots" id="diff">
+  <div class="wrap">
+    <div class="rv">
+      <p class="kicker">DIFF</p>
+      <h2 class="h2">ページ全体ではなく、<br><span class="band">変わった部分だけ</span>を届けます。</h2>
+      <p class="lead">見張っているページに行が増えたら、そこだけを抜き出してお知らせ。公募要領などのPDFが追加されたときも分かります。</p>
+    </div>
+    <div class="diff-grid">
+      <div class="diffbox rv" id="diffbox">
+        <div class="browser">
+          <div class="kw"><span class="wico xs r" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M192,112a80,80,0,1,1-80-80A80,80,0,0,1,192,112Z" opacity="0.2"/><path d="M229.66,218.34,179.6,168.28a88.21,88.21,0,1,0-11.32,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg></span>キーワード：<mark>公募</mark>・<mark>締切</mark></div>
+          <div class="b-bar" aria-hidden="true"><i></i><i></i><i></i><span class="b-url">https://www.pref.〇〇.lg.jp/sangyo/koubo/</span></div>
+          <div class="b-body">
+            <p class="b-crumb">ホーム ＞ 産業支援課 ＞ 公募情報</p>
+            <h3 class="b-h">〇〇県 産業支援課「公募情報」<span class="ex">表示例</span></h3>
+            <ul class="b-list">
+              <li class="add" data-step="0"><span class="sign">+</span><span class="type">令和9年度 小規模事業者 設備導入補助金（<mark>公募</mark>要領.pdf）</span>
+                <svg class="pdf" viewBox="0 0 34 42" aria-label="PDFファイル" role="img"><path d="M2 2h20l10 10v28H2z" fill="#fff" stroke="#1b2140" stroke-width="2" stroke-linejoin="round"/><path d="M22 2v10h10" fill="#dfe4f3" stroke="#1b2140" stroke-width="2" stroke-linejoin="round"/><rect x="0" y="20" width="26" height="12" rx="2" fill="#c2255c"/><text x="13" y="29.5" font-size="9" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">PDF</text></svg>
+              </li>
+              <li class="add" data-step="1"><span class="sign">+</span><span class="type">申請<mark>締切</mark>：令和9年5月30日</span></li>
+              <li class="same" aria-hidden="true"><span class="sk d"></span><span class="sk" style="width:62%"></span></li>
+              <li class="same" aria-hidden="true"><span class="sk d"></span><span class="sk" style="width:48%"></span></li>
+              <li class="same" aria-hidden="true"><span class="sk d"></span><span class="sk" style="width:70%"></span></li>
+              <li class="same" aria-hidden="true"><span class="sk d"></span><span class="sk" style="width:38%"></span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="diff-stat" aria-label="検知の表示例"><span>追加 <b class="cnt" data-to="2">2</b> 行</span><span>PDF <b class="cnt" data-to="1">1</b> 件</span><span>キーワード一致 <b class="cnt" data-to="2">2</b></span></div>
+      </div>
+      <div class="feat-list">
+        <article class="feat rv" style="--d:.05s"><span class="fn">01</span><div><h3>変わった部分だけ</h3><p>ページ全体ではなく、追加・変更された部分を抜き出して届けます。</p></div></article>
+        <article class="feat rv" style="--d:.15s"><span class="fn">02</span><div><h3>PDFの追加も検知</h3><p>公募要領などのPDFが追加されたらお知らせします。</p></div></article>
+        <article class="feat rv" style="--d:.25s"><span class="fn">03</span><div><h3>キーワードで絞り込み</h3><p>「公募」「締切」など、指定した言葉を含む更新だけを通知できます。</p></div></article>
+        <article class="feat rv" style="--d:.35s"><span class="fn">04</span><div><h3>LINEとメールで</h3><p>難しい設定は要りません。友だち追加だけで届きます。</p></div></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 確認の間隔 ================= -->
+<section class="sec bg2 cut">
+  <div class="wrap clock-grid">
+    <div class="clock rv zm">
+      <span class="wico r f-clock" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M216,136a88,88,0,1,1-88-88A88,88,0,0,1,216,136Z" opacity="0.2"/><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM61.66,37.66l-32,32A8,8,0,0,1,18.34,58.34l32-32A8,8,0,0,1,61.66,37.66Zm176,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32l32,32A8,8,0,0,1,237.66,69.66ZM184,128a8,8,0,0,1,0,16H128a8,8,0,0,1-8-8V80a8,8,0,0,1,16,0v48Z"/></svg><span class="wl">INTERVAL</span></span>
+      <svg viewBox="0 0 320 320" role="img" aria-label="24時間の時計。一定の間隔でページを確認する点が並ぶ図">
+        <defs><radialGradient id="wc-bg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#1d2a5c"/><stop offset="1" stop-color="#0f1938"/></radialGradient></defs>
+        <circle cx="160" cy="160" r="150" fill="url(#wc-bg)" stroke="#96afff" stroke-opacity=".35" stroke-width="1.5"/>
+        <circle cx="160" cy="160" r="134" fill="none" stroke="#96afff" stroke-opacity=".5" stroke-width="8" stroke-dasharray="1.5 33.6" transform="rotate(-90.4 160 160)"/>
+        <circle cx="160" cy="160" r="134" fill="none" stroke="#eef2ff" stroke-width="14" stroke-dasharray="3 207.5" transform="rotate(-90.7 160 160)"/>
+        <g fill="#b2bddf" font-family="monospace" font-size="13" text-anchor="middle"><text x="160" y="82">0</text><text x="246" y="164">6</text><text x="160" y="250">12</text><text x="74" y="164">18</text></g>
+        <g id="wc-hand" transform="rotate(0 160 160)">
+          <path d="M160 160 L160 40 A120 120 0 0 0 125 45.3 Z" fill="#ff7aa8" fill-opacity=".16"/>
+          <path d="M160 168 V40" stroke="#ff7aa8" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <g id="wc-dots">
+          <circle class="cdot" cx="160" cy="48" r="7"/><circle class="cdot" cx="239.2" cy="80.8" r="7"/><circle class="cdot" cx="272" cy="160" r="7"/><circle class="cdot" cx="239.2" cy="239.2" r="7"/>
+          <circle class="cdot" cx="160" cy="272" r="7"/><circle class="cdot" cx="80.8" cy="239.2" r="7"/><circle class="cdot" cx="48" cy="160" r="7"/><circle class="cdot" cx="80.8" cy="80.8" r="7"/>
+        </g>
+        <circle cx="160" cy="160" r="38" fill="#0a1128" stroke="#96afff" stroke-opacity=".4"/>
+        <text x="160" y="156" text-anchor="middle" font-family="monospace" font-size="11" fill="#b2bddf" letter-spacing="2">EVERY</text>
+        <text id="wc-label" x="160" y="176" text-anchor="middle" font-size="17" font-weight="900" fill="#3ee6a0">3時間</text>
+      </svg>
+    </div>
+    <div class="clock-copy">
+      <div class="rv">
+        <p class="kicker">INTERVAL</p>
+        <h2 class="h2">見張りは、<span class="band">一定の間隔</span>で。</h2>
+        <p class="big"><span>1〜6</span><small>時間ごとに確認</small></p>
+        <p class="lead">相手のサイトに負担をかけないよう、間隔に下限を設けています。</p>
+      </div>
+      <div class="rv" style="--d:.15s">
+        <div class="seg" role="group" aria-label="確認の間隔の例を切り替える">
+          <button type="button" data-h="1" aria-pressed="false">1時間ごと</button>
+          <button type="button" data-h="3" aria-pressed="true">3時間ごと</button>
+          <button type="button" data-h="6" aria-pressed="false">6時間ごと</button>
+        </div>
+        <div class="tl" id="tl" aria-hidden="true">
+          <div class="tl-bar"></div>
+          <span class="tl-dot" style="left:0%"></span><span class="tl-dot" style="left:12.5%"></span><span class="tl-dot" style="left:25%"></span><span class="tl-dot" style="left:37.5%"></span><span class="tl-dot" style="left:50%"></span><span class="tl-dot" style="left:62.5%"></span><span class="tl-dot" style="left:75%"></span><span class="tl-dot" style="left:87.5%"></span>
+          <span class="tl-now" id="tl-now"></span>
+          <span class="tl-lbl s" style="left:0">0:00</span><span class="tl-lbl" style="left:25%">6:00</span><span class="tl-lbl" style="left:50%">12:00</span><span class="tl-lbl" style="left:75%">18:00</span><span class="tl-lbl e" style="left:100%">24:00</span>
+        </div>
+        <p class="note">※図は確認の間隔の表示例です。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 用途 ================= -->
+<section class="sec dots">
+  <div class="wrap">
+    <div class="uc-head">
+      <div class="rv">
+        <p class="kicker">USE CASE</p>
+        <h2 class="h2">こんなページの<span class="band">見張り</span>に。</h2>
+        <p class="lead">補助金・助成金の公募、自治体のお知らせ、入札情報、求人ページなど。誰でも見られるページが対象です。</p>
+      </div>
+      <div class="lightpanel rv zm" style="--d:.15s"><svg class="ill" aria-hidden="true" focusable="false" data-undraw="file-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 748.974 457.275"><g transform="translate(-382.003 -195.455)"><g transform="translate(382.003 195.455)"><path d="M695.225,508.82,433.394,576.244a34.622,34.622,0,0,1-42.114-24.866L312.1,243.879a34.622,34.622,0,0,1,24.866-42.114l243.591-62.727L642.9,166.948l77.191,299.757A34.622,34.622,0,0,1,695.225,508.82Z" transform="translate(-311.003 -139.037)" fill="#f2f2f2"/><path d="M338.989,210.925a24.655,24.655,0,0,0-17.708,29.99l79.185,307.5a24.655,24.655,0,0,0,29.99,17.708L692.287,498.7a24.655,24.655,0,0,0,17.708-29.99L634,173.595l-54.792-24.529Z" transform="translate(-310.548 -138.556)" fill="#fff"/><path d="M629.927,168.5l-40.522,10.435a11.518,11.518,0,0,1-14.026-8.282l-7.707-29.929a.72.72,0,0,1,.989-.837l61.379,27.258a.72.72,0,0,1-.113,1.355Z" transform="translate(-298.695 -139)" fill="#f2f2f2"/><path d="M612.519,418.284l-119.208,30.7a5.759,5.759,0,0,1-2.872-11.154l119.208-30.7a5.759,5.759,0,1,1,2.872,11.154Z" transform="translate(-302.605 -126.189)" fill="#ccc"/><path d="M640.149,430.592,497.936,467.214a5.759,5.759,0,1,1-2.872-11.154l142.213-36.622a5.759,5.759,0,0,1,2.872,11.154Z" transform="translate(-302.384 -125.599)" fill="#ccc"/><circle cx="20.355" cy="20.355" r="20.355" transform="translate(121.697 319.055)" fill="currentColor"/><path d="M604.421,374.437,446.1,415.191a17.835,17.835,0,0,1-21.694-12.812L391.229,273.49A17.835,17.835,0,0,1,404.041,251.8l158.32-40.754a17.835,17.835,0,0,1,21.694,12.812l33.178,128.889A17.835,17.835,0,0,1,604.421,374.437Z" transform="translate(-307.183 -135.611)" fill="#fff"/><path d="M604.421,374.437,446.1,415.191a17.835,17.835,0,0,1-21.694-12.812L391.229,273.49A17.835,17.835,0,0,1,404.041,251.8l158.32-40.754a17.835,17.835,0,0,1,21.694,12.812l33.178,128.889A17.835,17.835,0,0,1,604.421,374.437ZM404.563,253.826a15.737,15.737,0,0,0-11.3,19.142l33.178,128.889a15.737,15.737,0,0,0,19.142,11.3L603.9,372.407a15.737,15.737,0,0,0,11.3-19.142L582.025,224.376a15.737,15.737,0,0,0-19.142-11.3Z" transform="translate(-307.183 -135.611)" fill="#e6e6e6"/><path d="M550.66,252.63l-79.9,20.568a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l81.335-20.937c3.286,1.665,2.421,5.07.091,5.67Z" transform="translate(-303.514 -133.861)" fill="#f2f2f2"/><path d="M554.1,266l-79.9,20.568a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l81.335-20.937c3.286,1.665,2.421,5.07.091,5.67Z" transform="translate(-303.349 -133.22)" fill="#f2f2f2"/><path d="M461.146,298.825,436.761,305.1a3.1,3.1,0,0,1-3.776-2.23L425.577,274.1a3.1,3.1,0,0,1,2.23-3.776l24.385-6.277a3.105,3.105,0,0,1,3.776,2.23l7.408,28.777a3.1,3.1,0,0,1-2.23,3.776Z" transform="translate(-305.513 -133.047)" fill="currentColor"/><path d="M562.854,293.445,440.909,324.835a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l123.38-31.76c3.286,1.665,2.421,5.07.091,5.67Z" transform="translate(-304.946 -131.904)" fill="#f2f2f2"/><path d="M566.3,306.822,444.353,338.213a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l123.38-31.76c3.286,1.665,2.421,5.07.091,5.67Z" transform="translate(-304.781 -131.263)" fill="#f2f2f2"/><path d="M569.739,320.192,447.794,351.582a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l123.379-31.76c3.286,1.665,2.421,5.07.091,5.67Z" transform="translate(-304.616 -130.621)" fill="#f2f2f2"/><path d="M573.183,333.569,451.237,364.959a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l123.38-31.76C576.377,329.564,575.513,332.969,573.183,333.569Z" transform="translate(-304.45 -129.98)" fill="#f2f2f2"/><path d="M576.624,346.939,454.679,378.329a2.862,2.862,0,0,1-3.467-1.8,2.757,2.757,0,0,1,1.942-3.5l123.38-31.76C579.819,342.934,578.954,346.339,576.624,346.939Z" transform="translate(-304.285 -129.339)" fill="#f2f2f2"/><path d="M448.363,470.511a2.111,2.111,0,0,1-1.335-.092l-.026-.011-5.545-2.351a2.126,2.126,0,1,1,1.664-3.913l3.593,1.528,4.708-11.076a2.125,2.125,0,0,1,2.787-1.124h0l-.028.072.029-.073a2.127,2.127,0,0,1,1.124,2.788l-5.539,13.023a2.126,2.126,0,0,1-1.431,1.224Z" transform="translate(-304.809 -123.966)" fill="#fff"/></g><g transform="translate(673.007 225.872) rotate(-8)"><g transform="translate(125.896 0) rotate(19)"><path d="M304.956,386.7H34.583A34.622,34.622,0,0,1,0,352.114V34.583A34.622,34.622,0,0,1,34.583,0H286.121l53.418,42.577V352.114A34.622,34.622,0,0,1,304.956,386.7Z" transform="translate(0 0)" fill="#e6e6e6"/><path d="M24.627,0A24.655,24.655,0,0,0,0,24.627V342.158a24.655,24.655,0,0,0,24.627,24.627H295a24.655,24.655,0,0,0,24.627-24.627V37.418L272.683,0Z" transform="translate(9.956 9.956)" fill="#fff"/><path d="M128.856,11.518H5.759A5.759,5.759,0,0,1,5.759,0h123.1a5.759,5.759,0,0,1,0,11.518Z" transform="translate(123.512 90.767)" fill="currentColor"/><path d="M152.612,11.518H5.759A5.759,5.759,0,0,1,5.759,0H152.612a5.759,5.759,0,1,1,0,11.518Z" transform="translate(123.512 110.204)" fill="currentColor"/><path d="M128.852,0H5.758a5.758,5.758,0,1,0,0,11.517H128.852a5.759,5.759,0,0,0,0-11.517Z" transform="translate(123.517 177.868)" fill="#ccc"/><path d="M152.609,0H5.758a5.759,5.759,0,1,0,0,11.517h146.85a5.759,5.759,0,1,0,0-11.517Z" transform="translate(123.517 197.307)" fill="#ccc"/><path d="M128.856,11.518H5.759A5.759,5.759,0,0,1,5.759,0h123.1a5.759,5.759,0,0,1,0,11.518Z" transform="translate(123.512 264.975)" fill="#ccc"/><path d="M152.612,11.518H5.759A5.759,5.759,0,0,1,5.759,0H152.612a5.759,5.759,0,1,1,0,11.518Z" transform="translate(123.512 284.411)" fill="#ccc"/><circle cx="20.355" cy="20.355" r="20.355" transform="translate(57.655 85.89)" fill="currentColor"/><path d="M6.909,15.481a2.111,2.111,0,0,1-1.27-.422l-.023-.017L.832,11.382A2.126,2.126,0,0,1,3.419,8.008l3.1,2.376L13.839.832A2.125,2.125,0,0,1,16.819.439h0L16.774.5l.047-.063a2.127,2.127,0,0,1,.393,2.98L8.6,14.649a2.126,2.126,0,0,1-1.691.829Z" transform="translate(69.085 98.528)" fill="#fff"/><path d="M40.707,20.359A20.354,20.354,0,0,1,20.356,40.721a4.372,4.372,0,0,1-.524-.021A20.353,20.353,0,1,1,40.707,20.359Z" transform="translate(59.75 172.987)" fill="currentColor"/><circle cx="20.355" cy="20.355" r="20.355" transform="translate(57.655 260.097)" fill="currentColor"/><path d="M53.362,43.143H11.518A11.518,11.518,0,0,1,0,31.625V.72A.72.72,0,0,1,1.167.156l52.642,41.7a.72.72,0,0,1-.447,1.284Z" transform="translate(285.137 0.805)" fill="#ccc"/></g></g><path d="M754.518,518.049a9.158,9.158,0,0,1-12.587,3.05L635.078,455.923a9.158,9.158,0,0,1,9.538-15.637l106.852,65.176a9.158,9.158,0,0,1,3.049,12.587Z" transform="translate(123.58 101.359)" fill="#3f3d56"/><path d="M688.648,486.5a73.265,73.265,0,1,1-24.4-100.7A73.265,73.265,0,0,1,688.648,486.5ZM579.19,419.73a54.949,54.949,0,1,0,75.524-18.3,54.949,54.949,0,0,0-75.524,18.3Z" transform="translate(82.597 67.737)" fill="#3f3d56"/><circle cx="57.007" cy="57.007" r="57.007" transform="translate(672.542 442.858) rotate(19)" fill="currentColor"/></g></svg></div>
+    </div>
+    <div class="uc-grid">
+      <article class="uc rv" style="--d:.0s">
+        <div class="thumb"><span class="new">NEW</span>
+          <svg viewBox="0 0 200 98" aria-hidden="true" preserveAspectRatio="xMinYMid meet"><rect x="0" y="22" width="150" height="6" rx="3" fill="#1b2140"/><rect x="0" y="40" width="130" height="7" rx="3.5" fill="#cfd6ea"/><rect x="0" y="56" width="110" height="7" rx="3.5" fill="#cfd6ea"/><rect x="-2" y="70" width="140" height="14" rx="3" fill="#3ee6a0" fill-opacity=".35"/><rect x="4" y="74" width="90" height="6" rx="3" fill="#0c8a59"/></svg>
+          <span class="wico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M16,152H48v56H16a8,8,0,0,1-8-8V160A8,8,0,0,1,16,152ZM204,56a28,28,0,0,0-12,2.71h0A28,28,0,1,0,176,85.29h0A28,28,0,1,0,204,56Z" opacity="0.2"/><path d="M230.33,141.06a24.43,24.43,0,0,0-21.24-4.23l-41.84,9.62A28,28,0,0,0,140,112H89.94a31.82,31.82,0,0,0-22.63,9.37L44.69,144H16A16,16,0,0,0,0,160v40a16,16,0,0,0,16,16H120a7.93,7.93,0,0,0,1.94-.24l64-16a6.94,6.94,0,0,0,1.19-.4L226,182.82l.44-.2a24.6,24.6,0,0,0,3.93-41.56ZM16,160H40v40H16Zm203.43,8.21-38,16.18L119,200H56V155.31l22.63-22.62A15.86,15.86,0,0,1,89.94,128H140a12,12,0,0,1,0,24H112a8,8,0,0,0,0,16h32a8.32,8.32,0,0,0,1.79-.2l67-15.41.31-.08a8.6,8.6,0,0,1,6.3,15.9ZM164,96a36,36,0,0,0,5.9-.48,36,36,0,1,0,28.22-47A36,36,0,1,0,164,96Zm60-12a20,20,0,1,1-20-20A20,20,0,0,1,224,84ZM164,40a20,20,0,0,1,19.25,14.61,36,36,0,0,0-15,24.93A20.42,20.42,0,0,1,164,80a20,20,0,0,1,0-40Z"/></svg><span class="wl">CH-01</span></span>
+        </div>
+        <h3>補助金・公募</h3><p>公募の開始や、公募要領のPDFの追加に。</p>
+      </article>
+      <article class="uc rv" style="--d:.1s">
+        <div class="thumb"><span class="new">NEW</span>
+          <svg viewBox="0 0 200 98" aria-hidden="true" preserveAspectRatio="xMinYMid meet"><rect x="0" y="22" width="150" height="12" rx="2" fill="#1b2140"/><g fill="#cfd6ea"><rect x="0" y="38" width="150" height="10" rx="2"/><rect x="0" y="52" width="150" height="10" rx="2"/></g><rect x="0" y="66" width="150" height="10" rx="2" fill="#3ee6a0" fill-opacity=".55"/><path d="M50 22V76M100 22V76" stroke="#f4f6fd" stroke-width="2"/></svg>
+          <span class="wico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M149.66,45.66l-64,64a8,8,0,0,1-11.32,0l-16-16a8,8,0,0,1,0-11.32l64-64a8,8,0,0,1,11.32,0l16,16A8,8,0,0,1,149.66,45.66Zm88,76.68-16-16a8,8,0,0,0-11.32,0l-64,64a8,8,0,0,0,0,11.32l16,16a8,8,0,0,0,11.32,0l64-64A8,8,0,0,0,237.66,122.34Z" opacity="0.2"/><path d="M243.32,116.69l-16-16a16,16,0,0,0-20.84-1.53L156.84,49.52a16,16,0,0,0-1.52-20.84l-16-16a16,16,0,0,0-22.63,0l-64,64a16,16,0,0,0,0,22.63l16,16a16,16,0,0,0,20.83,1.52L96.69,124,31.31,189.38A25,25,0,0,0,66.63,224.7L132,159.32l7.17,7.16a16,16,0,0,0,1.52,20.84l16,16a16,16,0,0,0,22.63,0l64-64A16,16,0,0,0,243.32,116.69ZM80,104,64,88l64-64,16,16ZM55.32,213.38a9,9,0,0,1-12.69,0,9,9,0,0,1,0-12.68L108,135.32,120.69,148ZM101,105.66,145.66,61,195,110.34,150.35,155ZM168,192l-16-16,4-4h0l56-56h0l4-4,16,16Z"/></svg><span class="wl">CH-02</span></span>
+        </div>
+        <h3>入札</h3><p>入札情報の一覧に、新しい案件が載ったときに。</p>
+      </article>
+      <article class="uc rv" style="--d:.2s">
+        <div class="thumb"><span class="new">NEW</span>
+          <svg viewBox="0 0 200 98" aria-hidden="true" preserveAspectRatio="xMinYMid meet"><g fill="#cfd6ea"><circle cx="5" cy="44" r="4" fill="#3ee6a0"/><rect x="14" y="40" width="110" height="7" rx="3.5" fill="#0c8a59"/><circle cx="5" cy="60" r="4"/><rect x="14" y="56" width="90" height="7" rx="3.5"/><circle cx="5" cy="76" r="4"/><rect x="14" y="72" width="120" height="7" rx="3.5"/></g><rect x="0" y="22" width="120" height="6" rx="3" fill="#1b2140"/></svg>
+          <span class="wico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M232,96H24L128,32Z" opacity="0.2"/><path d="M24,104H48v64H32a8,8,0,0,0,0,16H224a8,8,0,0,0,0-16H208V104h24a8,8,0,0,0,4.19-14.81l-104-64a8,8,0,0,0-8.38,0l-104,64A8,8,0,0,0,24,104Zm40,0H96v64H64Zm80,0v64H112V104Zm48,64H160V104h32ZM128,41.39,203.74,88H52.26ZM248,208a8,8,0,0,1-8,8H16a8,8,0,0,1,0-16H240A8,8,0,0,1,248,208Z"/></svg><span class="wl">CH-03</span></span>
+        </div>
+        <h3>自治体のお知らせ</h3><p>市区町村や県の「新着情報」の更新に。</p>
+      </article>
+      <article class="uc rv" style="--d:.3s">
+        <div class="thumb"><span class="new">NEW</span>
+          <svg viewBox="0 0 200 98" aria-hidden="true" preserveAspectRatio="xMinYMid meet"><rect x="0" y="22" width="90" height="6" rx="3" fill="#1b2140"/><g fill="#cfd6ea"><rect x="0" y="36" width="68" height="50" rx="5"/></g><rect x="76" y="36" width="68" height="50" rx="5" fill="#3ee6a0" fill-opacity=".45"/><circle cx="34" cy="54" r="9" fill="#f4f6fd"/><circle cx="110" cy="54" r="9" fill="#f4f6fd"/></svg>
+          <span class="wico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M224,118.31V200a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V118.31h0A191.14,191.14,0,0,0,128,144,191.08,191.08,0,0,0,224,118.31Z" opacity="0.2"/><path d="M104,112a8,8,0,0,1,8-8h32a8,8,0,0,1,0,16H112A8,8,0,0,1,104,112ZM232,72V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V72A16,16,0,0,1,40,56H80V48a24,24,0,0,1,24-24h48a24,24,0,0,1,24,24v8h40A16,16,0,0,1,232,72ZM96,56h64V48a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8ZM40,72v41.62A184.07,184.07,0,0,0,128,136a184,184,0,0,0,88-22.39V72ZM216,200V131.63A200.25,200.25,0,0,1,128,152a200.19,200.19,0,0,1-88-20.36V200H216Z"/></svg><span class="wl">CH-04</span></span>
+        </div>
+        <h3>求人</h3><p>気になる会社や団体の、求人ページの更新に。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 使い方 ================= -->
+<section class="sec bg2 cut">
+  <div class="wrap">
+    <div class="rv">
+      <p class="kicker">HOW TO</p>
+      <h2 class="h2">使い方は、<span class="band">3ステップ</span>。</h2>
+    </div>
+    <ol class="steps-grid">
+      <li class="step rv" style="--d:.0s"><span class="sn">STEP 01</span><h3>見張りたいページのURLを登録</h3>
+        <div class="vis" aria-hidden="true"><div class="urlbox"><span><i>https://www.city.〇〇.lg.jp/</i></span><b>登録</b></div></div></li>
+      <li class="step rv" style="--d:.15s"><span class="sn">STEP 02</span><h3>通知の条件を選ぶ</h3>
+        <div class="vis" aria-hidden="true"><div class="cond"><span class="on">キーワード「公募」</span><span class="on">「締切」</span><span>PDFの追加</span><span>すべての更新</span></div></div></li>
+      <li class="step rv" style="--d:.3s"><span class="sn">STEP 03</span><h3>更新があればLINEに届く</h3>
+        <div class="vis" aria-hidden="true"><div class="mini"><span class="app"><svg viewBox="0 0 16 16"><path d="M2 8 Q8 2 14 8 Q8 14 2 8Z" fill="#fff"/><circle cx="8" cy="8" r="2.4" fill="#c2255c"/></svg></span><span><b>【更新あり】</b>見張り中のページ<br>追加 2行</span></div></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 料金 ================= -->
+<section class="sec dots">
+  <div class="wrap">
+    <div class="rv">
+      <p class="kicker">PRICE</p>
+      <h2 class="h2"><span class="band">料金</span></h2>
+    </div>
+    <div class="price-grid">
+      <div class="plan rv" style="--d:.05s"><span class="pn">フリー（3ページまで）</span><span class="pv">無料</span></div>
+      <div class="plan hl rv" style="--d:.18s"><span class="tag">先行登録で1か月無料</span><span class="pn">スタンダード（50ページまで）</span><span class="pv"><small>月</small>1,980円</span></div>
+    </div>
+    <p class="price-note">税込・予定価格です。</p>
+    <div class="perk rv">
+      <span class="wico r" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M208,128v72a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V128Z" opacity="0.2"/><path d="M216,72H180.92c.39-.33.79-.65,1.17-1A29.53,29.53,0,0,0,192,49.57,32.62,32.62,0,0,0,158.44,16,29.53,29.53,0,0,0,137,25.91a54.94,54.94,0,0,0-9,14.48,54.94,54.94,0,0,0-9-14.48A29.53,29.53,0,0,0,97.56,16,32.62,32.62,0,0,0,64,49.57,29.53,29.53,0,0,0,73.91,71c.38.33.78.65,1.17,1H40A16,16,0,0,0,24,88v32a16,16,0,0,0,16,16v64a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM149,36.51a13.69,13.69,0,0,1,10-4.5h.49A16.62,16.62,0,0,1,176,49.08a13.69,13.69,0,0,1-4.5,10c-9.49,8.4-25.24,11.36-35,12.4C137.7,60.89,141,45.5,149,36.51Zm-64.09.36A16.63,16.63,0,0,1,96.59,32h.49a13.69,13.69,0,0,1,10,4.5c8.39,9.48,11.35,25.2,12.39,34.92-9.72-1-25.44-4-34.92-12.39a13.69,13.69,0,0,1-4.5-10A16.6,16.6,0,0,1,84.87,36.87ZM40,88h80v32H40Zm16,48h64v64H56Zm144,64H136V136h64Zm16-80H136V88h80v32Z"/></svg><span class="wl">GIFT</span></span>
+      <p><b>EARLY ENTRY</b>先行登録の方は、公開時にスタンダードを1か月無料でお試しいただけます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec bg2 dots">
+  <div class="wrap">
+    <div class="rv">
+      <p class="kicker">FAQ</p>
+      <h2 class="h2">よくある<span class="band">質問</span></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq">
+        <details class="rv"><summary>どれくらいの間隔で確認しますか？</summary><p>1〜6時間ごとに確認します。相手のサイトに負担をかけないよう、間隔に下限を設けています。</p></details>
+        <details class="rv" style="--d:.1s"><summary>ログインが必要なページも見張れますか？</summary><p>対応していません。誰でも見られるページが対象です。</p></details>
+        <details class="rv" style="--d:.2s"><summary>どんなページに向いていますか？</summary><p>補助金・助成金の公募、自治体のお知らせ、入札情報、求人ページなどです。</p></details>
+      </div>
+      <div class="faq-ill lightpanel rv zm" style="--d:.2s"><svg class="ill" aria-hidden="true" focusable="false" data-undraw="new-notification" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 685.713 718.541"><g transform="translate(-642.945 -180.73)"><g transform="translate(642.945 205.721)"><g transform="translate(49.292 77.023)"><path d="M378.7,156.324a29.47,29.47,0,0,1-11.226,8.227l-12.446,14.015-35.251,42.566-23.816,14.406L284.9,216.5l52.2-50.85,14.547-14.8a29.45,29.45,0,0,1,6.539-12.291c7.706-8.9,18.547-12.142,24.211-7.237s4.008,16.1-3.7,25Z" transform="translate(-165.634 -129.034)" fill="#9f616a"/><path d="M215.757,186.1l22.924-38.151,97.531,41.907,53.31-43.556,21.905,18.869c.755.651-53.758,76.155-57.629,76.066S215.756,186.1,215.756,186.1Z" transform="translate(-215.756 -116.517)" fill="#dedede"/></g><rect width="33.897" height="65.8" transform="translate(57.256 80.414)" fill="#9f616a"/><path d="M314.28,239.812l-81.751-5.982s-33.9,77.763-7.976,127.612L242.5,465.127l-7.1,170.657h37.132l57.7-274.342L314.28,239.812Z" transform="translate(-167.165 23.955)" fill="#2f2e41"/><path d="M271.6,287.792l31.9,27.768L287.553,587.52H251.662Z" transform="translate(-140.438 63.071)" fill="#2f2e41"/><ellipse cx="42.378" cy="42.378" rx="42.378" ry="42.378" transform="translate(31.369 8.595)" fill="#9f616a"/><path d="M233.624,443.381,277.4,450.3l8.228,31.4s35.545,13.376,18.418,27.911-80.4,7.02-85.4-3.406,14.979-62.824,14.979-62.824Z" transform="translate(-164.953 175.856)" fill="#2f2e41"/><path d="M254.432,443.381l43.777,6.916,8.228,31.4s35.545,13.376,18.418,27.911-80.4,7.02-85.4-3.406,14.978-62.824,14.978-62.824Z" transform="translate(-149.87 175.856)" fill="#2f2e41"/><path d="M365.829,246.749a29.469,29.469,0,0,1-13.56-3.136l-18.741-.283L278.27,244.4l-26.459-8.642,7.207-20.8,72.6,6.365,20.707,1.362a29.45,29.45,0,0,1,13.58-3.068c11.775.028,21.3,6.128,21.284,13.62s-9.58,13.543-21.359,13.513Z" transform="translate(-140.329 10.274)" fill="#9f616a"/><path d="M265.3,145.4H223.346l-13.878,41.873,26.918,110.663,81.751,5.982-4.985-44.863h0a45.435,45.435,0,0,0-1.95-50.536Z" transform="translate(-171.023 -40.149)" fill="#dedede"/><path d="M218.716,158.967l43.866-7.531,31.9,101.245,67.794,11.964v28.912c0,1-92.785,8.973-95.244,5.982s-48.319-140.572-48.319-140.572Z" transform="translate(-164.319 -35.772)" fill="#dedede"/><path d="M282.087,110.783c5.206,8.446.406,19.57-6.007,27.14s-14.683,14.215-17.546,23.714c-2.567,8.517-.232,17.7,2.787,26.069s6.773,16.71,7.084,25.6-3.9,18.707-12.27,21.708c-8.593,3.08-18.752-1.76-27.028,2.09-10.78,5.014-13.223,22.375-24.976,24.175-7.233,1.108-13.936-5.163-15.957-12.2s-.57-14.538.892-21.708l12.011-58.932,9.994-49.035c1.989-9.759,4.349-20.2,11.683-26.936,8.962-8.233,22.471-8.429,34.631-7.936,11.172.453,22.8,1.218,32.521,6.734s10.034,11.458,6.669,22.12c-3.143-7.5-5.7-5.931-13.394-3.285" transform="translate(-187.18 -84.38)" fill="#2f2e41"/></g><g transform="translate(886.496 180.73)"><path d="M8.353,0H409.309a8.353,8.353,0,0,1,8.353,8.353V242.244a8.353,8.353,0,0,1-8.353,8.353H25.148L13.01,273.775l-7.846,9.312C.551,283.087,0,246.858,0,242.244V8.353A8.353,8.353,0,0,1,8.353,0Z" transform="translate(0)" fill="#090814"/><path d="M8.274,0H405.22a8.25,8.25,0,0,1,8.27,8.23V238.674a8.25,8.25,0,0,1-8.27,8.23L21.5,246.744,10.289,268.781,3.535,277.8C-1.033,277.8,0,243.22,0,238.674V8.23A8.25,8.25,0,0,1,8.274,0Z" transform="translate(2.084 2.088)" fill="#f2f2f2"/></g><circle cx="24.5" cy="24.5" r="24.5" transform="translate(1279.658 403.73)" fill="currentColor"/><path d="M896.1,385.209a6.656,6.656,0,0,0,.018-13.312h-313.8a6.656,6.656,0,1,0,0,13.312Z" transform="translate(356.115 -68.734)" fill="#090814"/><path d="M717.338,356.293a6.656,6.656,0,0,0,0-13.312H582.318a6.656,6.656,0,1,0,0,13.312Z" transform="translate(356.115 -77.734)" fill="currentColor"/><path d="M896.1,385.209a6.656,6.656,0,0,0,.018-13.312h-313.8a6.656,6.656,0,1,0,0,13.312Z" transform="translate(356.115 -30.818)" fill="#090814"/></g></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 登録 ================= -->
+<section class="sec block signup cut-t" id="signup"><div class="wrap signup-grid">
+  <div>
+    <div class="rv">
+      <p class="kicker">ENTRY</p>
+      <h2 class="h2 sec-title">先行登録（無料）</h2>
+      <p class="lead sec-lead">メールアドレスを登録すると、公開時にお知らせします。登録しても料金はかかりません。</p>
+    </div>
+    <!-- 写真差し替え候補: スマホに届いた通知を見て安心している人の写真 -->
+    <div class="close-vis rv zm" style="--d:.15s">
+      <div class="lightpanel"><svg class="ill" aria-hidden="true" focusable="false" data-undraw="push-notifications" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800.604 540.622"><g transform="translate(-571.501 -259.359)"><path d="M0,14.366,23.124,0l6.154,25.631-17.343,6.04C11.232,24.951,7.086,19.232,0,14.366Z" transform="translate(713.669 473.17) rotate(-149)" fill="#ffb9b9"/><path d="M1017.467,271.587l-2.741.356,18.379-68.979a29.776,29.776,0,0,0,.642-14.181,18.719,18.719,0,0,0-5.716-9.991,21.4,21.4,0,0,0-10.765-5,37.038,37.038,0,0,0-14.585.653h0L877.774,202.894a44.108,44.108,0,0,0-12.374,5.091,64.892,64.892,0,0,0-11.585,8.784,70.813,70.813,0,0,0-9.7,11.311,57.657,57.657,0,0,0-6.7,12.8h0L706.727,600.34a74.225,74.225,0,0,0-4.2,18.341,55.657,55.657,0,0,0,.8,16.665,34.239,34.239,0,0,0,5.641,13.243,21.518,21.518,0,0,0,10.351,7.808h0L851.291,701.83a34.36,34.36,0,0,0,18.214,1.085,45.622,45.622,0,0,0,17.849-8.219,63.21,63.21,0,0,0,15.068-16.148,76.146,76.146,0,0,0,9.892-22.255h0l88.478-332.067,2.776-.222Z" transform="translate(337.791 89.819)" fill="#2f2e41"/><path d="M1007.467,267.587l-2.741.356,18.379-68.979a29.778,29.778,0,0,0,.643-14.181,18.718,18.718,0,0,0-5.716-9.991,21.4,21.4,0,0,0-10.765-5,37.037,37.037,0,0,0-14.585.653h0L867.774,198.894a44.108,44.108,0,0,0-12.374,5.091,64.893,64.893,0,0,0-11.585,8.784,70.818,70.818,0,0,0-9.7,11.311,57.653,57.653,0,0,0-6.7,12.8h0L696.727,596.34a74.224,74.224,0,0,0-4.2,18.341,55.655,55.655,0,0,0,.8,16.665,34.239,34.239,0,0,0,5.641,13.243,21.517,21.517,0,0,0,10.351,7.808h0L841.291,697.83a34.36,34.36,0,0,0,18.214,1.085,45.621,45.621,0,0,0,17.849-8.219,63.209,63.209,0,0,0,15.068-16.148,76.146,76.146,0,0,0,9.892-22.255h0l88.478-332.067,2.776-.222Z" transform="translate(338.244 90)" fill="#090814"/><path d="M992.012,179.891l-18.361,4.022a10.709,10.709,0,0,1-.463,4.721,19.1,19.1,0,0,1-2.462,5,26.535,26.535,0,0,1-9.293,8.363q-.668.355-1.332.656t-1.327.546q-.661.245-1.313.433t-1.289.317l-71.787,14.536a8.518,8.518,0,0,1-4.043-.046,4.965,4.965,0,0,1-2.673-1.8,5.926,5.926,0,0,1-1.09-3.227,11.379,11.379,0,0,1,.688-4.343q.191-.562.435-1.132t.533-1.14q.286-.573.625-1.14t.715-1.133L865.982,207.5a32.648,32.648,0,0,0-9.3,3.762,48.339,48.339,0,0,0-8.742,6.588,52.885,52.885,0,0,0-7.323,8.528,42.945,42.945,0,0,0-5.027,9.65L705.151,598.609a55.2,55.2,0,0,0-3.1,13.823,41.075,41.075,0,0,0,.7,12.469,25.156,25.156,0,0,0,4.332,9.8,15.963,15.963,0,0,0,7.8,5.666h0L847.828,683.56a25.874,25.874,0,0,0,13.563.608,34.351,34.351,0,0,0,13.185-6.186,47.293,47.293,0,0,0,11.106-11.934,56.8,56.8,0,0,0,7.339-16.4h0l121.468-448.235a22.457,22.457,0,0,0,.551-10.546,14.077,14.077,0,0,0-4.16-7.511,15.858,15.858,0,0,0-7.965-3.839A27.35,27.35,0,0,0,992.012,179.891Z" transform="translate(337.808 89.557)" fill="#fff"/><path d="M918.556,355.543H654.1V265.926h264.46Z" transform="translate(339.97 85.63)" fill="#fff"/><rect width="259.188" height="125.64" transform="translate(922.019 472.802)" fill="#fff"/><circle cx="18.748" cy="18.748" r="18.748" transform="translate(945.378 495.64)" fill="currentColor"/><path d="M667.941,423.385a3.125,3.125,0,0,0,0,6.249H815.247a3.125,3.125,0,0,0,0-6.249Z" transform="translate(339.484 78.504)" fill="#e6e6e6"/><path d="M667.941,443.022a3.125,3.125,0,0,0-.013,6.249h63.4a3.125,3.125,0,0,0,0-6.249Z" transform="translate(339.485 77.615)" fill="#e6e6e6"/><path d="M607.471,474.415c-2.377,0-4.311,1.4-4.311,3.125s1.934,3.125,4.311,3.125H810.708c2.377,0,4.311-1.4,4.311-3.125s-1.934-3.125-4.311-3.125Z" transform="translate(342.275 76.194)" fill="#e6e6e6"/><path d="M607.471,494.052c-2.377,0-4.311,1.4-4.311,3.125s1.934,3.125,4.311,3.125H763.926c2.377,0,4.311-1.4,4.311-3.125s-1.934-3.125-4.311-3.125Z" transform="translate(342.275 75.305)" fill="#e6e6e6"/><path d="M840.334,521.072H575.874V390.16h264.46ZM581.146,515.8H835.063V395.431H581.146Z" transform="translate(343.51 80.007)" fill="#e6e6e6"/><circle cx="18.748" cy="18.748" r="18.748" transform="translate(1020.06 377.028)" fill="currentColor"/><path d="M746.162,299.151a3.125,3.125,0,1,0,0,6.249H893.469a3.125,3.125,0,0,0,0-6.249Z" transform="translate(335.944 84.126)" fill="#e6e6e6"/><path d="M746.162,318.788a3.125,3.125,0,1,0-.013,6.249h115.91a3.125,3.125,0,1,0,0-6.249Z" transform="translate(335.945 83.237)" fill="#e6e6e6"/><path d="M918.556,355.543H654.1V265.926h264.46Zm-259.188-5.272H913.284V271.2H659.367Z" transform="translate(339.97 85.63)" fill="#e6e6e6"/><path d="M239.685,539.4h13.836l6.582-45.276H239.682Z" transform="translate(482.379 245.226)" fill="#ffb6b6"/><path d="M100.06,524.087l10.767,5.9L138.782,491.4,122.892,482.7Z" transform="translate(504.63 247.047)" fill="#ffb6b6"/><path d="M366.075,647.059a4.308,4.308,0,0,1-4.269-3.754l-14.68-113.12a2.394,2.394,0,0,0-4.47-.848l-61.179,111a4.332,4.332,0,0,1-5.307,1.948L262.836,637.2a4.308,4.308,0,0,1-2.457-5.65l42.38-104.109a3.319,3.319,0,0,0,.216-.825c5.74-44.428,20.345-67.022,24.684-72.888a3.336,3.336,0,0,0,.475-3.038l-.6-1.79a4.306,4.306,0,0,1,.829-4.191c15.636-17.81,42.89-8.091,43.163-7.991l.137.05.086.117c30.559,41.909,19.26,178.03,16.685,204.892a4.3,4.3,0,0,1-3.958,3.877l-18.07,1.391C366.3,647.055,366.186,647.059,366.075,647.059Z" transform="translate(355.44 112.441)" fill="#090814"/><path d="M263.266,805.18a22.184,22.184,0,0,1-15.047,5.481c-10.19-.149-29.228-.454-33.648-.642-5.915-.266-3.953-5.426-3.762-8.981v-.352c.069-3.563.766-11.283,1.946-12.489s5.217,5.371,5.217,5.371,7.883,2.349,10.052-4.7,6.573-7.728,6.573-7.728c2-.885,2.1,4.432,2.1,4.432l16.686,8.793,9.791,1.566c.314.149.6.3.866.446C268.468,798.916,266.506,802.315,263.266,805.18Z" transform="translate(508.137 -15.776)" fill="#090814"/><ellipse cx="25.538" cy="25.538" rx="25.538" ry="25.538" transform="translate(687.106 392.938)" fill="#ffb8b8"/><path d="M328.274,454.952l76.867,7c-6.7-23.3-12.842-46.524-7.837-69.66,6.355-20.656,6.946-32.1-9.819-41.826l-11.32-25.252-20.487-.745-9.99-2.738a65.785,65.785,0,0,0-9.337,43.5C340.695,398.164,339.522,428.725,328.274,454.952Z" transform="translate(344.569 130.331)" fill="currentColor"/><path d="M766.42,561.183H0V559.1H766.769Z" transform="translate(571.501 234.056)" fill="#cbcbcb"/><path d="M475.093,443,284.974,577.443l-45.559-64.426L429.534,378.573Z" transform="translate(358.73 121.272)" fill="#fff"/><ellipse cx="16.507" cy="16.507" rx="16.507" ry="16.507" transform="matrix(0.816, -0.577, 0.577, 0.816, 629.783, 639.386)" fill="currentColor"/><path d="M52.92,24.137a22.184,22.184,0,0,1-15.047,5.481c-10.19-.149-29.228-.454-33.648-.642C-1.689,28.71.272,23.55.463,20v-.352C.532,16.08,1.23,8.36,2.409,7.154s5.217,5.371,5.217,5.371,7.883,2.349,10.052-4.7S24.252.1,24.252.1c2-.885,2.1,4.432,2.1,4.432l16.686,8.793,9.791,1.566c.314.149.6.3.866.446C58.122,17.873,56.161,21.271,52.92,24.137Z" transform="matrix(0.921, 0.391, -0.391, 0.921, 609.671, 750.726)" fill="#090814"/><path d="M333.67,498.1a2.751,2.751,0,0,0,3.177,4.493l105.9-74.886a2.751,2.751,0,1,0-3.177-4.493Z" transform="translate(343.895 114.238)" fill="#e6e6e6"/><path d="M345.006,517.157a2.751,2.751,0,1,0,3.168,4.5l.009-.007L431.5,462.731a2.751,2.751,0,0,0-3.177-4.493Z" transform="translate(342.089 108.657)" fill="#e6e6e6"/><path d="M475.093,443,284.974,577.443l-45.559-64.426L429.534,378.573ZM286.084,570.973,468.623,441.889l-40.2-56.846L245.885,514.127Z" transform="translate(358.73 121.272)" fill="#e6e6e6"/><path d="M392.885,483.878l-12.363-67.585.871-41.8-27.864-.871,5.225,47.021,18.017,65.2a11.775,11.775,0,1,0,16.116-1.971Z" transform="translate(340.544 122.059)" fill="#ffb8b8"/><path d="M351.457,369.56a44.033,44.033,0,0,1,31.347,0l-1.742-34.83A13.932,13.932,0,0,0,367.13,320.8h0A13.932,13.932,0,0,0,353.2,334.73Z" transform="translate(340.875 130.479)" fill="currentColor"/><path d="M436.3,73.588s1.388,10.535,14.253,10.879l26.1.7s-22.06-53.685-12.989-47.637S496.922,18.22,496.922,18.22l7.137,13.386s17.051-6.175-1.846-21.295c0,0-22.547-17.432-46.483-6.964S436.3,73.588,436.3,73.588h0Z" transform="translate(234.463 383.276)" fill="#090814"/></g></svg></div>
+      <svg class="wart f3 c1" viewBox="0 0 140 104" aria-hidden="true" focusable="false">
+  <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
+    <rect x="26" y="5" width="22" height="17" rx="4" fill="#2c3b78"/><rect x="92" y="5" width="22" height="17" rx="4" fill="#2c3b78"/>
+    <rect x="16" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/><rect x="82" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/>
+    <rect x="54" y="25" width="32" height="20" rx="8" fill="#2c3b78"/>
+    <rect x="62" y="11" width="16" height="20" rx="4" fill="#ff7aa8"/>
+    <rect x="16" y="40" width="42" height="10" fill="#c2255c"/><rect x="82" y="40" width="42" height="10" fill="#c2255c"/>
+    <circle cx="37" cy="72" r="28" fill="#1a2752"/><circle cx="103" cy="72" r="28" fill="#1a2752"/>
+    <circle cx="37" cy="72" r="20" fill="#0a1128"/><circle cx="103" cy="72" r="20" fill="#0a1128"/>
+  </g>
+  <path d="M66 16 V26 M70 16 V26 M74 16 V26" stroke="#0a1128" stroke-width="2" opacity=".55"/>
+  <path d="M22 28 V36 M88 28 V36" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="37" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M17 72 H57 M37 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:37px 72px;--sd:2.6s" d="M37 72 L37 52 A20 20 0 0 1 54.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="44" cy="64" r="2.6" fill="#ff7aa8"/><path d="M22 66 A16 16 0 0 1 30 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/><circle cx="103" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M83 72 H123 M103 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:103px 72px;--sd:3.4s" d="M103 72 L103 52 A20 20 0 0 1 120.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="110" cy="64" r="2.6" fill="#ff7aa8"/><path d="M88 66 A16 16 0 0 1 96 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/>
+</svg>
+      <svg class="wart f3 c2" viewBox="0 0 110 116" aria-hidden="true" focusable="false">
+  <g fill="none" stroke="#3ee6a0" stroke-width="3.5" stroke-linecap="round">
+    <path class="w-wave" d="M12 40 Q4 54 12 68"/><path class="w-wave w2" d="M3 32 Q-8 54 3 76"/>
+    <path class="w-wave" d="M98 40 Q106 54 98 68"/><path class="w-wave w2" d="M107 32 Q118 54 107 76"/>
+  </g>
+  <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
+    <circle cx="55" cy="12" r="6" fill="#ffd166"/>
+    <circle cx="55" cy="100" r="8" fill="#ffd166"/>
+    <path d="M55 16 C34 16 26 34 26 52 V70 L16 84 H94 L84 70 V52 C84 34 76 16 55 16 Z" fill="#c2255c"/>
+    <rect x="12" y="82" width="86" height="10" rx="5" fill="#ff7aa8"/>
+  </g>
+  <path d="M36 70 V53 C36 41 41 31 48 27" stroke="#ff7aa8" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M30 76 H80" stroke="#8f1742" stroke-width="2.5" stroke-linecap="round"/>
+  <circle class="w-dot" cx="82" cy="24" r="10" fill="#3ee6a0" stroke="#0a1128" stroke-width="3"/>
+</svg>
+    </div>
+  </div>
+  <div class="form-card rv" style="--d:.1s">
+    <form class="card" id="signup-form" novalidate>
+      <label for="signup-email">メールアドレス<input id="signup-email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+      <label for="signup-q">使いたい用途<select id="signup-q"><option value="">選んでください（任意）</option><option>補助金・公募の情報</option><option>入札情報</option><option>仕事での情報収集</option><option>個人的な用途</option></select></label>
+      <p class="err" id="signup-error" role="alert" hidden></p>
+      <button class="cta btn" type="submit">先行登録する（無料）</button>
+      <p class="privacy">ご登録のメールアドレスは、このサービスの公開のご案内にのみ使用します。</p>
+    </form>
+    <div class="thanks" id="signup-thanks" hidden role="status">
+      <h3>ご登録ありがとうございます</h3>
+      <p>公開の準備ができしだい、メールでお知らせします。</p>
+      <small id="signup-preview" hidden>確認用のページのため、今回の入力は送信されていません。</small>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span class="fl">ページ見張り番</span>
+  <span>運営：運営者名（公開前に記入）　お問い合わせ：連絡先メールアドレス（公開前に記入）</span>
+</div></footer>
+
+<div class="sticky" id="sticky"><a class="btn" href="#signup">先行登録する（無料）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+
+<script>
+/* 演出：スクロール出現・差分のタイプ表示・確認間隔の時計・追従ボタン */
+(function () {
+  var root = document.documentElement;
+  var animate = root.classList.contains("js");
+
+  /* 差分：緑の帯 → 1文字ずつ表示 → PDFが落ちてくる → 件数のカウント */
+  function typeLine(li, done) {
+    var el = li.querySelector(".type");
+    var html = el.innerHTML, text = el.textContent, i = 0;
+    li.classList.add("on");
+    el.textContent = ""; el.classList.add("typing");
+    setTimeout(function tick() {
+      i++;
+      el.textContent = text.slice(0, i);
+      if (i < text.length) setTimeout(tick, 42);
+      else { el.innerHTML = html; el.classList.remove("typing"); done && done(); }
+    }, 520);
+  }
+  function countAll(box) {
+    Array.prototype.forEach.call(box.querySelectorAll(".cnt"), function (c, k) {
+      var to = +c.getAttribute("data-to"), v = 0;
+      c.textContent = "0";
+      var t = setInterval(function () { v++; c.textContent = v; if (v >= to) clearInterval(t); }, 260 + k * 60);
+    });
+  }
+  function runDiff(box) {
+    var lines = box.querySelectorAll(".add");
+    var pdf = box.querySelector(".pdf");
+    Array.prototype.forEach.call(lines, function (li) { li.querySelector(".type").style.visibility = "hidden"; });
+    var idx = 0;
+    (function next() {
+      if (idx >= lines.length) { countAll(box); return; }
+      var li = lines[idx++];
+      li.querySelector(".type").style.visibility = "";
+      typeLine(li, function () {
+        if (idx === 1 && pdf) { pdf.classList.add("drop"); setTimeout(next, 700); } else next();
+      });
+    })();
+  }
+
+  var targets = document.querySelectorAll(".rv");
+  function show(el) {
+    el.classList.add("in");
+    if (el.id === "diffbox" && animate) setTimeout(function () { runDiff(el); }, 500);
+  }
+  if (!animate || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(targets, show);
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+    Array.prototype.forEach.call(targets, function (el) { io.observe(el); });
+  }
+
+  /* 確認間隔の時計（例の切り替え） */
+  var NS = "http://www.w3.org/2000/svg";
+  var dotsG = document.getElementById("wc-dots"), hand = document.getElementById("wc-hand");
+  var label = document.getElementById("wc-label"), tl = document.getElementById("tl"), now = document.getElementById("tl-now");
+  var hours = [0, 3, 6, 9, 12, 15, 18, 21];
+  function build(step) {
+    hours = []; for (var h = 0; h < 24; h += step) hours.push(h);
+    dotsG.innerHTML = "";
+    Array.prototype.forEach.call(tl.querySelectorAll(".tl-dot"), function (d) { d.remove(); });
+    hours.forEach(function (h) {
+      var a = h / 24 * Math.PI * 2, x = 160 + 112 * Math.sin(a), y = 160 - 112 * Math.cos(a);
+      var halo = document.createElementNS(NS, "circle");
+      halo.setAttribute("class", "cdot-halo"); halo.setAttribute("cx", x.toFixed(1)); halo.setAttribute("cy", y.toFixed(1)); halo.setAttribute("r", "9");
+      var c = document.createElementNS(NS, "circle");
+      c.setAttribute("class", "cdot"); c.setAttribute("cx", x.toFixed(1)); c.setAttribute("cy", y.toFixed(1)); c.setAttribute("r", step === 1 ? "5" : "7");
+      dotsG.appendChild(halo); dotsG.appendChild(c);
+      var d = document.createElement("span"); d.className = "tl-dot"; d.style.left = (h / 24 * 100) + "%";
+      tl.insertBefore(d, now);
+    });
+    label.textContent = step + "時間";
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".seg button"), function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+      build(+b.getAttribute("data-h"));
+    });
+  });
+  if (animate) {
+    var PERIOD = 12000, last = -1;
+    (function frame(t) {
+      var p = (t % PERIOD) / PERIOD, hr = p * 24;
+      if (hr < last) last = -1;
+      hand.setAttribute("transform", "rotate(" + (p * 360).toFixed(2) + " 160 160)");
+      now.style.left = (p * 100) + "%";
+      var cd = dotsG.querySelectorAll(".cdot"), hl = dotsG.querySelectorAll(".cdot-halo"), td = tl.querySelectorAll(".tl-dot");
+      hours.forEach(function (h, k) {
+        var on = hr >= h && hr < h + 1.4;
+        if (cd[k]) cd[k].classList.toggle("lit", on);
+        if (td[k]) td[k].classList.toggle("lit", on);
+        if (hl[k]) { if (on && last < h) { hl[k].classList.remove("lit"); hl[k].getBoundingClientRect(); hl[k].classList.add("lit"); } }
+      });
+      last = hr;
+      requestAnimationFrame(frame);
+    })(0);
+  }
+
+  /* スマホの追従ボタンは、登録欄が見えたら隠す */
+  var sticky = document.getElementById("sticky"), signup = document.getElementById("signup");
+  if (sticky && signup && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { sticky.classList.toggle("hide", e.isIntersecting); });
+    }, { threshold: 0.05 }).observe(signup);
+  }
+})();
+</script>
+
+<script>
+(function () {
+  var FORM_ENDPOINT = "";
+  var form = document.getElementById("signup-form");
+  var err = document.getElementById("signup-error");
+  var thanks = document.getElementById("signup-thanks");
+  var preview = document.getElementById("signup-preview");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("signup-email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      err.textContent = "メールアドレスの形式を確認してください（例：name@example.com）。";
+      err.hidden = false;
+      return;
+    }
+    err.hidden = true;
+    var data = { service: "watch", email: email, answer: document.getElementById("signup-q").value };
+    var done = function () { form.hidden = true; thanks.hidden = false; };
+    if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
+    var btn = form.querySelector("button");
+    btn.disabled = true; btn.textContent = "送信しています";
+    fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error(); done(); })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = "先行登録する（無料）";
+        err.textContent = "送信できませんでした。通信状況を確認して、もう一度お試しください。";
+        err.hidden = false;
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

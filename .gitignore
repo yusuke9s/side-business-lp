@@ -1,0 +1,7 @@
+# 素材の元データ（ページにはすべてインラインで埋め込み済みのため不要。必要なら npm から再取得できる）
+assets/fluent3d/
+assets/undraw/
+assets/icons/
+# 旧テンプレート版のバックアップ
+_template/
+__pycache__/

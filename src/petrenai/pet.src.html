@@ -1,0 +1,957 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>うちの子アトリエ｜うちの子の写真が、イラストのアクスタに。</title>
+<meta name="description" content="スマホの写真を1枚送るだけ。AIがイラストにして、注文前に仕上がりを無料で確認できます。アクリルスタンドやポスターにしてお届けします。">
+<meta property="og:title" content="うちの子アトリエ">
+<meta property="og:description" content="スマホの写真を1枚送るだけ。AIがイラストにして、注文前に仕上がりを無料で確認できます。アクリルスタンドやポスターにしてお届けします。">
+<meta name="theme-color" content="#1f7a62">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Yomogi&display=swap">
+<!-- 計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる -->
+<style>
+:root{
+  --mint:#1f7a62; --mint-d:#145c4a; --mint-dd:#0d4437; --mint-l:#dcf1e8; --mint-ll:#eff8f4;
+  --sun:#ffd23f; --sun-l:#ffe88f; --sun-d:#f2a541; --coral:#ff8b73; --sky:#8ed2ee;
+  --ink:#1c2b26; --muted:#4a5a54; --cream:#fffcf2; --line:#1c2b26;
+  --f-disp:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  --f-hand:"Yomogi","Zen Maru Gothic",cursive;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--f-body);color:var(--ink);background:var(--cream);line-height:1.8;overflow-x:clip;
+  background-image:radial-gradient(rgba(31,122,98,.09) 1.2px,transparent 1.4px);background-size:22px 22px}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--f-disp);line-height:1.35;margin:0;font-weight:900;word-break:auto-phrase}
+p{margin:0}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:.6em;justify-content:center;font-family:var(--f-disp);font-weight:900;font-size:1.12rem;
+  text-decoration:none;color:#fff;background:var(--mint);border:3px solid var(--ink);border-radius:999px;padding:.85em 1.7em;
+  box-shadow:5px 5px 0 var(--ink);transition:transform .2s,box-shadow .2s,background .2s;position:relative}
+.btn svg{width:1.1em;height:1.1em;transition:transform .25s}
+.btn:hover{transform:translate(-2px,-3px);box-shadow:8px 8px 0 var(--ink);background:var(--mint-d)}
+.btn:hover svg{transform:translateX(4px)}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.btn:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sun-d);outline-offset:3px}
+
+/* ---------- header ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,252,242,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--f-disp);font-weight:900;font-size:1.22rem;color:var(--ink);white-space:nowrap}
+.logo svg{width:38px;height:38px;flex:none}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;background:var(--sun);border:2px solid var(--ink);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.badge i{width:8px;height:8px;border-radius:50%;background:#e2483a;animation:blink 1.4s ease-in-out infinite}
+.topbar .btn{margin-left:auto;font-size:.92rem;padding:.5em 1.2em;box-shadow:3px 3px 0 var(--ink)}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:var(--mint-l);border-bottom:3px solid var(--ink);padding:48px 0 84px}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);grid-template-areas:"head stage" "body stage";column-gap:40px;align-items:center}
+.hero-head{grid-area:head;align-self:end}
+.hero-body{grid-area:body;align-self:start}
+.hero-stage{grid-area:stage}
+.eyebrow{display:inline-block;font-family:var(--f-disp);font-weight:700;font-size:1rem;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:4px 14px;position:relative;margin-bottom:18px;rotate:-2deg}
+.eyebrow::after{content:"";position:absolute;left:26px;bottom:-9px;width:14px;height:14px;background:#fff;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg)}
+.hero h1{font-size:clamp(2.1rem,4vw,3.15rem);letter-spacing:.01em;isolation:isolate}
+.hero h1 .ln{display:block;white-space:nowrap}
+.mk{position:relative;z-index:0;display:inline-block}
+.mk::before{content:"";position:absolute;left:-.1em;right:-.1em;bottom:.06em;height:.46em;background:var(--sun);border-radius:.25em .6em .35em .7em;z-index:-1;transform:skewX(-10deg) rotate(-2deg);transform-origin:left center}
+.mk.mk2::before{background:#9fe2c7}
+.js .mk::before{transform:skewX(-10deg) rotate(-2deg) scaleX(0);animation:mk .7s cubic-bezier(.6,.1,.2,1) forwards;animation-delay:var(--md,1s)}
+@keyframes mk{to{transform:skewX(-10deg) rotate(-2deg) scaleX(1)}}
+.sub{font-size:1.04rem;color:var(--muted);margin-top:22px;max-width:34em}
+.hero-points{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:22px 0 0}
+.hero-points li{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:6px 12px;font-size:.88rem;font-weight:500;line-height:1.4}
+.hero-points b{font-family:var(--f-disp);color:var(--mint);font-size:1.15rem;margin-right:4px}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:28px}
+.cta-note{font-size:.84rem;color:var(--muted)}
+.ai-note{font-size:.8rem;color:var(--muted);margin-top:10px}
+
+/* stage collage */
+.hero-stage{position:relative;width:100%;max-width:620px;aspect-ratio:1/1;margin-inline:auto}
+.hero-stage>*{position:absolute}
+.spl{fill:currentColor}
+.spl1{color:var(--sun);width:46%;left:24%;top:4%;opacity:.9}
+.spl2{color:var(--coral);width:22%;left:-2%;top:42%;opacity:.75}
+.spl3{color:var(--sky);width:26%;right:-3%;top:44%;opacity:.8}
+.pol{margin:0;background:#fff;padding:5.5% 5.5% 0;border-radius:4px;box-shadow:0 14px 28px rgba(18,52,42,.22),0 2px 0 rgba(0,0,0,.06)}
+.pol figcaption{font-family:var(--f-hand);font-size:clamp(.9rem,1.6vw,1.2rem);text-align:center;padding:.35em 0 .55em;color:#3a3a3a}
+.ph{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:2px}
+.ph img{position:absolute;width:76%;height:auto;left:12%;top:14%;filter:drop-shadow(0 10px 10px rgba(0,0,0,.18))}
+.ph-a{background:radial-gradient(circle at 28% 22%,#fff6df 0,#f2dcb8 45%,#cfae84 100%)}
+.ph-a::after,.ph-b .lay-photo::after,.ph-c::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 55%,rgba(40,25,10,.22));pointer-events:none}
+.ph-c{background:radial-gradient(circle at 70% 25%,#fff 0,#f6dfe6 45%,#d9b3bf 100%)}
+.ph-b .lay-photo{position:absolute;inset:0;background:linear-gradient(180deg,#d6e6ef 0 62%,#b99d7d 62% 100%)}
+.ph-b .lay-photo img{filter:saturate(.85) drop-shadow(0 10px 10px rgba(0,0,0,.2))}
+.tape{position:absolute;z-index:2;width:34%;height:12%;left:33%;top:-5%;background:rgba(255,226,120,.78);rotate:-4deg;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.tape.t2{background:rgba(158,226,199,.85);rotate:5deg}
+.pol-dog{width:35%;left:1%;top:5%;rotate:-9deg;z-index:2}
+.pol-rab{width:31%;left:3%;top:57%;rotate:7deg;z-index:2}
+.pol-main{width:50%;left:27%;top:13%;rotate:3deg;z-index:3}
+.pol-main figcaption{font-size:clamp(1rem,1.9vw,1.4rem)}
+.lay-ill{position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,#ffbf3a 0 14%,transparent 15%),radial-gradient(circle at 85% 20%,#fff1a6 0 12%,transparent 13%),#ffd75e;
+  clip-path:polygon(0 0,62% 0,44% 100%,0 100%)}
+.lay-ill svg{position:absolute;width:88%;left:6%;bottom:0}
+.brush{width:40%;height:auto;left:46%;top:42%;transform:translate(-30%,-62%) rotate(18deg);filter:drop-shadow(0 6px 6px rgba(0,0,0,.25));z-index:3;pointer-events:none}
+.ai-chip{position:absolute;right:6%;top:6%;z-index:4;background:var(--ink);color:#fff;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.acsta-wrap{width:30%;right:1%;top:50%;z-index:4;perspective:700px}
+.acsta{position:relative;transform-style:preserve-3d}
+.acsta .plate{position:relative}
+.acsta .plate.back{position:absolute;inset:0;transform:translateZ(-6px);opacity:.45;filter:saturate(.4) brightness(1.2)}
+.acsta .plate svg{width:100%;height:auto;overflow:visible}
+.acsta-base{width:86%;height:18px;margin:-6px auto 0;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(206,233,225,.9));border:2px solid rgba(28,43,38,.35);border-radius:50%;box-shadow:0 10px 14px rgba(18,52,42,.25)}
+.acsta-label{position:static!important;display:block;text-align:center;font-family:var(--f-hand);font-size:clamp(.9rem,1.6vw,1.15rem);margin-top:8px;color:var(--mint-d);rotate:-4deg}
+.hand-arrow{width:24%;left:58%;top:-1%;z-index:4;overflow:visible}
+.hand-arrow path{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hand-note{left:75%;top:1%;z-index:4;font-family:var(--f-hand);font-size:clamp(.9rem,1.7vw,1.2rem);background:#fff;border:2px solid var(--ink);border-radius:10px;padding:0 8px;rotate:6deg;white-space:nowrap}
+.flo{z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.18))}
+.flo-pal{width:19%;left:-3%;top:-4%;height:auto}
+.flo-brush2{width:13%;right:4%;bottom:2%;height:auto}
+.spark{fill:#fff;z-index:6;filter:drop-shadow(0 0 6px rgba(255,210,63,.9))}
+.sp1{width:6%;left:22%;top:4%}.sp2{width:4.5%;left:80%;top:44%;fill:var(--sun)}.sp3{width:5%;left:36%;top:88%}.sp4{width:3.5%;left:12%;top:50%;fill:var(--sun)}.sp5{width:4%;right:2%;top:24%}
+.ex-tag{left:44%;bottom:6%;z-index:6;font-size:.72rem;font-weight:700;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:1px 8px}
+
+/* hero motion (JS only) */
+.js .ent{animation:entUp .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+.js .pop{animation:pop .8s cubic-bezier(.3,1.5,.5,1) both,bob 6s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + 1s)}
+.js .spl{animation:splat .7s cubic-bezier(.3,1.6,.5,1) both,bob 7s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + 1s)}
+.js .spark{animation:pop .6s both,twinkle 2.4s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .6s)}
+.js .lay-ill{animation:wipe 8s 1.6s linear infinite both}
+.js .brush{animation:brush 8s 1.6s linear infinite both}
+.js .ai-chip{animation:chip 8s 1.6s linear infinite both}
+.js .acsta{animation:spin 10s linear infinite}
+@keyframes entUp{from{opacity:0;translate:0 30px}}
+@keyframes pop{from{opacity:0;scale:.5;translate:0 30px}}
+@keyframes splat{from{opacity:0;scale:.1}}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes twinkle{50%{transform:scale(.4) rotate(45deg);opacity:.5}}
+@keyframes spin{to{transform:rotateY(360deg)}}
+@keyframes wipe{
+  0%,12%{clip-path:polygon(0 0,0 0,-20% 100%,0 100%);opacity:1}
+  45%,84%{clip-path:polygon(0 0,125% 0,105% 100%,0 100%);opacity:1}
+  94%,100%{clip-path:polygon(0 0,125% 0,105% 100%,0 100%);opacity:0}}
+@keyframes brush{
+  0%{left:-14%;top:30%;opacity:0} 9%{opacity:1} 12%{left:-8%;top:28%}
+  20%{left:18%;top:70%} 28%{left:44%;top:30%} 36%{left:72%;top:72%} 45%{left:104%;top:36%;opacity:1}
+  52%,100%{left:112%;top:30%;opacity:0}}
+@keyframes chip{0%,44%{opacity:0;transform:translateY(6px)}48%,84%{opacity:1;transform:none}92%,100%{opacity:0}}
+
+/* ---------- marquee ---------- */
+.bands{position:relative;height:150px;overflow:hidden;margin-top:-34px;z-index:5}
+.band{position:absolute;left:-5%;width:110%;overflow:hidden;border-block:3px solid var(--ink);white-space:nowrap}
+.band-a{top:34px;background:var(--sun);rotate:-2.5deg;z-index:2}
+.band-b{top:58px;background:var(--mint);color:#fff;rotate:2deg}
+.band .track{display:inline-flex;gap:0;animation:marq 34s linear infinite;font-family:var(--f-disp);font-weight:900;font-size:1.5rem;padding:8px 0}
+.band-b .track{animation-direction:reverse;animation-duration:40s;font-size:1.1rem}
+.band .track span{display:inline-flex;align-items:center;gap:.7em;padding-right:.7em}
+.band .track svg{width:1em;height:1em;fill:currentColor;opacity:.75}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+.sec{position:relative;padding:96px 0;overflow:hidden}
+.sec-head{text-align:center;margin-bottom:52px}
+.kicker{display:inline-block;font-family:var(--f-disp);font-weight:900;letter-spacing:.2em;font-size:.85rem;color:var(--mint);margin-bottom:8px}
+.sec-title{font-size:clamp(1.7rem,3.4vw,2.6rem);position:relative;display:inline-block;padding:0 .3em}
+.sec-title .stroke{position:absolute;left:-4%;width:108%;bottom:-.1em;height:.75em;z-index:-1;fill:var(--sun);overflow:visible}
+.sec-head h2{isolation:isolate}
+.sec-lead{color:var(--muted);margin-top:14px}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.rv-l{transform:translateX(-50px) rotate(-3deg)}
+.js .rv.rv-r{transform:translateX(50px) rotate(3deg)}
+.js .rv.rv-wipe{transform:none;clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1),opacity .3s;transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv.rv-wipe.in{clip-path:inset(-10% -10% -10% -10%)}
+.js .sec-title .stroke path{transform:scaleX(0);transform-origin:left;transition:transform .9s .3s cubic-bezier(.7,0,.2,1)}
+.js .in .sec-title .stroke path,.js .sec-head.in .stroke path{transform:scaleX(1)}
+.js .draw .dl{stroke-dasharray:1;stroke-dashoffset:1}
+.js .draw.in .dl{stroke-dashoffset:0;transition:stroke-dashoffset 1.8s cubic-bezier(.6,.1,.3,1);transition-delay:var(--dd,.2s)}
+
+/* ---------- pains ---------- */
+.pains{background:#fff;border-bottom:3px solid var(--ink)}
+.pains-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;align-items:center}
+.notes{display:grid;gap:22px;list-style:none;padding:0;margin:0}
+.note{position:relative;display:flex;gap:16px;align-items:center;background:#fffbe3;border:2px solid var(--ink);border-radius:6px;padding:18px 20px 18px 18px;font-family:var(--f-hand);font-size:1.25rem;line-height:1.5;box-shadow:6px 6px 0 rgba(28,43,38,.12)}
+.note:nth-child(1){rotate:-1.2deg}.note:nth-child(2){rotate:1deg;margin-left:28px;background:#eaf7f1}.note:nth-child(3){rotate:-.6deg;background:#fff0ea}
+.note img{width:60px;height:60px;flex:none}
+.note::before{content:"";position:absolute;top:-10px;left:40%;width:70px;height:18px;background:rgba(255,210,63,.7);rotate:-3deg}
+.pains-ill{position:relative;color:var(--mint)}
+.pains-ill .ud{width:100%;height:auto}
+.thought{position:absolute;right:4%;top:-8%;background:#fff;border:2px solid var(--ink);border-radius:50%;width:84px;height:84px;display:grid;place-items:center;font-family:var(--f-disp);font-weight:900;font-size:2rem;color:var(--mint)}
+.js .thought{animation:bob 4s ease-in-out infinite}
+.so{text-align:center;margin-top:64px}
+.so p{display:inline-block;font-family:var(--f-disp);font-weight:900;font-size:clamp(1.3rem,2.6vw,1.9rem);background:var(--ink);color:#fff;padding:.35em 1.1em;rotate:-1.5deg;box-shadow:6px 6px 0 var(--sun)}
+.so p b{color:var(--sun)}
+
+/* ---------- features + style gallery ---------- */
+.feat{background:var(--mint-ll)}
+.feat-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}
+.gallery{position:relative;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:22px;box-shadow:10px 10px 0 var(--mint)}
+.gal-frame{position:relative;background:#c99a63;padding:16px;border-radius:6px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.15),0 14px 24px rgba(0,0,0,.18)}
+.gal-mat{background:#fff;padding:18px}
+.gal-art{position:relative;aspect-ratio:1/1;overflow:hidden;--bgc:#ffd75e}
+.gal-art svg{width:100%;height:100%}
+.gal-art .bgr{fill:var(--bgc);transition:fill .5s}
+.gal-art .deco{opacity:0;transition:opacity .5s}
+.gal-art[data-style="pop"]{--bgc:#ffd75e}
+.gal-art[data-style="wc"]{--bgc:#fbf4e6;--fur:#f8c88a;--line:#c58d5c;--stripe:#eaa66a;--white:#fffaf0}
+.gal-art[data-style="yuru"]{--bgc:#e4f4fd;--fur:#ffe6c4;--line:#7a5c4c;--stripe:#f2c79b;--cheek:#ff9db4;--collar:#7cc6e8}
+.gal-art[data-style="wa"]{--bgc:#f3ece0;--fur:#f4ead8;--line:#1f2f55;--stripe:#c8452f;--collar:#c8452f;--bell:#e6b422;--cheek:#e77b6b}
+.gal-art[data-style="pop"] .d-pop,.gal-art[data-style="wc"] .d-wc,.gal-art[data-style="yuru"] .d-yuru,.gal-art[data-style="wa"] .d-wa{opacity:1}
+.gal-art[data-style="wc"] .pet{filter:url(#wc)}
+.gal-art .pet{transition:transform .5s}
+.gal-art.swap .pet{transform:scale(.94)}
+.sty-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;justify-content:center}
+.sty-tabs button{font:inherit;font-family:var(--f-disp);font-weight:700;font-size:.95rem;border:2px solid var(--ink);background:#fff;border-radius:999px;padding:4px 16px;cursor:pointer;transition:background .2s,transform .2s}
+.sty-tabs button:hover{transform:translateY(-2px)}
+.sty-tabs button[aria-pressed="true"]{background:var(--sun)}
+.gal-cap{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:.82rem;color:var(--muted)}
+.gal-cap b{font-family:var(--f-disp);font-size:1.05rem;color:var(--ink)}
+.gal-pal{position:absolute;width:86px;height:auto;right:-22px;top:-34px;rotate:12deg}
+.js .gal-pal{animation:bob 5s ease-in-out infinite}
+.fcards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.fcard{position:relative;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:20px 18px 20px;transition:transform .25s,box-shadow .25s;box-shadow:0 0 0 rgba(0,0,0,0)}
+.fcard:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:6px 8px 0 var(--sun)}
+.fcard img{width:58px;height:58px}
+.fcard .no{position:absolute;right:14px;top:10px;font-family:var(--f-disp);font-weight:900;color:var(--mint-l);font-size:2.4rem;line-height:1;-webkit-text-stroke:1.5px var(--mint)}
+.fcard h3{font-size:1.12rem;margin:10px 0 6px}
+.fcard p{font-size:.9rem;color:var(--muted);line-height:1.7}
+.fcard .big{display:block;font-family:var(--f-disp);font-weight:900;font-size:1.9rem;color:var(--mint);line-height:1.2;margin-top:6px}
+.fcard .big small{font-size:.9rem;margin-left:2px}
+.fcard.wide{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center}
+.fcard.wide img{grid-row:span 2}
+
+/* ---------- steps ---------- */
+.steps{background:#fff;border-block:3px solid var(--ink)}
+.flow{position:relative}
+.flow-path{position:absolute;left:0;top:0;width:100%;height:190px;overflow:visible}
+.flow-path .dots{fill:none;stroke:var(--mint);stroke-width:5;stroke-linecap:round;stroke-dasharray:0 15}
+.flow-list{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;list-style:none;padding:0;margin:0;counter-reset:st}
+.step{text-align:center;position:relative}
+.step-ic{position:relative;width:190px;height:190px;margin:0 auto;border-radius:50%;background:var(--mint-l);border:3px solid var(--ink);display:grid;place-items:center;box-shadow:0 10px 0 var(--mint)}
+.step:nth-child(2) .step-ic{background:var(--sun-l)}
+.step:nth-child(3) .step-ic{background:#ffe1d8}
+.step-ic img{width:58%;height:auto}
+.step-ic .sub-ic{position:absolute;width:38%;right:-6%;bottom:2%;rotate:12deg}
+.js .step-ic img{animation:bob 4.5s ease-in-out infinite;animation-delay:var(--b,0s)}
+.free-stamp{position:absolute;left:-10px;top:8px;width:66px;height:66px;border-radius:50%;background:#e2483a;color:#fff;display:grid;place-items:center;font-family:var(--f-disp);font-weight:900;font-size:1.05rem;border:3px dashed #fff;outline:3px solid #e2483a;rotate:-14deg}
+.st-no{display:inline-block;margin-top:26px;font-family:var(--f-disp);font-weight:900;font-size:.95rem;letter-spacing:.12em;background:var(--ink);color:#fff;border-radius:999px;padding:2px 14px}
+.st-no b{font-size:1.25rem;color:var(--sun);margin-left:4px}
+.step h3{font-size:1.18rem;margin-top:12px}
+.step p{font-size:.9rem;color:var(--muted);margin-top:6px}
+.js .flow .step{opacity:0;transform:translateY(30px) scale(.9);transition:opacity .6s,transform .7s cubic-bezier(.3,1.5,.5,1)}
+.js .flow.in .step{opacity:1;transform:none}
+.js .flow.in .step:nth-child(1){transition-delay:.2s}.js .flow.in .step:nth-child(2){transition-delay:1s}.js .flow.in .step:nth-child(3){transition-delay:1.8s}
+.ex-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);margin-top:30px}
+
+/* ---------- lineup ---------- */
+.lineup{background:linear-gradient(180deg,#f6f1e4 0 70%,#efe6d2 70%);}
+.lineup::before{content:"";position:absolute;left:0;right:0;top:250px;height:6px;background:#c99a63;box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.prods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;position:relative}
+.prod{background:#fff;border:3px solid var(--ink);border-radius:22px;overflow:hidden;transition:transform .3s cubic-bezier(.3,1.4,.5,1),box-shadow .3s;box-shadow:0 0 0 var(--ink)}
+.prod:hover{transform:translateY(-10px) rotate(-1.5deg);box-shadow:8px 10px 0 var(--ink)}
+.prod:nth-child(2):hover{transform:translateY(-10px) rotate(1.5deg)}
+.prod-vis{position:relative;aspect-ratio:4/4.2;display:grid;place-items:center;background:var(--mint-l);border-bottom:3px solid var(--ink);overflow:hidden}
+.prod:nth-child(2) .prod-vis{background:var(--sun-l)}
+.prod:nth-child(3) .prod-vis{background:#ffe1d8}
+.prod-vis svg.mock{width:78%;height:auto;transition:transform .5s cubic-bezier(.3,1.4,.5,1);filter:drop-shadow(0 16px 16px rgba(0,0,0,.18))}
+.prod:hover .prod-vis svg.mock{transform:scale(1.06) rotate(-3deg)}
+.prod-vis .tag{position:absolute;left:12px;top:12px;font-size:.72rem;font-weight:700;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:0 8px}
+.prod-body{padding:20px 22px 24px}
+.prod-body h3{font-size:1.25rem}
+.prod-body p{font-size:.9rem;color:var(--muted);margin-top:6px}
+.price{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:2px dashed #c9d6d1;margin-top:16px;padding-top:14px;flex-wrap:wrap}
+.price>span{font-size:.84rem;font-weight:700}
+.price b{font-family:var(--f-disp);font-size:1.9rem;color:var(--mint);line-height:1}
+.price b small{font-size:.9rem;color:var(--ink);margin-left:2px}
+.price .tbd{font-size:.9rem;color:var(--muted);font-weight:500}
+.price-note{text-align:center;margin-top:24px;font-size:.9rem;color:var(--muted)}
+.coupon{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;max-width:820px;margin:40px auto 0;background:var(--sun);border:3px solid var(--ink);border-radius:18px;padding:22px 28px;box-shadow:8px 8px 0 var(--ink)}
+.coupon::before,.coupon::after{content:"";position:absolute;top:50%;width:30px;height:30px;margin-top:-15px;background:#efe6d2;border:3px solid var(--ink);border-radius:50%}
+.coupon::before{left:-17px;clip-path:inset(0 0 0 50%)}.coupon::after{right:-17px;clip-path:inset(0 50% 0 0)}
+.coupon .lbl{font-family:var(--f-disp);font-weight:900;font-size:1rem;line-height:1.3;border-right:3px dashed var(--ink);padding-right:22px;text-align:center}
+.coupon .lbl b{display:block;font-size:1.6rem}
+.coupon p{font-weight:700}
+.coupon img{width:64px;height:64px}
+.js .coupon img{animation:bob 3.5s ease-in-out infinite}
+
+/* ---------- gift season ---------- */
+.gift{background:radial-gradient(ellipse at 50% 0,#17705a 0,#0d4437 60%,#0a3a2f 100%);color:#fff;padding-bottom:150px}
+.gift .kicker{color:var(--sun)}
+.gift .sec-title .stroke{fill:#1f7a62}
+.gift .sec-lead{color:#d4ece3}
+.snow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.flake{position:absolute;top:-12px;border-radius:50%;background:#fff;opacity:.85;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(var(--dx,20px),110vh)}}
+.gift-hero{position:relative;display:flex;justify-content:center;gap:10px;margin:-10px 0 36px}
+.gift-hero img{width:120px;height:auto;filter:drop-shadow(0 12px 14px rgba(0,0,0,.35))}
+.gift-hero img:nth-child(2){width:150px;margin-top:-20px}
+.js .gift-hero img{animation:bob 5s ease-in-out infinite}
+.js .gift-hero img:nth-child(2){animation-delay:-1.6s}.js .gift-hero img:nth-child(3){animation-delay:-3s}
+.gcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;position:relative;z-index:2}
+.gcard{background:#fff;color:var(--ink);border-radius:20px;padding:26px 22px;border:3px solid var(--ink);box-shadow:0 10px 0 rgba(0,0,0,.25);transition:transform .25s}
+.gcard:hover{transform:translateY(-6px)}
+.gcard .gc-top{display:flex;align-items:center;gap:12px}
+.gcard .gc-top img{width:58px;height:58px}
+.gcard h3{font-size:1.25rem}
+.gcard p{font-size:.92rem;color:var(--muted);margin-top:10px}
+.gnote{position:relative;z-index:2;display:flex;align-items:center;gap:14px;max-width:760px;margin:36px auto 0;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.5);border-radius:14px;padding:14px 20px;font-size:.95rem}
+.gnote img{width:44px;height:44px;flex:none}
+.drift{position:absolute;left:0;right:0;bottom:0;height:120px;z-index:1}
+.drift svg{width:100%;height:100%}
+.paws use{fill:#8fbfae}
+.js .paws g>use{opacity:0;transform-box:fill-box;transform-origin:center;animation:paw 7s ease-in-out infinite;animation-delay:calc(var(--i) * .38s)}
+@keyframes paw{0%{opacity:0;transform:scale(.4)}6%{opacity:1;transform:scale(1)}55%{opacity:1}75%,100%{opacity:0}}
+
+/* ---------- faq ---------- */
+.faq{background:var(--cream)}
+.faq-list{max-width:820px;margin:0 auto;display:grid;gap:14px}
+.faq details{background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;transition:box-shadow .2s}
+.faq details[open]{box-shadow:6px 6px 0 var(--mint)}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 20px;font-family:var(--f-disp);font-weight:700;font-size:1.08rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .q{flex:none;width:34px;height:34px;border-radius:50%;background:var(--mint);color:#fff;display:grid;place-items:center;font-weight:900}
+.faq summary .pm{margin-left:auto;flex:none;width:22px;height:22px;position:relative}
+.faq summary .pm::before,.faq summary .pm::after{content:"";position:absolute;left:0;top:10px;width:22px;height:3px;background:var(--ink);border-radius:2px;transition:transform .3s}
+.faq summary .pm::after{transform:rotate(90deg)}
+.faq details[open] .pm::after{transform:rotate(0)}
+.faq details p{padding:0 20px 20px 68px;color:var(--muted)}
+
+/* ---------- signup ---------- */
+.signup{background:var(--sun);border-top:3px solid var(--ink);padding-top:120px}
+.drip{position:absolute;left:0;right:0;top:-2px;height:70px;width:100%}
+.signup-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center}
+.signup .sec-title .stroke{fill:#fff}
+.signup .lead{margin-top:16px;font-weight:500}
+.signup-vis{position:relative;margin-top:28px;color:var(--mint)}
+.signup-vis .ud{width:88%;height:auto}
+.signup-vis .peek{position:absolute;width:110px;height:auto;right:4%;top:-10%}
+.js .signup-vis .peek{animation:bob 4s ease-in-out infinite}
+.signup-vis .ex-mini{position:absolute;left:0;bottom:0;font-size:.72rem;font-weight:700;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:0 8px}
+.form-card{position:relative;background:#fff;border:3px solid var(--ink);border-radius:24px;padding:30px 28px;box-shadow:10px 10px 0 var(--ink)}
+.form-card label{display:block;font-weight:700;font-size:.95rem;margin-bottom:16px}
+.form-card input,.form-card select{display:block;width:100%;margin-top:6px;font:inherit;font-weight:400;font-size:1rem;padding:12px 14px;border:2px solid var(--ink);border-radius:12px;background:var(--mint-ll);color:var(--ink)}
+.form-card .btn{width:100%;margin-top:6px;cursor:pointer;font-size:1.1rem}
+.err{color:#b3261e;font-weight:700;font-size:.9rem;margin:0 0 10px}
+.privacy{font-size:.8rem;color:var(--muted);margin-top:14px}
+.thanks{background:#fff;border:3px solid var(--ink);border-radius:24px;padding:34px 28px;box-shadow:10px 10px 0 var(--mint);text-align:center}
+.thanks h3{font-size:1.4rem;color:var(--mint)}
+.thanks p{margin-top:10px}
+.thanks small{display:block;margin-top:12px;color:var(--muted)}
+.form-card .perk-mini{display:flex;gap:10px;align-items:center;background:var(--sun-l);border-radius:12px;padding:10px 12px;font-size:.86rem;font-weight:700;margin-bottom:18px}
+.form-card .perk-mini img{width:36px;height:36px}
+
+/* ---------- footer ---------- */
+footer{background:var(--mint-dd);color:#e4f3ec;padding:40px 0 48px;font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
+footer .logo{color:#fff}
+
+/* sticky cta (mobile) */
+.sticky-cta{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero-grid{column-gap:24px}
+  .fcards{grid-template-columns:minmax(0,1fr)}
+  .fcard.wide{grid-column:auto}
+}
+@media (max-width:760px){
+  body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .topbar .wrap{height:56px}
+  .topbar .btn{display:none}
+  .badge{margin-left:auto}
+  .logo{font-size:1.05rem}.logo svg{width:32px;height:32px}
+  .hero{padding:26px 0 70px}
+  .hero-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "stage" "body"}
+  .eyebrow{font-size:.84rem;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.75rem,8.4vw,2.4rem)}
+  .hero-stage{aspect-ratio:1/1.02;margin-top:18px;max-width:440px}
+  .pol-main{width:56%;left:24%;top:9%}
+  .pol-dog{width:34%;left:-2%;top:3%}
+  .pol-rab{width:30%;left:0;top:60%}
+  .acsta-wrap{width:33%;right:-1%;top:54%}
+  .hand-arrow{display:none}
+  .hand-note{left:auto;right:0;top:0;font-size:.85rem}
+  .flo-pal{width:17%;left:auto;right:6%;top:30%}
+  .ex-tag{left:38%;bottom:1%}
+  .hero-points li{font-size:.8rem}
+  .cta-row .btn{width:100%}
+  .bands{height:120px;margin-top:-26px}
+  .band .track{font-size:1.15rem}.band-b .track{font-size:.95rem}
+  .band-a{top:26px}.band-b{top:50px}
+  .sec{padding:72px 0}
+  .sec-head{margin-bottom:36px}
+  .sec-title{font-size:clamp(1.4rem,6.3vw,1.75rem)}
+  .so p{font-size:1.12rem}
+  .pains-grid,.feat-grid,.signup-grid{grid-template-columns:minmax(0,1fr);gap:30px}
+  .note{font-size:1.08rem;padding:14px 14px}
+  .note img{width:48px;height:48px}
+  .note:nth-child(2){margin-left:12px}
+  .pains-ill{max-width:320px;margin:0 auto}
+  .gallery{padding:14px;box-shadow:7px 7px 0 var(--mint)}
+  .gal-frame{padding:10px}.gal-mat{padding:10px}
+  .gal-pal{width:64px;right:-8px;top:-28px}
+  .flow-path{display:none}
+  .flow-list{grid-template-columns:minmax(0,1fr);gap:46px}
+  .step{display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 18px;text-align:left;align-items:center}
+  .step-ic{width:120px;height:120px;grid-row:span 3;box-shadow:0 6px 0 var(--mint)}
+  .free-stamp{width:48px;height:48px;font-size:.8rem;left:-8px;top:-4px}
+  .st-no{margin-top:0;justify-self:start}
+  .step h3{margin-top:0;font-size:1.08rem}
+  .step:not(:last-child)::after{content:"";position:absolute;left:58px;top:132px;width:8px;height:34px;background:radial-gradient(circle,var(--mint) 2.6px,transparent 3px) center top/8px 12px repeat-y}
+  .js .flow .step:not(:last-child)::after{transform:scaleY(0);transform-origin:top;transition:transform .6s .5s}
+  .js .flow.in .step:not(:last-child)::after{transform:scaleY(1)}
+  .prods,.gcards{grid-template-columns:minmax(0,1fr);gap:22px}
+  .lineup::before{display:none}
+  .prod-vis{aspect-ratio:4/3.2}
+  .prod-vis svg.mock{width:58%}
+  .coupon{grid-template-columns:minmax(0,1fr);text-align:center;gap:12px;padding:22px 20px}
+  .coupon .lbl{border-right:0;border-bottom:3px dashed var(--ink);padding:0 0 12px}
+  .coupon img{margin:0 auto}
+  .gift-hero img{width:86px}.gift-hero img:nth-child(2){width:108px}
+  .faq summary{font-size:1rem;padding:16px}
+  .faq details p{padding:0 16px 18px 16px}
+  .signup{padding-top:96px}
+  .form-card{padding:24px 18px;box-shadow:7px 7px 0 var(--ink)}
+  .signup-vis .peek{width:80px}
+  .sticky-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(255,252,242,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:2px solid var(--ink);transition:transform .35s}
+  .sticky-cta .btn{width:100%;font-size:1.05rem;padding:.7em 1em;box-shadow:3px 3px 0 var(--ink)}
+  .sticky-cta.hide{transform:translateY(110%)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv,.js .flow .step{opacity:1!important;transform:none!important;clip-path:none!important}
+  .js .mk::before{transform:skewX(-10deg) rotate(-2deg)}
+  .js .draw .dl{stroke-dashoffset:0}
+  .js .sec-title .stroke path{transform:none}
+  .js .paws g>use{opacity:1}
+  .js .lay-ill{clip-path:polygon(0 0,62% 0,44% 100%,0 100%)}
+  .js .flow .step:not(:last-child)::after{transform:none}
+  .flake{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 共通のSVG部品（イラスト・足あと・しぶき） -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="pet-ill" viewBox="0 0 200 200">
+      <path d="M50 80 L55 26 Q57 18 64 23 L98 54 Z" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M150 80 L145 26 Q143 18 136 23 L102 54 Z" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M61 62 L63 36 L82 54 Z" style="fill:var(--ear,#ff9f9a)"/>
+      <path d="M139 62 L137 36 L118 54 Z" style="fill:var(--ear,#ff9f9a)"/>
+      <path d="M36 202 C38 160 66 140 100 140 C134 140 162 160 164 202 Z" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M76 202 C78 176 88 160 100 160 C112 160 122 176 124 202 Z" style="fill:var(--white,#fff7ea)"/>
+      <ellipse cx="100" cy="98" rx="61" ry="52" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5"/>
+      <path d="M100 48 V64 M85 50 L88 64 M115 50 L112 64 M42 92 H56 M43 104 H55 M158 92 H144 M157 104 H145" style="stroke:var(--stripe,#dc8a2c)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <ellipse cx="100" cy="120" rx="27" ry="18" style="fill:var(--white,#fff7ea)"/>
+      <ellipse cx="76" cy="98" rx="9.5" ry="11.5" style="fill:var(--eye,#2a211c)"/>
+      <ellipse cx="124" cy="98" rx="9.5" ry="11.5" style="fill:var(--eye,#2a211c)"/>
+      <circle cx="79.5" cy="93.5" r="3.4" fill="#fff"/><circle cx="127.5" cy="93.5" r="3.4" fill="#fff"/>
+      <ellipse cx="60" cy="118" rx="9" ry="6" style="fill:var(--cheek,#ff8f8f)" opacity=".6"/>
+      <ellipse cx="140" cy="118" rx="9" ry="6" style="fill:var(--cheek,#ff8f8f)" opacity=".6"/>
+      <path d="M93 111 H107 L100 119 Z" style="fill:var(--nose,#ff7a86);stroke:var(--line,#3a2a22)" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M100 119 Q100 127 92 127 M100 119 Q100 127 108 127" style="stroke:var(--line,#3a2a22)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M72 119 L48 115 M72 125 L50 130 M128 119 L152 115 M128 125 L150 130" style="stroke:var(--line,#3a2a22)" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>
+      <path d="M64 143 Q100 160 136 143" style="stroke:var(--collar,#1f7a62)" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <circle cx="100" cy="156" r="7" style="fill:var(--bell,#ffd23f);stroke:var(--line,#3a2a22)" stroke-width="2.5"/>
+    </symbol>
+    <symbol id="paw" viewBox="0 0 40 40"><ellipse cx="20" cy="27" rx="9.5" ry="8.5"/><ellipse cx="8.5" cy="16" rx="4.2" ry="5.4"/><ellipse cx="15.5" cy="8.5" rx="4.2" ry="5.4"/><ellipse cx="24.5" cy="8.5" rx="4.2" ry="5.4"/><ellipse cx="31.5" cy="16" rx="4.2" ry="5.4"/></symbol>
+    <symbol id="splash" viewBox="0 0 120 120"><path d="M60 14c8 0 10 14 18 16s18-8 24 0-6 16-2 24 16 8 14 18-16 6-20 14 4 20-6 24-14-10-22-8-12 16-22 12-2-16-10-20-20 2-22-8 12-12 10-20-14-10-8-18 18 0 22-6S50 14 60 14z"/><circle cx="104" cy="20" r="6"/><circle cx="14" cy="98" r="5"/><circle cx="108" cy="102" r="4"/><circle cx="20" cy="14" r="3.5"/></symbol>
+    <symbol id="spark" viewBox="0 0 40 40"><path d="M20 0C22 14 26 18 40 20 26 22 22 26 20 40 18 26 14 22 0 20 14 18 18 14 20 0Z"/></symbol>
+    <symbol id="brushstroke" viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></symbol>
+    <filter id="cut" x="-15%" y="-15%" width="130%" height="130%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="11" result="d2"/>
+      <feFlood flood-color="#d8eef0" flood-opacity=".9"/><feComposite in2="d2" operator="in" result="edge"/>
+      <feMorphology in="SourceAlpha" operator="dilate" radius="7" result="d1"/>
+      <feFlood flood-color="#ffffff"/><feComposite in2="d1" operator="in" result="white"/>
+      <feMerge><feMergeNode in="edge"/><feMergeNode in="white"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="wc" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G" result="dp"/>
+      <feGaussianBlur in="dp" stdDeviation="0.9"/>
+    </filter>
+    <pattern id="sei" width="40" height="20" patternUnits="userSpaceOnUse">
+      <g fill="#f3ece0" stroke="#1f2f55" stroke-width="1.6" stroke-opacity=".28">
+        <circle cx="0" cy="10" r="19"/><circle cx="0" cy="10" r="13"/><circle cx="0" cy="10" r="7"/>
+        <circle cx="40" cy="10" r="19"/><circle cx="40" cy="10" r="13"/><circle cx="40" cy="10" r="7"/>
+        <circle cx="20" cy="20" r="19"/><circle cx="20" cy="20" r="13"/><circle cx="20" cy="20" r="7"/>
+      </g>
+    </pattern>
+  </defs>
+</svg>
+
+<header class="topbar"><div class="wrap">
+  <a class="logo" href="#top" aria-label="うちの子アトリエ トップへ">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4C12 4 4 12 4 23c0 10 8 18 17 18 4 0 4-3 3-5s0-5 4-5h6c7 0 10-4 10-10C44 11 35 4 24 4z" fill="#ffd23f" stroke="#1c2b26" stroke-width="3"/><circle cx="14" cy="20" r="3.4" fill="#1f7a62"/><circle cx="21" cy="13" r="3.4" fill="#ff8b73"/><circle cx="31" cy="13" r="3.4" fill="#8ed2ee"/><circle cx="36" cy="22" r="3.4" fill="#1f7a62"/><use href="#paw" x="12" y="24" width="12" height="12" fill="#1c2b26"/></svg>
+    うちの子アトリエ
+  </a>
+  <span class="badge"><i></i>事前登録受付中</span>
+  <a class="btn" href="#signup">先行登録（無料）</a>
+</div></header>
+
+<main id="top">
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <svg class="hero-bg" viewBox="0 0 1440 820" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path fill="#ffe27a" opacity=".8" d="M1440 0v400c-90 50-180-20-260 30s-130 180-250 160-140-170-70-270 170-120 180-200S1440 0 1440 0z"/>
+    <path fill="#bfe6d4" d="M0 560c90-50 170 20 250-10s110-130 210-100 70 170 0 220-170 90-250 80S0 690 0 690z"/>
+    <path d="M70 130C250 70 420 180 610 110" stroke="#fff" stroke-width="30" fill="none" stroke-linecap="round" opacity=".55"/>
+    <path d="M820 760c120-40 260 10 420-30" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round" opacity=".5"/>
+    <g fill="#1f7a62" opacity=".12"><use href="#paw" x="90" y="300" width="40" height="40" transform="rotate(-20 110 320)"/><use href="#paw" x="150" y="250" width="40" height="40"/><use href="#paw" x="210" y="300" width="40" height="40" transform="rotate(15 230 320)"/></g>
+  </svg>
+  <div class="wrap hero-grid">
+    <div class="hero-head">
+      <p class="eyebrow ent" style="--d:.1s">ペットの写真から、世界にひとつのグッズを</p>
+      <h1><span class="ln ent" style="--d:.3s">うちの子の<span class="mk" style="--md:1.1s">写真</span>が、</span><span class="ln ent" style="--d:.5s"><span class="mk mk2" style="--md:1.35s">イラスト</span>の<span class="mk" style="--md:1.6s">アクスタ</span>に。</span></h1>
+    </div>
+
+    <!-- 写真差し替え候補: 実際のペット写真（犬・猫・うさぎ）と、イラスト化した作例・アクスタの商品写真 -->
+    <div class="hero-stage" role="img" aria-label="ペットの写真が筆でイラストに変わり、回転するアクリルスタンドになるイメージ（表示例）">
+      <svg class="spl spl1" viewBox="0 0 120 120" style="--d:.2s" aria-hidden="true"><use href="#splash"/></svg>
+      <svg class="spl spl2" viewBox="0 0 120 120" style="--d:.35s" aria-hidden="true"><use href="#splash"/></svg>
+      <svg class="spl spl3" viewBox="0 0 120 120" style="--d:.5s" aria-hidden="true"><use href="#splash"/></svg>
+      <figure class="pol pol-dog pop" style="--d:.45s"><span class="tape"></span><div class="ph ph-a"><img src="../assets/fluent3d/1f436.webp" width="256" height="256" alt="犬の写真の例"></div><figcaption>コタロウ</figcaption></figure>
+      <figure class="pol pol-rab pop" style="--d:.65s"><span class="tape t2"></span><div class="ph ph-c"><img src="../assets/fluent3d/1f430.webp" width="256" height="256" alt="うさぎの写真の例"></div><figcaption>もち</figcaption></figure>
+      <figure class="pol pol-main pop" style="--d:.8s"><span class="tape"></span>
+        <div class="ph ph-b">
+          <div class="lay-photo"><img src="../assets/fluent3d/1f431.webp" width="256" height="256" alt="猫の写真の例"></div>
+          <div class="lay-ill"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#pet-ill"/></svg></div>
+          <img class="brush" src="../assets/fluent3d/1f58c-fe0f.webp" width="256" height="256" alt="">
+          <span class="ai-chip">AIでイラストに</span>
+        </div>
+        <figcaption>MUGI</figcaption>
+      </figure>
+      <div class="acsta-wrap pop" style="--d:1.1s">
+        <div class="acsta">
+          <div class="plate back" aria-hidden="true"><svg viewBox="-16 -16 232 232"><use href="#pet-ill" filter="url(#cut)"/></svg></div>
+          <div class="plate"><svg viewBox="-16 -16 232 232" aria-hidden="true"><use href="#pet-ill" filter="url(#cut)"/><path d="M60 60 L84 40 M66 72 L94 48" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/></svg></div>
+        </div>
+        <div class="acsta-base"></div>
+        <span class="acsta-label">アクスタに！</span>
+      </div>
+      <svg class="hand-arrow draw" viewBox="0 0 160 160" aria-hidden="true" style="--dd:1.4s"><path class="dl" pathLength="1" d="M8 30C70 0 140 30 136 120"/><path class="dl" pathLength="1" d="M120 104L136 124L150 100"/></svg>
+      <span class="hand-note ent" style="--d:1.6s">約30秒でプレビュー</span>
+      <img class="flo flo-pal pop" style="--d:1.25s" src="../assets/fluent3d/1f3a8.webp" width="256" height="256" alt="">
+      <svg class="spark sp1" viewBox="0 0 40 40" style="--d:1.3s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp2" viewBox="0 0 40 40" style="--d:1.5s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp3" viewBox="0 0 40 40" style="--d:1.7s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp4" viewBox="0 0 40 40" style="--d:1.9s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp5" viewBox="0 0 40 40" style="--d:2.1s" aria-hidden="true"><use href="#spark"/></svg>
+      <span class="ex-tag">表示例</span>
+    </div>
+
+    <div class="hero-body">
+      <p class="sub ent" style="--d:.7s">スマホの写真を1枚送るだけ。AIがイラストにして、注文前に仕上がりを無料で確認できます。アクリルスタンドやポスターにしてお届けします。</p>
+      <ul class="hero-points ent" style="--d:.85s">
+        <li><b>無料</b>注文前にプレビュー</li>
+        <li><b>約30秒</b>で仕上がりを表示</li>
+        <li><b>1点</b>から受注生産</li>
+      </ul>
+      <div class="cta-row ent" style="--d:1s">
+        <a class="btn" href="#signup">先行登録する（無料）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <span class="cta-note">現在準備中です。公開時にメールでお知らせします。</span>
+      </div>
+      <p class="ai-note ent" style="--d:1.1s">※イラストはAIで描いています。仕上がりはご注文前に確認できます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MARQUEE ===== -->
+<div class="bands" aria-hidden="true">
+  <div class="band band-a"><div class="track">
+    <span>犬<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>猫<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>うさぎ<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>ハムスター<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>水彩<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span><span>ゆるかわ<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span><span>和風<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span><span>アクスタ<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>A4ポスター<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>2027年カレンダー<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span>
+    <span>犬<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>猫<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>うさぎ<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>ハムスター<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>水彩<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span><span>ゆるかわ<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span><span>和風<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span><span>アクスタ<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>A4ポスター<svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span>2027年カレンダー<svg viewBox="0 0 40 40"><use href="#spark"/></svg></span>
+  </div></div>
+  <div class="band band-b"><div class="track">
+    <span>写真1枚から</span><span>・</span><span>注文前に無料プレビュー</span><span>・</span><span>修正は1回無料</span><span>・</span><span>受注生産で1点から</span><span>・</span><span>写真1枚から</span><span>・</span><span>注文前に無料プレビュー</span><span>・</span><span>修正は1回無料</span><span>・</span><span>受注生産で1点から</span><span>・</span>
+    <span>写真1枚から</span><span>・</span><span>注文前に無料プレビュー</span><span>・</span><span>修正は1回無料</span><span>・</span><span>受注生産で1点から</span><span>・</span><span>写真1枚から</span><span>・</span><span>注文前に無料プレビュー</span><span>・</span><span>修正は1回無料</span><span>・</span><span>受注生産で1点から</span><span>・</span>
+  </div></div>
+</div>
+
+<!-- ===== PAINS ===== -->
+<section class="sec pains">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">WORRY</span><br>
+      <h2 class="sec-title">こんなこと、ありませんか？<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+    </div>
+    <div class="pains-grid">
+      <ul class="notes">
+        <li class="note rv rv-l" style="--d:.1s"><img src="../assets/fluent3d/23f3.webp" width="256" height="256" alt="砂時計">似顔絵を頼むと、仕上がりまで何日も待つ</li>
+        <li class="note rv rv-l" style="--d:.25s"><img src="../assets/fluent3d/1f914.webp" width="256" height="256" alt="考える顔">完成するまで、どんな絵になるか分からない</li>
+        <li class="note rv rv-l" style="--d:.4s"><img src="../assets/fluent3d/1f5bc-fe0f.webp" width="256" height="256" alt="額縁">写真をそのまま印刷するだけでは物足りない</li>
+      </ul>
+      <div class="pains-ill rv rv-r" style="--d:.3s">
+        {{UNDRAW pet-adoption}}
+        <span class="thought" aria-hidden="true">?</span>
+      </div>
+    </div>
+    <div class="so rv"><p>だから、<b>先に見てから</b>選べるアトリエを。</p></div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="sec feat">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">FEATURES</span><br>
+      <h2 class="sec-title">うちの子アトリエでできること<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+    </div>
+    <div class="feat-grid">
+      <!-- 写真差し替え候補: 画風ごとの作例イラスト -->
+      <div class="gallery rv rv-l">
+        <img class="gal-pal" src="../assets/fluent3d/1f3a8.webp" width="256" height="256" alt="">
+        <div class="gal-frame"><div class="gal-mat">
+          <div class="gal-art" id="gal-art" data-style="pop" role="img" aria-label="同じ写真を、選んだ画風で描いたイラストの例（表示例）">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <rect class="bgr" width="200" height="200"/>
+              <g class="deco d-pop"><use href="#splash" x="-20" y="-16" width="90" height="90" fill="#ffb02e"/><use href="#splash" x="128" y="120" width="80" height="80" fill="#fff3b0"/><circle cx="170" cy="40" r="8" fill="#fff"/><circle cx="30" cy="160" r="5" fill="#ff8b73"/></g>
+              <g class="deco d-wc"><circle cx="50" cy="60" r="46" fill="#bde3f2" opacity=".55" filter="url(#wc)"/><circle cx="160" cy="150" r="50" fill="#f7cfd8" opacity=".55" filter="url(#wc)"/><circle cx="150" cy="40" r="26" fill="#d6ecc9" opacity=".6" filter="url(#wc)"/></g>
+              <g class="deco d-yuru" fill="#ffb3c7"><path d="M30 40c-6-8 6-14 8-6 2-8 14-2 8 6l-8 8z"/><path d="M160 30c-5-7 5-12 7-5 2-7 12-2 7 5l-7 7z" fill="#9fd8f0"/><circle cx="176" cy="96" r="4"/><circle cx="20" cy="110" r="3" fill="#9fd8f0"/><circle cx="40" cy="176" r="4"/></g>
+              <g class="deco d-wa"><rect width="200" height="200" fill="url(#sei)"/><circle cx="156" cy="46" r="26" fill="#c8452f"/><path d="M0 182h200v18H0z" fill="#1f2f55" opacity=".85"/></g>
+              <g class="pet" style="transform-origin:100px 120px"><use href="#pet-ill" x="12" y="24" width="176" height="176"/></g>
+            </svg>
+          </div>
+        </div></div>
+        <div class="sty-tabs" role="group" aria-label="画風を選ぶ">
+          <button type="button" data-style="pop" aria-pressed="true">ポップ</button>
+          <button type="button" data-style="wc" aria-pressed="false">水彩</button>
+          <button type="button" data-style="yuru" aria-pressed="false">ゆるかわ</button>
+          <button type="button" data-style="wa" aria-pressed="false">和風</button>
+        </div>
+        <p class="gal-cap"><b>画風を選べる</b><span>表示例</span></p>
+      </div>
+      <div class="fcards">
+        <div class="fcard rv" style="--d:.05s"><span class="no">01</span><img src="../assets/fluent3d/23f3.webp" width="256" height="256" alt=""><h3>注文前に無料プレビュー</h3><p>写真を送って約30秒で仕上がりを表示します。気に入ってから注文できます。</p><span class="big">約<span data-count="30">30</span><small>秒</small></span></div>
+        <div class="fcard rv" style="--d:.15s"><span class="no">02</span><img src="../assets/fluent3d/1f3a8.webp" width="256" height="256" alt=""><h3>画風を選べる</h3><p>水彩、ゆるかわ、和風など。年賀状やカレンダーに合う画風も用意します。</p></div>
+        <div class="fcard rv" style="--d:.25s"><span class="no">03</span><img src="../assets/fluent3d/1f381.webp" width="256" height="256" alt=""><h3>グッズにしてお届け</h3><p>アクリルスタンド、A4ポスター、2027年カレンダー。受注生産で1点から作ります。</p></div>
+        <div class="fcard rv" style="--d:.35s"><span class="no">04</span><img src="../assets/fluent3d/1f58c-fe0f.webp" width="256" height="256" alt=""><h3>修正は1回無料</h3><p>目の色や模様など、気になるところは注文前に1回まで無料で直せます。</p><span class="big"><span data-count="1">1</span><small>回まで無料</small></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STEPS ===== -->
+<section class="sec steps">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">HOW TO</span><br>
+      <h2 class="sec-title">写真 → 無料プレビュー → グッズ<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+      <p class="sec-lead">使い方は3ステップ。気に入らなければ、注文しなくて大丈夫です。</p>
+    </div>
+    <div class="flow draw">
+      <svg class="flow-path" viewBox="0 0 1160 190" preserveAspectRatio="none" aria-hidden="true">
+        <defs><mask id="flow-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1160" height="190"><path class="dl" pathLength="1" d="M193 95C320 -10 440 200 580 95S840 -10 967 95" stroke="#fff" stroke-width="22" fill="none" style="--dd:.2s"/></mask></defs>
+        <path class="dots" d="M193 95C320 -10 440 200 580 95S840 -10 967 95" mask="url(#flow-mask)" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <ol class="flow-list">
+        <li class="step">
+          <div class="step-ic"><img src="../assets/fluent3d/1f4f1.webp" width="256" height="256" alt="スマートフォン"><img class="sub-ic" src="../assets/fluent3d/1f4f8.webp" width="256" height="256" alt=""></div>
+          <span class="st-no">STEP<b>1</b></span>
+          <h3>写真をアップロード</h3>
+          <p>スマホの写真を1枚。顔がはっきり写った、明るい写真がおすすめです。</p>
+        </li>
+        <li class="step">
+          <div class="step-ic" style="--b:-1.5s"><span class="free-stamp">無料</span><img src="../assets/fluent3d/1f3a8.webp" width="256" height="256" alt="パレット"></div>
+          <span class="st-no">STEP<b>2</b></span>
+          <h3>画風を選んで、無料プレビューを確認</h3>
+          <p>約30秒で仕上がりを表示。修正は注文前に1回まで無料です。</p>
+        </li>
+        <li class="step">
+          <div class="step-ic" style="--b:-3s"><img src="../assets/fluent3d/1f381.webp" width="256" height="256" alt="ギフト"><img class="sub-ic" src="../assets/fluent3d/1f69a.webp" width="256" height="256" alt=""></div>
+          <span class="st-no">STEP<b>3</b></span>
+          <h3>グッズを選んで注文。ご自宅にお届け</h3>
+          <p>受注生産で1点から。お届けまで1〜2週間ほどかかる見込みです。</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LINEUP ===== -->
+<section class="sec lineup">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">LINEUP</span><br>
+      <h2 class="sec-title">グッズと料金<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+    </div>
+    <!-- 写真差し替え候補: アクリルスタンド・額装ポスター・カレンダーの商品写真 -->
+    <div class="prods">
+      <article class="prod rv" style="--d:.05s">
+        <div class="prod-vis"><span class="tag">表示例</span>
+          <svg class="mock" viewBox="0 0 240 300" role="img" aria-label="アクリルスタンドのイメージ">
+            <ellipse cx="120" cy="276" rx="80" ry="12" fill="rgba(0,0,0,.12)"/>
+            <path d="M48 258a72 16 0 0 0 144 0v8a72 16 0 0 1-144 0z" fill="#cfe6df"/>
+            <ellipse cx="120" cy="258" rx="72" ry="16" fill="#f4fbf8" stroke="#a9cfc3" stroke-width="2"/>
+            <rect x="92" y="252" width="56" height="8" rx="3" fill="#cfe6df"/>
+            <use href="#pet-ill" x="30" y="70" width="180" height="180" filter="url(#cut)"/>
+            <path d="M74 120 L98 98 M80 134 L110 106" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+            <use href="#spark" x="186" y="64" width="22" height="22" fill="#ffd23f"/>
+          </svg>
+        </div>
+        <div class="prod-body">
+          <h3>アクリルスタンド</h3>
+          <p>イラストの形に切り抜いた、透明なアクリルのスタンド。デスクや棚に。</p>
+          <div class="price"><span>アクリルスタンド</span><b><span data-count="3980">3,980</span><small>円〜</small></b></div>
+        </div>
+      </article>
+      <article class="prod rv" style="--d:.2s">
+        <div class="prod-vis"><span class="tag">表示例</span>
+          <svg class="mock" viewBox="0 0 240 300" role="img" aria-label="額に入れたA4ポスターのイメージ">
+            <path d="M70 42 L120 10 L170 42" fill="none" stroke="#8b8b8b" stroke-width="2"/><circle cx="120" cy="10" r="4" fill="#666"/>
+            <rect x="28" y="36" width="184" height="246" rx="4" fill="#c99a63"/>
+            <rect x="28" y="36" width="184" height="246" rx="4" fill="none" stroke="#9c7244" stroke-width="3"/>
+            <rect x="40" y="48" width="160" height="222" fill="#fff"/>
+            <rect x="54" y="62" width="132" height="176" fill="#e8f5ef"/>
+            <circle cx="88" cy="100" r="34" fill="#bde3f2" opacity=".6" filter="url(#wc)"/>
+            <circle cx="160" cy="200" r="30" fill="#f7cfd8" opacity=".6" filter="url(#wc)"/>
+            <g style="--fur:#f8c88a;--line:#c58d5c;--stripe:#eaa66a"><use href="#pet-ill" x="58" y="96" width="124" height="124" filter="url(#wc)"/></g>
+            <text x="120" y="256" text-anchor="middle" font-size="12" fill="#5a4a3a" font-family="Yomogi, cursive">MUGI</text>
+            <path d="M40 48 L110 48 L40 150 Z" fill="#fff" opacity=".22"/>
+          </svg>
+        </div>
+        <div class="prod-body">
+          <h3>A4ポスター</h3>
+          <p>部屋に飾れるA4サイズ。アクリルスタンドとのセットでどうぞ。</p>
+          <div class="price"><span>アクスタ＋A4ポスター</span><b><span data-count="5480">5,480</span><small>円</small></b></div>
+        </div>
+      </article>
+      <article class="prod rv" style="--d:.35s">
+        <div class="prod-vis"><span class="tag">表示例</span>
+          <svg class="mock" viewBox="0 0 240 300" role="img" aria-label="2027年カレンダーのイメージ">
+            <path d="M120 4 L96 24 M120 4 L144 24" stroke="#8b8b8b" stroke-width="2"/><circle cx="120" cy="5" r="4" fill="#666"/>
+            <rect x="14" y="24" width="212" height="262" rx="6" fill="#fff" stroke="#dfe6e3" stroke-width="2"/>
+            <rect x="14" y="24" width="212" height="12" rx="4" fill="#1f7a62"/>
+            <g stroke="#9aa5a1" stroke-width="3" stroke-linecap="round"><path d="M40 18v14M58 18v14M76 18v14M94 18v14M146 18v14M164 18v14M182 18v14M200 18v14"/></g>
+            <rect x="26" y="44" width="188" height="118" rx="4" fill="#ffe58a"/>
+            <use href="#splash" x="150" y="40" width="70" height="70" fill="#ffc43a"/>
+            <use href="#splash" x="20" y="110" width="50" height="50" fill="#fff3b0"/>
+            <svg x="26" y="44" width="188" height="118" viewBox="0 0 188 118" overflow="hidden"><use href="#pet-ill" x="44" y="6" width="112" height="112"/></svg>
+            <text x="28" y="180" font-size="15" font-weight="900" fill="#1f7a62">2027</text>
+            <text x="212" y="180" font-size="15" font-weight="900" fill="#1c2b26" text-anchor="end">1月</text>
+            {{CAL_GRID}}
+          </svg>
+        </div>
+        <div class="prod-body">
+          <h3>2027年カレンダー</h3>
+          <p>1年中、うちの子と一緒に。受注生産で1点から作ります。</p>
+          <div class="price"><span>2027年カレンダー</span><span class="tbd">価格は公開時にお知らせします</span></div>
+        </div>
+      </article>
+    </div>
+    <p class="price-note">いずれも税込・予定価格です。</p>
+    <div class="coupon rv">
+      <div class="lbl">先行登録<b>特典</b></div>
+      <p>先行登録の方には、公開時に使える割引クーポンをお送りします。</p>
+      <img src="../assets/fluent3d/1f381.webp" width="256" height="256" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ===== GIFT SEASON ===== -->
+<section class="sec gift">
+  <div class="snow" id="snow" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="sec-head rv">
+      <span class="kicker">GIFT SEASON</span><br>
+      <h2 class="sec-title">贈りものの季節に、うちの子を。<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+      <p class="sec-lead">クリスマス、年賀状、新しい年のカレンダー。</p>
+    </div>
+    <div class="gift-hero rv">
+      <img src="../assets/fluent3d/1f381.webp" width="256" height="256" alt="ギフト">
+      <img src="../assets/fluent3d/1f384.webp" width="256" height="256" alt="クリスマスツリー">
+      <img src="../assets/fluent3d/1f4c5.webp" width="256" height="256" alt="カレンダー">
+    </div>
+    <div class="gcards">
+      <div class="gcard rv" style="--d:.05s"><div class="gc-top"><img src="../assets/fluent3d/1f384.webp" width="256" height="256" alt=""><h3>クリスマスに</h3></div><p>家族や、ペット好きの友だちへの贈りものに。アクスタ＋A4ポスターのセットは5,480円（税込・予定価格）。</p></div>
+      <div class="gcard rv" style="--d:.15s"><div class="gc-top"><img src="../assets/fluent3d/1f4e9.webp" width="256" height="256" alt=""><h3>年賀状に</h3></div><p>水彩、ゆるかわ、和風など。年賀状に合う画風も用意します。</p></div>
+      <div class="gcard rv" style="--d:.25s"><div class="gc-top"><img src="../assets/fluent3d/1f4c5.webp" width="256" height="256" alt=""><h3>2027年カレンダーに</h3></div><p>新しい年も、毎日うちの子と。カレンダーに合う画風も用意します。</p></div>
+    </div>
+    <p class="gnote rv"><img src="../assets/fluent3d/23f3.webp" width="256" height="256" alt="砂時計">受注生産のため、お届けまで1〜2週間ほどかかる見込みです。締切日は公開時にお知らせします。</p>
+  </div>
+  <div class="drift" aria-hidden="true">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0 50C160 20 300 70 480 46S820 10 1000 40s300 30 440 0V120H0z" fill="#f4faf7"/>
+    </svg>
+  </div>
+  <svg class="paws" viewBox="0 0 1440 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;width:100%;height:120px;z-index:1">
+    <g transform="translate(120 82) rotate(80)"><use href="#paw" width="24" height="24" style="--i:0"/></g>
+    <g transform="translate(220 64) rotate(80)"><use href="#paw" width="24" height="24" style="--i:1"/></g>
+    <g transform="translate(320 84) rotate(80)"><use href="#paw" width="24" height="24" style="--i:2"/></g>
+    <g transform="translate(420 66) rotate(80)"><use href="#paw" width="24" height="24" style="--i:3"/></g>
+    <g transform="translate(520 86) rotate(84)"><use href="#paw" width="24" height="24" style="--i:4"/></g>
+    <g transform="translate(620 68) rotate(84)"><use href="#paw" width="24" height="24" style="--i:5"/></g>
+    <g transform="translate(720 88) rotate(88)"><use href="#paw" width="24" height="24" style="--i:6"/></g>
+    <g transform="translate(820 70) rotate(88)"><use href="#paw" width="24" height="24" style="--i:7"/></g>
+    <g transform="translate(920 86) rotate(84)"><use href="#paw" width="24" height="24" style="--i:8"/></g>
+    <g transform="translate(1020 66) rotate(80)"><use href="#paw" width="24" height="24" style="--i:9"/></g>
+    <g transform="translate(1120 82) rotate(80)"><use href="#paw" width="24" height="24" style="--i:10"/></g>
+    <g transform="translate(1220 62) rotate(78)"><use href="#paw" width="24" height="24" style="--i:11"/></g>
+    <g transform="translate(1320 78) rotate(78)"><use href="#paw" width="24" height="24" style="--i:12"/></g>
+  </svg>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="sec faq">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <span class="kicker">FAQ</span><br>
+      <h2 class="sec-title">よくある質問<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+    </div>
+    <div class="faq-list">
+      <details class="rv" open><summary><span class="q">Q</span>AIで描くのですか？<span class="pm" aria-hidden="true"></span></summary><p>はい、AIでイラストにしています。ご注文前に仕上がりを確認でき、気に入らなければ注文の必要はありません。</p></details>
+      <details class="rv"><summary><span class="q">Q</span>どんな写真が向いていますか？<span class="pm" aria-hidden="true"></span></summary><p>顔がはっきり写った、明るい写真がおすすめです。</p></details>
+      <details class="rv"><summary><span class="q">Q</span>クリスマスに間に合いますか？<span class="pm" aria-hidden="true"></span></summary><p>受注生産のため、お届けまで1〜2週間ほどかかる見込みです。締切日は公開時にお知らせします。</p></details>
+      <details class="rv"><summary><span class="q">Q</span>返品はできますか？<span class="pm" aria-hidden="true"></span></summary><p>1点ずつ受注生産するため、お客様都合の返品はお受けできません。初期不良の場合は交換します。</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SIGNUP ===== -->
+<section class="sec signup" id="signup">
+  <svg class="drip" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v18c-40 0-44 30-60 30s-14-30-60-30-50 46-74 46-20-46-70-46-70 0-90 0-30 34-52 34-24-34-70-34H860c-30 0-36 52-62 52s-28-52-64-52-70 0-90 0-26 26-46 26-22-26-60-26H420c-36 0-40 40-64 40s-26-40-60-40-60 0-84 0-26 30-48 30-22-30-60-30H0z" fill="#fffcf2"/></svg>
+  <div class="wrap signup-grid">
+    <div class="rv rv-l">
+      <div class="sec-head" style="text-align:left;margin-bottom:0">
+        <span class="kicker" style="color:var(--mint-d)">PRE-ENTRY</span><br>
+        <h2 class="sec-title" style="padding-left:0">先行登録（無料）<svg class="stroke" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></svg></h2>
+      </div>
+      <p class="lead">メールアドレスを登録すると、公開時にお知らせします。登録しても料金はかかりません。</p>
+      <!-- 写真差し替え候補: ペットとくつろぐ飼い主の写真 -->
+      <div class="signup-vis">
+        {{UNDRAW petting}}
+        <img class="peek" src="../assets/fluent3d/1f431.webp" width="256" height="256" alt="">
+      </div>
+    </div>
+    <div class="rv rv-r" style="--d:.15s">
+      <form class="form-card" id="signup-form" novalidate>
+        <p class="perk-mini"><img src="../assets/fluent3d/1f381.webp" width="256" height="256" alt="">先行登録の方には、公開時に使える割引クーポンをお送りします。</p>
+        <label for="signup-email">メールアドレス<input id="signup-email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+        <label for="signup-q">飼っているペット<select id="signup-q"><option value="">選んでください（任意）</option><option>犬</option><option>猫</option><option>うさぎ・小動物</option><option>その他</option></select></label>
+        <p class="err" id="signup-error" role="alert" hidden></p>
+        <button class="btn cta" type="submit">先行登録する（無料）</button>
+        <p class="privacy">ご登録のメールアドレスは、このサービスの公開のご案内にのみ使用します。</p>
+      </form>
+      <div class="thanks" id="signup-thanks" hidden role="status">
+        <h3>ご登録ありがとうございます</h3>
+        <p>公開の準備ができしだい、メールでお知らせします。</p>
+        <small id="signup-preview" hidden>確認用のページのため、今回の入力は送信されていません。</small>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <span class="logo">うちの子アトリエ</span>
+  <span>運営：運営者名（公開前に記入）　お問い合わせ：連絡先メールアドレス（公開前に記入）</span>
+</div></footer>
+
+<div class="sticky-cta" id="sticky-cta"><a class="btn" href="#signup">先行登録する（無料）</a></div>
+
+<script>
+(function () {
+  var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(n) { return n.toLocaleString('ja-JP'); }
+  function countUp(el) {
+    var to = parseInt(el.getAttribute('data-count'), 10); if (rm || !to) return;
+    var t0 = null, dur = to > 100 ? 1400 : 900;
+    function tick(t) { if (!t0) t0 = t; var p = Math.min((t - t0) / dur, 1); el.textContent = fmt(Math.round(to * (1 - Math.pow(1 - p, 3)))); if (p < 1) requestAnimationFrame(tick); }
+    el.textContent = '0'; requestAnimationFrame(tick);
+  }
+  var targets = document.querySelectorAll('.rv, .draw, .flow, [data-count]');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        if (e.target.hasAttribute('data-count')) countUp(e.target);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  } else { targets.forEach(function (el) { el.classList.add('in'); }); }
+
+  /* style gallery */
+  var art = document.getElementById('gal-art');
+  var btns = document.querySelectorAll('.sty-tabs button');
+  var order = ['pop', 'wc', 'yuru', 'wa'], idx = 0, timer = null;
+  function setStyle(s) {
+    art.classList.add('swap');
+    setTimeout(function () { art.setAttribute('data-style', s); art.classList.remove('swap'); }, 160);
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-style') === s ? 'true' : 'false'); });
+    idx = order.indexOf(s);
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { clearInterval(timer); setStyle(b.getAttribute('data-style')); }); });
+  if (!rm) timer = setInterval(function () { setStyle(order[(idx + 1) % order.length]); }, 2800);
+
+  /* snow */
+  var snow = document.getElementById('snow');
+  if (snow && !rm) {
+    for (var i = 0; i < 46; i++) {
+      var f = document.createElement('span'); var s = 3 + Math.random() * 5;
+      f.className = 'flake';
+      f.style.cssText = 'left:' + (Math.random() * 100) + '%;width:' + s + 'px;height:' + s + 'px;opacity:' + (0.45 + Math.random() * 0.5) +
+        ';animation-duration:' + (9 + Math.random() * 10) + 's;animation-delay:-' + (Math.random() * 18) + 's;--dx:' + (Math.random() * 80 - 40) + 'px';
+      snow.appendChild(f);
+    }
+  }
+
+  /* sticky CTA: hide while the form is on screen */
+  var sticky = document.getElementById('sticky-cta'), su = document.getElementById('signup');
+  if (sticky && su && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) { sticky.classList.toggle('hide', es[0].isIntersecting); }, { threshold: 0.2 }).observe(su);
+  }
+})();
+</script>
+
+<script>
+(function () {
+  var FORM_ENDPOINT = "";
+  var form = document.getElementById("signup-form");
+  var err = document.getElementById("signup-error");
+  var thanks = document.getElementById("signup-thanks");
+  var preview = document.getElementById("signup-preview");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = document.getElementById("signup-email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      err.textContent = "メールアドレスの形式を確認してください（例：name@example.com）。";
+      err.hidden = false;
+      return;
+    }
+    err.hidden = true;
+    var data = { service: "pet", email: email, answer: document.getElementById("signup-q").value };
+    var done = function () { form.hidden = true; thanks.hidden = false; };
+    if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
+    var btn = form.querySelector("button");
+    btn.disabled = true; btn.textContent = "送信しています";
+    fetch(FORM_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) })
+      .then(function (r) { if (!r.ok) throw new Error(); done(); })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = "先行登録する（無料）";
+        err.textContent = "送信できませんでした。通信状況を確認して、もう一度お試しください。";
+        err.hidden = false;
+      });
+  });
+})();
+</script>
+</body>
+</html>
