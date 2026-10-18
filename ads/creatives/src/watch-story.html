@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>ページ見張り番 広告 story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+:root {
+  --ink: #0a1128; --ink2: #0f1938; --ink3: #16224a; --card: #1a2752; --line: rgba(150,175,255,.16);
+  --rose: #c2255c; --rose-l: #ff7aa8; --rose-d: #8f1742; --sig: #3ee6a0; --txt: #eef2ff; --mut: #b2bddf;
+  --fb: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+  --fm: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { position: relative; color: var(--txt); font-family: var(--fb); font-weight: 500; -webkit-font-smoothing: antialiased; background: var(--ink); }
+.bg { position: absolute; inset: 0; }
+.dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(160,185,255,.16) 1.3px, transparent 2px); background-size: 30px 30px; }
+.scanband { position: absolute; left: 0; right: 0; background: linear-gradient(transparent, rgba(62,230,160,.07), transparent); }
+.abs { position: absolute; }
+.logo { display: inline-flex; align-items: center; gap: .4em; font-weight: 900; letter-spacing: .04em; line-height: 1; white-space: nowrap; }
+.logo svg { width: 1.6em; height: 1.6em; flex: none; }
+.badge { display: inline-flex; align-items: center; gap: .5em; font-weight: 700; line-height: 1; color: var(--sig); border: 2px solid rgba(62,230,160,.6); padding: .45em .9em .45em .75em; border-radius: 999px; white-space: nowrap; background: rgba(62,230,160,.1); }
+.badge::before { content: ""; width: .42em; height: .42em; border-radius: 50%; background: var(--sig); box-shadow: 0 0 0 .22em rgba(62,230,160,.22); }
+.eyebrow { display: inline-flex; align-items: center; gap: .55em; font-weight: 700; line-height: 1.2; border: 1.5px solid var(--line); background: rgba(26,39,82,.75); padding: .32em .9em .32em .32em; border-radius: 999px; white-space: nowrap; }
+.eyebrow b { font-family: var(--fm); font-weight: 600; font-size: .62em; letter-spacing: .14em; background: var(--rose); color: #fff; padding: .3em .9em; border-radius: 999px; }
+.h1 { font-weight: 900; line-height: 1.3; letter-spacing: .01em; }
+.h1 .l { display: block; white-space: nowrap; }
+.mk { position: relative; z-index: 0; white-space: nowrap; }
+.mk::before { content: ""; position: absolute; left: -.06em; right: -.06em; bottom: .06em; height: .36em; background: var(--rose); z-index: -1; }
+.mk-g { color: var(--sig); }
+.cta { display: inline-flex; align-items: center; justify-content: center; gap: .5em; background: var(--rose); color: #fff; font-weight: 900; letter-spacing: .04em; line-height: 1; padding: .72em 1.4em; border-radius: 999px; white-space: nowrap;
+  box-shadow: 0 0 0 .22em rgba(255,122,168,.18), 0 .5em 1.4em rgba(194,37,92,.5); }
+.cta svg { width: 1em; height: 1em; }
+.stage { position: absolute; }
+.radar { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background: radial-gradient(circle, rgba(22,34,74,.97) 0%, rgba(13,22,50,.97) 70%); box-shadow: 0 0 0 2px rgba(150,175,255,.25), 0 0 120px rgba(194,37,92,.32), inset 0 0 80px rgba(0,0,0,.5); }
+.radar svg.rings { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sweep { position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0deg 270deg, rgba(255,122,168,.08) 290deg, rgba(255,122,168,.55) 358deg, rgba(255,200,222,1) 360deg); }
+.blip { position: absolute; width: 2.2%; height: 2.2%; transform: translate(-50%, -50%); border-radius: 50%; background: var(--rose-l); }
+.blip.hot { box-shadow: 0 0 0 6px rgba(255,122,168,.3), 0 0 22px 6px rgba(255,122,168,.6); }
+.blip.dim { opacity: .35; }
+.pg { position: absolute; width: 33%; transform: translate(-50%, -50%); z-index: 2; }
+.pg svg { display: block; width: 100%; height: auto; border-radius: 6%; box-shadow: 0 14px 30px rgba(0,0,0,.5); }
+.pg.hot svg { box-shadow: 0 0 0 4px var(--rose-l), 0 0 40px rgba(255,122,168,.7); }
+.f3 { position: absolute; z-index: 3; height: auto; overflow: visible; filter: drop-shadow(0 12px 16px rgba(0,0,0,.45)); }
+.scan-label { position: absolute; z-index: 3; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--fm); letter-spacing: .2em; color: var(--rose-l); background: rgba(10,17,40,.85); padding: .2em .9em; border-radius: 999px; border: 1.5px solid rgba(255,122,168,.45); white-space: nowrap; line-height: 1.4; }
+.scan-label::before { content: ""; display: inline-block; width: .55em; height: .55em; border-radius: 50%; background: var(--rose-l); margin-right: .7em; vertical-align: .08em; }
+/* 通知（表示例） */
+.notif { position: absolute; z-index: 5; }
+.notif .bell { position: absolute; z-index: 6; height: auto; filter: drop-shadow(0 10px 14px rgba(0,0,0,.45)); }
+.notice { background: #fff; color: #1b2140; border-radius: 1.1em; padding: .9em 1.05em 1em; box-shadow: 0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.4); }
+.notice-top { display: flex; align-items: center; gap: .5em; font-size: .82em; color: #59607a; line-height: 1.3; }
+.notice-top b { color: #1b2140; font-weight: 900; }
+.notice-top .app { width: 1.6em; height: 1.6em; border-radius: .4em; background: var(--rose); display: grid; place-items: center; flex: none; }
+.notice-top .app svg { width: 70%; height: 70%; }
+.notice-top span:last-child { margin-left: auto; font-family: var(--fm); }
+.notice-title { font-weight: 900; margin-top: .45em; line-height: 1.45; }
+.notice-diff { font-size: .9em; line-height: 1.5; margin-top: .4em; display: flex; gap: .45em; align-items: flex-start; font-weight: 700; }
+.plus { flex: none; font-size: .78em; font-weight: 900; background: var(--sig); color: #053a26; border-radius: .3em; padding: .1em .45em; margin-top: .15em; }
+.mock-note { font-size: .7em; color: var(--mut); margin-top: .5em; text-align: right; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="bg" style="background:
+  radial-gradient(70% 40% at 60% 52%, rgba(194,37,92,.30), transparent 70%),
+  radial-gradient(60% 30% at 0% 100%, rgba(62,230,160,.10), transparent 70%), var(--ink)"></div>
+<div class="dots" style="-webkit-mask-image:linear-gradient(#000 20%, rgba(0,0,0,.5) 60%, #000);mask-image:linear-gradient(#000 20%, rgba(0,0,0,.5) 60%, #000)"></div>
+<div class="scanband" style="top:840px;height:200px"></div>
+<div class="abs" style="left:64px;top:272px;right:64px;display:flex;align-items:center;justify-content:space-between">
+  <div class="logo" style="font-size:40px"><svg viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18.5" fill="#16224a" stroke="#ff7aa8" stroke-width="1.5"/>
+      <circle cx="20" cy="20" r="11" fill="none" stroke="#ff7aa8" stroke-opacity=".45"/>
+      <g class="lg-sweep"><path d="M20 20 L20 2 A18 18 0 0 1 33 7.5 Z" fill="#ff7aa8" fill-opacity=".55"/></g>
+      <path d="M9 20 Q20 10 31 20 Q20 30 9 20 Z" fill="#fff"/>
+      <circle cx="20" cy="20" r="4.6" fill="#c2255c"/><circle cx="21.6" cy="18.4" r="1.4" fill="#fff"/>
+    </svg><span>ページ見張り番</span></div>
+  <span class="badge" style="font-size:30px">事前登録受付中</span>
+</div>
+<div class="abs" style="left:64px;top:396px"><p class="eyebrow" style="font-size:33px"><b>WATCHING</b>補助金・公募の新着を見逃さない</p></div>
+<h1 class="h1 abs" style="left:64px;top:480px;font-size:116px;line-height:1.28">
+  <span class="l">見たいページの</span>
+  <span class="l"><span class="mk">更新、</span></span>
+  <span class="l"><span class="mk-g">LINE</span>に届く。</span>
+</h1>
+<div class="stage" style="left:150px;top:920px;width:820px;height:820px">
+  <div class="radar">
+    <svg class="rings" viewBox="0 0 400 400">
+          <g fill="none" stroke="#96afff">
+            <circle cx="200" cy="200" r="190" stroke-opacity=".35" stroke-width="1.5"/>
+            <circle cx="200" cy="200" r="182" stroke-opacity=".5" stroke-width="7" stroke-dasharray="1.2 30.57" transform="rotate(-90 200 200)"/>
+            <circle cx="200" cy="200" r="182" stroke-opacity=".85" stroke-width="12" stroke-dasharray="2 283.9" transform="rotate(-90.6 200 200)"/>
+            <circle cx="200" cy="200" r="140" stroke-opacity=".22"/>
+            <circle cx="200" cy="200" r="92" stroke-opacity=".22"/>
+            <circle cx="200" cy="200" r="44" stroke-opacity=".22"/>
+            <path d="M200 10 V390 M10 200 H390" stroke-opacity=".14"/>
+            <path d="M65.6 65.6 L334.4 334.4 M334.4 65.6 L65.6 334.4" stroke-opacity=".07"/>
+          </g>
+          <g fill="#96afff" fill-opacity=".55" font-family="monospace" font-size="10" text-anchor="middle">
+            <text x="200" y="30">00</text><text x="374" y="204">06</text><text x="200" y="380">12</text><text x="26" y="204">18</text>
+          </g>
+        </svg>
+    <div class="sweep" style="transform:rotate(128deg)"></div>
+    <span class="blip hot" style="left:73%;top:69%"></span>
+    <span class="blip" style="left:71.9%;top:28.1%"></span>
+    <span class="blip dim" style="left:28.1%;top:71.9%"></span>
+    <span class="blip dim" style="left:27%;top:30.7%"></span>
+    <span class="blip dim" style="left:50%;top:13%"></span>
+    <span class="blip" style="left:88%;top:50%"></span>
+  </div>
+  <span class="scan-label" style="font-size:20px">SCANNING</span>
+  <div class="pg hot" style="left:73%;top:69%"><svg viewBox="0 0 160 118" role="img" aria-label="〇〇県 公募情報のページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">〇〇県 公募情報</text>
+          <rect x="10" y="46" width="140" height="2" fill="#141b3a"/>
+          <rect x="10" y="56" width="118" height="6" rx="3" fill="#cfd6ea"/>
+          <rect x="10" y="68" width="96" height="6" rx="3" fill="#cfd6ea"/>
+          <rect x="8" y="80" width="144" height="13" rx="3" fill="#3ee6a0" fill-opacity=".35"/>
+          <rect x="12" y="84" width="100" height="5" rx="2.5" fill="#0c8a59"/>
+          <rect x="128" y="82" width="20" height="9" rx="2" fill="#c2255c"/><text x="138" y="89.5" font-size="6.5" font-weight="700" fill="#fff" text-anchor="middle">PDF</text>
+          <rect x="10" y="100" width="70" height="6" rx="3" fill="#cfd6ea"/>
+        </svg></div>
+<div class="pg" style="left:71.9%;top:28.1%"><svg viewBox="0 0 160 118" role="img" aria-label="入札情報のページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">入札情報</text>
+          <g fill="#cfd6ea"><rect x="10" y="50" width="140" height="14" rx="2" fill="#1d2a5c"/><rect x="10" y="68" width="140" height="10" rx="2"/><rect x="10" y="82" width="140" height="10" rx="2"/><rect x="10" y="96" width="140" height="10" rx="2"/></g>
+          <path d="M50 50V106M110 50V106" stroke="#f4f6fd" stroke-width="2"/>
+        </svg></div>
+<div class="pg" style="left:28.1%;top:71.9%"><svg viewBox="0 0 160 118" role="img" aria-label="〇〇市 お知らせのページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">〇〇市 お知らせ</text>
+          <g fill="#cfd6ea"><circle cx="14" cy="55" r="3" fill="#c2255c"/><rect x="22" y="52" width="110" height="6" rx="3"/><circle cx="14" cy="71" r="3"/><rect x="22" y="68" width="90" height="6" rx="3"/><circle cx="14" cy="87" r="3"/><rect x="22" y="84" width="120" height="6" rx="3"/><circle cx="14" cy="103" r="3"/><rect x="22" y="100" width="70" height="6" rx="3"/></g>
+        </svg></div>
+<div class="pg" style="left:27%;top:30.7%"><svg viewBox="0 0 160 118" role="img" aria-label="求人情報のページ">
+          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
+          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
+          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
+          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
+          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">求人情報</text>
+          <g fill="#cfd6ea"><rect x="10" y="48" width="66" height="58" rx="5"/><rect x="84" y="48" width="66" height="58" rx="5"/></g>
+          <g fill="#f4f6fd"><rect x="16" y="88" width="40" height="5" rx="2.5"/><rect x="90" y="88" width="40" height="5" rx="2.5"/><circle cx="43" cy="68" r="10"/><circle cx="117" cy="68" r="10"/></g>
+        </svg></div>
+
+  
+</div>
+<svg style="left:92px;top:900px;width:190px" class="wart f3 f-eyes" viewBox="0 0 140 104" aria-hidden="true" focusable="false">
+  <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
+    <rect x="26" y="5" width="22" height="17" rx="4" fill="#2c3b78"/><rect x="92" y="5" width="22" height="17" rx="4" fill="#2c3b78"/>
+    <rect x="16" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/><rect x="82" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/>
+    <rect x="54" y="25" width="32" height="20" rx="8" fill="#2c3b78"/>
+    <rect x="62" y="11" width="16" height="20" rx="4" fill="#ff7aa8"/>
+    <rect x="16" y="40" width="42" height="10" fill="#c2255c"/><rect x="82" y="40" width="42" height="10" fill="#c2255c"/>
+    <circle cx="37" cy="72" r="28" fill="#1a2752"/><circle cx="103" cy="72" r="28" fill="#1a2752"/>
+    <circle cx="37" cy="72" r="20" fill="#0a1128"/><circle cx="103" cy="72" r="20" fill="#0a1128"/>
+  </g>
+  <path d="M66 16 V26 M70 16 V26 M74 16 V26" stroke="#0a1128" stroke-width="2" opacity=".55"/>
+  <path d="M22 28 V36 M88 28 V36" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="37" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M17 72 H57 M37 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:37px 72px;--sd:2.6s" d="M37 72 L37 52 A20 20 0 0 1 54.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="44" cy="64" r="2.6" fill="#ff7aa8"/><path d="M22 66 A16 16 0 0 1 30 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/><circle cx="103" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M83 72 H123 M103 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:103px 72px;--sd:3.4s" d="M103 72 L103 52 A20 20 0 0 1 120.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="110" cy="64" r="2.6" fill="#ff7aa8"/><path d="M88 66 A16 16 0 0 1 96 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/>
+</svg>
+<svg style="left:860px;top:880px;width:150px" class="wart f3 f-sat" viewBox="0 0 140 92" aria-hidden="true" focusable="false">
+  <g transform="rotate(-16 70 46)">
+    <rect x="4" y="28" width="42" height="30" rx="2" fill="#2c3b78" stroke="#96afff" stroke-width="2"/><path d="M14.5 28 V58 M25 28 V58 M35.5 28 V58 M4 43 H46" stroke="#96afff" stroke-width="1.2" opacity=".7"/><path d="M6 56 L22 30 H30 L14 56 Z" fill="#3ee6a0" opacity=".22"/><rect x="94" y="28" width="42" height="30" rx="2" fill="#2c3b78" stroke="#96afff" stroke-width="2"/><path d="M104.5 28 V58 M115 28 V58 M125.5 28 V58 M94 43 H136" stroke="#96afff" stroke-width="1.2" opacity=".7"/><path d="M96 56 L112 30 H120 L104 56 Z" fill="#3ee6a0" opacity=".22"/>
+    <path d="M46 43 H56 M84 43 H94" stroke="#b2bddf" stroke-width="4"/>
+    <path d="M70 22 V8" stroke="#b2bddf" stroke-width="2.5"/>
+    <circle class="w-blip" cx="70" cy="7" r="3.5" fill="#ff7aa8"/>
+    <path d="M58 26 Q70 12 82 26 Z" fill="#dfe4f3" stroke="#0a1128" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="56" y="24" width="28" height="38" rx="5" fill="#eef2ff" stroke="#0a1128" stroke-width="3"/>
+    <rect x="56" y="37" width="28" height="9" fill="#c2255c" stroke="#0a1128" stroke-width="2"/>
+    <circle cx="70" cy="54" r="3" fill="#3ee6a0"/>
+  </g>
+</svg>
+<div class="notif" style="left:60px;top:1210px;width:640px;font-size:31px">
+  <svg class="wart bell" style="left:-14px;top:-96px;width:124px" viewBox="0 0 110 116" aria-hidden="true" focusable="false">
+  <g fill="none" stroke="#3ee6a0" stroke-width="3.5" stroke-linecap="round">
+    <path class="w-wave" d="M12 40 Q4 54 12 68"/><path class="w-wave w2" d="M3 32 Q-8 54 3 76"/>
+    <path class="w-wave" d="M98 40 Q106 54 98 68"/><path class="w-wave w2" d="M107 32 Q118 54 107 76"/>
+  </g>
+  <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
+    <circle cx="55" cy="12" r="6" fill="#ffd166"/>
+    <circle cx="55" cy="100" r="8" fill="#ffd166"/>
+    <path d="M55 16 C34 16 26 34 26 52 V70 L16 84 H94 L84 70 V52 C84 34 76 16 55 16 Z" fill="#c2255c"/>
+    <rect x="12" y="82" width="86" height="10" rx="5" fill="#ff7aa8"/>
+  </g>
+  <path d="M36 70 V53 C36 41 41 31 48 27" stroke="#ff7aa8" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M30 76 H80" stroke="#8f1742" stroke-width="2.5" stroke-linecap="round"/>
+  <circle class="w-dot" cx="82" cy="24" r="10" fill="#3ee6a0" stroke="#0a1128" stroke-width="3"/>
+</svg>
+  <div class="notice">
+    <div class="notice-top"><span class="app"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8 Q8 2 14 8 Q8 14 2 8Z" fill="#fff"/><circle cx="8" cy="8" r="2.4" fill="#c2255c"/></svg></span><b>ページ見張り番</b><span>10:12</span></div>
+    <p class="notice-title">【更新あり】〇〇県「公募情報」</p>
+    <p class="notice-diff"><span class="plus">追加</span>設備導入補助金（公募要領.pdf）</p>
+    
+  </div>
+  <p class="mock-note">※通知の表示例です</p>
+</div>
+<div class="abs" style="left:0;right:0;top:1520px;display:flex;justify-content:center"><span class="cta" style="font-size:50px">無料で先行登録<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></span></div>
+
+</body>
+</html>

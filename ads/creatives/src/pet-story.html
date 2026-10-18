@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>pet-story (1080x1920)</title>
+<!-- 広告クリエイティブ 1080x1920。CSS・SVGは public/pet.html からそのまま流用。文言はこのファイルの本文で直して撮り直す -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Yomogi&display=swap">
+<style>
+/* ===== LP (public/pet.html) のスタイルをそのまま ===== */
+
+:root{
+  --mint:#1f7a62; --mint-d:#145c4a; --mint-dd:#0d4437; --mint-l:#dcf1e8; --mint-ll:#eff8f4;
+  --sun:#ffd23f; --sun-l:#ffe88f; --sun-d:#f2a541; --coral:#ff8b73; --sky:#8ed2ee;
+  --ink:#1c2b26; --muted:#4a5a54; --cream:#fffcf2; --line:#1c2b26;
+  --f-disp:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+  --f-hand:"Yomogi","Zen Maru Gothic",cursive;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--f-body);color:var(--ink);background:var(--cream);line-height:1.8;overflow-x:clip;
+  background-image:radial-gradient(rgba(31,122,98,.09) 1.2px,transparent 1.4px);background-size:22px 22px}
+img,svg{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--f-disp);line-height:1.35;margin:0;font-weight:900;word-break:auto-phrase}
+p{margin:0}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:.6em;justify-content:center;font-family:var(--f-disp);font-weight:900;font-size:1.12rem;
+  text-decoration:none;color:#fff;background:var(--mint);border:3px solid var(--ink);border-radius:999px;padding:.85em 1.7em;
+  box-shadow:5px 5px 0 var(--ink);transition:transform .2s,box-shadow .2s,background .2s;position:relative}
+.btn svg{width:1.1em;height:1.1em;transition:transform .25s}
+.btn:hover{transform:translate(-2px,-3px);box-shadow:8px 8px 0 var(--ink);background:var(--mint-d)}
+.btn:hover svg{transform:translateX(4px)}
+.btn:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.btn:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sun-d);outline-offset:3px}
+
+/* ---------- header ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,252,242,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:2px solid var(--ink)}
+.topbar .wrap{display:flex;align-items:center;gap:14px;height:64px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--f-disp);font-weight:900;font-size:1.22rem;color:var(--ink);white-space:nowrap}
+.logo svg{width:38px;height:38px;flex:none}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;background:var(--sun);border:2px solid var(--ink);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.badge i{width:8px;height:8px;border-radius:50%;background:#e2483a;animation:blink 1.4s ease-in-out infinite}
+.topbar .btn{margin-left:auto;font-size:.92rem;padding:.5em 1.2em;box-shadow:3px 3px 0 var(--ink)}
+@keyframes blink{50%{opacity:.25}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;background:var(--mint-l);border-bottom:3px solid var(--ink);padding:48px 0 84px}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);grid-template-areas:"head stage" "body stage";column-gap:40px;align-items:center}
+.hero-head{grid-area:head;align-self:end}
+.hero-body{grid-area:body;align-self:start}
+.hero-stage{grid-area:stage}
+.eyebrow{display:inline-block;font-family:var(--f-disp);font-weight:700;font-size:1rem;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:4px 14px;position:relative;margin-bottom:18px;rotate:-2deg}
+.eyebrow::after{content:"";position:absolute;left:26px;bottom:-9px;width:14px;height:14px;background:#fff;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg)}
+.hero h1{font-size:clamp(2.1rem,4vw,3.15rem);letter-spacing:.01em;isolation:isolate}
+.hero h1 .ln{display:block;white-space:nowrap}
+.mk{position:relative;z-index:0;display:inline-block}
+.mk::before{content:"";position:absolute;left:-.1em;right:-.1em;bottom:.06em;height:.46em;background:var(--sun);border-radius:.25em .6em .35em .7em;z-index:-1;transform:skewX(-10deg) rotate(-2deg);transform-origin:left center}
+.mk.mk2::before{background:#9fe2c7}
+.js .mk::before{transform:skewX(-10deg) rotate(-2deg) scaleX(0);animation:mk .7s cubic-bezier(.6,.1,.2,1) forwards;animation-delay:var(--md,1s)}
+@keyframes mk{to{transform:skewX(-10deg) rotate(-2deg) scaleX(1)}}
+.sub{font-size:1.04rem;color:var(--muted);margin-top:22px;max-width:34em}
+.hero-points{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:22px 0 0}
+.hero-points li{background:#fff;border:2px solid var(--ink);border-radius:14px;padding:6px 12px;font-size:.88rem;font-weight:500;line-height:1.4}
+.hero-points b{font-family:var(--f-disp);color:var(--mint);font-size:1.15rem;margin-right:4px}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-top:28px}
+.cta-note{font-size:.84rem;color:var(--muted)}
+.ai-note{font-size:.8rem;color:var(--muted);margin-top:10px}
+
+/* stage collage */
+.hero-stage{position:relative;width:100%;max-width:620px;aspect-ratio:1/1;margin-inline:auto}
+.hero-stage>*{position:absolute}
+.spl{fill:currentColor}
+.spl1{color:var(--sun);width:46%;left:24%;top:4%;opacity:.9}
+.spl2{color:var(--coral);width:22%;left:-2%;top:42%;opacity:.75}
+.spl3{color:var(--sky);width:26%;right:-3%;top:44%;opacity:.8}
+.pol{margin:0;background:#fff;padding:5.5% 5.5% 0;border-radius:4px;box-shadow:0 14px 28px rgba(18,52,42,.22),0 2px 0 rgba(0,0,0,.06)}
+.pol figcaption{font-family:var(--f-hand);font-size:clamp(.9rem,1.6vw,1.2rem);text-align:center;padding:.35em 0 .55em;color:#3a3a3a}
+.ph{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:2px}
+.ph-a{background:radial-gradient(circle at 28% 22%,#fff6df 0,#f2dcb8 45%,#cfae84 100%)}
+.ph-a::after,.ph-b .lay-photo::after,.ph-c::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,transparent 55%,rgba(40,25,10,.22));pointer-events:none}
+.ph-c{background:radial-gradient(circle at 70% 25%,#fff 0,#f6dfe6 45%,#d9b3bf 100%)}
+.ph-b .lay-photo{position:absolute;inset:0;background:linear-gradient(180deg,#d6e6ef 0 62%,#b99d7d 62% 100%)}
+.ph-b .lay-photo .photo{filter:saturate(.92)}
+.tape{position:absolute;z-index:2;width:34%;height:12%;left:33%;top:-5%;background:rgba(255,226,120,.78);rotate:-4deg;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.tape.t2{background:rgba(158,226,199,.85);rotate:5deg}
+.pol-dog{width:35%;left:1%;top:5%;rotate:-9deg;z-index:2}
+.pol-rab{width:31%;left:3%;top:57%;rotate:7deg;z-index:2}
+.pol-main{width:50%;left:27%;top:13%;rotate:3deg;z-index:3}
+.pol-main figcaption{font-size:clamp(1rem,1.9vw,1.4rem)}
+.lay-ill{position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,#ffbf3a 0 14%,transparent 15%),radial-gradient(circle at 85% 20%,#fff1a6 0 12%,transparent 13%),#ffd75e;
+  clip-path:polygon(0 0,62% 0,44% 100%,0 100%)}
+.lay-ill svg{position:absolute;width:88%;left:6%;bottom:0}
+.brush{position:absolute;width:40%;height:auto;left:46%;top:42%;transform:translate(-30%,-62%) rotate(18deg);filter:drop-shadow(0 6px 6px rgba(0,0,0,.25));z-index:3;pointer-events:none}
+.ai-chip{position:absolute;right:6%;top:6%;z-index:4;background:var(--ink);color:#fff;font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.acsta-wrap{width:30%;right:1%;top:50%;z-index:4;perspective:700px}
+.acsta{position:relative;transform-style:preserve-3d}
+.acsta .plate{position:relative}
+.acsta .plate.back{position:absolute;inset:0;transform:translateZ(-6px);opacity:.45;filter:saturate(.4) brightness(1.2)}
+.acsta .plate svg{width:100%;height:auto;overflow:visible}
+.acsta-base{width:86%;height:18px;margin:-6px auto 0;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(206,233,225,.9));border:2px solid rgba(28,43,38,.35);border-radius:50%;box-shadow:0 10px 14px rgba(18,52,42,.25)}
+.acsta-label{position:static!important;display:block;text-align:center;font-family:var(--f-hand);font-size:clamp(.9rem,1.6vw,1.15rem);margin-top:8px;color:var(--mint-d);rotate:-4deg}
+.hand-arrow{width:24%;left:58%;top:-1%;z-index:4;overflow:visible}
+.hand-arrow path{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.hand-note{left:75%;top:1%;z-index:4;font-family:var(--f-hand);font-size:clamp(.9rem,1.7vw,1.2rem);background:#fff;border:2px solid var(--ink);border-radius:10px;padding:0 8px;rotate:6deg;white-space:nowrap}
+.flo{z-index:5;filter:drop-shadow(0 10px 12px rgba(0,0,0,.18))}
+.flo-pal{width:19%;left:-3%;top:-4%;height:auto}
+.flo-brush2{width:13%;right:4%;bottom:2%;height:auto}
+.spark{fill:#fff;z-index:6;filter:drop-shadow(0 0 6px rgba(255,210,63,.9))}
+.sp1{width:6%;left:22%;top:4%}.sp2{width:4.5%;left:80%;top:44%;fill:var(--sun)}.sp3{width:5%;left:36%;top:88%}.sp4{width:3.5%;left:12%;top:50%;fill:var(--sun)}.sp5{width:4%;right:2%;top:24%}
+.ex-tag{left:44%;bottom:6%;z-index:6;font-size:.72rem;font-weight:700;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:1px 8px}
+
+/* ---------- icon frames: paint splash + hand-drawn ring ---------- */
+.pic{display:inline-block;flex:none;line-height:0;position:relative}
+.pic svg{width:100%;height:100%;overflow:visible}
+.f-b{fill:var(--pc,var(--sun));transform-origin:50% 50%;transform:rotate(var(--pr,0deg));transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.f-r{fill:none;stroke:var(--ring,var(--ink));stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.f-i{fill:var(--pi,var(--mint-dd))}
+.f-p{fill:var(--ring,var(--ink));opacity:.8}
+.f-t{fill:none;stroke:var(--ring,var(--ink));stroke-width:3;stroke-linecap:round}
+.js .f-r{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s cubic-bezier(.6,.1,.3,1) .35s}
+.js .in .f-r{stroke-dashoffset:0}
+.fcard:hover .f-b,.gcard:hover .f-b{transform:rotate(calc(var(--pr,0deg) + 24deg)) scale(1.08)}
+/* pet "photos" */
+.ph .photo{position:absolute;inset:0;width:100%;height:100%}
+.js .ph .blink{transform-box:fill-box;transform-origin:center;animation:blinkE 5.5s ease-in-out infinite;animation-delay:var(--bk,0s)}
+.js .ph .ear-tw{transform-box:fill-box;transform-origin:50% 100%;animation:earTw 4.6s ease-in-out infinite;animation-delay:var(--et,0s)}
+@keyframes blinkE{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes earTw{0%,70%,100%{transform:rotate(0)}76%{transform:rotate(-7deg)}82%{transform:rotate(3deg)}88%{transform:rotate(-3deg)}}
+.js .gift-hero .tstar{transform-box:fill-box;transform-origin:center;animation:twinkle 2.4s ease-in-out infinite}
+.js .peek .blink{transform-box:fill-box;transform-origin:center;animation:blinkE 4.2s ease-in-out infinite}
+
+/* hero motion (JS only) */
+.js .ent{animation:entUp .9s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+.js .pop{animation:pop .8s cubic-bezier(.3,1.5,.5,1) both,bob 6s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + 1s)}
+.js .spl{animation:splat .7s cubic-bezier(.3,1.6,.5,1) both,bob 7s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + 1s)}
+.js .spark{animation:pop .6s both,twinkle 2.4s ease-in-out infinite;animation-delay:var(--d,0s),calc(var(--d,0s) + .6s)}
+.js .lay-ill{animation:wipe 8s 1.6s linear infinite both}
+.js .brush{animation:brush 8s 1.6s linear infinite both}
+.js .ai-chip{animation:chip 8s 1.6s linear infinite both}
+.js .acsta{animation:spin 10s linear infinite}
+@keyframes entUp{from{opacity:0;translate:0 30px}}
+@keyframes pop{from{opacity:0;scale:.5;translate:0 30px}}
+@keyframes splat{from{opacity:0;scale:.1}}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@keyframes twinkle{50%{transform:scale(.4) rotate(45deg);opacity:.5}}
+@keyframes spin{to{transform:rotateY(360deg)}}
+@keyframes wipe{
+  0%,12%{clip-path:polygon(0 0,0 0,-20% 100%,0 100%);opacity:1}
+  45%,84%{clip-path:polygon(0 0,125% 0,105% 100%,0 100%);opacity:1}
+  94%,100%{clip-path:polygon(0 0,125% 0,105% 100%,0 100%);opacity:0}}
+@keyframes brush{
+  0%{left:-14%;top:30%;opacity:0} 9%{opacity:1} 12%{left:-8%;top:28%}
+  20%{left:18%;top:70%} 28%{left:44%;top:30%} 36%{left:72%;top:72%} 45%{left:104%;top:36%;opacity:1}
+  52%,100%{left:112%;top:30%;opacity:0}}
+@keyframes chip{0%,44%{opacity:0;transform:translateY(6px)}48%,84%{opacity:1;transform:none}92%,100%{opacity:0}}
+
+/* ---------- marquee ---------- */
+.bands{position:relative;height:150px;overflow:hidden;margin-top:-34px;z-index:5}
+.band{position:absolute;left:-5%;width:110%;overflow:hidden;border-block:3px solid var(--ink);white-space:nowrap}
+.band-a{top:34px;background:var(--sun);rotate:-2.5deg;z-index:2}
+.band-b{top:58px;background:var(--mint);color:#fff;rotate:2deg}
+.band .track{display:inline-flex;gap:0;animation:marq 34s linear infinite;font-family:var(--f-disp);font-weight:900;font-size:1.5rem;padding:8px 0}
+.band-b .track{animation-direction:reverse;animation-duration:40s;font-size:1.1rem}
+.band .track span{display:inline-flex;align-items:center;gap:.7em;padding-right:.7em}
+.band .track svg{width:1em;height:1em;fill:currentColor;opacity:.75}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+.sec{position:relative;padding:96px 0;overflow:hidden}
+.sec-head{text-align:center;margin-bottom:52px}
+.kicker{display:inline-block;font-family:var(--f-disp);font-weight:900;letter-spacing:.2em;font-size:.85rem;color:var(--mint);margin-bottom:8px}
+.sec-title{font-size:clamp(1.7rem,3.4vw,2.6rem);position:relative;display:inline-block;padding:0 .3em}
+.sec-title .stroke{position:absolute;left:-4%;width:108%;bottom:-.1em;height:.75em;z-index:-1;fill:var(--sun);overflow:visible}
+.sec-head h2{isolation:isolate}
+.sec-lead{color:var(--muted);margin-top:14px}
+
+/* reveal */
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.rv-l{transform:translateX(-50px) rotate(-3deg)}
+.js .rv.rv-r{transform:translateX(50px) rotate(3deg)}
+.js .rv.rv-wipe{transform:none;clip-path:inset(0 100% 0 0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1),opacity .3s;transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv.rv-wipe.in{clip-path:inset(-10% -10% -10% -10%)}
+.js .sec-title .stroke path{transform:scaleX(0);transform-origin:left;transition:transform .9s .3s cubic-bezier(.7,0,.2,1)}
+.js .in .sec-title .stroke path,.js .sec-head.in .stroke path{transform:scaleX(1)}
+.js .draw .dl{stroke-dasharray:1;stroke-dashoffset:1}
+.js .draw.in .dl{stroke-dashoffset:0;transition:stroke-dashoffset 1.8s cubic-bezier(.6,.1,.3,1);transition-delay:var(--dd,.2s)}
+
+/* ---------- pains ---------- */
+.pains{background:#fff;border-bottom:3px solid var(--ink)}
+.pains-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:48px;align-items:center}
+.notes{display:grid;gap:22px;list-style:none;padding:0;margin:0}
+.note{position:relative;display:flex;gap:16px;align-items:center;background:#fffbe3;border:2px solid var(--ink);border-radius:6px;padding:18px 20px 18px 18px;font-family:var(--f-hand);font-size:1.25rem;line-height:1.5;box-shadow:6px 6px 0 rgba(28,43,38,.12)}
+.note:nth-child(1){rotate:-1.2deg}.note:nth-child(2){rotate:1deg;margin-left:28px;background:#eaf7f1}.note:nth-child(3){rotate:-.6deg;background:#fff0ea}
+.note .pic{width:62px;height:62px}
+.note::before{content:"";position:absolute;top:-10px;left:40%;width:70px;height:18px;background:rgba(255,210,63,.7);rotate:-3deg}
+.pains-ill{position:relative;color:var(--mint)}
+.pains-ill .ud{width:100%;height:auto}
+.thought{position:absolute;right:4%;top:-8%;background:#fff;border:2px solid var(--ink);border-radius:50%;width:84px;height:84px;display:grid;place-items:center;font-family:var(--f-disp);font-weight:900;font-size:2rem;color:var(--mint)}
+.js .thought{animation:bob 4s ease-in-out infinite}
+.so{text-align:center;margin-top:64px}
+.so p{display:inline-block;font-family:var(--f-disp);font-weight:900;font-size:clamp(1.3rem,2.6vw,1.9rem);background:var(--ink);color:#fff;padding:.35em 1.1em;rotate:-1.5deg;box-shadow:6px 6px 0 var(--sun)}
+.so p b{color:var(--sun)}
+
+/* ---------- features + style gallery ---------- */
+.feat{background:var(--mint-ll)}
+.feat-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:start}
+.gallery{position:relative;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:22px;box-shadow:10px 10px 0 var(--mint)}
+.gal-frame{position:relative;background:#c99a63;padding:16px;border-radius:6px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.15),0 14px 24px rgba(0,0,0,.18)}
+.gal-mat{background:#fff;padding:18px}
+.gal-art{position:relative;aspect-ratio:1/1;overflow:hidden;--bgc:#ffd75e}
+.gal-art svg{width:100%;height:100%}
+.gal-art .bgr{fill:var(--bgc);transition:fill .5s}
+.gal-art .deco{opacity:0;transition:opacity .5s}
+.gal-art[data-style="pop"]{--bgc:#ffd75e}
+.gal-art[data-style="wc"]{--bgc:#fbf4e6;--fur:#f8c88a;--line:#c58d5c;--stripe:#eaa66a;--white:#fffaf0}
+.gal-art[data-style="yuru"]{--bgc:#e4f4fd;--fur:#ffe6c4;--line:#7a5c4c;--stripe:#f2c79b;--cheek:#ff9db4;--collar:#7cc6e8}
+.gal-art[data-style="wa"]{--bgc:#f3ece0;--fur:#f4ead8;--line:#1f2f55;--stripe:#c8452f;--collar:#c8452f;--bell:#e6b422;--cheek:#e77b6b}
+.gal-art[data-style="pop"] .d-pop,.gal-art[data-style="wc"] .d-wc,.gal-art[data-style="yuru"] .d-yuru,.gal-art[data-style="wa"] .d-wa{opacity:1}
+.gal-art[data-style="wc"] .pet{filter:url(#wc)}
+.gal-art .pet{transition:transform .5s}
+.gal-art.swap .pet{transform:scale(.94)}
+.sty-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;justify-content:center}
+.sty-tabs button{font:inherit;font-family:var(--f-disp);font-weight:700;font-size:.95rem;border:2px solid var(--ink);background:#fff;border-radius:999px;padding:4px 16px;cursor:pointer;transition:background .2s,transform .2s}
+.sty-tabs button:hover{transform:translateY(-2px)}
+.sty-tabs button[aria-pressed="true"]{background:var(--sun)}
+.gal-cap{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:.82rem;color:var(--muted)}
+.gal-cap b{font-family:var(--f-disp);font-size:1.05rem;color:var(--ink)}
+.gal-pal{position:absolute;width:96px;height:auto;right:-26px;top:-38px;rotate:12deg;filter:drop-shadow(0 8px 8px rgba(0,0,0,.18))}
+.js .gal-pal{animation:bob 5s ease-in-out infinite}
+.fcards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.fcard{position:relative;background:#fff;border:2px solid var(--ink);border-radius:18px;padding:20px 18px 20px;transition:transform .25s,box-shadow .25s;box-shadow:0 0 0 rgba(0,0,0,0)}
+.fcard:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:6px 8px 0 var(--sun)}
+.fcard .pic{width:62px;height:62px}
+.fcard .no{position:absolute;right:14px;top:10px;font-family:var(--f-disp);font-weight:900;color:var(--mint-l);font-size:2.4rem;line-height:1;-webkit-text-stroke:1.5px var(--mint)}
+.fcard h3{font-size:1.12rem;margin:10px 0 6px}
+.fcard p{font-size:.9rem;color:var(--muted);line-height:1.7}
+.fcard .big{display:block;font-family:var(--f-disp);font-weight:900;font-size:1.9rem;color:var(--mint);line-height:1.2;margin-top:6px}
+.fcard .big small{font-size:.9rem;margin-left:2px}
+.fcard.wide{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:4px 16px;align-items:center}
+.fcard.wide .pic{grid-row:span 2}
+
+/* ---------- steps ---------- */
+.steps{background:#fff;border-block:3px solid var(--ink)}
+.flow{position:relative}
+.flow-path{position:absolute;left:0;top:0;width:100%;height:190px;overflow:visible}
+.flow-path .dots{fill:none;stroke:var(--mint);stroke-width:5;stroke-linecap:round;stroke-dasharray:0 15}
+.flow-list{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;list-style:none;padding:0;margin:0;counter-reset:st}
+.step{text-align:center;position:relative}
+.step-ic{position:relative;width:190px;height:190px;margin:0 auto;display:grid;place-items:center;--pc:#9fe2c7;--pr:-6deg}
+.step:nth-child(2) .step-ic{--pc:var(--sun);--pr:40deg}
+.step:nth-child(3) .step-ic{--pc:#ffb3a3;--pr:-50deg}
+.step-ic .st-art{width:100%;height:100%;overflow:visible}
+.step-ic .sb{fill:var(--pc);transform-origin:50% 50%;transform:rotate(var(--pr))}
+.step-ic .sb-sh{fill:var(--ink);opacity:.13;transform-origin:50% 50%;transform:translate(3px,5px) rotate(var(--pr))}
+.step-ic .sub-ic{position:absolute;width:40%;right:-6%;bottom:2%;rotate:12deg;line-height:0}
+.step-ic .sub-ic svg{width:100%;height:auto;overflow:visible}
+.sub-bg{fill:#fff;stroke:var(--ink);stroke-width:4}
+.sub-dash{fill:none;stroke:var(--mint);stroke-width:2.4;stroke-dasharray:4 5;opacity:.7}
+.js .step-ic .st-art,.js .step-ic .sub-ic{animation:bob 4.5s ease-in-out infinite;animation-delay:var(--b,0s)}
+.js .step-ic .sub-ic{animation-delay:calc(var(--b,0s) - .8s)}
+.free-stamp{position:absolute;left:-10px;top:8px;width:66px;height:66px;border-radius:50%;background:#e2483a;color:#fff;display:grid;place-items:center;font-family:var(--f-disp);font-weight:900;font-size:1.05rem;border:3px dashed #fff;outline:3px solid #e2483a;rotate:-14deg}
+.st-no{display:inline-block;margin-top:26px;font-family:var(--f-disp);font-weight:900;font-size:.95rem;letter-spacing:.12em;background:var(--ink);color:#fff;border-radius:999px;padding:2px 14px}
+.st-no b{font-size:1.25rem;color:var(--sun);margin-left:4px}
+.step h3{font-size:1.18rem;margin-top:12px}
+.step p{font-size:.9rem;color:var(--muted);margin-top:6px}
+.js .flow .step{opacity:0;transform:translateY(30px) scale(.9);transition:opacity .6s,transform .7s cubic-bezier(.3,1.5,.5,1)}
+.js .flow.in .step{opacity:1;transform:none}
+.js .flow.in .step:nth-child(1){transition-delay:.2s}.js .flow.in .step:nth-child(2){transition-delay:1s}.js .flow.in .step:nth-child(3){transition-delay:1.8s}
+.ex-note{display:block;text-align:center;font-size:.8rem;color:var(--muted);margin-top:30px}
+
+/* ---------- lineup ---------- */
+.lineup{background:linear-gradient(180deg,#f6f1e4 0 70%,#efe6d2 70%);}
+.lineup::before{content:"";position:absolute;left:0;right:0;top:250px;height:6px;background:#c99a63;box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.prods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;position:relative}
+.prod{background:#fff;border:3px solid var(--ink);border-radius:22px;overflow:hidden;transition:transform .3s cubic-bezier(.3,1.4,.5,1),box-shadow .3s;box-shadow:0 0 0 var(--ink)}
+.prod:hover{transform:translateY(-10px) rotate(-1.5deg);box-shadow:8px 10px 0 var(--ink)}
+.prod:nth-child(2):hover{transform:translateY(-10px) rotate(1.5deg)}
+.prod-vis{position:relative;aspect-ratio:4/4.2;display:grid;place-items:center;background:var(--mint-l);border-bottom:3px solid var(--ink);overflow:hidden}
+.prod:nth-child(2) .prod-vis{background:var(--sun-l)}
+.prod:nth-child(3) .prod-vis{background:#ffe1d8}
+.prod-vis svg.mock{width:78%;height:auto;transition:transform .5s cubic-bezier(.3,1.4,.5,1);filter:drop-shadow(0 16px 16px rgba(0,0,0,.18))}
+.prod:hover .prod-vis svg.mock{transform:scale(1.06) rotate(-3deg)}
+.prod-vis .tag{position:absolute;left:12px;top:12px;font-size:.72rem;font-weight:700;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:0 8px}
+.prod-body{padding:20px 22px 24px}
+.prod-body h3{font-size:1.25rem}
+.prod-body p{font-size:.9rem;color:var(--muted);margin-top:6px}
+.price{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:2px dashed #c9d6d1;margin-top:16px;padding-top:14px;flex-wrap:wrap}
+.price>span{font-size:.84rem;font-weight:700}
+.price b{font-family:var(--f-disp);font-size:1.9rem;color:var(--mint);line-height:1}
+.price b small{font-size:.9rem;color:var(--ink);margin-left:2px}
+.price .tbd{font-size:.9rem;color:var(--muted);font-weight:500}
+.price-note{text-align:center;margin-top:24px;font-size:.9rem;color:var(--muted)}
+.coupon{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;max-width:820px;margin:40px auto 0;background:var(--sun);border:3px solid var(--ink);border-radius:18px;padding:22px 28px;box-shadow:8px 8px 0 var(--ink)}
+.coupon::before,.coupon::after{content:"";position:absolute;top:50%;width:30px;height:30px;margin-top:-15px;background:#efe6d2;border:3px solid var(--ink);border-radius:50%}
+.coupon::before{left:-17px;clip-path:inset(0 0 0 50%)}.coupon::after{right:-17px;clip-path:inset(0 50% 0 0)}
+.coupon .lbl{font-family:var(--f-disp);font-weight:900;font-size:1rem;line-height:1.3;border-right:3px dashed var(--ink);padding-right:22px;text-align:center}
+.coupon .lbl b{display:block;font-size:1.6rem}
+.coupon p{font-weight:700}
+.coupon .pic{width:70px;height:70px}
+.js .coupon .pic{animation:bob 3.5s ease-in-out infinite}
+
+/* ---------- gift season ---------- */
+.gift{background:radial-gradient(ellipse at 50% 0,#17705a 0,#0d4437 60%,#0a3a2f 100%);color:#fff;padding-bottom:150px}
+.gift .kicker{color:var(--sun)}
+.gift .sec-title .stroke{fill:#1f7a62}
+.gift .sec-lead{color:#d4ece3}
+.snow{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.flake{position:absolute;top:-12px;border-radius:50%;background:#fff;opacity:.85;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(var(--dx,20px),110vh)}}
+.gift-hero{position:relative;display:flex;justify-content:center;gap:10px;margin:-10px 0 36px}
+.gift-hero .gobj{width:120px;height:auto;overflow:visible;filter:drop-shadow(0 12px 14px rgba(0,0,0,.35))}
+.gift-hero .gobj:nth-child(2){width:150px;margin-top:-20px}
+.js .gift-hero .gobj{animation:bob 5s ease-in-out infinite}
+.js .gift-hero .gobj:nth-child(2){animation-delay:-1.6s}.js .gift-hero .gobj:nth-child(3){animation-delay:-3s}
+.gcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;position:relative;z-index:2}
+.gcard{background:#fff;color:var(--ink);border-radius:20px;padding:26px 22px;border:3px solid var(--ink);box-shadow:0 10px 0 rgba(0,0,0,.25);transition:transform .25s}
+.gcard:hover{transform:translateY(-6px)}
+.gcard .gc-top{display:flex;align-items:center;gap:12px}
+.gcard .gc-top .pic{width:60px;height:60px}
+.gcard h3{font-size:1.25rem}
+.gcard p{font-size:.92rem;color:var(--muted);margin-top:10px}
+.gnote{position:relative;z-index:2;display:flex;align-items:center;gap:14px;max-width:760px;margin:36px auto 0;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.5);border-radius:14px;padding:14px 20px;font-size:.95rem}
+.gnote .pic{width:48px;height:48px;--ring:#fff;--pi:var(--mint-dd)}
+.drift{position:absolute;left:0;right:0;bottom:0;height:120px;z-index:1}
+.drift svg{width:100%;height:100%}
+.paws use{fill:#8fbfae}
+.js .paws g>use{opacity:0;transform-box:fill-box;transform-origin:center;animation:paw 7s ease-in-out infinite;animation-delay:calc(var(--i) * .38s)}
+@keyframes paw{0%{opacity:0;transform:scale(.4)}6%{opacity:1;transform:scale(1)}55%{opacity:1}75%,100%{opacity:0}}
+
+/* ---------- faq ---------- */
+.faq{background:var(--cream)}
+.faq-list{max-width:820px;margin:0 auto;display:grid;gap:14px}
+.faq details{background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;transition:box-shadow .2s}
+.faq details[open]{box-shadow:6px 6px 0 var(--mint)}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 20px;font-family:var(--f-disp);font-weight:700;font-size:1.08rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .q{flex:none;width:34px;height:34px;border-radius:50%;background:var(--mint);color:#fff;display:grid;place-items:center;font-weight:900}
+.faq summary .pm{margin-left:auto;flex:none;width:22px;height:22px;position:relative}
+.faq summary .pm::before,.faq summary .pm::after{content:"";position:absolute;left:0;top:10px;width:22px;height:3px;background:var(--ink);border-radius:2px;transition:transform .3s}
+.faq summary .pm::after{transform:rotate(90deg)}
+.faq details[open] .pm::after{transform:rotate(0)}
+.faq details p{padding:0 20px 20px 68px;color:var(--muted)}
+
+/* ---------- signup ---------- */
+.signup{background:var(--sun);border-top:3px solid var(--ink);padding-top:120px}
+.drip{position:absolute;left:0;right:0;top:-2px;height:70px;width:100%}
+.signup-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:44px;align-items:center}
+.signup .sec-title .stroke{fill:#fff}
+.signup .lead{margin-top:16px;font-weight:500}
+.signup-vis{position:relative;margin-top:28px;color:var(--mint)}
+.signup-vis .ud{width:88%;height:auto}
+.signup-vis .peek{position:absolute;width:118px;height:auto;right:4%;top:-12%;overflow:visible}
+.js .signup-vis .peek{animation:bob 4s ease-in-out infinite}
+.signup-vis .ex-mini{position:absolute;left:0;bottom:0;font-size:.72rem;font-weight:700;background:#fff;border:1.5px solid var(--ink);border-radius:6px;padding:0 8px}
+.form-card{position:relative;background:#fff;border:3px solid var(--ink);border-radius:24px;padding:30px 28px;box-shadow:10px 10px 0 var(--ink)}
+.form-card label{display:block;font-weight:700;font-size:.95rem;margin-bottom:16px}
+.form-card input,.form-card select{display:block;width:100%;margin-top:6px;font:inherit;font-weight:400;font-size:1rem;padding:12px 14px;border:2px solid var(--ink);border-radius:12px;background:var(--mint-ll);color:var(--ink)}
+.form-card .btn{width:100%;margin-top:6px;cursor:pointer;font-size:1.1rem}
+.err{color:#b3261e;font-weight:700;font-size:.9rem;margin:0 0 10px}
+.privacy{font-size:.8rem;color:var(--muted);margin-top:14px}
+.thanks{background:#fff;border:3px solid var(--ink);border-radius:24px;padding:34px 28px;box-shadow:10px 10px 0 var(--mint);text-align:center}
+.thanks h3{font-size:1.4rem;color:var(--mint)}
+.thanks p{margin-top:10px}
+.thanks small{display:block;margin-top:12px;color:var(--muted)}
+.form-card .perk-mini{display:flex;gap:10px;align-items:center;background:var(--sun-l);border-radius:12px;padding:10px 12px;font-size:.86rem;font-weight:700;margin-bottom:18px}
+.form-card .perk-mini .pic{width:40px;height:40px}
+
+/* ---------- footer ---------- */
+footer{background:var(--mint-dd);color:#e4f3ec;padding:40px 0 48px;font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;justify-content:space-between}
+footer .logo{color:#fff}
+
+/* sticky cta (mobile) */
+.sticky-cta{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero-grid{column-gap:24px}
+  .fcards{grid-template-columns:minmax(0,1fr)}
+  .fcard.wide{grid-column:auto}
+}
+@media (max-width:760px){
+  body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .topbar .wrap{height:56px}
+  .topbar .btn{display:none}
+  .badge{margin-left:auto}
+  .logo{font-size:1.05rem}.logo svg{width:32px;height:32px}
+  .hero{padding:26px 0 70px}
+  .hero-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "stage" "body"}
+  .eyebrow{font-size:.84rem;margin-bottom:14px}
+  .hero h1{font-size:clamp(1.75rem,8.4vw,2.4rem)}
+  .hero-stage{aspect-ratio:1/1.02;margin-top:18px;max-width:440px}
+  .pol-main{width:56%;left:24%;top:9%}
+  .pol-dog{width:34%;left:-2%;top:3%}
+  .pol-rab{width:30%;left:0;top:60%}
+  .acsta-wrap{width:33%;right:-1%;top:54%}
+  .hand-arrow{display:none}
+  .hand-note{left:auto;right:0;top:0;font-size:.85rem}
+  .flo-pal{width:17%;left:auto;right:6%;top:30%}
+  .ex-tag{left:38%;bottom:1%}
+  .hero-points li{font-size:.8rem}
+  .cta-row .btn{width:100%}
+  .bands{height:120px;margin-top:-26px}
+  .band .track{font-size:1.15rem}.band-b .track{font-size:.95rem}
+  .band-a{top:26px}.band-b{top:50px}
+  .sec{padding:72px 0}
+  .sec-head{margin-bottom:36px}
+  .sec-title{font-size:clamp(1.4rem,6.3vw,1.75rem)}
+  .so p{font-size:1.12rem}
+  .pains-grid,.feat-grid,.signup-grid{grid-template-columns:minmax(0,1fr);gap:30px}
+  .note{font-size:1.08rem;padding:14px 14px}
+  .note .pic{width:50px;height:50px}
+  .note:nth-child(2){margin-left:12px}
+  .pains-ill{max-width:320px;margin:0 auto}
+  .gallery{padding:14px;box-shadow:7px 7px 0 var(--mint)}
+  .gal-frame{padding:10px}.gal-mat{padding:10px}
+  .gal-pal{width:64px;right:-8px;top:-28px}
+  .flow-path{display:none}
+  .flow-list{grid-template-columns:minmax(0,1fr);gap:46px}
+  .step{display:grid;grid-template-columns:120px minmax(0,1fr);gap:4px 18px;text-align:left;align-items:center}
+  .step-ic{width:120px;height:120px;grid-row:span 3}
+  .free-stamp{width:48px;height:48px;font-size:.8rem;left:-8px;top:-4px}
+  .st-no{margin-top:0;justify-self:start}
+  .step h3{margin-top:0;font-size:1.08rem}
+  .step:not(:last-child)::after{content:"";position:absolute;left:58px;top:132px;width:8px;height:34px;background:radial-gradient(circle,var(--mint) 2.6px,transparent 3px) center top/8px 12px repeat-y}
+  .js .flow .step:not(:last-child)::after{transform:scaleY(0);transform-origin:top;transition:transform .6s .5s}
+  .js .flow.in .step:not(:last-child)::after{transform:scaleY(1)}
+  .prods,.gcards{grid-template-columns:minmax(0,1fr);gap:22px}
+  .lineup::before{display:none}
+  .prod-vis{aspect-ratio:4/3.2}
+  .prod-vis svg.mock{width:58%}
+  .coupon{grid-template-columns:minmax(0,1fr);text-align:center;gap:12px;padding:22px 20px}
+  .coupon .lbl{border-right:0;border-bottom:3px dashed var(--ink);padding:0 0 12px}
+  .coupon .pic{display:block;margin:0 auto}
+  .gift-hero .gobj{width:86px}.gift-hero .gobj:nth-child(2){width:108px}
+  .faq summary{font-size:1rem;padding:16px}
+  .faq details p{padding:0 16px 18px 16px}
+  .signup{padding-top:96px}
+  .form-card{padding:24px 18px;box-shadow:7px 7px 0 var(--ink)}
+  .signup-vis .peek{width:86px}
+  .sticky-cta{display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(255,252,242,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:2px solid var(--ink);transition:transform .35s}
+  .sticky-cta .btn{width:100%;font-size:1.05rem;padding:.7em 1em;box-shadow:3px 3px 0 var(--ink)}
+  .sticky-cta.hide{transform:translateY(110%)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .rv,.js .flow .step{opacity:1!important;transform:none!important;clip-path:none!important}
+  .js .mk::before{transform:skewX(-10deg) rotate(-2deg)}
+  .js .draw .dl{stroke-dashoffset:0}
+  .js .sec-title .stroke path{transform:none}
+  .js .paws g>use{opacity:1}
+  .js .f-r{stroke-dashoffset:0}
+  .js .lay-ill{clip-path:polygon(0 0,62% 0,44% 100%,0 100%)}
+  .js .flow .step:not(:last-child)::after{transform:none}
+  .flake{display:none}
+}
+
+/* ===== 広告用 ===== */
+*,*::before,*::after{animation:none!important;transition:none!important}
+html,body{width:1080px;height:1920px;overflow:hidden;margin:0}
+.ad{position:relative;width:1080px;height:1920px;overflow:hidden}
+
+.ad{background:var(--mint-l);font-family:var(--f-body);color:var(--ink)}
+.ad-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(31,122,98,.13) 1.6px,transparent 1.9px);background-size:26px 26px}
+.ad-bg{position:absolute;inset:0;width:100%;height:100%}
+.ad-logo{position:absolute;display:flex;align-items:center;gap:12px;font-family:var(--f-disp);font-weight:900;color:var(--ink);white-space:nowrap}
+.ad-logo svg{flex:none}
+.ad-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-body);font-weight:700;background:var(--sun);border:3px solid var(--ink);border-radius:999px;white-space:nowrap;line-height:1.3}
+.ad-badge i{border-radius:50%;background:#e2483a;flex:none}
+.ad-h{position:absolute;margin:0;font-family:var(--f-disp);font-weight:900;line-height:1.28;letter-spacing:.01em;color:var(--ink);isolation:isolate}
+.ad-h .ln{display:block;white-space:nowrap}
+.ad-sub{position:absolute;font-family:var(--f-disp);font-weight:700;color:var(--mint-dd);white-space:nowrap;background:#fff;border:3px solid var(--ink);border-radius:16px;line-height:1.35}
+.ad-btn{position:absolute;display:inline-flex;align-items:center;gap:.5em;justify-content:center;font-family:var(--f-disp);font-weight:900;color:#fff;background:var(--mint);border:4px solid var(--ink);border-radius:999px;white-space:nowrap;line-height:1.2}
+.ad-btn svg{width:.9em;height:.9em;flex:none;max-width:none}
+.ad-stage{position:absolute;width:620px;height:620px}
+.ad-stage .hand-note{left:auto;right:0;top:2%}
+.ad-stage .hand-arrow{left:54%}
+.ad-stage .hero-stage{width:620px;max-width:none;margin:0}
+.ad-stage .pol figcaption{font-size:1.2rem}
+.ad-stage .pol-main figcaption{font-size:1.4rem}
+.ad-stage .hand-note{font-size:1.2rem}
+.ad-stage .acsta-label{font-size:1.15rem}
+.ad-stage .ex-tag{font-size:.8rem}
+.ad-band{position:absolute;left:-5%;width:110%;overflow:hidden;border-block:4px solid var(--ink);white-space:nowrap;font-family:var(--f-disp);font-weight:900}
+.ad-band .tr{display:inline-flex;align-items:center}
+.ad-band .tr span{display:inline-flex;align-items:center;gap:.5em;padding-right:.7em}
+.ad-band svg{width:1em;height:1em;fill:currentColor;opacity:.75}
+
+.ad-logo{left:50%;transform:translateX(-50%);top:278px;font-size:46px}.ad-logo svg{width:68px;height:68px}
+.ad-badge.b1{position:absolute;left:50%;transform:translateX(-50%);top:368px;font-size:30px;padding:7px 26px}.ad-badge i{width:14px;height:14px}
+.ad-h{left:0;right:0;top:446px;font-size:112px;text-align:center}
+.ad-sub{left:50%;top:752px;transform:translateX(-50%) rotate(-2deg);font-size:36px;padding:12px 28px}
+.ad-stage{left:50%;top:850px;margin-left:-310px;transform:scale(1.07);transform-origin:50% 0}
+.ad-btn{left:50%;transform:translateX(-50%);top:1532px;font-size:52px;padding:26px 60px;box-shadow:9px 9px 0 var(--ink)}
+.ad-band{background:var(--sun);font-size:36px;padding:10px 0}
+.ad-band.top{top:120px;rotate:-3deg}
+.ad-band.bot{top:1760px;rotate:2.5deg;background:var(--mint);color:#fff}
+
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="pet-ill" viewBox="0 0 200 200">
+      <path d="M50 80 L55 26 Q57 18 64 23 L98 54 Z" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M150 80 L145 26 Q143 18 136 23 L102 54 Z" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M61 62 L63 36 L82 54 Z" style="fill:var(--ear,#ff9f9a)"/>
+      <path d="M139 62 L137 36 L118 54 Z" style="fill:var(--ear,#ff9f9a)"/>
+      <path d="M36 202 C38 160 66 140 100 140 C134 140 162 160 164 202 Z" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M76 202 C78 176 88 160 100 160 C112 160 122 176 124 202 Z" style="fill:var(--white,#fff7ea)"/>
+      <ellipse cx="100" cy="98" rx="61" ry="52" style="fill:var(--fur,#f6b94f);stroke:var(--line,#3a2a22)" stroke-width="5"/>
+      <path d="M100 48 V64 M85 50 L88 64 M115 50 L112 64 M42 92 H56 M43 104 H55 M158 92 H144 M157 104 H145" style="stroke:var(--stripe,#dc8a2c)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <ellipse cx="100" cy="120" rx="27" ry="18" style="fill:var(--white,#fff7ea)"/>
+      <ellipse cx="76" cy="98" rx="9.5" ry="11.5" style="fill:var(--eye,#2a211c)"/>
+      <ellipse cx="124" cy="98" rx="9.5" ry="11.5" style="fill:var(--eye,#2a211c)"/>
+      <circle cx="79.5" cy="93.5" r="3.4" fill="#fff"/><circle cx="127.5" cy="93.5" r="3.4" fill="#fff"/>
+      <ellipse cx="60" cy="118" rx="9" ry="6" style="fill:var(--cheek,#ff8f8f)" opacity=".6"/>
+      <ellipse cx="140" cy="118" rx="9" ry="6" style="fill:var(--cheek,#ff8f8f)" opacity=".6"/>
+      <path d="M93 111 H107 L100 119 Z" style="fill:var(--nose,#ff7a86);stroke:var(--line,#3a2a22)" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M100 119 Q100 127 92 127 M100 119 Q100 127 108 127" style="stroke:var(--line,#3a2a22)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M72 119 L48 115 M72 125 L50 130 M128 119 L152 115 M128 125 L150 130" style="stroke:var(--line,#3a2a22)" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>
+      <path d="M64 143 Q100 160 136 143" style="stroke:var(--collar,#1f7a62)" stroke-width="8" fill="none" stroke-linecap="round"/>
+      <circle cx="100" cy="156" r="7" style="fill:var(--bell,#ffd23f);stroke:var(--line,#3a2a22)" stroke-width="2.5"/>
+    </symbol>
+    <symbol id="i-hourglass" viewBox="0 0 256 256"><path d="M180.92,88,128,128,74.67,88Z" opacity="0.2"/><path d="M200,75.64V40a16,16,0,0,0-16-16H72A16,16,0,0,0,56,40V76a16.07,16.07,0,0,0,6.4,12.8L114.67,128,62.4,167.2A16.07,16.07,0,0,0,56,180v36a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V180.36a16.09,16.09,0,0,0-6.35-12.77L141.27,128l52.38-39.59A16.09,16.09,0,0,0,200,75.64ZM72,40H184V75.64L178.23,80H77.33L72,76Zm56,78L98.67,96h58.4Zm56,98H72V180l48-36v24a8,8,0,0,0,16,0V144.08l48,36.28Z"/></symbol>
+    <symbol id="i-question" viewBox="0 0 256 256"><path d="M232,128c0,12.51-17.82,21.95-22.68,33.69-4.68,11.32,1.42,30.64-7.78,39.85s-28.53,3.1-39.85,7.78C150,214.18,140.5,232,128,232s-22-17.82-33.69-22.68c-11.32-4.68-30.65,1.42-39.85-7.78s-3.1-28.53-7.78-39.85C41.82,150,24,140.5,24,128s17.82-22,22.68-33.69C51.36,83,45.26,63.66,54.46,54.46S83,51.36,94.31,46.68C106.05,41.82,115.5,24,128,24S150,41.82,161.69,46.68c11.32,4.68,30.65-1.42,39.85,7.78s3.1,28.53,7.78,39.85C214.18,106.05,232,115.5,232,128Z" opacity="0.2"/><path d="M225.86,102.82c-3.77-3.94-7.67-8-9.14-11.57-1.36-3.27-1.44-8.69-1.52-13.94-.15-9.76-.31-20.82-8-28.51s-18.75-7.85-28.51-8c-5.25-.08-10.67-.16-13.94-1.52-3.56-1.47-7.63-5.37-11.57-9.14C146.28,23.51,138.44,16,128,16s-18.27,7.51-25.18,14.14c-3.94,3.77-8,7.67-11.57,9.14C88,40.64,82.56,40.72,77.31,40.8c-9.76.15-20.82.31-28.51,8S41,67.55,40.8,77.31c-.08,5.25-.16,10.67-1.52,13.94-1.47,3.56-5.37,7.63-9.14,11.57C23.51,109.72,16,117.56,16,128s7.51,18.27,14.14,25.18c3.77,3.94,7.67,8,9.14,11.57,1.36,3.27,1.44,8.69,1.52,13.94.15,9.76.31,20.82,8,28.51s18.75,7.85,28.51,8c5.25.08,10.67.16,13.94,1.52,3.56,1.47,7.63,5.37,11.57,9.14C109.72,232.49,117.56,240,128,240s18.27-7.51,25.18-14.14c3.94-3.77,8-7.67,11.57-9.14,3.27-1.36,8.69-1.44,13.94-1.52,9.76-.15,20.82-.31,28.51-8s7.85-18.75,8-28.51c.08-5.25.16-10.67,1.52-13.94,1.47-3.56,5.37-7.63,9.14-11.57C232.49,146.28,240,138.44,240,128S232.49,109.73,225.86,102.82Zm-11.55,39.29c-4.79,5-9.75,10.17-12.38,16.52-2.52,6.1-2.63,13.07-2.73,19.82-.1,7-.21,14.33-3.32,17.43s-10.39,3.22-17.43,3.32c-6.75.1-13.72.21-19.82,2.73-6.35,2.63-11.52,7.59-16.52,12.38S132,224,128,224s-9.15-4.92-14.11-9.69-10.17-9.75-16.52-12.38c-6.1-2.52-13.07-2.63-19.82-2.73-7-.1-14.33-.21-17.43-3.32s-3.22-10.39-3.32-17.43c-.1-6.75-.21-13.72-2.73-19.82-2.63-6.35-7.59-11.52-12.38-16.52S32,132,32,128s4.92-9.15,9.69-14.11,9.75-10.17,12.38-16.52c2.52-6.1,2.63-13.07,2.73-19.82.1-7,.21-14.33,3.32-17.43S70.51,56.9,77.55,56.8c6.75-.1,13.72-.21,19.82-2.73,6.35-2.63,11.52-7.59,16.52-12.38S124,32,128,32s9.15,4.92,14.11,9.69,10.17,9.75,16.52,12.38c6.1,2.52,13.07,2.63,19.82,2.73,7,.1,14.33.21,17.43,3.32s3.22,10.39,3.32,17.43c.1,6.75.21,13.72,2.73,19.82,2.63,6.35,7.59,11.52,12.38,16.52S224,124,224,128,219.08,137.15,214.31,142.11ZM140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180Zm28-72c0,17.38-13.76,31.93-32,35.28V144a8,8,0,0,1-16,0v-8a8,8,0,0,1,8-8c13.23,0,24-9,24-20s-10.77-20-24-20-24,9-24,20v4a8,8,0,0,1-16,0v-4c0-19.85,17.94-36,40-36S168,88.15,168,108Z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 256 256"><path d="M208,40H48a8,8,0,0,0-8,8V208a8,8,0,0,0,8,8h8.69L166.34,106.34a8,8,0,0,1,11.32,0L216,144.69V48A8,8,0,0,0,208,40ZM96,112a16,16,0,1,1,16-16A16,16,0,0,1,96,112Z" opacity="0.2"/><path d="M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM48,48H208v77.38l-24.69-24.7a16,16,0,0,0-22.62,0L53.37,208H48ZM208,208H76l96-96,36,36v60ZM96,120A24,24,0,1,0,72,96,24,24,0,0,0,96,120Zm0-32a8,8,0,1,1-8,8A8,8,0,0,1,96,88Z"/></symbol>
+    <symbol id="i-timer" viewBox="0 0 256 256"><path d="M216,136a88,88,0,1,1-88-88A88,88,0,0,1,216,136Z" opacity="0.2"/><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 256 256"><path d="M224,127.17a96.48,96.48,0,0,1-2.39,22.18A24,24,0,0,1,198.21,168H152a24,24,0,0,0-24,24,24,24,0,0,1-32,22.61C58.73,201.44,32,169.81,32,128a96,96,0,0,1,95-96C179.84,31.47,223.55,74.35,224,127.17Z" opacity="0.2"/><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></symbol>
+    <symbol id="i-package" viewBox="0 0 256 256"><path d="M128,129.09V232a8,8,0,0,1-3.84-1l-88-48.18a8,8,0,0,1-4.16-7V80.18a8,8,0,0,1,.7-3.25Z" opacity="0.2"/><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 256 256"><path d="M224,32c0,32.81-31.64,67.43-58.64,91.05A84.39,84.39,0,0,0,133,90.64C156.57,63.64,191.19,32,224,32Z" opacity="0.2"/><path d="M232,32a8,8,0,0,0-8-8c-44.08,0-89.31,49.71-114.43,82.63A60,60,0,0,0,32,164c0,30.88-19.54,44.73-20.47,45.37A8,8,0,0,0,16,224H92a60,60,0,0,0,57.37-77.57C182.3,121.31,232,76.08,232,32ZM92,208H34.63C41.38,198.41,48,183.92,48,164a44,44,0,1,1,44,44Zm32.42-94.45q5.14-6.66,10.09-12.55A76.23,76.23,0,0,1,155,121.49q-5.9,4.94-12.55,10.09A60.54,60.54,0,0,0,124.42,113.55Zm42.7-2.68a92.57,92.57,0,0,0-22-22c31.78-34.53,55.75-45,69.9-47.91C212.17,55.12,201.65,79.09,167.12,110.87Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 256 256"><path d="M192,40V216a16,16,0,0,1-16,16H80a16,16,0,0,1-16-16V40A16,16,0,0,1,80,24h96A16,16,0,0,1,192,40Z" opacity="0.2"/><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16Zm8,200a8,8,0,0,1-8,8H80a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h96a8,8,0,0,1,8,8ZM140,60a12,12,0,1,1-12-12A12,12,0,0,1,140,60Z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 256 256"><path d="M208,64H176L160,40H96L80,64H48A16,16,0,0,0,32,80V192a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V80A16,16,0,0,0,208,64ZM128,168a36,36,0,1,1,36-36A36,36,0,0,1,128,168Z" opacity="0.2"/><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 256 256"><path d="M208,128v72a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V128Z" opacity="0.2"/><path d="M216,72H180.92c.39-.33.79-.65,1.17-1A29.53,29.53,0,0,0,192,49.57,32.62,32.62,0,0,0,158.44,16,29.53,29.53,0,0,0,137,25.91a54.94,54.94,0,0,0-9,14.48,54.94,54.94,0,0,0-9-14.48A29.53,29.53,0,0,0,97.56,16,32.62,32.62,0,0,0,64,49.57,29.53,29.53,0,0,0,73.91,71c.38.33.78.65,1.17,1H40A16,16,0,0,0,24,88v32a16,16,0,0,0,16,16v64a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM149,36.51a13.69,13.69,0,0,1,10-4.5h.49A16.62,16.62,0,0,1,176,49.08a13.69,13.69,0,0,1-4.5,10c-9.49,8.4-25.24,11.36-35,12.4C137.7,60.89,141,45.5,149,36.51Zm-64.09.36A16.63,16.63,0,0,1,96.59,32h.49a13.69,13.69,0,0,1,10,4.5c8.39,9.48,11.35,25.2,12.39,34.92-9.72-1-25.44-4-34.92-12.39a13.69,13.69,0,0,1-4.5-10A16.6,16.6,0,0,1,84.87,36.87ZM40,88h80v32H40Zm16,48h64v64H56Zm144,64H136V136h64Zm16-80H136V88h80v32Z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 256 256"><path d="M248,120v64a8,8,0,0,1-8,8H216a24,24,0,0,0-48,0H104a24,24,0,0,0-48,0H32a8,8,0,0,1-8-8V144H184V120Z" opacity="0.2"/><path d="M255.42,117l-14-35A15.93,15.93,0,0,0,226.58,72H192V64a8,8,0,0,0-8-8H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H49a32,32,0,0,0,62,0h50a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,255.42,117ZM192,88h34.58l9.6,24H192ZM32,72H176v64H32ZM80,208a16,16,0,1,1,16-16A16,16,0,0,1,80,208Zm81-24H111a32,32,0,0,0-62,0H32V152H176v12.31A32.11,32.11,0,0,0,161,184Zm31,24a16,16,0,1,1,16-16A16,16,0,0,1,192,208Zm48-24H223a32.06,32.06,0,0,0-31-24V128h48Z"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 256 256"><path d="M32,192l56-72H48L128,16l80,104H168l56,72Z" opacity="0.2"/><path d="M230.31,187.09,184.36,128H208a8,8,0,0,0,6.34-12.88l-80-104a8,8,0,0,0-12.68,0l-80,104A8,8,0,0,0,48,128H71.64L25.69,187.09A8,8,0,0,0,32,200h88v40a8,8,0,0,0,16,0V200h88a8,8,0,0,0,6.31-12.91ZM48.36,184l46-59.09A8,8,0,0,0,88,112H64.25L128,29.12,191.75,112H168a8,8,0,0,0-6.31,12.91L207.64,184Z"/></symbol>
+    <symbol id="i-envelope" viewBox="0 0 256 256"><path d="M224,56l-96,88L32,56Z" opacity="0.2"/><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 256 256"><path d="M176,120c0,32-48,56-48,56s-48-24-48-56a24,24,0,0,1,48,0,24,24,0,0,1,48,0Z" opacity="0.2"/><path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H72v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V208ZM152,88a31.91,31.91,0,0,0-24,10.86A32,32,0,0,0,72,120c0,36.52,50.28,62.08,52.42,63.16a8,8,0,0,0,7.16,0C133.72,182.08,184,156.52,184,120A32,32,0,0,0,152,88Zm-24,78.93c-13.79-7.79-40-26.75-40-46.93a16,16,0,0,1,32,0,8,8,0,0,0,16,0,16,16,0,0,1,32,0C168,140.19,141.79,159.15,128,166.93Z"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 256 256"><path d="M200,128a32,32,0,0,0,32,32v32a8,8,0,0,1-8,8H96V56H224a8,8,0,0,1,8,8V96A32,32,0,0,0,200,128Z" opacity="0.2"/><path d="M232,104a8,8,0,0,0,8-8V64a16,16,0,0,0-16-16H32A16,16,0,0,0,16,64V96a8,8,0,0,0,8,8,24,24,0,0,1,0,48,8,8,0,0,0-8,8v32a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V160a8,8,0,0,0-8-8,24,24,0,0,1,0-48ZM32,167.2a40,40,0,0,0,0-78.4V64H88V192H32Zm192,0V192H104V64H224V88.8a40,40,0,0,0,0,78.4Z"/></symbol>
+    <!-- アイコンの器: 絵の具のしぶき＋手描きの丸 -->
+    <symbol id="pf-a" viewBox="0 0 100 100"><use href="#splash" x="-4" y="-4" width="108" height="108"/></symbol>
+    <symbol id="pf-b" viewBox="0 0 100 100"><path d="M20 30C30 13 52 9 66 16C77 7 93 14 92 28C100 40 97 56 88 64C91 79 78 91 62 86C50 97 29 93 24 80C9 76 5 59 12 50C5 41 11 31 20 30Z"/><path d="M30 86C29 93 30 98 33 98C36 98 36 92 35 87Z"/><circle cx="96" cy="12" r="3.4"/><circle cx="5" cy="24" r="2.4"/><circle cx="92" cy="90" r="2.6"/></symbol>
+    <symbol id="pf-c" viewBox="0 0 100 100"><path d="M6 52C9 34 28 22 52 22C72 22 90 28 95 44C99 57 90 70 74 74C60 78 40 80 24 76C11 72 4 63 6 52Z"/><path d="M14 74C30 84 58 86 80 78L78 82C58 90 30 88 14 78Z"/><circle cx="96" cy="20" r="3.2"/><circle cx="4" cy="34" r="2.4"/><circle cx="88" cy="88" r="2"/><circle cx="20" cy="14" r="1.8"/></symbol>
+    <symbol id="pf-tick" viewBox="0 0 100 100"><path d="M84 8L80 18M95 20L86 25M97 36L88 36"/></symbol>
+    <symbol id="pf-ring" viewBox="0 0 100 100"><path pathLength="1" d="M71 15C89 24 96 46 90 65C83 85 61 95 40 90C20 85 7 65 10 45C13 27 29 12 50 11C59 10 67 12 74 17"/></symbol>
+    <!-- 手描きの小物: パレット -->
+    <symbol id="obj-palette" viewBox="0 0 120 100">
+      <path fill-rule="evenodd" d="M60 6C94 6 116 24 116 46C116 62 104 70 92 68C82 66 76 72 79 81C82 92 72 96 58 96C28 96 4 76 4 50C4 25 28 6 60 6ZM98 44a7 7 0 1 0-14 0a7 7 0 1 0 14 0Z" fill="#f2cb90" stroke="#1c2b26" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M14 56C28 44 46 38 64 36M20 74C32 66 44 64 56 64M70 56C76 54 82 54 86 56" stroke="#d9a868" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <g stroke="#1c2b26" stroke-width="2.2" stroke-linejoin="round">
+        <path d="M29 22c7-3 14 1 14 7s-6 9-11 8-9-12-3-15z" fill="#ffd23f"/>
+        <path d="M55 14c7-2 13 3 12 9s-7 8-12 6-7-13 0-15z" fill="#ff8b73"/>
+        <path d="M82 20c7 0 11 5 9 11s-9 6-13 3-3-14 4-14z" fill="#8ed2ee"/>
+        <path d="M17 46c6-3 13 0 13 6s-7 9-12 7-6-10-1-13z" fill="#1f7a62"/>
+        <path d="M36 70c6-2 13 2 12 8s-8 8-13 6-5-12 1-14z" fill="#ff9db4"/>
+      </g>
+      <g fill="#fff" opacity=".8"><circle cx="33" cy="26" r="2"/><circle cx="59" cy="18" r="2"/><circle cx="85" cy="24" r="2"/><circle cx="21" cy="50" r="1.8"/><circle cx="40" cy="74" r="1.8"/></g>
+      <g transform="rotate(-28 70 80)"><path d="M50 78L100 80C104 80 104 86 100 86L50 84Z" fill="#1f7a62" stroke="#1c2b26" stroke-width="2.4" stroke-linejoin="round"/><rect x="38" y="76.5" width="13" height="10" rx="2" fill="#d9e2e6" stroke="#1c2b26" stroke-width="2.4"/><path d="M38 77.5C30 77 24 79 18 81.5C24 84 30 86 38 85.5Z" fill="#ff8b73" stroke="#1c2b26" stroke-width="2.4" stroke-linejoin="round"/></g>
+    </symbol>
+    <symbol id="paw" viewBox="0 0 40 40"><ellipse cx="20" cy="27" rx="9.5" ry="8.5"/><ellipse cx="8.5" cy="16" rx="4.2" ry="5.4"/><ellipse cx="15.5" cy="8.5" rx="4.2" ry="5.4"/><ellipse cx="24.5" cy="8.5" rx="4.2" ry="5.4"/><ellipse cx="31.5" cy="16" rx="4.2" ry="5.4"/></symbol>
+    <symbol id="splash" viewBox="0 0 120 120"><path d="M60 14c8 0 10 14 18 16s18-8 24 0-6 16-2 24 16 8 14 18-16 6-20 14 4 20-6 24-14-10-22-8-12 16-22 12-2-16-10-20-20 2-22-8 12-12 10-20-14-10-8-18 18 0 22-6S50 14 60 14z"/><circle cx="104" cy="20" r="6"/><circle cx="14" cy="98" r="5"/><circle cx="108" cy="102" r="4"/><circle cx="20" cy="14" r="3.5"/></symbol>
+    <symbol id="spark" viewBox="0 0 40 40"><path d="M20 0C22 14 26 18 40 20 26 22 22 26 20 40 18 26 14 22 0 20 14 18 18 14 20 0Z"/></symbol>
+    <symbol id="brushstroke" viewBox="0 0 300 40" preserveAspectRatio="none"><path d="M6 22c20-14 60-16 100-15s90 2 130-2 54 0 58 6-6 12-30 14-80 2-130 3-96 4-118 2-14-3-10-8z"/></symbol>
+    <filter id="cut" x="-15%" y="-15%" width="130%" height="130%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="11" result="d2"/>
+      <feFlood flood-color="#d8eef0" flood-opacity=".9"/><feComposite in2="d2" operator="in" result="edge"/>
+      <feMorphology in="SourceAlpha" operator="dilate" radius="7" result="d1"/>
+      <feFlood flood-color="#ffffff"/><feComposite in2="d1" operator="in" result="white"/>
+      <feMerge><feMergeNode in="edge"/><feMergeNode in="white"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="wc" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="8" xChannelSelector="R" yChannelSelector="G" result="dp"/>
+      <feGaussianBlur in="dp" stdDeviation="0.9"/>
+    </filter>
+    <pattern id="sei" width="40" height="20" patternUnits="userSpaceOnUse">
+      <g fill="#f3ece0" stroke="#1f2f55" stroke-width="1.6" stroke-opacity=".28">
+        <circle cx="0" cy="10" r="19"/><circle cx="0" cy="10" r="13"/><circle cx="0" cy="10" r="7"/>
+        <circle cx="40" cy="10" r="19"/><circle cx="40" cy="10" r="13"/><circle cx="40" cy="10" r="7"/>
+        <circle cx="20" cy="20" r="19"/><circle cx="20" cy="20" r="13"/><circle cx="20" cy="20" r="7"/>
+      </g>
+    </pattern>
+  </defs>
+</svg>
+<div class="ad">
+<svg class="ad-bg" viewBox="0 0 1080 1920" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#ffe27a" opacity=".85" d="M1080 760v640c-80 50-170-10-240 40s-100 160-220 140-130-150-60-240 150-110 160-190 360-390 360-390z"/>
+  <path fill="#bfe6d4" d="M0 1180c90-50 170 20 250-10s110-130 210-100 70 170 0 220-170 90-250 80S0 1340 0 1340z"/>
+  <path d="M90 700C270 650 430 740 610 690" stroke="#fff" stroke-width="30" fill="none" stroke-linecap="round" opacity=".55"/>
+  <path d="M520 1520c120-40 260 10 420-30" stroke="#fff" stroke-width="24" fill="none" stroke-linecap="round" opacity=".5"/>
+  <g fill="#1f7a62" opacity=".13"><use href="#paw" x="80" y="1460" width="60" height="60" transform="rotate(-20 110 1490)"/><use href="#paw" x="170" y="1400" width="60" height="60"/><use href="#paw" x="890" y="640" width="60" height="60" transform="rotate(15 920 670)"/><use href="#paw" x="960" y="580" width="60" height="60" transform="rotate(25 990 610)"/></g>
+</svg>
+<div class="ad-dots"></div>
+<div class="ad-band top"><div class="tr"><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span></div></div>
+<div class="ad-band bot"><div class="tr"><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span><span><svg viewBox="0 0 40 40"><use href="#paw"/></svg></span></div></div>
+<div class="ad-logo"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4C12 4 4 12 4 23c0 10 8 18 17 18 4 0 4-3 3-5s0-5 4-5h6c7 0 10-4 10-10C44 11 35 4 24 4z" fill="#ffd23f" stroke="#1c2b26" stroke-width="3"/><circle cx="14" cy="20" r="3.4" fill="#1f7a62"/><circle cx="21" cy="13" r="3.4" fill="#ff8b73"/><circle cx="31" cy="13" r="3.4" fill="#8ed2ee"/><circle cx="36" cy="22" r="3.4" fill="#1f7a62"/><use href="#paw" x="12" y="24" width="12" height="12" fill="#1c2b26"/></svg>うちの子アトリエ</div>
+<span class="ad-badge b1"><i></i>事前登録受付中</span>
+<h1 class="ad-h"><span class="ln">うちの子の<span class="mk">写真</span>が、</span><span class="ln"><span class="mk">アクスタ</span>に。</span></h1>
+<p class="ad-sub">注文前に、仕上がりを無料でプレビュー</p>
+<div class="ad-stage"><div class="hero-stage" role="img" aria-label="ペットの写真が筆でイラストに変わり、回転するアクリルスタンドになるイメージ（表示例）">
+      <svg class="spl spl1" viewBox="0 0 120 120" style="--d:.2s" aria-hidden="true"><use href="#splash"/></svg>
+      <svg class="spl spl2" viewBox="0 0 120 120" style="--d:.35s" aria-hidden="true"><use href="#splash"/></svg>
+      <svg class="spl spl3" viewBox="0 0 120 120" style="--d:.5s" aria-hidden="true"><use href="#splash"/></svg>
+      <figure class="pol pol-dog pop" style="--d:.45s"><span class="tape"></span><div class="ph ph-a"><svg class="photo" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <radialGradient id="pd-fur" cx="50%" cy="36%" r="64%"><stop offset="0" stop-color="#f7b062"/><stop offset=".6" stop-color="#e28b3d"/><stop offset="1" stop-color="#b9632a"/></radialGradient>
+              <radialGradient id="pd-body" cx="50%" cy="15%" r="85%"><stop offset="0" stop-color="#eb9748"/><stop offset="1" stop-color="#b15c25"/></radialGradient>
+              <linearGradient id="pd-cream" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#f1dfc4"/></linearGradient>
+            </defs>
+            <circle cx="166" cy="34" r="30" fill="#fff" opacity=".35"/><circle cx="26" cy="54" r="16" fill="#fff" opacity=".25"/>
+            <path d="M0 166C44 154 156 154 200 166V200H0Z" fill="#8fc7ad" opacity=".6"/>
+            <g transform="rotate(-5 100 130)">
+              <path d="M32 206C34 166 62 145 100 145C138 145 166 166 168 206Z" fill="url(#pd-body)"/>
+              <path d="M68 206C70 174 84 156 100 156C116 156 130 174 132 206Z" fill="url(#pd-cream)"/>
+              <path d="M62 151Q100 171 138 151" stroke="#1f7a62" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <circle cx="100" cy="167" r="7" fill="#ffd23f" stroke="#b07a12" stroke-width="1.6"/>
+              <g class="ear-tw" style="--et:-1s"><path d="M48 82C42 62 42 41 48 25C50 20 55 19 59 22C71 33 81 44 89 56Z" fill="#d57a33"/><path d="M55 69C52 55 52 42 55 33C63 41 71 50 77 59Z" fill="#f7d9bd"/></g>
+              <g class="ear-tw" style="--et:-3.2s"><path d="M152 82C158 62 158 41 152 25C150 20 145 19 141 22C129 33 119 44 111 56Z" fill="#d57a33"/><path d="M145 69C148 55 148 42 145 33C137 41 129 50 123 59Z" fill="#f7d9bd"/></g>
+              <path d="M100 46C138 46 160 68 162 98C164 126 146 150 100 152C54 150 36 126 38 98C40 68 62 46 100 46Z" fill="url(#pd-fur)"/>
+              <path d="M78 52C88 47 112 47 122 52C116 63 108 69 100 71C92 69 84 63 78 52Z" fill="#b65e26" opacity=".35"/>
+              <path d="M41 106C35 112 37 120 43 123M159 106C165 112 163 120 157 123" fill="none" stroke="#b9632a" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+              <path d="M100 96C110 96 116 103 127 106C143 110 152 120 147 133C140 147 121 153 100 153C79 153 60 147 53 133C48 120 57 110 73 106C84 103 90 96 100 96Z" fill="url(#pd-cream)"/>
+              <ellipse cx="80" cy="77" rx="6.4" ry="3.6" fill="#fff4e2" transform="rotate(-14 80 77)"/><ellipse cx="120" cy="77" rx="6.4" ry="3.6" fill="#fff4e2" transform="rotate(14 120 77)"/>
+              <path d="M70 90C74 84.5 86 84.5 90 90M110 90C114 84.5 126 84.5 130 90" stroke="#7a3e18" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".55"/>
+              <g class="blink" style="--bk:-2s"><ellipse cx="80" cy="94" rx="7.6" ry="7.2" fill="#2b1a10"/><ellipse cx="120" cy="94" rx="7.6" ry="7.2" fill="#2b1a10"/><circle cx="82.8" cy="91.2" r="2.5" fill="#fff"/><circle cx="122.8" cy="91.2" r="2.5" fill="#fff"/><circle cx="77.4" cy="96.8" r="1.1" fill="#fff" opacity=".7"/><circle cx="117.4" cy="96.8" r="1.1" fill="#fff" opacity=".7"/></g>
+              <ellipse cx="65" cy="114" rx="7.5" ry="4.2" fill="#ff8f80" opacity=".35"/><ellipse cx="135" cy="114" rx="7.5" ry="4.2" fill="#ff8f80" opacity=".35"/>
+              <path d="M93 132C93 146 107 146 107 132C104 134.5 96 134.5 93 132Z" fill="#ff7f8c"/><path d="M100 134.5V141" stroke="#e05a6c" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M100 124V129M100 129C96 135 88 135 84 130M100 129C104 135 112 135 116 130" stroke="#4a2c1a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+              <path d="M89 114C89 108 111 108 111 114C111 120 105 124 100 124C95 124 89 120 89 114Z" fill="#2b1a10"/><ellipse cx="95.5" cy="111.5" rx="4" ry="2" fill="#fff" opacity=".45"/>
+            </g>
+          </svg></div><figcaption>コタロウ</figcaption></figure>
+      <figure class="pol pol-rab pop" style="--d:.65s"><span class="tape t2"></span><div class="ph ph-c"><svg class="photo" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <radialGradient id="pr-fur" cx="45%" cy="32%" r="72%"><stop offset="0" stop-color="#fff"/><stop offset=".68" stop-color="#f5eff3"/><stop offset="1" stop-color="#d8cad4"/></radialGradient>
+              <linearGradient id="pr-ear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfafc"/><stop offset="1" stop-color="#e4d8e0"/></linearGradient>
+            </defs>
+            <circle cx="40" cy="36" r="22" fill="#fff" opacity=".35"/><circle cx="170" cy="60" r="12" fill="#fff" opacity=".3"/>
+            <path d="M0 170C50 160 150 160 200 170V200H0Z" fill="#fff" opacity=".45"/>
+            <ellipse cx="100" cy="197" rx="72" ry="10" fill="#b98293" opacity=".28"/>
+            <path d="M38 206C36 162 64 140 100 140C136 140 164 162 162 206Z" fill="url(#pr-fur)"/>
+            <g transform="rotate(-16 82 78)"><path d="M70 78C64 54 64 28 72 13C78 5 88 7 90 19C94 39 92 61 88 80Z" fill="url(#pr-ear)"/><path d="M75 71C71 51 71 31 76 20C80 16 84 18 85 25C87 41 86 57 84 71Z" fill="#ffb3c4"/></g>
+            <g transform="rotate(12 120 78)"><g class="ear-tw" style="--et:-1.4s"><path d="M112 80C108 56 108 30 116 14C122 6 132 8 134 20C136 40 134 61 130 80Z" fill="url(#pr-ear)"/><path d="M117 72C114 53 114 33 119 22C123 17 128 19 129 26C130 41 129 57 126 72Z" fill="#ffb3c4"/></g></g>
+            <ellipse cx="100" cy="151" rx="40" ry="8" fill="#c9b5c2" opacity=".55"/>
+            <ellipse cx="100" cy="110" rx="50" ry="43" fill="url(#pr-fur)"/>
+            <ellipse cx="74" cy="129" rx="23" ry="16" fill="#fff" stroke="#eadfe6" stroke-width="1.5"/><ellipse cx="126" cy="129" rx="23" ry="16" fill="#fff" stroke="#eadfe6" stroke-width="1.5"/>
+            <ellipse cx="65" cy="122" rx="7" ry="4" fill="#ff9db4" opacity=".55"/><ellipse cx="135" cy="122" rx="7" ry="4" fill="#ff9db4" opacity=".55"/>
+            <g class="blink" style="--bk:-3.4s"><circle cx="80" cy="107" r="7.8" fill="#3a1f2a"/><circle cx="120" cy="107" r="7.8" fill="#3a1f2a"/><circle cx="82.8" cy="104.2" r="2.7" fill="#fff"/><circle cx="122.8" cy="104.2" r="2.7" fill="#fff"/><circle cx="77.6" cy="109.6" r="1.1" fill="#fff" opacity=".7"/><circle cx="117.6" cy="109.6" r="1.1" fill="#fff" opacity=".7"/></g>
+            <path d="M95 121C95 118 105 118 105 121C105 124 102 126 100 126C98 126 95 124 95 121Z" fill="#ff8fa8"/>
+            <path d="M100 126V130M100 130C97 134 93 134 91 131M100 130C103 134 107 134 109 131" stroke="#9b6f7e" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="97" y="131" width="6" height="5.5" rx="1.4" fill="#fff" stroke="#d8c6cf" stroke-width="1"/>
+            <g stroke="#a99aa3" stroke-width="1.3" stroke-linecap="round" opacity=".75"><path d="M70 128L46 124M70 133L48 138M130 128L154 124M130 133L152 138"/></g>
+            <g transform="rotate(28 100 172)"><path d="M93 152H107L100 196Z" fill="#ff9a3c"/><path d="M96 162H101M98 172H103M97 182H100" stroke="#e0782a" stroke-width="1.6" stroke-linecap="round"/><path d="M100 152C96 142 90 140 87 142M100 152C100 141 102 135 106 134M100 152C104 144 110 143 113 145" stroke="#4caf6e" stroke-width="3.6" fill="none" stroke-linecap="round"/></g>
+            <ellipse cx="84" cy="176" rx="12" ry="9" fill="#fff" stroke="#e2d6de" stroke-width="1.5"/><ellipse cx="116" cy="176" rx="12" ry="9" fill="#fff" stroke="#e2d6de" stroke-width="1.5"/>
+            <path d="M80 180V184M86 180V184M112 180V184M118 180V184" stroke="#d6c6d0" stroke-width="1.4" stroke-linecap="round"/>
+          </svg></div><figcaption>もち</figcaption></figure>
+      <figure class="pol pol-main pop" style="--d:.8s"><span class="tape"></span>
+        <div class="ph ph-b">
+          <div class="lay-photo"><svg class="photo" viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <radialGradient id="pc-fur" cx="50%" cy="38%" r="64%"><stop offset="0" stop-color="#fac47d"/><stop offset=".65" stop-color="#eca050"/><stop offset="1" stop-color="#c8762f"/></radialGradient>
+              <radialGradient id="pc-eye" cx="50%" cy="62%" r="60%"><stop offset="0" stop-color="#eef49a"/><stop offset="1" stop-color="#8db23a"/></radialGradient>
+              <linearGradient id="pc-light" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            </defs>
+            <path d="M0 0H96L44 124H0Z" fill="url(#pc-light)" opacity=".55"/>
+            <g stroke="#fff" stroke-width="5" opacity=".8"><path d="M20 0V124M180 0V124M0 58H42M158 58H200"/></g>
+            <ellipse cx="100" cy="197" rx="76" ry="10" fill="#6e4f36" opacity=".35"/>
+            <path d="M146 196C178 196 192 170 179 149C172 139 159 142 162 153" stroke="#dc8c40" stroke-width="13" fill="none" stroke-linecap="round"/>
+            <path d="M170 186L176 178M181 168L186 164" stroke="#b8642a" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+            <path d="M42 206C44 166 68 146 100 146C132 146 156 166 158 206Z" fill="url(#pc-fur)"/>
+            <g stroke="#b8642a" stroke-width="5" stroke-linecap="round" fill="none" opacity=".5"><path d="M50 178C56 175 61 178 63 183"/><path d="M47 193C54 190 60 193 62 198"/><path d="M150 178C144 175 139 178 137 183"/><path d="M153 193C146 190 140 193 138 198"/></g>
+            <path d="M76 206C76 174 88 157 100 157C112 157 124 174 124 206Z" fill="#fff6ea"/>
+            <ellipse cx="86" cy="198" rx="12.5" ry="8.5" fill="#fff6ea" stroke="#ead9c2" stroke-width="1.4"/><ellipse cx="114" cy="198" rx="12.5" ry="8.5" fill="#fff6ea" stroke="#ead9c2" stroke-width="1.4"/>
+            <g class="ear-tw" style="--et:-2.2s"><path d="M50 86C46 62 48 39 56 24C70 32 84 46 92 61Z" fill="#e3913f"/><path d="M57 73C55 57 57 45 61 36C70 43 78 51 82 59Z" fill="#f6b0a4"/></g>
+            <path d="M150 86C154 62 152 39 144 24C130 32 116 46 108 61Z" fill="#e3913f"/><path d="M143 73C145 57 143 45 139 36C130 43 122 51 118 59Z" fill="#f6b0a4"/>
+            <path d="M100 52C138 52 162 74 162 104C162 134 136 154 100 154C64 154 38 134 38 104C38 74 62 52 100 52Z" fill="url(#pc-fur)"/>
+            <g stroke="#b5612a" stroke-width="4.6" stroke-linecap="round" fill="none" opacity=".75"><path d="M100 56V73"/><path d="M87 58L90 73"/><path d="M113 58L110 73"/><path d="M43 98H58"/><path d="M41 110H55"/><path d="M157 98H142"/><path d="M159 110H145"/></g>
+            <path d="M100 114C90 106 72 110 71 124C70 138 88 144 100 137C112 144 130 138 129 124C128 110 110 106 100 114Z" fill="#fff6ea"/>
+            <ellipse cx="100" cy="145" rx="15" ry="8" fill="#fff6ea"/>
+            <path d="M62 150Q100 168 138 150" stroke="#1f7a62" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="100" cy="161" r="6" fill="#ffd23f" stroke="#a87412" stroke-width="1.6"/>
+            <g class="blink" style="--bk:-.8s"><ellipse cx="78" cy="100" rx="10.6" ry="9.8" fill="url(#pc-eye)" stroke="#5a3a20" stroke-width="2"/><ellipse cx="122" cy="100" rx="10.6" ry="9.8" fill="url(#pc-eye)" stroke="#5a3a20" stroke-width="2"/><ellipse cx="78" cy="101" rx="3.4" ry="8" fill="#1d1a14"/><ellipse cx="122" cy="101" rx="3.4" ry="8" fill="#1d1a14"/><circle cx="81.6" cy="96" r="2.7" fill="#fff"/><circle cx="125.6" cy="96" r="2.7" fill="#fff"/></g>
+            <ellipse cx="64" cy="122" rx="7" ry="4" fill="#ff9a8a" opacity=".3"/><ellipse cx="136" cy="122" rx="7" ry="4" fill="#ff9a8a" opacity=".3"/>
+            <path d="M94.5 116H105.5L100 122.5Z" fill="#f28a96" stroke="#f28a96" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M100 123V127M100 127C97 131 92 131 90 128M100 127C103 131 108 131 110 128" stroke="#6b4632" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <g stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".9"><path d="M74 124L42 117M74 129L44 135M126 124L158 117M126 129L156 135"/></g>
+          </svg></div>
+          <div class="lay-ill"><svg viewBox="0 0 200 200" aria-hidden="true"><use href="#pet-ill"/></svg></div>
+          <svg class="brush" viewBox="0 0 120 120" aria-hidden="true">
+            <g transform="rotate(-40 60 60)">
+              <path d="M58 52L108 56C114 56.6 114 63.4 108 64L58 68Z" fill="#1f7a62" stroke="#1c2b26" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M66 55.5L104 58.4" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".45"/>
+              <rect x="40" y="49" width="20" height="22" rx="3" fill="#d9e2e6" stroke="#1c2b26" stroke-width="3"/>
+              <path d="M47 50.5V69.5M53 50.5V69.5" stroke="#9fb0b8" stroke-width="2"/>
+              <path d="M41 51C30 50 16 54 6 60C16 66 30 70 41 69Z" fill="#8a5a36" stroke="#1c2b26" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M25 53.2C18 55 11 57.5 7 60C11 62.5 18 65 25 66.8C22 62 22 58 25 53.2Z" fill="#ffd23f"/>
+              <path d="M36 55L24 57.5M36 64.5L25 62.5" stroke="#5e3b22" stroke-width="1.4" stroke-linecap="round"/>
+            </g>
+            <path d="M17 99C17 104 15 108 18 109C21 110 22 105 21 99Z" fill="#ffd23f" stroke="#1c2b26" stroke-width="2"/>
+          </svg>
+          <span class="ai-chip">AIでイラストに</span>
+        </div>
+        <figcaption>MUGI</figcaption>
+      </figure>
+      <div class="acsta-wrap pop" style="--d:1.1s">
+        <div class="acsta">
+          <div class="plate back" aria-hidden="true"><svg viewBox="-16 -16 232 232"><use href="#pet-ill" filter="url(#cut)"/></svg></div>
+          <div class="plate"><svg viewBox="-16 -16 232 232" aria-hidden="true"><use href="#pet-ill" filter="url(#cut)"/><path d="M60 60 L84 40 M66 72 L94 48" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/></svg></div>
+        </div>
+        <div class="acsta-base"></div>
+        <span class="acsta-label">アクスタに！</span>
+      </div>
+      <svg class="hand-arrow draw" viewBox="0 0 160 160" aria-hidden="true" style="--dd:1.4s"><path class="dl" pathLength="1" d="M8 30C70 0 140 30 136 120"/><path class="dl" pathLength="1" d="M120 104L136 124L150 100"/></svg>
+      <span class="hand-note ent" style="--d:1.6s">約30秒でプレビュー</span>
+      <svg class="flo flo-pal pop" style="--d:1.25s" viewBox="0 0 120 100" aria-hidden="true"><use href="#obj-palette"/></svg>
+      <svg class="spark sp1" viewBox="0 0 40 40" style="--d:1.3s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp2" viewBox="0 0 40 40" style="--d:1.5s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp3" viewBox="0 0 40 40" style="--d:1.7s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp4" viewBox="0 0 40 40" style="--d:1.9s" aria-hidden="true"><use href="#spark"/></svg>
+      <svg class="spark sp5" viewBox="0 0 40 40" style="--d:2.1s" aria-hidden="true"><use href="#spark"/></svg>
+      <span class="ex-tag">表示例</span>
+    </div></div>
+<span class="ad-btn">無料で先行登録<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</div>
+</body>
+</html>

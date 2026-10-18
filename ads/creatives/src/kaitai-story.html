@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>解体見積メーカー 広告 story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=BIZ+UDPGothic:wght@400;700&display=swap">
+<style>
+:root {
+  --y: #f2b705; --y2: #ffd34a; --k: #1d1f22; --k2: #2a2c31; --paper: #fffdf6; --red: #d6332b;
+  --fd: "Dela Gothic One", "BIZ UDPGothic", sans-serif;
+  --fb: "BIZ UDPGothic", "Hiragino Sans", sans-serif;
+  --fm: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; }
+body { position: relative; background-color: var(--y); color: var(--k); font-family: var(--fb); font-weight: 700; -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(rgba(29,31,34,.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,31,34,.13) 1px, transparent 1px),
+    linear-gradient(rgba(29,31,34,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29,31,34,.06) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px; background-position: -1px -1px; }
+.abs { position: absolute; }
+.dims { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+.word { position: absolute; font-family: var(--fd); line-height: 1; color: transparent; -webkit-text-stroke: 3px rgba(29,31,34,.15); white-space: nowrap; letter-spacing: -.02em; }
+.tape { position: absolute; left: 0; right: 0; background: repeating-linear-gradient(-45deg, var(--k) 0 18px, var(--y) 18px 36px); }
+.tape.t { top: 0; border-bottom: 5px solid var(--k); }
+.tape.b { bottom: 0; border-top: 5px solid var(--k); }
+.logo { display: inline-flex; align-items: center; gap: .32em; font-family: var(--fd); font-weight: 400; letter-spacing: .02em; line-height: 1; white-space: nowrap; }
+.logo svg { width: 1.5em; height: 1.5em; flex: none; }
+.badge { display: inline-flex; align-items: center; gap: .5em; background: var(--k); color: var(--y); font-weight: 700; line-height: 1; padding: .42em .8em .42em .7em; border-radius: 3px; white-space: nowrap; }
+.badge::before { content: ""; width: .45em; height: .45em; border-radius: 50%; background: var(--y); box-shadow: 0 0 0 .18em rgba(242,183,5,.25); }
+.eyebrow { display: inline-flex; align-items: stretch; gap: .55em; background: #fff; border: 4px solid var(--k); box-shadow: 6px 6px 0 var(--k); line-height: 1.25; white-space: nowrap; }
+.eyebrow span { padding: .3em .7em .3em 0; }
+.eyebrow i { width: 1.25em; flex: none; background: repeating-linear-gradient(-45deg, var(--k) 0 7px, var(--y) 7px 14px); }
+.h1 { font-family: var(--fd); font-weight: 400; line-height: 1.2; letter-spacing: .01em; }
+.ln { display: block; width: fit-content; }
+.ln + .ln { margin-top: .16em; }
+.ln > span { display: block; background: var(--k); color: var(--y); padding: .06em .3em .14em; white-space: nowrap; }
+.ln-w > span { background: #fff; color: var(--k); border: 6px solid var(--k); box-shadow: 12px 12px 0 var(--k); }
+.ln-w em { font-style: normal; background: linear-gradient(transparent 62%, var(--y) 62%); }
+.cta { display: inline-flex; align-items: center; justify-content: center; gap: .45em; background: var(--k); color: var(--y); font-family: var(--fd); font-weight: 400; letter-spacing: .04em; line-height: 1; padding: .66em 1.1em; border: 4px solid var(--k); border-radius: 6px; box-shadow: 10px 10px 0 #fff; white-space: nowrap; }
+.cta svg { width: 1em; height: 1em; }
+.frame { position: absolute; border: 5px solid var(--k); box-shadow: 16px 16px 0 var(--k); transform: rotate(1.4deg); background: var(--k); }
+.frame > svg { display: block; width: 100%; height: auto; }
+.st { position: absolute; z-index: 3; filter: drop-shadow(6px 8px 0 rgba(29,31,34,.55)); }
+.st svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ctape { position: absolute; z-index: 2; background: repeating-linear-gradient(-45deg, var(--k) 0 16px, var(--y) 16px 32px); border-block: 4px solid var(--k); box-shadow: 0 8px 0 rgba(0,0,0,.25); }
+/* 見積書（表示例） */
+.doc { position: absolute; z-index: 4; background: var(--paper); color: var(--k); border: 4px solid var(--k); box-shadow: 12px 12px 0 var(--k); padding: 1.1em 1em 1em; font-weight: 700;
+  background-image: linear-gradient(rgba(29,31,34,.035) 1px, transparent 1px); background-size: 100% 1.6em; }
+.doc-head { display: flex; align-items: baseline; justify-content: space-between; gap: .6em; border-bottom: 4px double var(--k); padding-bottom: .35em; }
+.doc-head b { font-family: var(--fd); font-weight: 400; font-size: 1.5em; letter-spacing: .25em; line-height: 1.2; }
+.doc-head span { font-size: .78em; border: 2px solid var(--red); color: var(--red); padding: 0 .5em; line-height: 1.5; }
+.doc table { width: 100%; border-collapse: collapse; margin-top: .5em; font-variant-numeric: tabular-nums; line-height: 1.3; }
+.doc th { background: var(--k); color: var(--y); font-size: .74em; padding: .35em .5em; text-align: left; }
+.doc td { padding: .38em .5em; border-bottom: 1.5px dashed #b9b29c; white-space: nowrap; }
+.doc td:last-child, .doc th:last-child { text-align: right; }
+.doc .total td { border-bottom: 0; border-top: 3px solid var(--k); background: var(--y); }
+.doc .total td:last-child { font-family: var(--fd); font-weight: 400; font-size: 1.2em; }
+.doc .stamp { position: absolute; right: .7em; top: 3.4em; width: 4.2em; height: 4.2em; border: 3px solid var(--red); border-radius: 50%; color: var(--red); display: grid; place-items: center; font-size: .9em; transform: rotate(-14deg); background: rgba(214,51,43,.05); }
+</style>
+</head>
+<body>
+
+<svg class="dims" viewBox="0 0 1080 1920" aria-hidden="true">
+  <g fill="none" stroke="#1d1f22" stroke-width="2">
+    <path d="M40 120 H1040 M40 108 V132 M1040 108 V132"/>
+    <path d="M1044 300 V1600 M1032 300 H1056 M1032 1600 H1056"/>
+    <path d="M40 1800 H1040 M40 1788 V1812 M1040 1788 V1812"/>
+    <circle cx="140" cy="1130" r="44" stroke-dasharray="5 7"/><path d="M102 1130 H178 M140 1092 V1168"/>
+  </g>
+  <g fill="#1d1f22" font-family="monospace" font-size="20" letter-spacing="3">
+    <text x="540" y="110" text-anchor="middle">9,100</text>
+    <text x="540" y="1790" text-anchor="middle">SCALE 1:100</text>
+    <text x="1036" y="950" transform="rotate(-90 1036 950)" text-anchor="middle">GL＋6,800</text>
+  </g>
+</svg>
+<div class="word" style="font-size:360px;left:-30px;top:1250px">KAITAI</div>
+<div class="tape t" style="height:56px"></div>
+<div class="tape b" style="height:56px"></div>
+
+<div class="abs" style="left:64px;top:270px;right:64px;display:flex;align-items:center;justify-content:space-between">
+  <div class="logo" style="font-size:40px"><svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" fill="#1d1f22"/><path d="M10 8h14l6 6v18H10z" fill="#f2b705"/><path d="M24 8v6h6" fill="none" stroke="#1d1f22" stroke-width="2"/><path d="M14 19h12M14 23h12M14 27h7" stroke="#1d1f22" stroke-width="2.2"/><path d="M4 36 L12 30" stroke="#f2b705" stroke-width="3"/></svg><span>解体見積メーカー</span></div>
+  <span class="badge" style="font-size:30px">事前登録受付中</span>
+</div>
+
+<div class="abs" style="left:64px;top:384px"><p class="eyebrow" style="font-size:34px"><i></i><span>解体工事の見積書を、現場でつくる</span></p></div>
+
+<h1 class="h1 abs" style="left:64px;top:482px;font-size:112px">
+  <span class="ln"><span>坪数と構造で、</span></span>
+  <span class="ln ln-w" style="margin-left:.1em"><span><em>内訳つき</em>見積書。</span></span>
+</h1>
+
+<div class="frame" style="left:236px;top:870px;width:790px"><svg class="scene" viewBox="0 0 640 520" role="img" aria-label="木造2階建ての家を、ショベルカーが解体しているイラスト">
+          <defs>
+            <pattern id="ks-g1" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#f2b705" stroke-opacity=".12"/></pattern>
+            <pattern id="ks-g2" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" fill="none" stroke="#f2b705" stroke-opacity=".24" stroke-width="1.3"/></pattern>
+            <pattern id="ks-sid" width="10" height="11" patternUnits="userSpaceOnUse"><rect width="10" height="11" fill="#efe1c1"/><path d="M0 10.4H10" stroke="#c4ad80" stroke-width="1.3"/></pattern>
+            <pattern id="ks-tile" width="16" height="12" patternUnits="userSpaceOnUse"><rect width="16" height="12" fill="#434a55"/><path d="M0 11.3H16M8 0V12" stroke="#2b3038" stroke-width="1.6"/></pattern>
+            <pattern id="ks-hz" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="11" height="22" fill="#1d1f22"/><rect x="11" width="11" height="22" fill="#f2b705"/></pattern>
+          </defs>
+          <rect width="640" height="520" fill="#1d1f22"/>
+          <rect width="640" height="520" fill="url(#ks-g1)"/>
+          <rect width="640" height="520" fill="url(#ks-g2)"/>
+          <circle cx="176" cy="268" r="170" fill="#f2b705" opacity=".09"/>
+          <!-- 寸法線 -->
+          <g stroke="#f2b705" stroke-width="1.6" fill="none">
+            <path d="M48 116H290M48 106V126M290 106V126"/>
+            <path d="M22 150V432M12 150H32M12 432H32"/>
+          </g>
+          <g fill="#f2b705"><path d="M48 116l10-5v10z"/><path d="M290 116l-10-5v10z"/><path d="M22 150l-5 10h10z"/><path d="M22 432l-5-10h10z"/></g>
+          <g fill="#f2b705" font-family="monospace" font-size="15" font-weight="700" letter-spacing="1">
+            <text x="169" y="104" text-anchor="middle">W 9,100</text>
+            <text x="14" y="300" transform="rotate(-90 14 300)" text-anchor="middle">H 6,800</text>
+          </g>
+          <!-- 地面 -->
+          <rect y="432" width="640" height="88" fill="#2a2c31"/>
+          <path d="M0 433H640" stroke="#f2b705" stroke-width="2.5" stroke-dasharray="16 10"/>
+          <!-- 家 -->
+          <g class="house">
+            <rect x="62" y="200" width="214" height="102" fill="url(#ks-sid)" stroke="#0f1012" stroke-width="3"/>
+            <rect x="56" y="306" width="226" height="126" fill="url(#ks-sid)" stroke="#0f1012" stroke-width="3"/>
+            <rect x="50" y="296" width="238" height="12" fill="#6b4a2e" stroke="#0f1012" stroke-width="3"/>
+            <path d="M38 206 L118 150 H222 L300 206 Z" fill="url(#ks-tile)" stroke="#0f1012" stroke-width="3.5" stroke-linejoin="round"/>
+            <path d="M116 150H224" stroke="#2b3038" stroke-width="7" stroke-linecap="round"/>
+            <g fill="#8fb3c4" stroke="#0f1012" stroke-width="3">
+              <rect x="84" y="224" width="48" height="44"/><rect x="152" y="224" width="48" height="44"/>
+              <rect x="76" y="334" width="66" height="52"/><rect x="226" y="338" width="38" height="32"/>
+            </g>
+            <path d="M108 224V268M84 246H132M176 224V268M152 246H200M109 334V386M245 338V370" stroke="#0f1012" stroke-width="2.5"/>
+            <path d="M88 342l14-6M160 232l12-5" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+            <rect x="174" y="352" width="36" height="80" fill="#8a5a33" stroke="#0f1012" stroke-width="3"/>
+            <circle cx="202" cy="394" r="3" fill="#f2b705"/>
+            <rect x="166" y="344" width="52" height="8" fill="#6b4a2e" stroke="#0f1012" stroke-width="2.5"/>
+            <!-- かじられた跡と、むき出しの骨組み -->
+            <path d="M232 138 L312 138 L312 300 L292 302 L286 284 L270 278 L276 258 L256 248 L264 228 L246 216 L252 198 L238 186 Z" fill="#232529"/>
+            <g stroke="#c98a4b" stroke-width="6" stroke-linecap="square">
+              <path d="M262 206V298M282 236V298M252 252H290M258 296L286 240"/>
+            </g>
+            <path d="M232 186 L246 176 L258 168 L264 160" stroke="#c98a4b" stroke-width="5" fill="none"/>
+            <path d="M238 186 L252 198 L246 216 L264 228 L256 248 L276 258 L270 278 L286 284 L292 302" fill="none" stroke="#0f1012" stroke-width="3" stroke-linejoin="round"/>
+            <!-- がれき -->
+            <g stroke="#0f1012" stroke-width="2.5" stroke-linejoin="round">
+              <path d="M252 432 L268 404 L290 412 L300 396 L326 408 L338 400 L360 432Z" fill="#8b806b"/>
+              <path d="M268 432 L282 418 L304 424 L318 414 L336 432Z" fill="#b6a789"/>
+              <path d="M286 404 L340 392" stroke="#c98a4b" stroke-width="7"/>
+              <path d="M300 420 L346 426" stroke="#c98a4b" stroke-width="6"/>
+              <rect x="320" y="414" width="18" height="12" fill="#9e9a92" transform="rotate(-12 329 420)"/>
+            </g>
+          </g>
+          <!-- ショベルカー -->
+          <g class="exc">
+            <rect x="372" y="392" width="236" height="40" rx="20" fill="#14161a" stroke="#000" stroke-width="3"/>
+            <g fill="#4a4e55" stroke="#000" stroke-width="2"><circle cx="394" cy="412" r="11"/><circle cx="440" cy="412" r="11"/><circle cx="486" cy="412" r="11"/><circle cx="532" cy="412" r="11"/><circle cx="584" cy="412" r="11"/></g>
+            <path d="M378 400H602" stroke="#2c3036" stroke-width="2" stroke-dasharray="6 6"/>
+            <rect x="460" y="380" width="80" height="14" fill="#3a3c40" stroke="#000" stroke-width="2"/>
+            <path d="M392 380 V340 Q392 330 402 330 H598 Q610 330 610 342 V380 Z" fill="#ffc21a" stroke="#0f1012" stroke-width="4"/>
+            <rect x="566" y="318" width="48" height="62" rx="10" fill="#e0a800" stroke="#0f1012" stroke-width="4"/>
+            <rect x="484" y="352" width="70" height="12" fill="url(#ks-hz)" stroke="#0f1012" stroke-width="2"/>
+            <path d="M520 334V346M534 334V346M548 334V346" stroke="#0f1012" stroke-width="2.5"/>
+            <path d="M398 330 V258 Q398 250 406 250 H452 L472 288 V330 Z" fill="#ffc21a" stroke="#0f1012" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M407 260 H447 L463 290 V322 H407 Z" fill="#a9c7d6" stroke="#0f1012" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M414 270 L426 262 M414 286 L440 268" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-linecap="round"/>
+            <rect class="beacon" x="420" y="240" width="14" height="10" rx="3" fill="#ff9d00" stroke="#0f1012" stroke-width="2"/>
+            <g class="exc-arm">
+              <path d="M476 336 L508 322 L452 184 Q444 168 428 164 L384 152 L374 178 L416 190 Q428 194 430 204 Z" fill="#ffc21a" stroke="#0f1012" stroke-width="4" stroke-linejoin="round"/>
+              <path d="M466 318 L438 226" stroke="#c9ced4" stroke-width="8" stroke-linecap="round"/>
+              <path d="M466 318 L452 272" stroke="#6e747c" stroke-width="10" stroke-linecap="round"/>
+              <g class="exc-stick">
+                <path d="M368 156 L394 162 L312 250 L290 236 Z" fill="#ffc21a" stroke="#0f1012" stroke-width="4" stroke-linejoin="round"/>
+                <path d="M398 150 L346 210" stroke="#c9ced4" stroke-width="6" stroke-linecap="round"/>
+                <path d="M398 150 L374 178" stroke="#6e747c" stroke-width="8" stroke-linecap="round"/>
+                <g class="exc-bucket">
+                  <path d="M292 232 L318 246 Q324 286 286 302 L250 304 L246 292 L256 288 L250 282 L262 278 Q286 270 284 248 Z" fill="#3e4249" stroke="#0f1012" stroke-width="4" stroke-linejoin="round"/>
+                  <path d="M250 304 L238 310 L246 292 Z M256 288 L242 290 L250 282Z" fill="#c9ced4" stroke="#0f1012" stroke-width="2"/>
+                  <circle cx="300" cy="240" r="7" fill="#0f1012"/><circle cx="300" cy="240" r="3" fill="#c9ced4"/>
+                </g>
+                <circle cx="380" cy="166" r="7" fill="#0f1012"/><circle cx="380" cy="166" r="3" fill="#c9ced4"/>
+              </g>
+              <circle cx="492" cy="326" r="8" fill="#0f1012"/><circle cx="492" cy="326" r="3.5" fill="#c9ced4"/>
+            </g>
+          </g>
+          <!-- 土ぼこり・がれき -->
+          <g fill="#d9cbb0">
+            <circle class="pf" cx="262" cy="296" r="14" style="--dx:-26px;--dy:-34px"/>
+            <circle class="pf" cx="276" cy="300" r="11" style="--dx:18px;--dy:-40px;animation-delay:.15s"/>
+            <circle class="pf" cx="250" cy="306" r="9" style="--dx:-40px;--dy:-10px;animation-delay:.3s"/>
+            <circle class="pf" cx="300" cy="424" r="16" style="--dx:-30px;--dy:-26px;animation-delay:.9s"/>
+            <circle class="pf" cx="326" cy="426" r="13" style="--dx:26px;--dy:-30px;animation-delay:1.05s"/>
+            <circle class="pf" cx="276" cy="428" r="10" style="--dx:-44px;--dy:-8px;animation-delay:1.2s"/>
+          </g>
+          <path class="chunk" d="M262 302 h14 v6 h-14z" fill="#c98a4b" style="--dx:-8px;--dy:116px"/>
+          <path class="chunk" d="M274 300 l10 -4 l6 8 l-10 5z" fill="#9b9488" style="--dx:14px;--dy:118px;animation-delay:.12s"/>
+          <path class="chunk" d="M254 306 l8 0 l3 7 l-9 2z" fill="#b6a789" style="--dx:-20px;--dy:112px;animation-delay:.24s"/>
+          <!-- 手前のバリケードとコーン -->
+          <g stroke="#0f1012" stroke-width="3">
+            <path d="M42 470 L30 512 M156 470 L168 512" stroke="#e6e6e6" stroke-width="5"/>
+            <rect x="22" y="452" width="156" height="26" fill="url(#ks-hz)"/>
+            <rect x="34" y="488" width="132" height="14" fill="url(#ks-hz)"/>
+            <path d="M598 444 L612 444 L626 504 L584 504 Z" fill="#ff7a1a" stroke-linejoin="round"/>
+            <path d="M594 462 H616 M589 482 H621" stroke="#fff" stroke-width="6"/>
+            <rect x="574" y="502" width="62" height="10" fill="#14161a"/>
+          </g>
+        </svg></div>
+<span class="st" style="left:150px;top:830px;width:180px"><svg class="kart k-hat" viewBox="0 0 120 104" aria-hidden="true" focusable="false">
+  <g stroke="#1d1f22" stroke-width="4" stroke-linejoin="round">
+    <path d="M20 76 C20 40 38 18 60 18 C82 18 100 40 100 76 Z" fill="#f2b705"/>
+    <path d="M49 21 C52 17 56 16 60 16 C64 16 68 17 71 21 V76 H49 Z" fill="#ffd34a"/>
+    <path d="M6 75 H114 C116 83 110 90 102 90 H18 C10 90 4 83 6 75 Z" fill="#f2b705"/>
+    <path d="M80 41 H88 V48 H95 V56 H88 V63 H80 V56 H73 V48 H80 Z" fill="#2e9d4a" stroke-width="2.5"/>
+  </g>
+  <path d="M15 83 H105" stroke="#b98a00" stroke-width="3" stroke-linecap="round"/>
+  <path d="M29 66 C29 48 35 37 43 30" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+  <path d="M55 26 V68" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+</svg></span>
+<span class="st" style="left:900px;top:808px;width:160px"><svg class="kart k-hammer" viewBox="0 0 120 120" aria-hidden="true" focusable="false">
+  <g transform="rotate(-28 60 62)" stroke="#1d1f22" stroke-width="4" stroke-linejoin="round">
+    <rect x="53" y="38" width="14" height="76" rx="5" fill="#c98a4b"/>
+    <path d="M53 82 H67 V109 Q67 114 62 114 H58 Q53 114 53 109 Z" fill="#1d1f22"/>
+    <path d="M30 16 C18 16 10 23 6 36 C14 31 22 33 30 40 Z" fill="#8a929e"/>
+    <rect x="30" y="14" width="60" height="28" rx="3" fill="#9aa3ae"/>
+    <rect x="88" y="9" width="17" height="38" rx="3" fill="#c7cdd5"/>
+  </g>
+  <g transform="rotate(-28 60 62)" stroke-linecap="round">
+    <path d="M57 90 H63 M57 98 H63 M57 106 H63" stroke="#f2b705" stroke-width="3"/>
+    <path d="M59 48 V76" stroke="#e7b37e" stroke-width="3"/>
+    <path d="M36 21 H82" stroke="#fff" stroke-width="3" opacity=".7"/>
+  </g>
+</svg></span>
+<span class="st" style="left:836px;top:1370px;width:214px"><svg class="kart k-truck" viewBox="0 0 170 114" aria-hidden="true" focusable="false">
+  <g stroke="#1d1f22" stroke-width="4" stroke-linejoin="round">
+    <path d="M14 36 L24 20 L34 28 L46 12 L60 24 L72 14 L84 27 L97 21 L102 36 Z" fill="#8a8f98"/>
+    <path d="M38 22 L46 30 M70 20 L76 28" stroke-width="3"/>
+    <rect x="8" y="76" width="150" height="12" rx="3" fill="#1d1f22"/>
+    <path d="M6 34 H106 L100 78 H14 Z" fill="#f2b705"/>
+    <path d="M112 40 H138 Q144 40 148 46 L162 64 V82 H112 Z" fill="#f2b705"/>
+    <path d="M120 48 H136 L147 63 H120 Z" fill="#2a2c31" stroke-width="3"/>
+    <rect x="124" y="30" width="12" height="9" rx="2" class="k-lamp" fill="#ff6a3d"/>
+    <rect x="156" y="72" width="10" height="11" rx="2" fill="#1d1f22"/>
+  </g>
+  <path d="M16.0 71 L16.0 71 L18.4 62 L16.0 62Z M19.0 71 L25.0 71 L30.4 62 L24.4 62Z M31.0 71 L37.0 71 L42.4 62 L36.4 62Z M43.0 71 L49.0 71 L54.4 62 L48.4 62Z M55.0 71 L61.0 71 L66.4 62 L60.4 62Z M67.0 71 L73.0 71 L78.4 62 L72.4 62Z M79.0 71 L85.0 71 L90.4 62 L84.4 62Z M91.0 71 L97.0 71 L98.0 62 L96.4 62Z" fill="#1d1f22"/>
+  <rect x="16" y="62" width="82" height="9" fill="none" stroke="#1d1f22" stroke-width="2.5"/>
+  <path d="M38 40 V56 M62 40 V56 M86 40 V56" stroke="#b98a00" stroke-width="3" stroke-linecap="round"/>
+  <path d="M124 52 L132 52" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+  <rect x="153" y="66" width="7" height="5" fill="#fff"/>
+  <g class="k-wheel"><circle cx="36" cy="93" r="15" fill="#1d1f22" stroke="#1d1f22" stroke-width="4"/><circle cx="36" cy="93" r="7" fill="#c7cdd5"/><path d="M29 93 H43 M36 86 V100" stroke="#1d1f22" stroke-width="2.5"/><circle cx="36" cy="93" r="2.2" fill="#f2b705"/></g><g class="k-wheel"><circle cx="70" cy="93" r="15" fill="#1d1f22" stroke="#1d1f22" stroke-width="4"/><circle cx="70" cy="93" r="7" fill="#c7cdd5"/><path d="M63 93 H77 M70 86 V100" stroke="#1d1f22" stroke-width="2.5"/><circle cx="70" cy="93" r="2.2" fill="#f2b705"/></g><g class="k-wheel"><circle cx="134" cy="93" r="15" fill="#1d1f22" stroke="#1d1f22" stroke-width="4"/><circle cx="134" cy="93" r="7" fill="#c7cdd5"/><path d="M127 93 H141 M134 86 V100" stroke="#1d1f22" stroke-width="2.5"/><circle cx="134" cy="93" r="2.2" fill="#f2b705"/></g>
+</svg></span>
+<div class="doc" style="left:48px;top:1150px;width:430px;font-size:21px;transform:rotate(-4deg)">
+  <div class="doc-head"><b>御見積書</b><span>表示例</span></div>
+  <table>
+    <thead><tr><th>項目</th><th>金額</th></tr></thead>
+    <tbody>
+      <tr><td>建物解体（木造）</td><td>960,000</td></tr>
+      <tr><td>廃材運搬（4t車）</td><td>210,000</td></tr>
+      <tr><td>木くず処分</td><td>108,000</td></tr>
+      <tr><td>ブロック塀撤去</td><td>60,000</td></tr>
+      <tr class="total"><td>合計</td><td>¥1,537,800</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="abs" style="left:0;right:0;top:1548px;display:flex;justify-content:center;z-index:6"><span class="cta" style="font-size:50px">無料で先行登録<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></span></div>
+
+</body>
+</html>

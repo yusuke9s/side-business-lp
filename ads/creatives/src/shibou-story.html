@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>志望理由書コーチ 広告 story 1080x1920</title>
+<!-- 志望理由書コーチ（public/shibou.html）の広告クリエイティブ。文言を直したら Playwright でこの解像度ちょうどに撮り直す（deviceScaleFactor 1）。 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&family=Klee+One:wght@600&display=swap">
+<style>
+:root {
+  --bd: #7a1f3d; --bd-deep: #5a1530; --bd-soft: #efdde3;
+  --ink: #1b2340; --ink-2: #283158;
+  --paper: #fbf8f2; --paper-2: #f2ebdf; --white: #ffffff;
+  --red: #c42b40; --text: #1d2233; --muted: #4f566a;
+  --gl: rgba(122, 31, 61, 0.26);
+  --f-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --f-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --f-pen: "Klee One", "Shippori Mincho", serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; width: 1080px; height: 1920px; overflow: hidden; }
+body { background: var(--paper); color: var(--text); font-family: var(--f-body); }
+p { margin: 0; }
+.ad { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 78% 70%, rgba(239,221,227,.75), transparent 55%),
+    repeating-linear-gradient(90deg, transparent 0 calc(var(--g) - 1px), rgba(122,31,61,.10) calc(var(--g) - 1px) var(--g)),
+    repeating-linear-gradient(0deg, transparent 0 calc(var(--g) - 1px), rgba(122,31,61,.10) calc(var(--g) - 1px) var(--g));
+}
+/* 原稿用紙の外枠（ノド）風の帯 */
+.ad::after { content: ""; position: absolute; inset: var(--frame-in); border: 2px solid rgba(122,31,61,.22); pointer-events: none; }
+.wm { position: absolute; font-family: var(--f-display); font-weight: 800; line-height: 1; color: rgba(122,31,61,.05); pointer-events: none; }
+
+/* logo / badge */
+.logo { position: absolute; display: inline-flex; align-items: center; gap: .32em; color: var(--ink); }
+.logo svg { width: 1.9em; height: 1.9em; flex: none; }
+.logo b { display: block; font-family: var(--f-display); font-weight: 800; letter-spacing: .04em; line-height: 1.1; }
+.logo small { display: block; font-size: .36em; font-weight: 500; letter-spacing: .12em; color: var(--bd); line-height: 1.3; }
+.badge { position: absolute; font-weight: 700; color: var(--white); background: var(--bd); border-radius: 6px; white-space: nowrap; line-height: 1; display: inline-flex; align-items: center; gap: .45em; box-shadow: 0 4px 0 var(--bd-deep); }
+.badge::before { content: ""; width: .5em; height: .5em; border-radius: 50%; background: #ffd1db; }
+
+/* headline */
+h1 { position: absolute; margin: 0; font-family: var(--f-display); font-weight: 800; color: var(--ink); }
+h1 .l1 { display: block; letter-spacing: .02em; line-height: 1.15; white-space: nowrap; }
+h1 .l2 { display: inline-block; color: var(--white); background: var(--bd); line-height: 1.3; white-space: nowrap; clip-path: polygon(0 0, 100% 0, calc(100% - .28em) 100%, 0 100%); }
+h1 .l2 em { font-style: normal; position: relative; }
+h1 .l2 em svg { position: absolute; left: -14%; top: -20%; width: 128%; height: 140%; overflow: visible; }
+h1 .l2 em path { fill: none; stroke: #ffd1db; stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.sub { position: absolute; display: flex; align-items: center; gap: .5em; font-weight: 700; color: var(--bd); letter-spacing: .04em; white-space: nowrap; }
+.sub::before { content: ""; width: 1.4em; height: 2px; background: var(--bd); }
+
+/* CTA */
+.cta { position: absolute; display: inline-flex; align-items: center; justify-content: center; gap: .5em; background: var(--bd); color: var(--white); font-weight: 700; letter-spacing: .04em; border-radius: 10px; white-space: nowrap; line-height: 1; box-shadow: 0 .2em 0 var(--bd-deep), 0 .5em 1em rgba(90,21,48,.28); overflow: hidden; }
+.cta::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.22) 48%, transparent 66%); }
+.cta .arr { font-weight: 700; }
+
+/* paper (原稿用紙) */
+.paper { position: absolute; background: #fffdf8; padding: calc(var(--cell) * .55) calc(var(--cell) * .6) calc(var(--cell) * .66); box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 24px 50px rgba(27,35,64,.18), 0 6px 14px rgba(27,35,64,.08); transform: rotate(-2.2deg); z-index: 3; }
+.paper::before, .paper::after { content: ""; position: absolute; width: calc(var(--cell) * 2.9); height: calc(var(--cell) * .8); background: rgba(239,221,227,.88); top: calc(var(--cell) * -.36); box-shadow: 0 2px 4px rgba(0,0,0,.06); }
+.paper::before { left: calc(var(--cell) * .55); transform: rotate(-6deg); }
+.paper::after { right: calc(var(--cell) * .55); transform: rotate(5deg); }
+.paper-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: calc(var(--cell) * .3); color: var(--muted); }
+.paper-head b { font-family: var(--f-display); color: var(--ink); font-size: calc(var(--cell) * .46); }
+.tag-ex { font-size: calc(var(--cell) * .36); font-weight: 700; color: var(--bd); border: 1px solid var(--bd); border-radius: 3px; padding: 0 .5em; background: #fff; line-height: 1.5; }
+.genko-wrap { position: relative; width: max-content; margin: 0 auto; }
+.genko { display: grid; direction: rtl; grid-auto-flow: column; grid-template-rows: repeat(12, var(--cell)); grid-auto-columns: var(--cell); border-top: 1.5px solid var(--gl); border-right: 1.5px solid var(--gl); font-family: var(--f-display); font-weight: 600; color: var(--ink); }
+.genko i { font-style: normal; writing-mode: vertical-rl; display: grid; place-items: center; position: relative; border-left: 1px solid var(--gl); border-bottom: 1px solid var(--gl); font-size: calc(var(--cell) * .58); line-height: 1; }
+.genko i.t { font-weight: 800; color: var(--bd); }
+.genko i s { text-decoration: none; position: absolute; bottom: -.55em; left: 50%; transform: translateX(-50%); }
+.anno { position: absolute; inset: -14px; width: calc(100% + 28px); height: calc(100% + 28px); overflow: visible; pointer-events: none; }
+.anno path { fill: none; stroke: var(--red); stroke-width: calc(var(--cell) * .08); stroke-linecap: round; stroke-linejoin: round; }
+.pen-note { position: absolute; left: calc(var(--cell) * .08); top: calc(var(--cell) * 3.6); writing-mode: vertical-rl; font-family: var(--f-pen); color: var(--red); font-size: calc(var(--cell) * .46); line-height: 1.2; letter-spacing: .08em; }
+
+/* 問いの吹き出し */
+.bubble { position: absolute; z-index: 5; background: var(--white); border: 3px solid var(--ink); border-radius: 18px; box-shadow: 8px 8px 0 var(--ink); }
+.bubble::before { content: ""; position: absolute; top: -17px; right: 22%; width: 28px; height: 28px; background: var(--white); border-left: 3px solid var(--ink); border-top: 3px solid var(--ink); transform: rotate(45deg) skew(8deg, 8deg); }
+.bubble-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: .35em; }
+.bubble-h b { font-family: var(--f-pen); color: var(--white); background: var(--red); font-size: .82em; padding: .05em .7em; border-radius: 4px; font-weight: 600; }
+.bubble-h .tag-ex { font-size: .62em; }
+.bubble p { line-height: 1.6; font-weight: 500; color: var(--ink); }
+
+.stamp { position: absolute; z-index: 6; font-family: var(--f-pen); font-weight: 600; color: var(--red); border: 3px solid var(--red); background: rgba(255,255,255,.92); border-radius: 8px; padding: .1em .55em; white-space: nowrap; line-height: 1.4; }
+
+.c-img { position: absolute; z-index: 2; filter: drop-shadow(0 16px 18px rgba(27,35,64,.22)); }
+.c-img svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.pole { position: absolute; border-radius: 50%; background: var(--bd); opacity: .1; }
+.squig { position: absolute; overflow: visible; }
+.squig path { fill: none; stroke: var(--red); stroke-width: 3; stroke-linecap: round; opacity: .55; }
+
+.ad { --g: 40px; --frame-in: 30px; }
+.wm { font-size: 1100px; right: -220px; top: 520px; }
+.pole { width: 360px; height: 360px; left: 760px; top: 1180px; }
+.squig { left: 110px; top: 1530px; width: 0; height: 0; }
+.logo { left: 80px; top: 280px; font-size: 44px; }
+.badge { right: 80px; top: 296px; font-size: 32px; padding: 18px 26px; }
+h1 { left: 80px; top: 410px; }
+h1 .l1 { font-size: 132px; }
+h1 .l2 { margin-top: 26px; font-size: 92px; padding: 8px 48px 12px 26px; }
+.sub { left: 82px; top: 740px; font-size: 40px; }
+.c-bldg { left: 810px; top: 830px; width: 200px; height: 200px; z-index: 1; }
+.paper { --cell: 37px; left: 408px; top: 860px; }
+.c-cap { left: 110px; top: 860px; width: 180px; height: 180px; z-index: 4; transform: rotate(-8deg); }
+.c-books { left: 120px; top: 1056px; width: 170px; height: 170px; }
+.c-pen { left: 850px; top: 1270px; width: 150px; height: 150px; z-index: 6; }
+.bubble { left: 80px; top: 1236px; width: 500px; padding: 20px 26px 22px; font-size: 30px; }
+.bubble::before { right: 18%; }
+.stamp { font-size: 30px; }
+.stamp.s1 { left: 820px; top: 1076px; transform: rotate(-4deg); }
+.stamp.s2 { left: 796px; top: 1166px; transform: rotate(4deg); }
+.cta { left: 50%; top: 1500px; transform: translateX(-50%); font-size: 46px; padding: 30px 64px; }
+</style>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <filter id="seal-ink" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="4" result="w"/>
+      <feDisplacementMap in="SourceGraphic" in2="w" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".75" numOctaves="1" seed="9" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  9 0 0 0 -2.75" result="sp"/>
+      <feComposite in="d" in2="sp" operator="in"/>
+    </filter>
+    <!-- 手描き風の小物（墨の線＋原稿用紙の色） -->
+    <symbol id="art-bldg" viewBox="0 0 200 200"><g stroke="#1b2340" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="100" cy="186" rx="84" ry="7" fill="#1b2340" opacity=".1" stroke="none"/>
+      <path d="M100 30 V8" fill="none"/>
+      <path d="M100 9 C108 6 114 12 124 9 L122 20 C113 23 107 17 100 20 Z" fill="#c42b40"/>
+      <rect x="40" y="84" width="120" height="62" fill="#283158"/>
+      <path d="M44 88 L72 88 L44 116 Z" fill="#fffdf8" opacity=".06" stroke="none"/>
+      <path d="M88 146 V116 a12 12 0 0 1 24 0 V146" fill="#efdde3" stroke-width="2"/>
+      <path d="M100 104 V146" stroke-width="1.4" opacity=".6"/>
+      <path d="M22 70 L100 28 L178 70 Z" fill="#efdde3"/>
+      <path d="M46 64 L100 37 L154 64 Z" fill="#fffdf8" stroke-width="1.6"/>
+      <path d="M128 50 l6 -3 M136 54 l8 -4 M144 58 l6 -3" stroke-width="1.2" opacity=".45"/>
+      <circle cx="100" cy="54" r="7.5" fill="#fffdf8"/>
+      <circle cx="100" cy="54" r="3.4" fill="#c42b40" stroke="none"/>
+      <rect x="28" y="70" width="144" height="14" fill="#7a1f3d"/>
+      <path d="M36 77 H164" stroke="#fffdf8" stroke-width="1.2" stroke-dasharray="4 5" opacity=".7"/>
+      <rect x="44" y="84" width="16" height="6" fill="#fffdf8"/><rect x="46" y="90" width="12" height="52" fill="#fffdf8"/><path d="M50 93 V139 M54 93 V139" stroke-width="1" opacity=".5"/><path d="M56 92 V140" stroke-width="2.5" opacity=".12"/><rect x="44" y="142" width="16" height="5" fill="#fffdf8"/><rect x="66" y="84" width="16" height="6" fill="#fffdf8"/><rect x="68" y="90" width="12" height="52" fill="#fffdf8"/><path d="M72 93 V139 M76 93 V139" stroke-width="1" opacity=".5"/><path d="M78 92 V140" stroke-width="2.5" opacity=".12"/><rect x="66" y="142" width="16" height="5" fill="#fffdf8"/><rect x="118" y="84" width="16" height="6" fill="#fffdf8"/><rect x="120" y="90" width="12" height="52" fill="#fffdf8"/><path d="M124 93 V139 M128 93 V139" stroke-width="1" opacity=".5"/><path d="M130 92 V140" stroke-width="2.5" opacity=".12"/><rect x="118" y="142" width="16" height="5" fill="#fffdf8"/><rect x="140" y="84" width="16" height="6" fill="#fffdf8"/><rect x="142" y="90" width="12" height="52" fill="#fffdf8"/><path d="M146 93 V139 M150 93 V139" stroke-width="1" opacity=".5"/><path d="M152 92 V140" stroke-width="2.5" opacity=".12"/><rect x="140" y="142" width="16" height="5" fill="#fffdf8"/>
+      <rect x="34" y="147" width="132" height="9" fill="#fffdf8"/>
+      <rect x="26" y="156" width="148" height="10" fill="#f2ebdf"/>
+      <rect x="18" y="166" width="164" height="12" fill="#f2ebdf"/>
+      <path d="M140 160.5 h28 M150 171 h26 M150 174.5 h20" stroke-width="1" opacity=".4"/>
+    </g></symbol>
+    <symbol id="art-cap" viewBox="0 0 200 200"><g stroke="#1b2340" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="100" cy="178" rx="62" ry="7" fill="#1b2340" opacity=".1" stroke="none"/>
+      <path d="M52 92 V134 C52 158 148 158 148 134 V92 Z" fill="#283158"/>
+      <path d="M60 138 C80 148 120 148 140 138" fill="none" stroke="#fffdf8" stroke-width="1.4" opacity=".35"/>
+      <path d="M126 104 V140" stroke="#fffdf8" stroke-width="1.2" opacity=".18"/>
+      <path d="M12 76 V83 L100 123 L188 83 V76 L100 116 Z" fill="#11172b"/>
+      <path d="M100 36 L188 76 L100 116 L12 76 Z" fill="#1b2340"/>
+      <path d="M100 47 L164 76 L100 105 L36 76 Z" fill="#283158" stroke="none"/>
+      <path d="M58 61 L98 43" stroke="#fffdf8" stroke-width="1.6" opacity=".4" fill="none"/>
+      <path d="M100 76 C122 80 146 86 160 89 V128" fill="none" stroke="#d4a24c" stroke-width="3.2"/>
+      <circle cx="100" cy="76" r="6.5" fill="#c42b40"/>
+      <path d="M154 126 h12 v8 h-12 z" fill="#d4a24c"/>
+      <path d="M153 134 h14 l4 28 h-22 z" fill="#d4a24c"/>
+      <path d="M156 139 v20 M160 139 v21 M164 139 v20" stroke-width="1" opacity=".55"/>
+    </g></symbol>
+    <symbol id="art-pen" viewBox="0 0 200 200"><g stroke="#1b2340" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <path d="M96 178 q12 -10 24 0 t24 0 t24 0" fill="none" stroke="#c42b40" stroke-width="3"/>
+      <g transform="rotate(-38 100 100)">
+        <path d="M32 88 v24 h-10 a12 12 0 0 1 0 -24 z" fill="#5a1530"/>
+        <rect x="32" y="88" width="92" height="24" fill="#7a1f3d"/>
+        <path d="M38 94.5 H108" stroke="#fffdf8" stroke-width="2" opacity=".35"/>
+        <path d="M40 106 H108" stroke-width="1.2" opacity=".35"/>
+        <rect x="112" y="88" width="8" height="24" fill="#d4a24c"/>
+        <rect x="42" y="82" width="52" height="6.5" rx="3.2" fill="#d4a24c"/>
+        <path d="M124 90 L146 93 V107 L124 110 Z" fill="#1b2340"/>
+        <path d="M146 92 C160 92 176 96 189 100 C176 104 160 108 146 108 Z" fill="#d4a24c"/>
+        <path d="M165 100 H187" stroke-width="1.6"/>
+        <circle cx="162" cy="100" r="2.6" fill="#1b2340" stroke="none"/>
+        <path d="M150 96 C158 96 166 97 172 98.5" stroke="#fffdf8" stroke-width="1.4" opacity=".5"/>
+      </g>
+      <circle cx="176" cy="42" r="3.2" fill="#c42b40" stroke="none"/>
+    </g></symbol>
+    <symbol id="art-books" viewBox="0 0 200 200"><g stroke="#1b2340" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+      <ellipse cx="100" cy="184" rx="82" ry="7" fill="#1b2340" opacity=".1" stroke="none"/>
+      <rect x="22" y="144" width="156" height="32" rx="3" fill="#1b2340"/>
+      <rect x="150" y="148" width="24" height="24" fill="#fffdf8"/>
+      <path d="M152 154 h20 M152 160 h20 M152 166 h20" stroke-width="1" opacity=".5"/>
+      <path d="M40 144 v32 M48 144 v32" stroke="#d4a24c" stroke-width="2.2"/>
+      <rect x="70" y="153" width="54" height="14" fill="#fffdf8" stroke-width="1.6"/>
+      <path d="M78 160 h38" stroke-width="1.4" opacity=".6"/>
+      <g transform="rotate(-4 100 128)">
+        <rect x="32" y="114" width="140" height="30" rx="3" fill="#7a1f3d"/>
+        <rect x="36" y="118" width="20" height="22" fill="#fffdf8"/>
+        <path d="M38 124 h16 M38 130 h16 M38 136 h16" stroke-width="1" opacity=".5"/>
+        <path d="M146 114 v30 M154 114 v30" stroke="#d4a24c" stroke-width="2.2"/>
+        <path d="M72 129 h56" stroke="#fffdf8" stroke-width="2" opacity=".6"/>
+        <path d="M118 143 v20 l5 -4.5 l5 4.5 v-20" fill="#c42b40" stroke-width="1.8"/>
+      </g>
+      <g transform="rotate(3 100 98)">
+        <rect x="28" y="86" width="142" height="28" rx="3" fill="#efdde3"/>
+        <rect x="146" y="90" width="20" height="20" fill="#fffdf8"/>
+        <path d="M148 96 h16 M148 102 h16" stroke-width="1" opacity=".5"/>
+        <path d="M31 86 h13 v28 h-13 a3 3 0 0 1 -3 -3 v-22 a3 3 0 0 1 3 -3 z" fill="#c42b40"/>
+        <path d="M62 100 h64" stroke-width="1.6" opacity=".55"/>
+      </g>
+      <g transform="rotate(-8 92 66)">
+        <rect x="56" y="44" width="72" height="44" fill="#fffdf8"/>
+        <path d="M65 44 v44 M74 44 v44 M83 44 v44 M92 44 v44 M101 44 v44 M110 44 v44 M119 44 v44 M56 58.7 h72 M56 73.3 h72" stroke="#c42b40" stroke-width="1" opacity=".4"/>
+        <path d="M104 51 c9 -3 15 6 11 13 c-4 6 -15 5 -16 -2" fill="none" stroke="#c42b40" stroke-width="2.2"/>
+        <path d="M66 52 v6 M75 66 v6 M66 80 v4" stroke-width="2" opacity=".7"/>
+      </g>
+    </g></symbol>
+  </defs>
+</svg>
+
+
+<div class="ad">
+  <div class="wm" aria-hidden="true">志</div>
+  <div class="pole" aria-hidden="true"></div>
+  <svg class="squig" viewBox="0 0 120 30" aria-hidden="true"><path d="M4 18 q14 -22 28 0 t28 0 t28 0 t28 0"/></svg>
+
+  <div class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" fill="#fffdf8" stroke="#7a1f3d" stroke-width="2"/><path d="M14 1.5v37M26 1.5v37M1.5 14h37M1.5 26h37" stroke="#7a1f3d" stroke-opacity=".3" stroke-width="1"/><text x="20" y="27.5" text-anchor="middle" font-family="Shippori Mincho, serif" font-weight="800" font-size="20" fill="#1b2340">志</text><circle cx="29" cy="11" r="7" fill="none" stroke="#c42b40" stroke-width="2"/></svg><span><small>総合型・推薦型選抜の</small><b>志望理由書コーチ</b></span></div>
+  <div class="badge">事前登録受付中</div>
+
+  <h1><span class="l1">書き直さない。</span><span class="l2"><em>問い<svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M52 4 C18 2 2 18 6 34 C10 52 46 58 74 52 C98 46 100 22 84 12 C70 3 44 2 30 8"/></svg></em>返す添削。</span></h1>
+  <p class="sub">総合型選抜・推薦の志望理由書に</p>
+
+  <div class="c-img c-bldg" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#art-bldg"/></svg></div>
+  <div class="paper">
+    <div class="paper-head"><b>下書き</b><span class="tag-ex">表示例</span></div>
+    <div class="genko-wrap">
+      <div class="genko" id="genko" aria-hidden="true"><i></i><i></i><i class="t">志</i><i class="t">望</i><i class="t">理</i><i class="t">由</i><i class="t">書</i><i></i><i></i><i></i><i></i><i></i><i>　</i><i>私</i><i>は</i><i>貴</i><i>学</i><i>の</i><i class="c">国</i><i class="c">際</i><i class="c">協</i><i class="c">力</i><i>の</i><i>学</i><i>び</i><i>に</i><i>惹</i><i>か</i><i>れ</i><i>ま</i><i>し</i><i>た</i><i>。</i><i class="u">高</i><i class="u">校</i><i class="u">時</i><i class="u">代</i><i class="u">の</i><i class="u">ボ</i><i class="u">ラ</i><i class="u">ン</i><i class="u">テ</i><i class="u">ィ</i><i class="u">ア</i><i class="u">経</i><i class="u">験</i><i class="u">か</i><i class="u">ら<s>、</s></i><i>困</i><i>っ</i><i>て</i><i>い</i><i>る</i><i>人</i><i>の</i><i>立</i><i>場</i><i>に</i><i>立</i><i>っ</i><i>て</i><i>考</i><i>え</i><i>る</i><i>大</i><i>切</i><i>さ</i><i>を</i><i>学</i><i>び</i><i>ま</i><i>し</i><i>た</i><i>。</i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <svg class="anno" id="anno" aria-hidden="true"></svg>
+      <span class="pen-note" aria-hidden="true">いつ？どんな経験？</span>
+    </div>
+  </div>
+  <div class="c-img c-cap" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#art-cap"/></svg></div>
+  <div class="c-img c-books" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#art-books"/></svg></div>
+  <div class="c-img c-pen" aria-hidden="true"><svg viewBox="0 0 200 200"><use href="#art-pen"/></svg></div>
+  <div class="bubble">
+    <div class="bubble-h"><b>問い</b><span class="tag-ex">表示例</span></div>
+    <p>そのボランティアで、あなたが一番迷ったことは何でしたか。</p>
+  </div>
+  <span class="stamp s1">構成 ◯</span><span class="stamp s2">具体性 △</span>
+  <div class="cta">無料で先行登録<span class="arr">→</span></div>
+</div>
+
+
+<script>
+(function () {
+  function mk(t, a) { var e = document.createElementNS("http://www.w3.org/2000/svg", t); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  // LP（public/shibou.html）の赤ペン注記と同じ描き方：{c} を丸で囲み、{u} の右に波線
+  function annotate() {
+    var anno = document.getElementById("anno"); anno.innerHTML = "";
+    var box = anno.getBoundingClientRect();
+    function rel(r) { return { x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height }; }
+    var cs = $$("#genko i.c").map(function (c) { return rel(c.getBoundingClientRect()); });
+    var pad = parseFloat(getComputedStyle(document.querySelector(".paper")).getPropertyValue("--cell")) / 4;
+    if (cs.length) {
+      var x1 = Math.min.apply(null, cs.map(function (r) { return r.x; })), y1 = Math.min.apply(null, cs.map(function (r) { return r.y; }));
+      var x2 = Math.max.apply(null, cs.map(function (r) { return r.x + r.w; })), y2 = Math.max.apply(null, cs.map(function (r) { return r.y + r.h; }));
+      var cx = (x1 + x2) / 2, cy = (y1 + y2) / 2, rx = (x2 - x1) / 2 + pad, ry = (y2 - y1) / 2 + pad;
+      var d = "M" + (cx + rx * .3) + " " + (cy - ry) +
+        " C" + (cx - rx * 1.25) + " " + (cy - ry * 1.05) + " " + (cx - rx * 1.2) + " " + (cy + ry * 1.1) + " " + cx + " " + (cy + ry) +
+        " C" + (cx + rx * 1.2) + " " + (cy + ry * .95) + " " + (cx + rx * 1.15) + " " + (cy - ry * 1.15) + " " + (cx - rx * .2) + " " + (cy - ry * 1.08);
+      anno.appendChild(mk("path", { d: d }));
+    }
+    var groups = {};
+    $$("#genko i.u").forEach(function (c) { var r = rel(c.getBoundingClientRect()); var k = Math.round(r.x); (groups[k] = groups[k] || []).push(r); });
+    Object.keys(groups).forEach(function (k) {
+      var g = groups[k], x = g[0].x + g[0].w - 3, ya = g[0].y + 3, yb = g[g.length - 1].y + g[g.length - 1].h - 3, d = "M" + x + " " + ya, amp = pad * .4, n = Math.max(2, Math.round((yb - ya) / (pad * 1.3)));
+      for (var i = 1; i <= n; i++) { var y = ya + (yb - ya) * i / n; d += " Q" + (x + (i % 2 ? amp : -amp)) + " " + (y - (yb - ya) / n / 2) + " " + x + " " + y; }
+      anno.appendChild(mk("path", { d: d }));
+    });
+  }
+  document.fonts.ready.then(function () { requestAnimationFrame(function () { annotate(); document.documentElement.setAttribute("data-ready", "1"); }); });
+})();
+</script>
+
+</body>
+</html>
