@@ -94,11 +94,11 @@ h1 .em path { fill: none; stroke: var(--gold-lt); stroke-width: .11em; stroke-li
 .badge { right: 72px; top: 72px; font-size: 26px; padding: 15px 26px; }
 h1 { left: 70px; top: 166px; font-size: 86px; }
 .sub { left: 72px; top: 456px; font-size: 32px; }
-.tl-card { left: 452px; top: 532px; width: 572px; font-size: 21px; }
+.tl-card { left: 462px; top: 532px; width: 564px; font-size: 21px; }
 .s-cal { left: 930px; top: 452px; width: 120px; }
 .s-flower { left: 96px; top: 560px; width: 100px; transform: rotate(-4deg); }
 .s-memo { left: 236px; top: 650px; width: 150px; }
-.cta { left: 72px; top: 902px; font-size: 34px; padding: 28px 44px; }
+.cta { left: 72px; top: 904px; font-size: 32px; padding: 27px 38px; }
 </style>
 </head>
 <body>
@@ -202,7 +202,7 @@ h1 { left: 70px; top: 166px; font-size: 86px; }
     var tl = document.getElementById("tl"), svg = document.getElementById("tl-path");
     var b = tl.getBoundingClientRect();
     var pts = [document.querySelector(".tl-today .sun")].concat($$(".tl .node")).map(function (n) { var r = n.getBoundingClientRect(); return [r.left - b.left + r.width / 2, r.top - b.top + r.height / 2]; });
-    var k = parseFloat(getComputedStyle(tl).fontSize);
+    var k = parseFloat(getComputedStyle(tl).fontSize) * .6;
     var d = "M" + pts[0][0] + " " + pts[0][1];
     for (var i = 1; i < pts.length; i++) {
       var a = pts[i - 1], c = pts[i], my = (a[1] + c[1]) / 2;

@@ -95,7 +95,7 @@ h1 .em path { fill: none; stroke: var(--gold-lt); stroke-width: .11em; stroke-li
 h1 { left: 48px; top: 124px; font-size: 58px; }
 .sub { left: 50px; top: 316px; font-size: 23px; }
 .tl-card { left: 640px; top: 66px; width: 516px; font-size: 18px; }
-.s-cal { left: 1090px; top: 26px; width: 92px; }
+.s-cal { left: 1104px; top: 12px; width: 82px; }
 .s-flower { left: 572px; top: 60px; width: 64px; transform: rotate(-4deg); }
 .s-memo { left: 584px; top: 410px; width: 100px; }
 .cta { left: 48px; top: 416px; font-size: 27px; padding: 24px 38px; }
@@ -202,7 +202,7 @@ h1 { left: 48px; top: 124px; font-size: 58px; }
     var tl = document.getElementById("tl"), svg = document.getElementById("tl-path");
     var b = tl.getBoundingClientRect();
     var pts = [document.querySelector(".tl-today .sun")].concat($$(".tl .node")).map(function (n) { var r = n.getBoundingClientRect(); return [r.left - b.left + r.width / 2, r.top - b.top + r.height / 2]; });
-    var k = parseFloat(getComputedStyle(tl).fontSize);
+    var k = parseFloat(getComputedStyle(tl).fontSize) * .6;
     var d = "M" + pts[0][0] + " " + pts[0][1];
     for (var i = 1; i < pts.length; i++) {
       var a = pts[i - 1], c = pts[i], my = (a[1] + c[1]) / 2;

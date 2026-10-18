@@ -89,16 +89,16 @@ h1 .em path { fill: none; stroke: var(--gold-lt); stroke-width: .11em; stroke-li
 .ad { --fi: 34px; }
 .light { width: 1400px; height: 1400px; right: -520px; top: -420px; }
 .hills { height: 340px; }
-.sprig { left: 800px; top: 680px; width: 120px; transform: rotate(18deg); }
+.sprig { left: 70px; top: 1660px; width: 96px; transform: rotate(-14deg); }
 .logo { left: 84px; top: 286px; font-size: 44px; }
 .badge { right: 84px; top: 292px; font-size: 32px; padding: 18px 30px; }
 h1 { left: 82px; top: 410px; font-size: 104px; }
 .sub { left: 86px; top: 760px; font-size: 40px; }
-.tl-card { left: 84px; top: 900px; width: 912px; font-size: 29px; }
-.s-cal { left: 850px; top: 820px; width: 170px; }
-.s-flower { left: 40px; top: 790px; width: 0; }
-.s-memo { left: 60px; top: 1330px; width: 150px; }
-.cta { left: 50%; top: 1510px; transform: translateX(-50%); font-size: 46px; padding: 34px 70px; }
+.tl-card { left: 84px; top: 872px; width: 912px; font-size: 27px; }
+.s-cal { left: 862px; top: 716px; width: 146px; }
+.s-flower { left: 884px; top: 1476px; width: 86px; transform: rotate(5deg); }
+.s-memo { left: 76px; top: 1494px; width: 140px; }
+.cta { left: 50%; top: 1514px; transform: translateX(-50%); font-size: 46px; padding: 34px 70px; }
 </style>
 </head>
 <body>
@@ -202,7 +202,7 @@ h1 { left: 82px; top: 410px; font-size: 104px; }
     var tl = document.getElementById("tl"), svg = document.getElementById("tl-path");
     var b = tl.getBoundingClientRect();
     var pts = [document.querySelector(".tl-today .sun")].concat($$(".tl .node")).map(function (n) { var r = n.getBoundingClientRect(); return [r.left - b.left + r.width / 2, r.top - b.top + r.height / 2]; });
-    var k = parseFloat(getComputedStyle(tl).fontSize);
+    var k = parseFloat(getComputedStyle(tl).fontSize) * .6;
     var d = "M" + pts[0][0] + " " + pts[0][1];
     for (var i = 1; i < pts.length; i++) {
       var a = pts[i - 1], c = pts[i], my = (a[1] + c[1]) / 2;

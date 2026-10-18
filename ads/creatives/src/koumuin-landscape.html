@@ -22,6 +22,7 @@ html, body { width: 1200px; height: 628px; }
 }
 body { overflow: hidden; position: relative; color: #fff; font-family: var(--font); font-weight: 500; line-height: 1.85; -webkit-font-smoothing: antialiased;
   background: var(--navy); background-image: radial-gradient(ellipse at 75% 55%, rgba(80,130,220,.35), transparent 60%), linear-gradient(160deg, #22427c 0%, var(--navy) 45%, var(--navy-deep) 100%); }
+.abs { position: absolute; }
 .bpgrid { position: absolute; inset: 0; background-image: var(--bp-w); background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px; }
 .citymap { position: absolute; inset: 0; width: 100%; height: 100%; }
 .citymap .st { fill: none; stroke: rgba(255,255,255,.16); stroke-width: 1.4; }
@@ -66,7 +67,7 @@ h1 .g { color: var(--green-light); }
 .panel { position: absolute; width: 350px; height: 236px; background: #eaf0fa; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); color: var(--green); overflow: hidden; }
 .panel::before { content: ""; position: absolute; inset: 0; background-image: var(--bp); background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px; }
 .panel svg { position: absolute; left: 50%; bottom: 0; width: 82%; height: auto; transform: translateX(-50%); display: block; }
-.panel-tag { position: absolute; left: 40px; top: 14px; font-size: 11px; font-weight: 900; letter-spacing: .2em; color: var(--navy); z-index: 2; line-height: 1.4; }
+.panel-tag { position: absolute; left: 40px; top: 14px; font-size: 11px; font-weight: 900; letter-spacing: .2em; color: var(--navy); z-index: 2; line-height: 1.4; background: #eaf0fa; padding: 1px 6px; }
 .badge-ai { position: absolute; background: var(--green); color: #fff; font-size: 12px; font-weight: 900; padding: 6px 12px; letter-spacing: .1em; clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%); line-height: 1.4; }
 
 .chat { position: absolute; width: 410px; background: #fff; color: var(--ink); border-radius: 6px; box-shadow: 0 30px 60px -20px rgba(0,0,20,.6); overflow: hidden; }
@@ -156,7 +157,7 @@ h1 { font-size: 58px; }
 </g>
 <path d="M136 63 V30 M131 30 H141 M131 63 H141" stroke="#69db7c" stroke-width="1.2" fill="none"/>
 <text x="140" y="49" font-family="Zen Kaku Gothic New, sans-serif" font-weight="900" font-size="7" fill="#69db7c" letter-spacing=".08em">H</text>
-</svg><span class="lbl">CITY HALL</span>
+</svg>
 </div></div>
 <div class="abs" style="left:630px;top:200px;"><div class="chat" style="position:relative;zoom:1.0;">
   <div class="chat-top"><span class="dots"><i></i><i></i><i></i></span><span>模擬面接・〇〇市</span><span class="tag-ex">表示例</span></div>
