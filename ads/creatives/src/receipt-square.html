@@ -61,7 +61,8 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 /* 読み取り結果カード（LPのMOCK_RECEIPTと同じ） */
 .zzb { --t: 14px; -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--t) 100%; mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--t) 100%; }
 .shadow { filter: drop-shadow(0 12px 18px rgba(6,47,59,.3)); }
-.result { position: absolute; }
+.result-pos { position: absolute; }
+.result { position: relative; }
 .mock-list { background: var(--paper); color: var(--ink); border-radius: 4px; padding: 22px 18px 26px; position: relative; }
 .mock-list::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: repeating-linear-gradient(90deg, var(--teal) 0 12px, transparent 12px 18px); opacity: .6; }
 .list-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--line); padding-bottom: 10px; margin-bottom: 4px; }
@@ -81,7 +82,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 .belt { position: absolute; display: flex; white-space: nowrap; overflow: hidden; background: var(--amber); color: var(--ink); box-shadow: 0 10px 0 rgba(0,0,0,.18); }
 .belt span { display: inline-flex; align-items: center; font: 700 1em/1 var(--fd); padding: .7em 0; }
 .belt span i { display: inline-block; width: .42em; height: .42em; background: var(--ink); margin: 0 .9em; transform: rotate(45deg); }
-.belt small { font: 700 .5em/1 var(--fd); background: var(--ink); color: var(--amber); padding: .45em .6em; border-radius: 3px; margin: 0 1.6em 0 1em; }
+.belt small { font: 700 .5em/1 var(--fd); background: var(--ink); color: var(--amber); padding: .45em .6em; border-radius: 3px; margin: 0 1.6em 0 2.4em; }
 .belt-paper { position: absolute; display: flex; white-space: nowrap; overflow: hidden; background: var(--paper); color: var(--teal-dd); --t: 14px; -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--t) 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--t) 51% repeat-x; mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--t) 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--t) 51% repeat-x; }
 .belt-paper span { font: 1em/1 var(--fm); padding: .85em 0; letter-spacing: .08em; }
 .belt-paper span i { font-style: normal; color: var(--amber-d); margin: 0 1.1em; }
@@ -89,16 +90,17 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 .ad { width: 1080px; height: 1080px; }
 .glow { width: 900px; height: 900px; right: -200px; bottom: -260px; }
 .digits { font-size: 150px; left: -10px; bottom: 300px; }
-.dim { left: 620px; top: 470px; width: 380px; }
+.dim { left: 700px; top: 470px; width: 320px; }
 .topbar { position: absolute; left: 60px; right: 60px; top: 54px; display: flex; justify-content: space-between; align-items: center; }
 .topbar .logo-chip { font-size: 34px; }
 .topbar .badge { font-size: 28px; }
-.copy { position: absolute; left: 60px; top: 176px; font-size: 98px; }
-.sub { position: absolute; left: 62px; top: 448px; font-size: 34px; }
-.scene { left: -6px; top: 520px; width: 560px; }
-.result { left: 556px; top: 548px; width: 290px; zoom: 1.6; transform: rotate(1.5deg); }
-.f-receipt { width: 150px; right: 54px; top: 300px; transform: rotate(10deg); }
-.cta { position: absolute; right: 56px; bottom: 50px; font-size: 44px; }
+.copy { position: absolute; left: 60px; top: 170px; font-size: 96px; }
+.sub { position: absolute; left: 62px; top: 436px; font-size: 34px; }
+.scene { left: 0; top: 520px; width: 500px; }
+.result-pos { left: 612px; top: 510px; }
+.result { width: 300px; zoom: 1.38; transform: rotate(1.5deg); }
+.f-receipt { width: 124px; right: 52px; top: 150px; transform: rotate(12deg); }
+.cta { position: absolute; right: 52px; bottom: 40px; font-size: 44px; }
 
 </style>
 </head>
@@ -248,8 +250,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
         <!-- 袋から飛び出してスマホへ（静止版） -->
         <path d="M150 300C150 200 200 160 250 190" fill="none" stroke="#f59f00" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round" opacity=".8"/>
         <use href="#rc" x="140" y="222" width="26" height="58" transform="rotate(-28 153 251)"/>
-        <use href="#rc" x="176" y="160" width="28" height="62" transform="rotate(24 190 191)"/>
-        <use href="#rc" x="216" y="150" width="22" height="50" transform="rotate(70 227 175)" opacity=".9"/>
+        <use href="#rc" x="184" y="150" width="26" height="58" transform="rotate(30 197 179)"/>
 
         <!-- スマホ -->
         <g>
@@ -281,7 +282,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
         <g fill="#7fd6e6"><rect x="436" y="236" width="7" height="7"/><rect x="452" y="262" width="7" height="7" fill="#f59f00"/><rect x="444" y="288" width="7" height="7"/><rect x="460" y="314" width="7" height="7" fill="#f59f00"/><rect x="438" y="340" width="7" height="7"/></g>
       </svg></div>
   <svg class="obj f-receipt" viewBox="0 0 122 164" aria-hidden="true"><use href="#o-receipt"/></svg>
-  <div class="result shadow"><div class="mock mock-list zzb">
+  <div class="result-pos"><div class="result shadow"><div class="mock mock-list zzb">
       <div class="list-head"><b>読み取り結果</b><span>表示例</span></div>
       <ul class="rows">
         <li class="hl"><span class="d">1/12</span><span class="s">ガソリンスタンド</span><span class="a">¥4,820</span><span class="k">旅費交通費（候補）</span></li>
@@ -289,7 +290,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
         <li><span class="d">3/18</span><span class="s">カフェ</span><span class="a">¥690</span><span class="k">会議費（候補）</span></li>
       </ul>
       <p class="mock-note">※画面は表示例です。勘定科目は候補の表示です。</p>
-    </div></div>
+    </div></div></div>
   <div class="cta">無料で先行登録<span class="arr">→</span></div>
 </div>
 </body>

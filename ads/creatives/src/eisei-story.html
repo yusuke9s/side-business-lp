@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>衛生管理者 合格ドリル 広告 story</title>
+<!-- 広告クリエイティブ 1080x1920。文言を直したら Playwright で 1080x1920・deviceScaleFactor 1 で撮り直す（ads/creatives/eisei-story.png）。 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Yomogi&display=swap">
+<style>
+html, body { width: 1080px; height: 1920px; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --paper: #fffaf2; --surface: #ffffff; --ink: #1d232b; --muted: #545e69; --line: #e6dccf;
+  --brand: #d9480f; --brand-deep: #b33c0b; --brand-soft: #fde4d3;
+  --green: #1f6b3a; --green-deep: #133f24; --green-soft: #d3f0dc; --green-bright: #2b8a3e;
+  --hl: #ffe066; --note-y: #fff3a8;
+  --font-display: "M PLUS 1p", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --font-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --grid: linear-gradient(rgba(217,72,15,.10) 1px, transparent 1px), linear-gradient(90deg, rgba(217,72,15,.10) 1px, transparent 1px), linear-gradient(rgba(217,72,15,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(217,72,15,.05) 1px, transparent 1px);
+  --grid-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+body { overflow: hidden; position: relative; background: var(--paper); background-image: var(--grid); background-size: var(--grid-size); color: var(--ink); font-family: var(--font-body); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+.abs { position: absolute; }
+.glow { position: absolute; border-radius: 50%; background: radial-gradient(circle at 40% 40%, #ffb37f 0, #ff8a3d 35%, var(--brand) 70%); opacity: .16; }
+
+/* logo / badge (LPのトップバーと同じ) */
+.logo { position: absolute; display: flex; align-items: center; font-family: var(--font-display); font-weight: 800; letter-spacing: .02em; white-space: nowrap; }
+.logo svg { flex: none; display: block; }
+.logo span { line-height: 1.15; }
+.logo small { display: block; letter-spacing: .18em; color: var(--brand-deep); line-height: 1; }
+.badge { position: absolute; font-weight: 700; color: #fff; background: var(--green); border-radius: 999px; white-space: nowrap; display: inline-flex; align-items: center; line-height: 1.3; }
+.badge::before { content: ""; border-radius: 50%; background: var(--hl); }
+
+/* copy */
+.eyebrow { position: absolute; display: inline-flex; align-items: center; font-weight: 800; font-family: var(--font-display); background: var(--ink); color: #fff; border-radius: 10px; transform: rotate(-1.5deg); white-space: nowrap; line-height: 1.3; }
+.eyebrow b { background: var(--brand); border-radius: 6px; letter-spacing: .08em; }
+h1 { position: absolute; font-family: var(--font-display); font-weight: 800; line-height: 1.26; letter-spacing: -.01em; white-space: nowrap; }
+h1 .o { color: var(--brand); }
+.hl { background-image: linear-gradient(transparent 58%, var(--hl) 58%, var(--hl) 92%, transparent 92%); padding: 0 .06em; }
+
+.cta { position: absolute; display: inline-flex; align-items: center; justify-content: center; background: var(--brand); color: #fff; font-family: var(--font-display); font-weight: 800; border: 3px solid var(--ink); white-space: nowrap; line-height: 1.2; }
+.cta .arr { display: inline-grid; place-items: center; border-radius: 50%; background: #fff; color: var(--brand); flex: none; }
+.cta .arr svg { display: block; }
+
+/* collage parts (LPのヒーローから流用) */
+.blob { position: absolute; border-radius: 42% 58% 55% 45% / 50% 40% 60% 50%; background: var(--brand); background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,.12) 0 12px, transparent 12px 24px); border: 3px solid var(--ink); }
+.fx { position: absolute; filter: drop-shadow(0 12px 14px rgba(60,30,10,.25)); }
+.fx svg { display: block; width: 100%; height: auto; overflow: visible; }
+.tag-ex { display: inline-block; font-size: 11px; font-weight: 700; color: var(--muted); background: #f1ece4; border: 1px solid var(--line); border-radius: 6px; padding: 0 7px; line-height: 1.8; vertical-align: middle; }
+
+.tearcal { position: absolute; width: 158px; }
+.tc-page { position: relative; background: #fff; border: 2.5px solid var(--ink); border-radius: 6px 6px 10px 10px; text-align: center; padding: 0 0 10px; box-shadow: 0 4px 0 #fff, 0 6px 0 var(--ink), 0 9px 0 #fff, 0 11px 0 var(--ink), 6px 16px 18px rgba(0,0,0,.18); }
+.tc-head { background: var(--brand); color: #fff; font-weight: 800; font-size: 13px; padding: 14px 0 4px; border-bottom: 2.5px solid var(--ink); border-radius: 3px 3px 0 0; letter-spacing: .1em; }
+.tc-num { display: block; font-family: var(--font-display); font-weight: 800; font-size: 66px; line-height: 1.05; margin-top: 4px; }
+.tc-unit { font-weight: 800; font-size: 14px; }
+.tc-foot { display: block; font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+.tc-rings { position: absolute; top: -10px; left: 0; right: 0; display: flex; justify-content: space-around; z-index: 3; }
+.tc-rings i { width: 12px; height: 22px; border-radius: 6px; background: #3b3b3b; border: 2px solid var(--ink); box-shadow: inset 2px 0 0 #777; }
+
+.qcard { position: absolute; width: 410px; }
+.qc-face { background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 20px 22px; box-shadow: 10px 10px 0 var(--ink); }
+.quiz-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); font-weight: 700; }
+.quiz-head .tag { background: var(--brand); color: #fff; padding: 2px 12px; border-radius: 999px; font-weight: 800; font-size: 12px; }
+.quiz-head b { color: var(--ink); }
+.quiz-q { margin-top: 12px; font-weight: 700; font-size: 15.5px; line-height: 1.7; }
+.quiz-opts { margin: 12px 0 0; list-style: none; display: grid; gap: 6px; font-size: 14.5px; counter-reset: opt; }
+.quiz-opts li { counter-increment: opt; display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--line); border-radius: 10px; padding: 5px 10px; background: #fffdf9; }
+.quiz-opts li::before { content: counter(opt); display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--ink); font-size: 12px; font-weight: 800; }
+.flip-btn { margin-top: 14px; width: 100%; font: inherit; font-weight: 800; font-size: 14.5px; color: #fff; background: var(--green); border: 2px solid var(--ink); border-radius: 10px; padding: 9px 12px; text-align: center; }
+
+.ringcard { position: absolute; width: 184px; background: #fff; border: 2.5px solid var(--ink); border-radius: 18px; padding: 14px 14px 12px; box-shadow: 6px 6px 0 var(--green); text-align: center; }
+.ring { position: relative; width: 120px; margin: 0 auto; }
+.ring svg { display: block; transform: rotate(-90deg); }
+.ring .trk { stroke: #f1e6da; }
+.ring .bar { stroke: var(--brand); stroke-dasharray: 100; stroke-dashoffset: 40; }
+.ring-num { position: absolute; inset: 0; display: grid; place-content: center; font-family: var(--font-display); font-weight: 800; font-size: 28px; line-height: 1; text-align: center; }
+.ring-num small { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.ringcard p { font-weight: 800; font-size: 13.5px; margin-top: 6px; line-height: 1.6; }
+.ringcard .tag-ex { margin-top: 4px; }
+.badge::before { width: var(--dot); height: var(--dot); }
+h1 { font-size: 120px; }
+</style>
+</head>
+<body>
+
+<div class="glow" style="right:-300px;top:-260px;width:1000px;height:1000px;"></div>
+<div class="glow" style="left:-360px;bottom:-420px;width:900px;height:900px;opacity:.1;"></div>
+<div class="logo" style="left:72px;top:268px;gap:18px;font-size:44px;">
+  <svg width="84" height="84" viewBox="0 0 40 40" aria-hidden="true"><rect x="2" y="2" width="36" height="36" rx="9" fill="#d9480f" stroke="#1d232b" stroke-width="2.5"/><path d="M8 12h24M8 20h24M8 28h24" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/><path d="M11 21l6 6 12-14" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31" cy="9" r="5" fill="#ffe066" stroke="#1d232b" stroke-width="2"/></svg>
+  <span><small style="font-size:20px;margin-bottom:4px;">第一種・第二種</small>衛生管理者 合格ドリル</span>
+</div>
+<span class="badge" style="right:72px;top:288px;font-size:28px;padding:11px 26px 11px 22px;gap:13px;--dot:13px;">事前登録受付中</span>
+<div class="eyebrow" style="left:76px;top:420px;font-size:32px;padding:12px 26px;">第一種・第二種衛生管理者の試験対策</div>
+<h1 style="left:72px;top:500px;">試験日から<br><span class="hl">逆算</span>して、<br><span class="o">毎日</span>の出題を。</h1>
+
+<div class="blob" style="left:150px;top:1010px;width:960px;height:560px;"></div>
+<div class="fx" style="left:830px;top:930px;width:150px;transform:rotate(8deg);"><svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><g stroke="#1d232b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M36 96 L26 112 M84 96 L94 112" stroke-width="6"/>
+<path d="M14 54 L5 49 M13 67 H3 M106 54 L115 49 M107 67 H117" stroke="#d9480f"/>
+<path d="M60 24 V13" stroke-width="4"/><path d="M50 11 H70" stroke-width="5"/>
+<path d="M10 40 A20 20 0 0 1 40 12 Z" fill="#ffe066"/>
+<path d="M110 40 A20 20 0 0 0 80 12 Z" fill="#ffe066"/>
+<circle cx="60" cy="64" r="40" fill="#d9480f"/>
+<path d="M27 52 A35 35 0 0 1 42.5 33.7" stroke="#fff" stroke-opacity=".55" stroke-width="4" fill="none"/>
+<circle cx="60" cy="64" r="30" fill="#fffaf2"/>
+<path d="M60.0 42.0 L60.0 37.0 M82.0 64.0 L87.0 64.0 M60.0 86.0 L60.0 91.0 M38.0 64.0 L33.0 64.0" stroke-width="3"/>
+<path d="M60 64 V45" stroke-width="4"/><path d="M60 64 L74 71" stroke-width="3.5" stroke="#2b8a3e"/>
+</g><circle cx="72.5" cy="42.3" r="1.7" fill="#1d232b"/><circle cx="81.7" cy="51.5" r="1.7" fill="#1d232b"/><circle cx="81.7" cy="76.5" r="1.7" fill="#1d232b"/><circle cx="72.5" cy="85.7" r="1.7" fill="#1d232b"/><circle cx="47.5" cy="85.7" r="1.7" fill="#1d232b"/><circle cx="38.3" cy="76.5" r="1.7" fill="#1d232b"/><circle cx="38.3" cy="51.5" r="1.7" fill="#1d232b"/><circle cx="47.5" cy="42.3" r="1.7" fill="#1d232b"/><circle cx="60" cy="64" r="4.5" fill="#1d232b"/></svg></div>
+<div class="abs" style="left:56px;top:990px;transform:rotate(-7deg);"><div class="tearcal" style="position:relative;zoom:1.6;">
+  <div class="tc-rings" aria-hidden="true"><i></i><i></i></div>
+  <div class="tc-page"><div class="tc-head">試験まで あと</div><span class="tc-num">32</span><span class="tc-unit">日</span><span class="tc-foot">表示例</span></div>
+</div></div>
+<div class="abs" style="left:350px;top:1050px;"><div class="qcard" style="position:relative;zoom:1.3;"><div class="qc-face">
+  <div class="quiz-head"><span class="tag">関係法令</span><span>問 <b>12</b> / 20 <span class="tag-ex">表示例</span></span></div>
+  <p class="quiz-q">衛生管理者を選任しなければならない事業場の規模として、正しいものはどれか。</p>
+  <ol class="quiz-opts"><li>常時10人以上</li><li>常時30人以上</li><li>常時50人以上</li><li>常時100人以上</li></ol>
+</div></div></div>
+<div class="abs" style="left:50px;top:1290px;transform:rotate(4deg);"><div class="ringcard" style="position:relative;zoom:1.05;">
+  <div class="ring"><svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"><circle class="trk" cx="60" cy="60" r="48" fill="none" stroke-width="13"/><circle class="bar" cx="60" cy="60" r="48" fill="none" stroke-width="13" stroke-linecap="round" pathLength="100"/></svg>
+  <div class="ring-num"><span>12/20</span><small>問</small></div></div>
+  <p>今日の出題</p><span class="tag-ex">表示例</span>
+</div></div>
+<div class="fx" style="left:900px;top:1290px;width:150px;"><svg viewBox="-2 0 124 130" aria-hidden="true" focusable="false"><g stroke="#1d232b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+<path d="M30 26 H16 C10 26 8 30 8 36 C8 50 20 58 32 58 M90 26 H104 C110 26 112 30 112 36 C112 50 100 58 88 58" fill="none" stroke-width="11"/><path d="M30 26 H16 C10 26 8 30 8 36 C8 50 20 58 32 58 M90 26 H104 C110 26 112 30 112 36 C112 50 100 58 88 58" fill="none" stroke="#fcc419" stroke-width="5"/>
+<path d="M52 84 L48 101 H72 L68 84 Z" fill="#f59f00"/>
+<path d="M28 16 H92 V42 C92 68 78 86 60 86 C42 86 28 68 28 42 Z" fill="#fcc419"/>
+<path d="M38 26 V42 C38 56 42 64 48 72" stroke="#fff" stroke-opacity=".7" stroke-width="4" fill="none"/>
+<rect x="24" y="9" width="72" height="10" rx="3" fill="#ffe066"/>
+<polygon points="60.0,34.0 63.3,42.5 72.4,43.0 65.3,48.7 67.6,57.5 60.0,52.6 52.4,57.5 54.7,48.7 47.6,43.0 56.7,42.5" fill="#d9480f" stroke-width="2.5"/>
+<rect x="36" y="100" width="48" height="10" rx="2" fill="#f59f00"/>
+<rect x="28" y="110" width="64" height="17" rx="3" fill="#1f6b3a"/>
+<rect x="44" y="113.5" width="32" height="10" rx="1.5" fill="#ffe066" stroke-width="2"/></g>
+<text x="60" y="121.5" text-anchor="middle" font-family="M PLUS 1p, sans-serif" font-weight="800" font-size="7.5" fill="#1d232b" letter-spacing=".1em">GOAL</text>
+<g fill="#ffe066" stroke="#1d232b" stroke-width="1.6" stroke-linejoin="round"><path d="M8 8 l2.5 6 l6 2.5 l-6 2.5 l-2.5 6 l-2.5 -6 l-6 -2.5 l6 -2.5 Z"/><path d="M110 72 l2 4.5 l4.5 2 l-4.5 2 l-2 4.5 l-2 -4.5 l-4.5 -2 l4.5 -2 Z"/></g></svg></div>
+
+<div class="cta" style="left:50%;top:1530px;transform:translateX(-50%);font-size:50px;padding:28px 40px 28px 52px;gap:22px;border-radius:20px;box-shadow:0 10px 0 var(--ink);">無料で先行登録<span class="arr" style="width:62px;height:62px;"><svg width="31" height="31" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h12M10 4l6 6-6 6" fill="none" stroke="#d9480f" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+
+</body>
+</html>

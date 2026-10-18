@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>相続やることナビ 広告 square 1080x1080</title>
+<!-- 相続やることナビ（public/souzoku.html）の広告クリエイティブ。文言を直したら Playwright でこの解像度ちょうどに撮り直す（deviceScaleFactor 1）。 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+:root {
+  --sl: #3d5266; --sl-deep: #2a3a4a; --sl-2: #56697c; --sl-soft: #dde4ea; --sl-mist: #eef2f5;
+  --gold: #9c6b2f; --gold-text: #7f5620; --gold-lt: #c9a46a; --gold-soft: #f1e7d6;
+  --washi: #f6f3ec; --washi-2: #efeae0; --white: #fffdf9;
+  --ink: #232e39; --muted: #535e69;
+  --f-display: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --f-body: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+  --washi-tex: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .42 0 0 0 0 .37 0 0 0 0 .28 0 0 0 .075 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; width: 1080px; height: 1080px; overflow: hidden; }
+body { background: var(--washi); color: var(--ink); font-family: var(--f-body); }
+p { margin: 0; }
+.ad { position: relative; width: 1080px; height: 1080px; overflow: hidden; background-color: var(--washi); background-image: var(--washi-tex); }
+/* やわらかな光と、遠くの丘（LPヒーローと同じ） */
+.light { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,244,222,.95) 0%, rgba(241,231,214,.5) 35%, transparent 68%); pointer-events: none; }
+.hills { position: absolute; left: 0; bottom: 0; width: 100%; pointer-events: none; }
+/* 細い金の二重罫 */
+.frame { position: absolute; inset: var(--fi); border: 1px solid rgba(156,107,47,.35); pointer-events: none; }
+.frame::before { content: ""; position: absolute; inset: 6px; border: 1px solid rgba(156,107,47,.16); }
+
+.logo { position: absolute; display: inline-flex; align-items: center; gap: .36em; color: var(--sl-deep); }
+.logo svg { width: 1.6em; height: 1.6em; flex: none; }
+.logo b { font-family: var(--f-display); font-weight: 700; letter-spacing: .08em; line-height: 1; }
+.badge { position: absolute; display: inline-flex; align-items: center; gap: .5em; font-weight: 700; color: var(--white); background: var(--sl); border-radius: 999px; white-space: nowrap; line-height: 1; letter-spacing: .04em; }
+.badge::before { content: ""; width: .42em; height: .42em; border-radius: 50%; background: var(--gold-lt); }
+
+h1 { position: absolute; margin: 0; font-family: var(--f-display); font-weight: 700; color: var(--sl-deep); letter-spacing: .04em; line-height: 1.5; white-space: nowrap; }
+h1 .em { position: relative; }
+h1 .em svg { position: absolute; left: 0; bottom: .02em; width: 100%; height: .2em; overflow: visible; }
+h1 .em path { fill: none; stroke: var(--gold-lt); stroke-width: .11em; stroke-linecap: round; opacity: .8; }
+.sub { position: absolute; display: flex; align-items: center; gap: .6em; font-weight: 500; color: var(--sl); letter-spacing: .12em; white-space: nowrap; }
+.sub::before { content: ""; width: 1.6em; height: 1px; background: var(--gold); }
+
+.cta { position: absolute; display: inline-flex; align-items: center; justify-content: center; gap: .6em; background: var(--sl); color: var(--white); font-weight: 700; letter-spacing: .06em; border-radius: 999px; white-space: nowrap; line-height: 1; box-shadow: 0 .3em .8em rgba(42,58,74,.22); }
+.cta .arr { display: inline-block; width: 1.1em; height: 1.5px; background: var(--gold-lt); position: relative; }
+.cta .arr::after { content: ""; position: absolute; right: 0; top: -.17em; width: .36em; height: .36em; border-top: 1.5px solid var(--gold-lt); border-right: 1.5px solid var(--gold-lt); transform: rotate(45deg); }
+
+/* やることと期限（LPヒーローのカードと同じ作り。サイズは em で一括調整） */
+.tl-card { position: absolute; z-index: 2; background: rgba(255,253,249,.94); border: 1px solid rgba(61,82,102,.16); border-radius: 1.2em; padding: 1.6em 1.6em 1.1em 1.4em; box-shadow: 0 2em 4em rgba(42,58,74,.12), 0 2px 0 rgba(255,255,255,.8) inset; }
+.tl-card::before { content: ""; position: absolute; inset: .55em; border: 1px solid rgba(156,107,47,.22); border-radius: .8em; pointer-events: none; }
+.tl-head { display: flex; justify-content: space-between; align-items: center; gap: .6em; }
+.tl-head b { font-family: var(--f-display); font-size: 1.22em; color: var(--sl-deep); letter-spacing: .06em; }
+.tag-ex { font-size: .72em; font-weight: 700; color: var(--gold-text); border: 1px solid var(--gold-lt); border-radius: 3px; padding: 0 .55em; background: var(--white); white-space: nowrap; line-height: 1.6; }
+.tl { position: relative; margin-top: .8em; }
+.tl-path { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.tl-path .base { fill: none; stroke: var(--sl-soft); stroke-width: .4em; stroke-linecap: round; }
+.tl-path .line { fill: none; stroke: url(#tlgrad); stroke-width: .17em; stroke-linecap: round; }
+.tl-today { position: relative; display: flex; align-items: center; gap: .8em; padding: .2em 0 .6em .25em; }
+.tl-today .sun { position: relative; width: 2.3em; height: 2.3em; flex: none; border-radius: 50%; background: radial-gradient(circle, #fff7e6 0 30%, var(--gold-lt) 31% 46%, rgba(201,164,106,.25) 47% 100%); }
+.tl-today .sun::after { content: ""; position: absolute; inset: -.7em; border-radius: 50%; background: radial-gradient(circle, rgba(201,164,106,.35), transparent 70%); }
+.tl-today b { font-family: var(--f-display); font-size: 1.15em; color: var(--gold-text); line-height: 1.3; }
+.tl-today small { display: block; font-size: .84em; color: var(--muted); line-height: 1.4; }
+.ring { --s: 3em; position: relative; display: grid; place-items: center; width: var(--s); height: var(--s); flex: none; border-radius: 50%; color: var(--sl); background: radial-gradient(circle at 50% 36%, #fffdf9 0 50%, rgba(241,231,214,.55) 100%); border: 1px solid var(--gold-lt); margin-left: auto; }
+.ring::before { content: ""; position: absolute; inset: 3px; border-radius: 50%; border: 1px solid rgba(201,164,106,.3); }
+.ring .ph { position: relative; width: 44%; height: 44%; display: block; }
+.ring .ph [opacity] { fill: var(--gold-lt); opacity: .5; }
+.tl ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .25em; }
+.tl li { position: relative; display: grid; grid-template-columns: 5.4em minmax(0, 1fr) auto; gap: .2em .8em; align-items: baseline; padding: .72em .4em .72em 4em; border-radius: .7em; line-height: 1.6; }
+.tl .node { position: absolute; left: var(--nx, .95em); top: 50%; width: 1.24em; height: 1.24em; margin-top: -.62em; border-radius: 50%; background: var(--white); border: 2px solid var(--sl-2); z-index: 1; }
+.tl li:nth-child(even) .node { --nx: 1.8em; }
+.tl li.done .node { background: var(--sl); border-color: var(--sl); }
+.tl li.done .node::after { content: ""; position: absolute; left: 32%; top: 12%; width: 26%; height: 52%; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg); }
+.tl li.next .node { border-color: var(--gold); background: var(--gold-soft); }
+.tl li.next .node::before { content: ""; position: absolute; inset: -.45em; border-radius: 50%; border: 1.5px solid rgba(201,164,106,.6); }
+.tl .when { font-family: var(--f-display); font-weight: 700; color: var(--sl); font-size: 1.03em; white-space: nowrap; }
+.tl .what { font-weight: 500; white-space: nowrap; }
+.tl .st { font-size: .82em; color: var(--muted); white-space: nowrap; background: var(--sl-mist); border-radius: 999px; padding: .05em .8em; }
+.tl li.done .st { background: var(--sl); color: #fff; }
+.tl li.next { background: rgba(241,231,214,.55); }
+.tl li.next .st { background: var(--gold-soft); color: var(--gold-text); font-weight: 700; border: 1px solid var(--gold-lt); }
+
+.f3d { position: absolute; z-index: 3; filter: drop-shadow(0 14px 18px rgba(42,58,74,.16)); }
+.f3d svg { width: 100%; height: auto; display: block; overflow: visible; }
+.sprig { position: absolute; opacity: .9; }
+.sprig svg { width: 100%; height: auto; display: block; }
+
+.ad { --fi: 28px; }
+.light { width: 980px; height: 980px; right: -300px; top: -380px; }
+.hills { height: 200px; }
+.sprig { left: 56px; bottom: 150px; width: 0; }
+.logo { left: 72px; top: 66px; font-size: 36px; }
+.badge { right: 72px; top: 72px; font-size: 26px; padding: 15px 26px; }
+h1 { left: 70px; top: 166px; font-size: 86px; }
+.sub { left: 72px; top: 456px; font-size: 32px; }
+.tl-card { left: 452px; top: 532px; width: 572px; font-size: 21px; }
+.s-cal { left: 930px; top: 452px; width: 120px; }
+.s-flower { left: 96px; top: 560px; width: 100px; transform: rotate(-4deg); }
+.s-memo { left: 236px; top: 650px; width: 150px; }
+.cta { left: 72px; top: 902px; font-size: 34px; padding: 28px 44px; }
+</style>
+</head>
+<body>
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <linearGradient id="petal" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#dfe3ee"/><stop offset=".7" stop-color="#fffdf9"/></linearGradient>
+    <!-- 手描き風の小物（細い線＋くすんだ金） -->
+    <symbol id="art-cal" viewBox="0 0 120 120"><g stroke="#3d5266" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">
+      <rect x="20" y="28" width="88" height="82" rx="7" fill="#efeae0" stroke="none"/>
+      <rect x="16" y="24" width="88" height="82" rx="7" fill="#fffdf9"/>
+      <path d="M16 31 a7 7 0 0 1 7 -7 h74 a7 7 0 0 1 7 7 v13 h-88 z" fill="#3d5266"/>
+      <path d="M28 35 h16" stroke="#f1e7d6" stroke-width="1.4"/>
+      <path d="M86 35 h6" stroke="#c9a46a" stroke-width="1.4"/>
+      <rect x="37" y="15" width="6" height="17" rx="3" fill="#c9a46a" stroke="#9c6b2f" stroke-width="1.1"/>
+      <rect x="77" y="15" width="6" height="17" rx="3" fill="#c9a46a" stroke="#9c6b2f" stroke-width="1.1"/>
+      <g fill="#b9c4ce" stroke="none"><circle cx="30" cy="57" r="2.1"/><circle cx="45" cy="57" r="2.1"/><circle cx="60" cy="57" r="2.1"/><circle cx="75" cy="57" r="2.1"/><circle cx="90" cy="57" r="2.1"/><circle cx="30" cy="70" r="2.1"/><circle cx="45" cy="70" r="2.1"/><circle cx="60" cy="70" r="2.1"/><circle cx="90" cy="70" r="2.1"/><circle cx="30" cy="83" r="2.1"/><circle cx="45" cy="83" r="2.1"/><circle cx="60" cy="83" r="2.1"/><circle cx="75" cy="83" r="2.1"/><circle cx="90" cy="83" r="2.1"/><circle cx="30" cy="96" r="2.1"/><circle cx="45" cy="96" r="2.1"/><circle cx="60" cy="96" r="2.1"/><circle cx="75" cy="96" r="2.1"/><circle cx="90" cy="96" r="2.1"/></g>
+      <circle cx="75" cy="70" r="7.4" fill="#f1e7d6" stroke="#9c6b2f" stroke-width="1.2"/>
+      <circle cx="75" cy="70" r="2.4" fill="#9c6b2f" stroke="none"/>
+      <path d="M88 106 L104 90 V99 a7 7 0 0 1 -7 7 Z" fill="#efeae0" stroke-width="1.3"/>
+    </g></symbol>
+    <symbol id="art-memo" viewBox="0 0 120 120"><g stroke-linejoin="round" stroke-linecap="round">
+      <g stroke="#3d5266" stroke-width="1.6" transform="rotate(-6 60 60)">
+        <path d="M26 20 h56 l14 14 v76 h-70 z" fill="#efeae0" stroke="none" transform="translate(3 3)"/>
+        <path d="M24 16 h58 l14 14 v76 h-72 z" fill="#fffdf9"/>
+        <path d="M82 16 v14 h14" fill="#efeae0"/>
+        <rect x="44" y="9" width="30" height="13" fill="#c9a46a" opacity=".45" stroke="none" transform="rotate(4 59 15)"/>
+        <path d="M46 44 H84 M46 58 H80 M46 72 H84 M46 86 H74" stroke="#c8d1da" stroke-width="1.3"/>
+        <path d="M46 44 H70 M46 58 H64" stroke="#56697c" stroke-width="1.3" opacity=".7"/>
+        <path d="M31.5 44 l3 3 l6 -6.5 M31.5 58 l3 3 l6 -6.5" stroke="#9c6b2f" stroke-width="1.6" fill="none"/>
+        <circle cx="35.5" cy="72" r="3.6" fill="none" stroke="#9aa8b5" stroke-width="1.2"/>
+        <circle cx="35.5" cy="86" r="3.6" fill="none" stroke="#9aa8b5" stroke-width="1.2"/>
+      </g>
+      <g stroke="#2a3a4a" stroke-width="1.3" transform="rotate(36 84 92)">
+        <rect x="58" y="88" width="44" height="8" rx="4" fill="#3d5266"/>
+        <rect x="90" y="88" width="4" height="8" fill="#c9a46a"/>
+        <path d="M102 89 L112 92 L102 95 Z" fill="#f1e7d6"/>
+        <path d="M62 90.5 H86" stroke="#fffdf9" stroke-width="1" opacity=".4"/>
+      </g>
+    </g></symbol>
+    <symbol id="art-flower" viewBox="0 0 80 140"><g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M40 138 C41.5 116 37 92 40 58" fill="none" stroke="#56697c" stroke-width="1.6"/>
+      <path d="M39.6 110 C28 106 19 96 16 84 C28 86 37 95 39.6 110 Z" fill="#e9dfcb" stroke="#9c6b2f" stroke-width="1.1"/>
+      <path d="M20 87 C28 94 34 101 38.5 108" fill="none" stroke="#9c6b2f" stroke-width=".8" opacity=".55"/>
+      <path d="M40.3 92 C50 88 59 79 62 68 C51 70 43 78 40.3 92 Z" fill="#e9dfcb" stroke="#9c6b2f" stroke-width="1.1"/>
+      <path d="M59 71 C52 77 46 84 41.5 90" fill="none" stroke="#9c6b2f" stroke-width=".8" opacity=".55"/>
+      <path d="M33.5 57 C36 63 44 63 46.5 57" fill="#e9dfcb" stroke="#9c6b2f" stroke-width="1.1"/>
+      <g transform="translate(40 38)"><g transform="rotate(0)"><path d="M0 0 C-8 -8 -10.5 -20 0 -29 C10.5 -20 8 -8 0 0 Z" fill="url(#petal)" stroke="#56697c" stroke-width="1.25"/><path d="M0 -5 V-22" stroke="#c9a46a" stroke-width=".9" opacity=".75"/></g><g transform="rotate(72)"><path d="M0 0 C-8 -8 -10.5 -20 0 -29 C10.5 -20 8 -8 0 0 Z" fill="url(#petal)" stroke="#56697c" stroke-width="1.25"/><path d="M0 -5 V-22" stroke="#c9a46a" stroke-width=".9" opacity=".75"/></g><g transform="rotate(144)"><path d="M0 0 C-8 -8 -10.5 -20 0 -29 C10.5 -20 8 -8 0 0 Z" fill="url(#petal)" stroke="#56697c" stroke-width="1.25"/><path d="M0 -5 V-22" stroke="#c9a46a" stroke-width=".9" opacity=".75"/></g><g transform="rotate(216)"><path d="M0 0 C-8 -8 -10.5 -20 0 -29 C10.5 -20 8 -8 0 0 Z" fill="url(#petal)" stroke="#56697c" stroke-width="1.25"/><path d="M0 -5 V-22" stroke="#c9a46a" stroke-width=".9" opacity=".75"/></g><g transform="rotate(288)"><path d="M0 0 C-8 -8 -10.5 -20 0 -29 C10.5 -20 8 -8 0 0 Z" fill="url(#petal)" stroke="#56697c" stroke-width="1.25"/><path d="M0 -5 V-22" stroke="#c9a46a" stroke-width=".9" opacity=".75"/></g><circle r="3.8" fill="#c9a46a" stroke="#9c6b2f" stroke-width=".9"/><g transform="rotate(36)"><path d="M0 0 V-7.5" stroke="#9c6b2f" stroke-width=".9"/><circle cy="-8" r="1.1" fill="#9c6b2f"/></g><g transform="rotate(108)"><path d="M0 0 V-7.5" stroke="#9c6b2f" stroke-width=".9"/><circle cy="-8" r="1.1" fill="#9c6b2f"/></g><g transform="rotate(180)"><path d="M0 0 V-7.5" stroke="#9c6b2f" stroke-width=".9"/><circle cy="-8" r="1.1" fill="#9c6b2f"/></g><g transform="rotate(252)"><path d="M0 0 V-7.5" stroke="#9c6b2f" stroke-width=".9"/><circle cy="-8" r="1.1" fill="#9c6b2f"/></g><g transform="rotate(324)"><path d="M0 0 V-7.5" stroke="#9c6b2f" stroke-width=".9"/><circle cy="-8" r="1.1" fill="#9c6b2f"/></g></g>
+    </g></symbol>
+    <symbol id="art-sprig" viewBox="0 0 80 100"><g stroke-linecap="round" stroke-linejoin="round" stroke="#9c6b2f" stroke-width="1.1">
+      <path d="M30 96 C34 72 40 48 54 8" fill="none" stroke="#56697c" stroke-width="1.5"/>
+      <path d="M33 80 C22 80 14 72 12 64 C22 64 30 70 33 80 Z" fill="#e9dfcb"/>
+      <path d="M37 66 C46 62 54 54 56 46 C46 48 39 56 37 66 Z" fill="#e2d3b5"/>
+      <path d="M41 52 C31 51 24 44 22 37 C31 37 38 43 41 52 Z" fill="#e9dfcb"/>
+      <path d="M46 38 C54 34 60 27 62 20 C54 22 48 29 46 38 Z" fill="#e2d3b5"/>
+      <path d="M50 24 C43 22 38 16 37 10 C44 11 49 17 50 24 Z" fill="#e9dfcb"/>
+      <path d="M31 77 L16 66 M38 63 L53 49 M40 49 L25 40 M47 35 L59 23" stroke-width=".7" opacity=".55"/>
+    </g></symbol>
+  </defs>
+</svg>
+
+
+<div class="ad">
+  <div class="light" aria-hidden="true"></div>
+  <svg class="hills" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true"><path d="M0 110 C240 70 420 130 720 96 S1200 60 1440 92 V160 H0 Z" fill="#dde4ea" opacity=".55"/><path d="M0 132 C300 104 520 150 820 124 S1260 104 1440 122 V160 H0 Z" fill="#cfd8e0" opacity=".6"/></svg>
+  <div class="frame" aria-hidden="true"></div>
+  <div class="sprig" aria-hidden="true"><svg viewBox="0 0 80 100"><use href="#art-sprig"/></svg></div>
+
+  <div class="logo"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18.5" fill="#fffdf9" stroke="#3d5266" stroke-width="1.5"/><path d="M9 28 C14 26 14 18 20 18 S26 12 31 11" fill="none" stroke="#9c6b2f" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="28" r="2.6" fill="#3d5266"/><circle cx="20" cy="18" r="2.6" fill="#fffdf9" stroke="#3d5266" stroke-width="1.5"/><circle cx="31" cy="11" r="2.6" fill="#fffdf9" stroke="#3d5266" stroke-width="1.5"/></svg><b>相続やることナビ</b></div>
+  <div class="badge">事前登録受付中</div>
+
+  <h1>相続の手続き、<br><span class="em">いつまでに何を<svg viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true"><path d="M1 9 C30 6 60 11 99 7" vector-effect="non-scaling-stroke"/></svg></span>。</h1>
+  <p class="sub">やることと期限を、一覧に</p>
+
+  <div class="f3d s-flower" aria-hidden="true"><svg viewBox="0 0 80 140"><use href="#art-flower"/></svg></div>
+  <div class="f3d s-cal" aria-hidden="true"><svg viewBox="0 0 120 120"><use href="#art-cal"/></svg></div>
+  <div class="tl-card">
+    <div class="tl-head"><b>やることと期限</b><span class="tag-ex">表示例</span></div>
+    <div class="tl" id="tl">
+      <svg class="tl-path" id="tl-path" aria-hidden="true"><defs><linearGradient id="tlgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a46a"/><stop offset="1" stop-color="#3d5266"/></linearGradient></defs></svg>
+      <div class="tl-today"><span class="sun" aria-hidden="true"></span><div><b>今日</b><small>ここから、ひとつずつ進めましょう</small></div><span class="ring" aria-hidden="true"><svg class="ph" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M168,144a40,40,0,1,1-40-40A40,40,0,0,1,168,144ZM64,56A32,32,0,1,0,96,88,32,32,0,0,0,64,56Zm128,0a32,32,0,1,0,32,32A32,32,0,0,0,192,56Z" opacity="0.2"/><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1,0-16,24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.85,8,57,57,0,0,0-98.15,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"/></svg></span></div>
+      <ol>
+        <li class="done"><span class="node"></span><span class="when">7日以内</span><span class="what">死亡届の提出</span><span class="st">完了</span></li>
+        <li class="next"><span class="node"></span><span class="when">3か月以内</span><span class="what">相続放棄の期限</span><span class="st">担当：兄</span></li>
+        <li><span class="node"></span><span class="when">4か月以内</span><span class="what">準確定申告</span><span class="st">未着手</span></li>
+        <li><span class="node"></span><span class="when">10か月以内</span><span class="what">相続税の申告・納付</span><span class="st">未着手</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="f3d s-memo" aria-hidden="true"><svg viewBox="0 0 120 120"><use href="#art-memo"/></svg></div>
+
+  <div class="cta">無料で先行登録<span class="arr" aria-hidden="true"></span></div>
+</div>
+
+
+<script>
+(function () {
+  function mk(t, a) { var e = document.createElementNS("http://www.w3.org/2000/svg", t); for (var k in a) e.setAttribute(k, a[k]); return e; }
+  function $$(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }
+  // LP（public/souzoku.html）と同じ、今日から各期限へゆるやかにつながる線
+  function drawTimeline() {
+    var tl = document.getElementById("tl"), svg = document.getElementById("tl-path");
+    var b = tl.getBoundingClientRect();
+    var pts = [document.querySelector(".tl-today .sun")].concat($$(".tl .node")).map(function (n) { var r = n.getBoundingClientRect(); return [r.left - b.left + r.width / 2, r.top - b.top + r.height / 2]; });
+    var k = parseFloat(getComputedStyle(tl).fontSize);
+    var d = "M" + pts[0][0] + " " + pts[0][1];
+    for (var i = 1; i < pts.length; i++) {
+      var a = pts[i - 1], c = pts[i], my = (a[1] + c[1]) / 2;
+      d += " C" + (a[0] + (i % 2 ? k : -k)) + " " + my + " " + (c[0] + (i % 2 ? -k : k)) + " " + my + " " + c[0] + " " + c[1];
+    }
+    svg.appendChild(mk("path", { d: d, "class": "base" }));
+    svg.appendChild(mk("path", { d: d, "class": "line" }));
+  }
+  document.fonts.ready.then(function () { requestAnimationFrame(function () { drawTimeline(); document.documentElement.setAttribute("data-ready", "1"); }); });
+})();
+</script>
+
+</body>
+</html>

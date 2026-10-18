@@ -60,7 +60,7 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
 .notice-title { font-weight: 900; margin-top: .45em; line-height: 1.45; }
 .notice-diff { font-size: .9em; line-height: 1.5; margin-top: .4em; display: flex; gap: .45em; align-items: flex-start; font-weight: 700; }
 .plus { flex: none; font-size: .78em; font-weight: 900; background: var(--sig); color: #053a26; border-radius: .3em; padding: .1em .45em; margin-top: .15em; }
-.mock-note { font-size: .7em; color: var(--mut); margin-top: .5em; text-align: right; font-weight: 700; }
+.mock-note { width: fit-content; margin: .5em 0 0 auto; font-size: .7em; color: var(--mut); font-weight: 700; background: rgba(10,17,40,.85); border-radius: 999px; padding: .1em .8em; }
 </style>
 </head>
 <body>
@@ -81,12 +81,12 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
   <span class="badge" style="font-size:30px">事前登録受付中</span>
 </div>
 <div class="abs" style="left:64px;top:396px"><p class="eyebrow" style="font-size:33px"><b>WATCHING</b>補助金・公募の新着を見逃さない</p></div>
-<h1 class="h1 abs" style="left:64px;top:480px;font-size:116px;line-height:1.28">
+<h1 class="h1 abs" style="left:64px;top:470px;font-size:108px;line-height:1.28">
   <span class="l">見たいページの</span>
   <span class="l"><span class="mk">更新、</span></span>
   <span class="l"><span class="mk-g">LINE</span>に届く。</span>
 </h1>
-<div class="stage" style="left:150px;top:920px;width:820px;height:820px">
+<div class="stage" style="left:200px;top:890px;width:740px;height:740px">
   <div class="radar">
     <svg class="rings" viewBox="0 0 400 400">
           <g fill="none" stroke="#96afff">
@@ -111,7 +111,7 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
     <span class="blip dim" style="left:50%;top:13%"></span>
     <span class="blip" style="left:88%;top:50%"></span>
   </div>
-  <span class="scan-label" style="font-size:20px">SCANNING</span>
+  
   <div class="pg hot" style="left:73%;top:69%"><svg viewBox="0 0 160 118" role="img" aria-label="〇〇県 公募情報のページ">
           <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
           <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
@@ -135,14 +135,6 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
           <g fill="#cfd6ea"><rect x="10" y="50" width="140" height="14" rx="2" fill="#1d2a5c"/><rect x="10" y="68" width="140" height="10" rx="2"/><rect x="10" y="82" width="140" height="10" rx="2"/><rect x="10" y="96" width="140" height="10" rx="2"/></g>
           <path d="M50 50V106M110 50V106" stroke="#f4f6fd" stroke-width="2"/>
         </svg></div>
-<div class="pg" style="left:28.1%;top:71.9%"><svg viewBox="0 0 160 118" role="img" aria-label="〇〇市 お知らせのページ">
-          <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
-          <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
-          <circle cx="10" cy="11" r="2.6" fill="#ff7aa8"/><circle cx="18" cy="11" r="2.6" fill="#ffd166"/><circle cx="26" cy="11" r="2.6" fill="#8bd3b4"/>
-          <rect x="34" y="6" width="116" height="10" rx="5" fill="#33447f"/>
-          <text x="10" y="38" font-size="12.5" font-weight="900" fill="#141b3a">〇〇市 お知らせ</text>
-          <g fill="#cfd6ea"><circle cx="14" cy="55" r="3" fill="#c2255c"/><rect x="22" y="52" width="110" height="6" rx="3"/><circle cx="14" cy="71" r="3"/><rect x="22" y="68" width="90" height="6" rx="3"/><circle cx="14" cy="87" r="3"/><rect x="22" y="84" width="120" height="6" rx="3"/><circle cx="14" cy="103" r="3"/><rect x="22" y="100" width="70" height="6" rx="3"/></g>
-        </svg></div>
 <div class="pg" style="left:27%;top:30.7%"><svg viewBox="0 0 160 118" role="img" aria-label="求人情報のページ">
           <rect x="1" y="1" width="158" height="116" rx="8" fill="#f4f6fd"/>
           <path d="M1 9a8 8 0 0 1 8-8h142a8 8 0 0 1 8 8v11H1z" fill="#1d2a5c"/>
@@ -155,7 +147,7 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
 
   
 </div>
-<svg style="left:92px;top:900px;width:190px" class="wart f3 f-eyes" viewBox="0 0 140 104" aria-hidden="true" focusable="false">
+<svg style="left:740px;top:850px;width:170px" class="wart f3 f-eyes" viewBox="0 0 140 104" aria-hidden="true" focusable="false">
   <g stroke="#0a1128" stroke-width="3" stroke-linejoin="round">
     <rect x="26" y="5" width="22" height="17" rx="4" fill="#2c3b78"/><rect x="92" y="5" width="22" height="17" rx="4" fill="#2c3b78"/>
     <rect x="16" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/><rect x="82" y="17" width="42" height="48" rx="12" fill="#dfe4f3"/>
@@ -169,7 +161,7 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
   <path d="M22 28 V36 M88 28 V36" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
   <circle cx="37" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M17 72 H57 M37 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:37px 72px;--sd:2.6s" d="M37 72 L37 52 A20 20 0 0 1 54.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="44" cy="64" r="2.6" fill="#ff7aa8"/><path d="M22 66 A16 16 0 0 1 30 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/><circle cx="103" cy="72" r="13" fill="none" stroke="#3ee6a0" stroke-opacity=".45" stroke-width="1.5"/><path d="M83 72 H123 M103 52 V92" stroke="#3ee6a0" stroke-opacity=".3" stroke-width="1"/><path class="w-sweep" style="--o:103px 72px;--sd:3.4s" d="M103 72 L103 52 A20 20 0 0 1 120.3 62 Z" fill="#3ee6a0" opacity=".5"/><circle class="w-blip" cx="110" cy="64" r="2.6" fill="#ff7aa8"/><path d="M88 66 A16 16 0 0 1 96 57" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".85"/>
 </svg>
-<svg style="left:860px;top:880px;width:150px" class="wart f3 f-sat" viewBox="0 0 140 92" aria-hidden="true" focusable="false">
+<svg style="left:900px;top:1010px;width:140px" class="wart f3 f-sat" viewBox="0 0 140 92" aria-hidden="true" focusable="false">
   <g transform="rotate(-16 70 46)">
     <rect x="4" y="28" width="42" height="30" rx="2" fill="#2c3b78" stroke="#96afff" stroke-width="2"/><path d="M14.5 28 V58 M25 28 V58 M35.5 28 V58 M4 43 H46" stroke="#96afff" stroke-width="1.2" opacity=".7"/><path d="M6 56 L22 30 H30 L14 56 Z" fill="#3ee6a0" opacity=".22"/><rect x="94" y="28" width="42" height="30" rx="2" fill="#2c3b78" stroke="#96afff" stroke-width="2"/><path d="M104.5 28 V58 M115 28 V58 M125.5 28 V58 M94 43 H136" stroke="#96afff" stroke-width="1.2" opacity=".7"/><path d="M96 56 L112 30 H120 L104 56 Z" fill="#3ee6a0" opacity=".22"/>
     <path d="M46 43 H56 M84 43 H94" stroke="#b2bddf" stroke-width="4"/>
@@ -181,8 +173,8 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
     <circle cx="70" cy="54" r="3" fill="#3ee6a0"/>
   </g>
 </svg>
-<div class="notif" style="left:60px;top:1210px;width:640px;font-size:31px">
-  <svg class="wart bell" style="left:-14px;top:-96px;width:124px" viewBox="0 0 110 116" aria-hidden="true" focusable="false">
+<div class="notif" style="left:48px;top:1150px;width:580px;font-size:29px">
+  <svg class="wart bell" style="left:-10px;top:-92px;width:116px" viewBox="0 0 110 116" aria-hidden="true" focusable="false">
   <g fill="none" stroke="#3ee6a0" stroke-width="3.5" stroke-linecap="round">
     <path class="w-wave" d="M12 40 Q4 54 12 68"/><path class="w-wave w2" d="M3 32 Q-8 54 3 76"/>
     <path class="w-wave" d="M98 40 Q106 54 98 68"/><path class="w-wave w2" d="M107 32 Q118 54 107 76"/>
@@ -205,7 +197,7 @@ body { position: relative; color: var(--txt); font-family: var(--fb); font-weigh
   </div>
   <p class="mock-note">※通知の表示例です</p>
 </div>
-<div class="abs" style="left:0;right:0;top:1520px;display:flex;justify-content:center"><span class="cta" style="font-size:50px">無料で先行登録<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></span></div>
+<div class="abs" style="left:0;right:0;top:1530px;display:flex;justify-content:center;z-index:7"><span class="cta" style="font-size:50px">無料で先行登録<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></span></div>
 
 </body>
 </html>

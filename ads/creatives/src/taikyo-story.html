@@ -55,7 +55,8 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 .cta .arr { display: inline-grid; place-items: center; width: 1.3em; height: 1.3em; border-radius: 50%; background: #fff; color: var(--orange); font-size: .8em; text-shadow: none; }
 
 /* 間取りステージ（LPのヒーロー。600x560 を zoom で拡大） */
-.hero-stage { position: absolute; width: 600px; aspect-ratio: 600 / 560; }
+.stage-pos { position: absolute; }
+.hero-stage { position: relative; width: 600px; aspect-ratio: 600 / 560; }
 .plan-card { position: absolute; inset: 0; }
 .plan-svg { width: 100%; height: auto; overflow: visible; }
 .plan-svg text { font-family: var(--fd); }
@@ -107,7 +108,8 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 .topbar .badge { font-size: 30px; }
 .copy { position: absolute; left: 70px; top: 420px; font-size: 118px; }
 .sub { position: absolute; left: 72px; top: 762px; font-size: 34px; }
-.hero-stage { left: 120px; top: 932px; zoom: 1.38; }
+.stage-pos { left: 130px; top: 900px; }
+.hero-stage { zoom: 1.38; }
 .tape-a { left: -40px; right: -40px; top: 1468px; transform: rotate(-2.2deg); font-size: 30px; }
 .ctawrap { position: absolute; left: 0; right: 0; top: 1556px; display: flex; justify-content: center; }
 .cta { font-size: 54px; }
@@ -209,7 +211,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
   <div class="topbar"><div class="logo-chip"><svg viewBox="0 0 38 36" aria-hidden="true"><path d="M4 17L19 4l15 13v16H4z" fill="#4d7c0f"/><path d="M4 17L19 4l15 13" fill="none" stroke="#233a08" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><rect x="21" y="19" width="15" height="15" rx="3" fill="#e67700"/><path d="M24.5 26.5l3 3 5.5-6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><rect x="9" y="21" width="8" height="12" rx="1" fill="#fff"/></svg><span>退去前チェックパック<small>立ち会いの前に、準備をひとまとめ</small></span></div><span class="badge"><i></i>事前登録受付中</span></div>
   <h1 class="copy"><span class="ln"><span class="mark">退去の立ち会い、</span></span><span class="ln"><em>その前に。</em></span></h1>
   <p class="eyebrow sub"><span class="ey-ic"><svg aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M232,98.36C230.73,136.92,198.67,168,160.09,168a71.68,71.68,0,0,1-26.92-5.17h0L120,176H96v24H72v24H40a8,8,0,0,1-8-8V187.31a8,8,0,0,1,2.34-5.65l58.83-58.83h0A71.68,71.68,0,0,1,88,95.91c0-38.58,31.08-70.64,69.64-71.87A72,72,0,0,1,232,98.36Z" opacity="0.2"/><path d="M216.57,39.43A80,80,0,0,0,83.91,120.78L28.69,176A15.86,15.86,0,0,0,24,187.31V216a16,16,0,0,0,16,16H72a8,8,0,0,0,8-8V208H96a8,8,0,0,0,8-8V184h16a8,8,0,0,0,5.66-2.34l9.56-9.57A79.73,79.73,0,0,0,160,176h.1A80,80,0,0,0,216.57,39.43ZM224,98.1c-1.09,34.09-29.75,61.86-63.89,61.9H160a63.7,63.7,0,0,1-23.65-4.51,8,8,0,0,0-8.84,1.68L116.69,168H96a8,8,0,0,0-8,8v16H72a8,8,0,0,0-8,8v16H40V187.31l58.83-58.82a8,8,0,0,0,1.68-8.84A63.72,63.72,0,0,1,96,95.92c0-34.14,27.81-62.8,61.9-63.89A64,64,0,0,1,224,98.1ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></svg></span>退去費用で損しないための準備</p>
-  <div class="hero-stage"><div class="plan-card"><svg class="plan-svg" viewBox="0 0 600 560" aria-hidden="true">
+  <div class="stage-pos"><div class="hero-stage"><div class="plan-card"><svg class="plan-svg" viewBox="0 0 600 560" aria-hidden="true">
         <defs>
           <pattern id="floorP" width="40" height="14" patternUnits="userSpaceOnUse"><rect width="40" height="14" fill="#f3e2c2"/><path d="M0 13.5h40M20 0v14" stroke="#e0c79c" stroke-width="1"/></pattern>
           <pattern id="tileP" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#e6f0f2"/><path d="M0 13.5h14M13.5 0v14" stroke="#c8dade" stroke-width="1"/></pattern>
@@ -292,7 +294,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
     <svg class="obj f-house" viewBox="0 0 150 136" aria-hidden="true"><use href="#o-house"/></svg>
     <svg class="obj f-cam" viewBox="0 0 150 120" aria-hidden="true"><use href="#o-cam"/></svg>
     <svg class="obj f-door" viewBox="0 0 120 156" aria-hidden="true"><use href="#o-door"/></svg>
-    <svg class="obj f-broom" viewBox="0 0 90 164" aria-hidden="true"><use href="#o-broom"/></svg></div>
+    <svg class="obj f-broom" viewBox="0 0 90 164" aria-hidden="true"><use href="#o-broom"/></svg></div></div>
   <div class="tape tape-a"><span><i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>入居時の写真を部屋ごとに整理<i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>傷や汚れを日付入りで撮影<i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>請求の内訳を書面でもらう<i><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i>管理会社に聞く質問を用意</span></div>
   <div class="ctawrap"><div class="cta">無料で先行登録<span class="arr">→</span></div></div>
 </div>

@@ -61,7 +61,8 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 /* 読み取り結果カード（LPのMOCK_RECEIPTと同じ） */
 .zzb { --t: 14px; -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--t) 100%; mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--t) 100%; }
 .shadow { filter: drop-shadow(0 12px 18px rgba(6,47,59,.3)); }
-.result { position: absolute; }
+.result-pos { position: absolute; }
+.result { position: relative; }
 .mock-list { background: var(--paper); color: var(--ink); border-radius: 4px; padding: 22px 18px 26px; position: relative; }
 .mock-list::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: repeating-linear-gradient(90deg, var(--teal) 0 12px, transparent 12px 18px); opacity: .6; }
 .list-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px dashed var(--line); padding-bottom: 10px; margin-bottom: 4px; }
@@ -81,28 +82,29 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
 .belt { position: absolute; display: flex; white-space: nowrap; overflow: hidden; background: var(--amber); color: var(--ink); box-shadow: 0 10px 0 rgba(0,0,0,.18); }
 .belt span { display: inline-flex; align-items: center; font: 700 1em/1 var(--fd); padding: .7em 0; }
 .belt span i { display: inline-block; width: .42em; height: .42em; background: var(--ink); margin: 0 .9em; transform: rotate(45deg); }
-.belt small { font: 700 .5em/1 var(--fd); background: var(--ink); color: var(--amber); padding: .45em .6em; border-radius: 3px; margin: 0 1.6em 0 1em; }
+.belt small { font: 700 .5em/1 var(--fd); background: var(--ink); color: var(--amber); padding: .45em .6em; border-radius: 3px; margin: 0 1.6em 0 2.4em; }
 .belt-paper { position: absolute; display: flex; white-space: nowrap; overflow: hidden; background: var(--paper); color: var(--teal-dd); --t: 14px; -webkit-mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--t) 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--t) 51% repeat-x; mask: conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / var(--t) 51% repeat-x, conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / var(--t) 51% repeat-x; }
 .belt-paper span { font: 1em/1 var(--fm); padding: .85em 0; letter-spacing: .08em; }
 .belt-paper span i { font-style: normal; color: var(--amber-d); margin: 0 1.1em; }
 
 .ad { width: 1080px; height: 1920px; }
 .glow { width: 1200px; height: 1200px; right: -420px; top: 560px; }
-.digits { font-size: 190px; left: -20px; bottom: 30px; }
-.dim { left: 560px; top: 860px; width: 420px; }
+.digits { font-size: 190px; left: -20px; top: 1040px; }
+.dim { left: 560px; top: 812px; width: 420px; }
 .topbar { position: absolute; left: 70px; right: 70px; top: 290px; display: flex; justify-content: space-between; align-items: center; }
 .topbar .logo-chip { font-size: 38px; }
 .topbar .badge { font-size: 30px; }
 .copy { position: absolute; left: 70px; top: 420px; font-size: 108px; }
 .sub { position: absolute; left: 72px; top: 726px; font-size: 40px; }
-.scene { left: 6px; top: 930px; width: 640px; }
-.result { left: 590px; top: 960px; width: 270px; zoom: 1.72; transform: rotate(1.5deg); }
-.f-receipt { width: 170px; right: 70px; top: 760px; transform: rotate(12deg); }
+.scene { left: 0; top: 880px; width: 600px; }
+.result-pos { left: 590px; top: 880px; }
+.result { width: 280px; zoom: 1.55; transform: rotate(1.5deg); }
+.f-receipt { width: 150px; right: 60px; top: 720px; transform: rotate(12deg); }
 .f-bag { width: 160px; left: 470px; top: 830px; transform: rotate(-8deg); }
-.belt { left: -40px; right: -40px; top: 1468px; transform: rotate(-2.2deg); font-size: 40px; }
+.belt { left: -40px; right: -40px; top: 1414px; transform: rotate(-2.2deg); font-size: 38px; }
 .belt-paper { left: -40px; right: -40px; top: 1546px; transform: rotate(1.2deg); font-size: 26px; }
-.ctawrap { position: absolute; left: 0; right: 0; top: 1576px; display: flex; justify-content: center; }
-.cta { font-size: 52px; }
+.ctawrap { position: absolute; left: 0; right: 0; top: 1534px; display: flex; justify-content: center; }
+.cta { font-size: 50px; }
 
 </style>
 </head>
@@ -253,8 +255,7 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
         <!-- 袋から飛び出してスマホへ（静止版） -->
         <path d="M150 300C150 200 200 160 250 190" fill="none" stroke="#f59f00" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round" opacity=".8"/>
         <use href="#rc" x="140" y="222" width="26" height="58" transform="rotate(-28 153 251)"/>
-        <use href="#rc" x="176" y="160" width="28" height="62" transform="rotate(24 190 191)"/>
-        <use href="#rc" x="216" y="150" width="22" height="50" transform="rotate(70 227 175)" opacity=".9"/>
+        <use href="#rc" x="184" y="150" width="26" height="58" transform="rotate(30 197 179)"/>
 
         <!-- スマホ -->
         <g>
@@ -285,16 +286,15 @@ h1, p, ul { margin: 0; } ul { padding: 0; list-style: none; }
         <!-- スマホ → 表 へ流れるデータ -->
         <g fill="#7fd6e6"><rect x="436" y="236" width="7" height="7"/><rect x="452" y="262" width="7" height="7" fill="#f59f00"/><rect x="444" y="288" width="7" height="7"/><rect x="460" y="314" width="7" height="7" fill="#f59f00"/><rect x="438" y="340" width="7" height="7"/></g>
       </svg></div>
-  <div class="result shadow"><div class="mock mock-list zzb">
+  <div class="result-pos"><div class="result shadow"><div class="mock mock-list zzb">
       <div class="list-head"><b>読み取り結果</b><span>表示例</span></div>
       <ul class="rows">
         <li class="hl"><span class="d">1/12</span><span class="s">ガソリンスタンド</span><span class="a">¥4,820</span><span class="k">旅費交通費（候補）</span></li>
         <li><span class="d">2/03</span><span class="s">家電量販店</span><span class="a">¥1,280</span><span class="k">消耗品費（候補）</span></li>
         <li><span class="d">3/18</span><span class="s">カフェ</span><span class="a">¥690</span><span class="k">会議費（候補）</span></li>
-        <li><span class="d">4/02</span><span class="s">書店</span><span class="a">¥2,420</span><span class="k">新聞図書費（候補）</span></li>
       </ul>
       <p class="mock-note">※画面は表示例です。勘定科目は候補の表示です。</p>
-    </div></div>
+    </div></div></div>
   <div class="belt"><span><small>勘定科目の例</small>旅費交通費<i></i>消耗品費<i></i>会議費<i></i>新聞図書費<i></i>通信費<i></i>水道光熱費<i></i>地代家賃<i></i>広告宣伝費<i></i></span></div>
   <div class="ctawrap"><div class="cta">無料で先行登録<span class="arr">→</span></div></div>
 </div>
