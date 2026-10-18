@@ -1,0 +1,139 @@
+﻿Campaign,Campaign Type,Networks,Budget,Budget type,Bid Strategy Type,Campaign Status,Ad Group,Ad Group Status,Max CPC,Keyword,Criterion Type,Ad type,Headline 1,Headline 2,Headline 3,Headline 4,Headline 5,Headline 6,Headline 7,Headline 8,Headline 9,Headline 10,Headline 11,Headline 12,Headline 13,Headline 14,Headline 15,Description 1,Description 2,Description 3,Description 4,Path 1,Path 2,Final URL,Status
+LP_pet_うちの子アトリエ,Search,Google search,357,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_pet_うちの子アトリエ,,,,,,,pet_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,ペット アクスタ,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,ペット アクリルスタンド,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,うちの子 グッズ,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,ペット 似顔絵 オーダー,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,犬 アクスタ 作成,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,猫 アクスタ 作成,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,ペット イラスト グッズ,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,ペット 似顔絵 プレゼント,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,,,,無料 素材,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,,,,フリー,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,,,,自作,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,,,,100均,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_pet_うちの子アトリエ,,,,,,,pet_main,,,,,Responsive search ad,うちの子の写真がアクスタに,写真1枚でペットのイラスト,注文前に無料でプレビュー,犬も猫もうさぎも,画風を選べるペットグッズ,受注生産で1点から,修正1回無料,2027年カレンダーも,贈り物にもおすすめ,"アクスタ3,980円〜（予定）",事前登録受付中,うちの子アトリエ,,,,スマホの写真を送るだけ。AIがイラストにして、仕上がりを注文前に無料で確認できます。,アクリルスタンド、A4ポスター、2027年カレンダー。受注生産で1点からお届け。,水彩・ゆるかわ・和風など画風を選べます。気になる所は注文前に1回無料で修正。,現在、事前登録を受付中。公開時に使える割引クーポンを登録者にお送りします。,アクスタ,事前登録,https://lp.site-forge.jp/pet?utm_source=google&utm_medium=cpc&utm_campaign=pet,Enabled
+LP_kaitai_解体見積メーカー,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,解体 見積書 テンプレート,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,解体工事 見積書,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,解体 見積 ソフト,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,解体 見積書 エクセル,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,解体業 見積 アプリ,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,見積書 アプリ 解体,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,,,,費用 相場,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,,,,自分で,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,,,,補助金,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,,,,業者 選び方,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,,,,安い 業者,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_kaitai_解体見積メーカー,,,,,,,kaitai_main,,,,,Responsive search ad,解体見積書を現場でつくる,坪数と構造で内訳つき見積,産廃の品目ごとに自動計算,「一式」をやめて内訳を明確に,見積から請求書へワンタップ,スマホだけで作成・送付,自社の単価を登録して使える,先行登録で14日間無料,"月額4,980円（予定）",事前登録受付中,解体見積メーカー,,,,,木造・鉄骨・RCの構造と坪数、付帯工事、産廃の品目を選ぶと内訳つき見積書PDFに。,現地調査のその場でスマホから作成。PDFをLINEやメールでそのまま送れます。,受注したらワンタップで請求書に変換。よく使う単価は一度登録すれば自動で計算。,解体業者向けの見積書作成ツール。事前登録受付中、先行登録者は14日間無料の予定。,解体,見積書,https://lp.site-forge.jp/kaitai?utm_source=google&utm_medium=cpc&utm_campaign=kaitai,Enabled
+LP_eisei_衛生管理者 合格ドリル,Search,Google search,1071,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,衛生管理者 アプリ,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,衛生管理者 問題集,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,衛生管理者 勉強 方法,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,第一種衛生管理者 勉強,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,第二種衛生管理者 問題,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,衛生管理者 一問一答,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,,,,求人,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,,,,年収,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,,,,講習,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,,,,合格発表,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,,,,過去問 無料,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_eisei_衛生管理者 合格ドリル,,,,,,,eisei_main,,,,,Responsive search ad,衛生管理者の試験対策アプリ,試験日から逆算して毎日出題,条文つきで解説が分かる,弱点を分野ごとに自動分析,第一種・第二種に対応予定,スマホで1問から学べる,無料診断を先行でお試し,"試験日まで4,980円（予定）",会社での一括導入にも対応予定,事前登録受付中,衛生管理者 合格ドリル,,,,,法令の条文にもとづいた一問一答と五肢択一。すべての解説に根拠の条文を示します。,受験日を入れると毎日の問題数と範囲を自動で決定。分野別の正答率で弱点が分かる。,会社から取るよう言われた方へ。スマホで1問から、通勤中でも続けられます。,事前登録受付中。先行登録の方は、公開時に無料診断を先行してお試しいただけます。,衛生管理者,試験対策,https://lp.site-forge.jp/eisei?utm_source=google&utm_medium=cpc&utm_campaign=eisei,Enabled
+LP_koumuin_公務員面接トレーナー,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,公務員 面接カード 書き方,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,公務員 面接 対策,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,公務員 面接 練習,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,市役所 面接 対策,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,社会人経験者採用 面接,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,面接カード 添削,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,,,,求人,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,,,,倍率,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,,,,年収,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,,,,合格発表,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,,,,例文 無料,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_koumuin_公務員面接トレーナー,,,,,,,koumuin_main,,,,,Responsive search ad,面接カードから深掘り質問,公務員面接をAIで練習,「なぜ」を5段階で深掘り,志望先の自治体に合わせた質問,回答の具体性・一貫性を評価,社会人経験者採用にも対応,"3ヶ月パス4,980円（予定）",公開時に3問無料でお試し,事前登録受付中,公務員面接トレーナー,,,,,,面接カードと志望先を入れると、面接官が聞きそうな質問を5段階で深掘りします。,回答を入力すると、具体性や志望先との一貫性を評価。カードと回答のずれも指摘。,予備校に通わなくても、一人で深掘りの練習ができます。社会人経験者採用にも対応。,事前登録受付中。面接カードはご自身で書き、その内容で面接の練習をするサービスです。,公務員,面接対策,https://lp.site-forge.jp/koumuin?utm_source=google&utm_medium=cpc&utm_campaign=koumuin,Enabled
+LP_receipt_レシートまるごと申告,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,レシート 整理 確定申告,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,領収書 まとめて 入力,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,レシート データ化,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,確定申告 レシート 大量,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,経費 レシート 読み取り,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,確定申告 準備 レシート,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,,,,無料 アプリ,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,,,,税理士,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,,,,代行 料金,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,,,,保存期間,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,,,,家計簿,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_receipt_レシートまるごと申告,,,,,,,receipt_main,,,,,Responsive search ad,1年分のレシートをデータに,まとめて撮るだけで経費を整理,AIが読み取り人が確認,主要な会計ソフトの形式で出力,確定申告の準備をラクに,"1シーズン9,800円（予定）",年明けから受付予定,事前登録受付中,レシートまるごと申告,,,,,,,ためこんだレシートや領収書をスマホでまとめて撮影。日付・金額・お店を読み取ります。,読み取った内容はスタッフが確認。会計ソフトに取り込めるデータでお渡しします。,収支内訳書の経費欄に写しやすい集計表つき。申告書の作成や税務相談は行いません。,副業・個人事業主の確定申告準備に。事前登録受付中、年明けの受付開始をお知らせ。,確定申告,レシート,https://lp.site-forge.jp/receipt?utm_source=google&utm_medium=cpc&utm_campaign=receipt,Enabled
+LP_taikyo_退去前チェックパック,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,退去 立ち会い 注意点,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,退去費用 高い,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,原状回復 ガイドライン,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,退去 立ち会い サイン,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,退去費用 相場 クロス,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,賃貸 退去 チェックリスト,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,,,,弁護士,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,,,,訴訟,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,,,,少額訴訟,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,,,,業者,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,,,,ハウスクリーニング,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_taikyo_退去前チェックパック,,,,,,,taikyo_main,,,,,Responsive search ad,退去の立ち会い、その前に,退去費用で損しないための準備,立ち会い前のチェックリスト,壁紙の残存価値の目安を計算,国交省ガイドラインをもとに,管理会社に聞く質問集つき,980円（予定）,事前登録受付中,退去前チェックパック,,,,,,,立ち会いで言われるままサインしないために。部屋ごとの撮影ポイントと確認事項を一覧に。,入居年数から壁紙などの残存価値の目安を計算。国交省ガイドラインの考え方にもとづく。,請求の内訳を確認するための質問テンプレートつき。個別の判断や交渉は行いません。,賃貸の退去前に準備しておくことをまとめたチェックパック。事前登録受付中です。,退去,チェック,https://lp.site-forge.jp/taikyo?utm_source=google&utm_medium=cpc&utm_campaign=taikyo,Enabled
+LP_watch_ページ見張り番,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_watch_ページ見張り番,,,,,,,watch_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_watch_ページ見張り番,,,,,,,watch_main,,,Webページ 更新 通知,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,watch_main,,,サイト 更新 通知 LINE,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,watch_main,,,補助金 新着 通知,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,watch_main,,,ホームページ 更新 監視,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,watch_main,,,公募 情報 通知,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,watch_main,,,ページ 更新 チェック ツール,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,,,,WordPress 更新,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,,,,作り方,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,,,,Python,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,,,,無料 自作,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_watch_ページ見張り番,,,,,,,watch_main,,,,,Responsive search ad,ページの更新をLINEで通知,補助金の公募を見逃さない,変わった部分だけを届ける,PDFの追加も検知,キーワードで絞り込み通知,URLを登録するだけ,3ページまで無料（予定）,事前登録受付中,ページ見張り番,,,,,,,見ておきたいページのURLを登録するだけ。更新されたら変わった部分をLINEとメールで。,補助金の公募ページや自治体のお知らせ、入札情報の更新を見逃さないために。,公募要領などのPDFの追加も検知。「公募」「締切」などのキーワードで絞り込めます。,"3ページまで無料、50ページまで月1,980円の予定。事前登録受付中です。",更新通知,補助金,https://lp.site-forge.jp/watch?utm_source=google&utm_medium=cpc&utm_campaign=watch,Enabled
+LP_shibou_志望理由書コーチ,Search,Google search,357,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,,,志望理由書 添削,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,,,志望理由書 書き方,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,,,総合型選抜 志望理由書,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,,,推薦 志望理由書 添削,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,,,志望理由書 アドミッションポリシー,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,,,,例文 無料,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,,,,就職,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,,,,転職,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,,,,看護 例文,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_shibou_志望理由書コーチ,,,,,,,shibou_main,,,,,Responsive search ad,書き直さない、問い返す添削,志望理由書を自分の言葉で,アドミッション・ポリシーと照合,想定面接質問を10問つき,総合型選抜・推薦に対応,"受験まで9,800円（予定）",保護者とも共有できる,事前登録受付中,志望理由書コーチ,,,,,,,下書きと志望校のポリシーを入れると、合い方・具体性・構成をチェックします。,直した文章ではなく、自分の言葉で書き直すための問いを返す添削です。,志望理由書から、面接で聞かれそうな質問を10問。進み具合は保護者とも共有できます。,大学によっては生成AIの利用にルールがあります。募集要項をご確認ください。,志望理由書,添削,https://lp.site-forge.jp/shibou?utm_source=google&utm_medium=cpc&utm_campaign=shibou,Enabled
+LP_renai_メンズ恋愛ナビ,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,女性 LINE 返信 迷う,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,デート 誘い方 LINE,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,マッチングアプリ プロフィール 添削,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,恋愛 相談 男性,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,好きな人 LINE 返信,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,2回目 デート 誘い方,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,,,,無料 占い,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,,,,出会い系,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,,,,風俗,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,,,,既婚,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_renai_メンズ恋愛ナビ,,,,,,,renai_main,,,,,Responsive search ad,このLINE、どう返す？,スクショで返信案を3パターン,男性のための恋愛相談AI,匿名でいつでも相談できる,デートの誘い方も相談,プロフィール添削も,"月額1,480円（予定）",先行登録で初月無料（予定）,事前登録受付中,メンズ恋愛ナビ,,,,,,やりとりのスクリーンショットを貼るだけで、流れをふまえた返信の案を3パターン。,デートの誘い方、マッチングアプリのプロフィール、2回目につなげるコツまで相談。,人には聞きにくいことも、匿名で24時間いつでも。相手を尊重する会話をお手伝い。,結果を約束するものではありません。事前登録受付中、先行登録で初月無料の予定。,恋愛相談,事前登録,https://lp.site-forge.jp/renai?utm_source=google&utm_medium=cpc&utm_campaign=renai,Enabled
+LP_souzoku_相続やることナビ,Search,Google search,714,Daily,Maximize clicks,Paused,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,Enabled,150,,,,,,,,,,,,,,,,,,,,,,,,,,
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,相続 手続き 一覧,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,相続 やること リスト,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,相続 手続き 期限,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,相続 手続き 自分で,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,相続放棄 期限,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,死亡後 手続き 一覧,Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,,,,弁護士,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,,,,税理士,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,,,,司法書士,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,,,,料金,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,,,,トラブル,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,,,,遺留分,Campaign Negative Phrase,,,,,,,,,,,,,,,,,,,,,,,,Enabled
+LP_souzoku_相続やることナビ,,,,,,,souzoku_main,,,,,Responsive search ad,相続の手続き、いつまでに何を,やることと期限を一覧に,期限が近づくとお知らせ,家族で分担して進められる,相続放棄・相続税の期限も,必要書類と窓口を案内,"4,980円（予定）",事前登録受付中,相続やることナビ,,,,,,,いくつかの質問に答えると、ご家族に必要な手続きと期限を一覧にします。,相続放棄（3か月）や相続税の申告（10か月）など、期限が近づくとお知らせします。,家族を招待して手続きを割り振り、進み具合を共有。必要書類と窓口も案内します。,書類作成や申請の代行、個別の税務・法律相談は行いません。事前登録受付中です。,相続,手続き,https://lp.site-forge.jp/souzoku?utm_source=google&utm_medium=cpc&utm_campaign=souzoku,Enabled

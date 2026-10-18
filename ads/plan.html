@@ -1,0 +1,212 @@
+<title>広告運用プラン</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+:root { --bg: #f4f6f8; --surface: #ffffff; --fg: #182230; --muted: #5a6676; --line: #d9dfe6; --accent: #2d4f9e; --soft: #e8eef9;
+  --ok: #1d7a52; --warn: #9a6510; --warn-soft: #fbf0db;
+  --font-display: "Zen Kaku Gothic New", "Hiragino Sans", sans-serif; --font-body: "Noto Sans JP", "Hiragino Sans", sans-serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #11161d; --surface: #18202a; --fg: #e4e9ef; --muted: #99a4b3; --line: #2a3542; --accent: #8fb0ff; --soft: #1d2a45; --ok: #5fd39b; --warn: #f0b85a; --warn-soft: #3a2d14; color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #11161d; --surface: #18202a; --fg: #e4e9ef; --muted: #99a4b3; --line: #2a3542; --accent: #8fb0ff; --soft: #1d2a45; --ok: #5fd39b; --warn: #f0b85a; --warn-soft: #3a2d14; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 15px; line-height: 1.75; }
+.wrap { max-width: 1060px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px; display: grid; gap: 40px; }
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; line-height: 1.35; }
+h1 { font-size: clamp(25px, 4vw, 34px); }
+h2 { font-size: 21px; }
+h3 { font-size: 15px; color: var(--muted); font-weight: 700; letter-spacing: 0.04em; }
+p { margin: 0; }
+.lead { color: var(--muted); max-width: 68ch; margin-top: 8px; }
+section { display: grid; gap: 16px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; color: var(--muted); font-weight: 500; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tfoot td { font-weight: 700; border-bottom: 0; }
+.todo { display: grid; gap: 10px; counter-reset: t; margin: 0; padding: 0; list-style: none; }
+.todo li { counter-increment: t; display: grid; grid-template-columns: 2em 1fr; gap: 8px; }
+.todo li::before { content: counter(t); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.todo b { display: block; }
+.todo span { color: var(--muted); font-size: 14px; }
+.svc-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--soft); border-radius: 999px; padding: 2px 10px; font-size: 12.5px; font-weight: 700; color: var(--accent); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+ul.copy { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+ul.copy li { display: flex; justify-content: space-between; gap: 10px; background: var(--bg); border-radius: 8px; padding: 6px 10px; font-size: 14px; }
+ul.copy li small { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.kw { font-size: 14px; color: var(--fg); }
+.neg { font-size: 13px; color: var(--muted); }
+pre.meta { white-space: pre-wrap; background: var(--bg); border-radius: 8px; padding: 10px 12px; margin: 0; font-family: var(--font-body); font-size: 14px; }
+.url { font-size: 12.5px; word-break: break-all; color: var(--muted); }
+.note { background: var(--warn-soft); color: var(--fg); border-radius: 8px; padding: 8px 12px; font-size: 13.5px; }
+.gallery { display: grid; grid-template-columns: 1fr 0.56fr 1.9fr; gap: 10px; align-items: start; }
+.gallery img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); display: block; }
+.rule { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.rule div { border-top: 3px solid var(--accent); padding-top: 10px; display: grid; gap: 4px; }
+.rule b { font-size: 15px; }
+.rule span { color: var(--muted); font-size: 13.5px; }
+@media (max-width: 760px) { .grid2, .rule { grid-template-columns: minmax(0, 1fr); } .gallery { grid-template-columns: 1fr 1fr; } .gallery img:last-child { grid-column: 1 / -1; } }
+</style>
+<div class="wrap">
+<header>
+  <h1>広告運用プラン（事前登録LP 10本）</h1>
+  <p class="lead">10本のLPに少額の広告を2週間出し、「先行登録してくれる人がどれくらいいるか」を比べます。反応が良かった2〜3本だけ、本当に作ります。広告文の右の数字は Google 広告の文字数（全角=2）です。</p>
+</header>
+
+<section>
+  <h2>判断の基準</h2>
+  <div class="rule">
+    <div><b>登録率 8%以上</b><span>クリックした人のうち先行登録した人。ここまで来れば有望。作る候補にする。</span></div>
+    <div><b>3〜8%</b><span>見出しや画像を差し替えて、もう1週間様子を見る。</span></div>
+    <div><b>3%未満</b><span>広告費1万円か150クリックを使った時点で止める。</span></div>
+  </div>
+  <p class="neg">目安の数字です。1件の登録にかかった広告費（＝広告費÷登録数）も合わせて見ます。</p>
+</section>
+
+<section>
+  <h2>予算（2週間）</h2>
+  <div class="card scroll"><table>
+<thead><tr><th>サービス</th><th class="num">Google 検索広告</th><th class="num">Instagram / Facebook</th><th class="num">TikTok</th><th class="num">合計</th></tr></thead>
+<tbody><tr><td><b>うちの子アトリエ</b><br><span class='neg'>ペットの写真からグッズ</span></td><td class="num">5,000円</td><td class="num">15,000円</td><td class="num">—</td><td class='num'>20,000円</td></tr><tr><td><b>解体見積メーカー</b><br><span class='neg'>解体工事の見積書作成</span></td><td class="num">10,000円</td><td class="num">5,000円</td><td class="num">—</td><td class='num'>15,000円</td></tr><tr><td><b>衛生管理者 合格ドリル</b><br><span class='neg'>衛生管理者の試験対策</span></td><td class="num">15,000円</td><td class="num">—</td><td class="num">—</td><td class='num'>15,000円</td></tr><tr><td><b>公務員面接トレーナー</b><br><span class='neg'>公務員試験の面接練習</span></td><td class="num">10,000円</td><td class="num">—</td><td class="num">—</td><td class='num'>10,000円</td></tr><tr><td><b>レシートまるごと申告</b><br><span class='neg'>確定申告のレシート整理</span></td><td class="num">10,000円</td><td class="num">—</td><td class="num">—</td><td class='num'>10,000円</td></tr><tr><td><b>退去前チェックパック</b><br><span class='neg'>賃貸の退去前の準備</span></td><td class="num">10,000円</td><td class="num">—</td><td class="num">—</td><td class='num'>10,000円</td></tr><tr><td><b>ページ見張り番</b><br><span class='neg'>Webページ更新のLINE通知</span></td><td class="num">10,000円</td><td class="num">—</td><td class="num">—</td><td class='num'>10,000円</td></tr><tr><td><b>志望理由書コーチ</b><br><span class='neg'>志望理由書の添削</span></td><td class="num">5,000円</td><td class="num">5,000円</td><td class="num">—</td><td class='num'>10,000円</td></tr><tr><td><b>メンズ恋愛ナビ</b><br><span class='neg'>男性向けの恋愛AIコーチ</span></td><td class="num">10,000円</td><td class="num">—</td><td class="num">5,000円</td><td class='num'>15,000円</td></tr><tr><td><b>相続やることナビ</b><br><span class='neg'>相続手続きの一覧と期限</span></td><td class="num">10,000円</td><td class="num">—</td><td class="num">—</td><td class='num'>10,000円</td></tr></tbody>
+<tfoot><tr><td>合計（2週間）</td><td class="num">95,000円</td><td class="num">25,000円</td><td class="num">5,000円</td><td class="num">125,000円</td></tr></tfoot></table></div>
+</section>
+
+<section>
+  <h2>あなたにお願いしたいこと</h2>
+  <div class="card"><ol class="todo">
+    <li><div><b>Google アナリティクス 4 のプロパティを作り、「測定ID」（G-から始まる）を教える</b><span>analytics.google.com → 管理 → プロパティを作成 → ウェブ ストリームで lp.site-forge.jp を登録</span></div></li>
+    <li><div><b>Google 広告のアカウントを作り、支払い方法を登録する</b><span>ads.google.com。作成後、「目標 → コンバージョン → ウェブサイト」で「見込み顧客フォームの送信」を作ると出るタグID（AW-）とラベルを教える</span></div></li>
+    <li><div><b>Meta ビジネス（Instagram / Facebook 広告）を作り、ピクセルIDを教える</b><span>business.facebook.com → イベントマネージャ → データソースを追加 → ウェブ。ペット・解体見積・志望理由書で使う</span></div></li>
+    <li><div><b>TikTok 広告のアカウントを作り、ピクセルIDを教える</b><span>ads.tiktok.com。恋愛ナビで使う（Meta は出会い関連の広告に事前許可が必要なため）</span></div></li>
+  </ol></div>
+  <p class="neg">IDを受け取ったら、10本のLPにまとめて設定します。Google 広告の検索広告は、取り込み用のファイル（ads/google-ads-editor.csv）を用意済みです。すべて「一時停止」の状態で入るので、確認してから配信を始められます。</p>
+</section>
+
+<section>
+  <h2>サービスごとの広告</h2>
+  <div class="card" id="pet">
+<div class="svc-head"><h2>うちの子アトリエ</h2><div class="chips"><span class="chip">Instagram / Facebook 15,000円</span><span class="chip">Google 検索広告 5,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/pet-square.png" alt="うちの子アトリエの広告画像（正方形）" loading="lazy">
+<img src="creatives/pet-story.png" alt="うちの子アトリエの広告画像（縦長）" loading="lazy">
+<img src="creatives/pet-landscape.png" alt="うちの子アトリエの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（12本）</h3><ul class="copy"><li><span>うちの子の写真がアクスタに</span><small>26/30</small></li><li><span>写真1枚でペットのイラスト</span><small>25/30</small></li><li><span>注文前に無料でプレビュー</span><small>24/30</small></li><li><span>犬も猫もうさぎも</span><small>16/30</small></li><li><span>画風を選べるペットグッズ</span><small>24/30</small></li><li><span>受注生産で1点から</span><small>17/30</small></li><li><span>修正1回無料</span><small>11/30</small></li><li><span>2027年カレンダーも</span><small>18/30</small></li><li><span>贈り物にもおすすめ</span><small>18/30</small></li><li><span>アクスタ3,980円〜（予定）</span><small>25/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>うちの子アトリエ</span><small>16/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>スマホの写真を送るだけ。AIがイラストにして、仕上がりを注文前に無料で確認できます。</span><small>82/90</small></li><li><span>アクリルスタンド、A4ポスター、2027年カレンダー。受注生産で1点からお届け。</span><small>73/90</small></li><li><span>水彩・ゆるかわ・和風など画風を選べます。気になる所は注文前に1回無料で修正。</span><small>75/90</small></li><li><span>現在、事前登録を受付中。公開時に使える割引クーポンを登録者にお送りします。</span><small>74/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">ペット アクスタ ／ ペット アクリルスタンド ／ うちの子 グッズ ／ ペット 似顔絵 オーダー ／ 犬 アクスタ 作成 ／ 猫 アクスタ 作成 ／ ペット イラスト グッズ ／ ペット 似顔絵 プレゼント</p>
+<p class="neg">除外：無料 素材 ／ フリー ／ 自作 ／ 100均</p></div></div><div><h3>Instagram / Facebook の広告文</h3>
+<pre class="meta">うちの子の写真を、イラストのアクリルスタンドに。
+スマホの写真を送るだけで、注文前に仕上がりを無料でプレビューできます。
+いまなら事前登録で、公開時の割引クーポンをお送りします。</pre>
+<p style="margin-top:6px;font-size:14px"><b>見出し：</b>うちの子の写真が、アクスタに。　<b>ボタン横の説明：</b>無料で先行登録</p>
+<p class="neg" style="margin-top:4px">配信先：Instagram：犬・猫・ペット用品・ペットとの暮らしに興味がある人／25〜54歳／全国</p></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Instagram / Facebook</b>：https://lp.site-forge.jp/pet?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=pet</p><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/pet?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=pet</p></div></div><div class="card" id="kaitai">
+<div class="svc-head"><h2>解体見積メーカー</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span><span class="chip">Instagram / Facebook 5,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/kaitai-square.png" alt="解体見積メーカーの広告画像（正方形）" loading="lazy">
+<img src="creatives/kaitai-story.png" alt="解体見積メーカーの広告画像（縦長）" loading="lazy">
+<img src="creatives/kaitai-landscape.png" alt="解体見積メーカーの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（11本）</h3><ul class="copy"><li><span>解体見積書を現場でつくる</span><small>24/30</small></li><li><span>坪数と構造で内訳つき見積</span><small>24/30</small></li><li><span>産廃の品目ごとに自動計算</span><small>24/30</small></li><li><span>「一式」をやめて内訳を明確に</span><small>28/30</small></li><li><span>見積から請求書へワンタップ</span><small>26/30</small></li><li><span>スマホだけで作成・送付</span><small>22/30</small></li><li><span>自社の単価を登録して使える</span><small>26/30</small></li><li><span>先行登録で14日間無料</span><small>20/30</small></li><li><span>月額4,980円（予定）</span><small>19/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>解体見積メーカー</span><small>16/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>木造・鉄骨・RCの構造と坪数、付帯工事、産廃の品目を選ぶと内訳つき見積書PDFに。</span><small>77/90</small></li><li><span>現地調査のその場でスマホから作成。PDFをLINEやメールでそのまま送れます。</span><small>71/90</small></li><li><span>受注したらワンタップで請求書に変換。よく使う単価は一度登録すれば自動で計算。</span><small>76/90</small></li><li><span>解体業者向けの見積書作成ツール。事前登録受付中、先行登録者は14日間無料の予定。</span><small>78/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">解体 見積書 テンプレート ／ 解体工事 見積書 ／ 解体 見積 ソフト ／ 解体 見積書 エクセル ／ 解体業 見積 アプリ ／ 見積書 アプリ 解体</p>
+<p class="neg">除外：費用 相場 ／ 自分で ／ 補助金 ／ 業者 選び方 ／ 安い 業者</p></div></div><div><h3>Instagram / Facebook の広告文</h3>
+<pre class="meta">解体工事の見積書、まだ夜にExcelで作っていませんか？
+構造・坪数・付帯工事・産廃の品目を選ぶだけで、内訳つきの見積書PDFに。現地調査のその場でスマホから送れます。
+事前登録受付中です。</pre>
+<p style="margin-top:6px;font-size:14px"><b>見出し：</b>坪数と構造で、内訳つき見積書。　<b>ボタン横の説明：</b>無料で先行登録</p>
+<p class="neg" style="margin-top:4px">配信先：Facebook / Instagram：建設・解体・リフォーム・中小企業経営に興味がある人／30〜64歳</p></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/kaitai?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=kaitai</p><p class="url"><b>Instagram / Facebook</b>：https://lp.site-forge.jp/kaitai?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=kaitai</p></div></div><div class="card" id="eisei">
+<div class="svc-head"><h2>衛生管理者 合格ドリル</h2><div class="chips"><span class="chip">Google 検索広告 15,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/eisei-square.png" alt="衛生管理者 合格ドリルの広告画像（正方形）" loading="lazy">
+<img src="creatives/eisei-story.png" alt="衛生管理者 合格ドリルの広告画像（縦長）" loading="lazy">
+<img src="creatives/eisei-landscape.png" alt="衛生管理者 合格ドリルの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（11本）</h3><ul class="copy"><li><span>衛生管理者の試験対策アプリ</span><small>26/30</small></li><li><span>試験日から逆算して毎日出題</span><small>26/30</small></li><li><span>条文つきで解説が分かる</span><small>22/30</small></li><li><span>弱点を分野ごとに自動分析</span><small>24/30</small></li><li><span>第一種・第二種に対応予定</span><small>24/30</small></li><li><span>スマホで1問から学べる</span><small>21/30</small></li><li><span>無料診断を先行でお試し</span><small>22/30</small></li><li><span>試験日まで4,980円（予定）</span><small>25/30</small></li><li><span>会社での一括導入にも対応予定</span><small>28/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>衛生管理者 合格ドリル</span><small>21/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>法令の条文にもとづいた一問一答と五肢択一。すべての解説に根拠の条文を示します。</span><small>78/90</small></li><li><span>受験日を入れると毎日の問題数と範囲を自動で決定。分野別の正答率で弱点が分かる。</span><small>78/90</small></li><li><span>会社から取るよう言われた方へ。スマホで1問から、通勤中でも続けられます。</span><small>71/90</small></li><li><span>事前登録受付中。先行登録の方は、公開時に無料診断を先行してお試しいただけます。</span><small>78/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">衛生管理者 アプリ ／ 衛生管理者 問題集 ／ 衛生管理者 勉強 方法 ／ 第一種衛生管理者 勉強 ／ 第二種衛生管理者 問題 ／ 衛生管理者 一問一答</p>
+<p class="neg">除外：求人 ／ 年収 ／ 講習 ／ 合格発表 ／ 過去問 無料</p></div></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/eisei?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=eisei</p></div></div><div class="card" id="koumuin">
+<div class="svc-head"><h2>公務員面接トレーナー</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/koumuin-square.png" alt="公務員面接トレーナーの広告画像（正方形）" loading="lazy">
+<img src="creatives/koumuin-story.png" alt="公務員面接トレーナーの広告画像（縦長）" loading="lazy">
+<img src="creatives/koumuin-landscape.png" alt="公務員面接トレーナーの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（10本）</h3><ul class="copy"><li><span>面接カードから深掘り質問</span><small>24/30</small></li><li><span>公務員面接をAIで練習</span><small>20/30</small></li><li><span>「なぜ」を5段階で深掘り</span><small>23/30</small></li><li><span>志望先の自治体に合わせた質問</span><small>28/30</small></li><li><span>回答の具体性・一貫性を評価</span><small>26/30</small></li><li><span>社会人経験者採用にも対応</span><small>24/30</small></li><li><span>3ヶ月パス4,980円（予定）</span><small>24/30</small></li><li><span>公開時に3問無料でお試し</span><small>23/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>公務員面接トレーナー</span><small>20/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>面接カードと志望先を入れると、面接官が聞きそうな質問を5段階で深掘りします。</span><small>75/90</small></li><li><span>回答を入力すると、具体性や志望先との一貫性を評価。カードと回答のずれも指摘。</span><small>76/90</small></li><li><span>予備校に通わなくても、一人で深掘りの練習ができます。社会人経験者採用にも対応。</span><small>78/90</small></li><li><span>事前登録受付中。面接カードはご自身で書き、その内容で面接の練習をするサービスです。</span><small>82/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">公務員 面接カード 書き方 ／ 公務員 面接 対策 ／ 公務員 面接 練習 ／ 市役所 面接 対策 ／ 社会人経験者採用 面接 ／ 面接カード 添削</p>
+<p class="neg">除外：求人 ／ 倍率 ／ 年収 ／ 合格発表 ／ 例文 無料</p></div></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/koumuin?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=koumuin</p></div><p class="note">面接の時期（市役所・経験者採用は10〜11月、本番は2027年5〜7月）に合わせて出稿量を調整する。</p></div><div class="card" id="receipt">
+<div class="svc-head"><h2>レシートまるごと申告</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/receipt-square.png" alt="レシートまるごと申告の広告画像（正方形）" loading="lazy">
+<img src="creatives/receipt-story.png" alt="レシートまるごと申告の広告画像（縦長）" loading="lazy">
+<img src="creatives/receipt-landscape.png" alt="レシートまるごと申告の広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（9本）</h3><ul class="copy"><li><span>1年分のレシートをデータに</span><small>25/30</small></li><li><span>まとめて撮るだけで経費を整理</span><small>28/30</small></li><li><span>AIが読み取り人が確認</span><small>20/30</small></li><li><span>主要な会計ソフトの形式で出力</span><small>28/30</small></li><li><span>確定申告の準備をラクに</span><small>22/30</small></li><li><span>1シーズン9,800円（予定）</span><small>24/30</small></li><li><span>年明けから受付予定</span><small>18/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>レシートまるごと申告</span><small>20/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>ためこんだレシートや領収書をスマホでまとめて撮影。日付・金額・お店を読み取ります。</span><small>82/90</small></li><li><span>読み取った内容はスタッフが確認。会計ソフトに取り込めるデータでお渡しします。</span><small>76/90</small></li><li><span>収支内訳書の経費欄に写しやすい集計表つき。申告書の作成や税務相談は行いません。</span><small>78/90</small></li><li><span>副業・個人事業主の確定申告準備に。事前登録受付中、年明けの受付開始をお知らせ。</span><small>78/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">レシート 整理 確定申告 ／ 領収書 まとめて 入力 ／ レシート データ化 ／ 確定申告 レシート 大量 ／ 経費 レシート 読み取り ／ 確定申告 準備 レシート</p>
+<p class="neg">除外：無料 アプリ ／ 税理士 ／ 代行 料金 ／ 保存期間 ／ 家計簿</p></div></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/receipt?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=receipt</p></div><p class="note">11〜12月は「年末にレシート整理」の切り口でテスト。本番は2〜3月。</p></div><div class="card" id="taikyo">
+<div class="svc-head"><h2>退去前チェックパック</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/taikyo-square.png" alt="退去前チェックパックの広告画像（正方形）" loading="lazy">
+<img src="creatives/taikyo-story.png" alt="退去前チェックパックの広告画像（縦長）" loading="lazy">
+<img src="creatives/taikyo-landscape.png" alt="退去前チェックパックの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（9本）</h3><ul class="copy"><li><span>退去の立ち会い、その前に</span><small>24/30</small></li><li><span>退去費用で損しないための準備</span><small>28/30</small></li><li><span>立ち会い前のチェックリスト</span><small>26/30</small></li><li><span>壁紙の残存価値の目安を計算</span><small>26/30</small></li><li><span>国交省ガイドラインをもとに</span><small>26/30</small></li><li><span>管理会社に聞く質問集つき</span><small>24/30</small></li><li><span>980円（予定）</span><small>13/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>退去前チェックパック</span><small>20/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>立ち会いで言われるままサインしないために。部屋ごとの撮影ポイントと確認事項を一覧に。</span><small>84/90</small></li><li><span>入居年数から壁紙などの残存価値の目安を計算。国交省ガイドラインの考え方にもとづく。</span><small>82/90</small></li><li><span>請求の内訳を確認するための質問テンプレートつき。個別の判断や交渉は行いません。</span><small>78/90</small></li><li><span>賃貸の退去前に準備しておくことをまとめたチェックパック。事前登録受付中です。</span><small>76/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">退去 立ち会い 注意点 ／ 退去費用 高い ／ 原状回復 ガイドライン ／ 退去 立ち会い サイン ／ 退去費用 相場 クロス ／ 賃貸 退去 チェックリスト</p>
+<p class="neg">除外：弁護士 ／ 訴訟 ／ 少額訴訟 ／ 業者 ／ ハウスクリーニング</p></div></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/taikyo?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=taikyo</p></div><p class="note">個別の請求の妥当性を判断するような表現は使わない（弁護士法）。引っ越しが増える2〜4月に出稿を増やす。</p></div><div class="card" id="watch">
+<div class="svc-head"><h2>ページ見張り番</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/watch-square.png" alt="ページ見張り番の広告画像（正方形）" loading="lazy">
+<img src="creatives/watch-story.png" alt="ページ見張り番の広告画像（縦長）" loading="lazy">
+<img src="creatives/watch-landscape.png" alt="ページ見張り番の広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（9本）</h3><ul class="copy"><li><span>ページの更新をLINEで通知</span><small>24/30</small></li><li><span>補助金の公募を見逃さない</span><small>24/30</small></li><li><span>変わった部分だけを届ける</span><small>24/30</small></li><li><span>PDFの追加も検知</span><small>15/30</small></li><li><span>キーワードで絞り込み通知</span><small>24/30</small></li><li><span>URLを登録するだけ</span><small>17/30</small></li><li><span>3ページまで無料（予定）</span><small>23/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>ページ見張り番</span><small>14/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>見ておきたいページのURLを登録するだけ。更新されたら変わった部分をLINEとメールで。</span><small>81/90</small></li><li><span>補助金の公募ページや自治体のお知らせ、入札情報の更新を見逃さないために。</span><small>72/90</small></li><li><span>公募要領などのPDFの追加も検知。「公募」「締切」などのキーワードで絞り込めます。</span><small>79/90</small></li><li><span>3ページまで無料、50ページまで月1,980円の予定。事前登録受付中です。</span><small>66/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">Webページ 更新 通知 ／ サイト 更新 通知 LINE ／ 補助金 新着 通知 ／ ホームページ 更新 監視 ／ 公募 情報 通知 ／ ページ 更新 チェック ツール</p>
+<p class="neg">除外：WordPress 更新 ／ 作り方 ／ Python ／ 無料 自作</p></div></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/watch?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=watch</p></div><p class="note">「LINE Notify」などの他社サービス名は広告文に入れない（商標）。</p></div><div class="card" id="shibou">
+<div class="svc-head"><h2>志望理由書コーチ</h2><div class="chips"><span class="chip">Instagram / Facebook 5,000円</span><span class="chip">Google 検索広告 5,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/shibou-square.png" alt="志望理由書コーチの広告画像（正方形）" loading="lazy">
+<img src="creatives/shibou-story.png" alt="志望理由書コーチの広告画像（縦長）" loading="lazy">
+<img src="creatives/shibou-landscape.png" alt="志望理由書コーチの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（9本）</h3><ul class="copy"><li><span>書き直さない、問い返す添削</span><small>26/30</small></li><li><span>志望理由書を自分の言葉で</span><small>24/30</small></li><li><span>アドミッション・ポリシーと照合</span><small>30/30</small></li><li><span>想定面接質問を10問つき</span><small>22/30</small></li><li><span>総合型選抜・推薦に対応</span><small>22/30</small></li><li><span>受験まで9,800円（予定）</span><small>23/30</small></li><li><span>保護者とも共有できる</span><small>20/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>志望理由書コーチ</span><small>16/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>下書きと志望校のポリシーを入れると、合い方・具体性・構成をチェックします。</span><small>74/90</small></li><li><span>直した文章ではなく、自分の言葉で書き直すための問いを返す添削です。</span><small>66/90</small></li><li><span>志望理由書から、面接で聞かれそうな質問を10問。進み具合は保護者とも共有できます。</span><small>80/90</small></li><li><span>大学によっては生成AIの利用にルールがあります。募集要項をご確認ください。</span><small>72/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">志望理由書 添削 ／ 志望理由書 書き方 ／ 総合型選抜 志望理由書 ／ 推薦 志望理由書 添削 ／ 志望理由書 アドミッションポリシー</p>
+<p class="neg">除外：例文 無料 ／ 就職 ／ 転職 ／ 看護 例文</p></div></div><div><h3>Instagram / Facebook の広告文</h3>
+<pre class="meta">志望理由書、AIに書かせると「自分の文章」ではなくなってしまう。
+志望理由書コーチは文章を書き換えず、自分の言葉で書き直すための「問い」を返す添削です。想定面接質問も10問。
+事前登録受付中です。</pre>
+<p style="margin-top:6px;font-size:14px"><b>見出し：</b>書き直さない。問い返す添削。　<b>ボタン横の説明：</b>無料で先行登録</p>
+<p class="neg" style="margin-top:4px">配信先：Facebook / Instagram：大学受験・子育て・教育に興味がある保護者／35〜59歳（高校生本人への配信はしない）</p></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Instagram / Facebook</b>：https://lp.site-forge.jp/shibou?utm_source=meta&amp;utm_medium=paid_social&amp;utm_campaign=shibou</p><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/shibou?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=shibou</p></div><p class="note">出願の山（6〜9月）は過ぎているので、今は小さく反応だけ測る。</p></div><div class="card" id="renai">
+<div class="svc-head"><h2>メンズ恋愛ナビ</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span><span class="chip">TikTok 5,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/renai-square.png" alt="メンズ恋愛ナビの広告画像（正方形）" loading="lazy">
+<img src="creatives/renai-story.png" alt="メンズ恋愛ナビの広告画像（縦長）" loading="lazy">
+<img src="creatives/renai-landscape.png" alt="メンズ恋愛ナビの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（10本）</h3><ul class="copy"><li><span>このLINE、どう返す？</span><small>20/30</small></li><li><span>スクショで返信案を3パターン</span><small>27/30</small></li><li><span>男性のための恋愛相談AI</span><small>22/30</small></li><li><span>匿名でいつでも相談できる</span><small>24/30</small></li><li><span>デートの誘い方も相談</span><small>20/30</small></li><li><span>プロフィール添削も</span><small>18/30</small></li><li><span>月額1,480円（予定）</span><small>19/30</small></li><li><span>先行登録で初月無料（予定）</span><small>26/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>メンズ恋愛ナビ</span><small>14/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>やりとりのスクリーンショットを貼るだけで、流れをふまえた返信の案を3パターン。</span><small>77/90</small></li><li><span>デートの誘い方、マッチングアプリのプロフィール、2回目につなげるコツまで相談。</span><small>77/90</small></li><li><span>人には聞きにくいことも、匿名で24時間いつでも。相手を尊重する会話をお手伝い。</span><small>76/90</small></li><li><span>結果を約束するものではありません。事前登録受付中、先行登録で初月無料の予定。</span><small>76/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">女性 LINE 返信 迷う ／ デート 誘い方 LINE ／ マッチングアプリ プロフィール 添削 ／ 恋愛 相談 男性 ／ 好きな人 LINE 返信 ／ 2回目 デート 誘い方</p>
+<p class="neg">除外：無料 占い ／ 出会い系 ／ 風俗 ／ 既婚</p></div></div><div><h3>TikTok の広告文</h3>
+<pre class="meta">「今週ちょっとバタバタしてて」…このLINE、どう返す？
+トーク画面のスクショを貼るだけで、返信の案を3パターン。デートの誘い方やプロフィールの相談も、匿名でいつでも。
+事前登録受付中です。</pre>
+<p style="margin-top:6px;font-size:14px"><b>見出し：</b>このLINE、どう返す？　<b>ボタン横の説明：</b>無料で先行登録</p>
+<p class="neg" style="margin-top:4px">配信先：TikTok：男性／20〜34歳／恋愛・ライフスタイルに興味（18歳未満は配信対象外）</p></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/renai?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=renai</p><p class="url"><b>TikTok</b>：https://lp.site-forge.jp/renai?utm_source=tiktok&amp;utm_medium=paid_social&amp;utm_campaign=renai</p></div><p class="note">Meta（Instagram / Facebook）は出会い関連の広告に事前の書面許可が必要なため使わない。Google も「出会い」関連として審査で制限される可能性があるので、審査結果を確認する。</p></div><div class="card" id="souzoku">
+<div class="svc-head"><h2>相続やることナビ</h2><div class="chips"><span class="chip">Google 検索広告 10,000円</span></div></div>
+<div class="gallery">
+<img src="creatives/souzoku-square.png" alt="相続やることナビの広告画像（正方形）" loading="lazy">
+<img src="creatives/souzoku-story.png" alt="相続やることナビの広告画像（縦長）" loading="lazy">
+<img src="creatives/souzoku-landscape.png" alt="相続やることナビの広告画像（横長）" loading="lazy"></div><div class="grid2">
+<div><h3>検索広告の見出し（9本）</h3><ul class="copy"><li><span>相続の手続き、いつまでに何を</span><small>28/30</small></li><li><span>やることと期限を一覧に</span><small>22/30</small></li><li><span>期限が近づくとお知らせ</span><small>22/30</small></li><li><span>家族で分担して進められる</span><small>24/30</small></li><li><span>相続放棄・相続税の期限も</span><small>24/30</small></li><li><span>必要書類と窓口を案内</span><small>20/30</small></li><li><span>4,980円（予定）</span><small>15/30</small></li><li><span>事前登録受付中</span><small>14/30</small></li><li><span>相続やることナビ</span><small>16/30</small></li></ul></div>
+<div><h3>説明文（4本）</h3><ul class="copy"><li><span>いくつかの質問に答えると、ご家族に必要な手続きと期限を一覧にします。</span><small>68/90</small></li><li><span>相続放棄（3か月）や相続税の申告（10か月）など、期限が近づくとお知らせします。</span><small>77/90</small></li><li><span>家族を招待して手続きを割り振り、進み具合を共有。必要書類と窓口も案内します。</span><small>76/90</small></li><li><span>書類作成や申請の代行、個別の税務・法律相談は行いません。事前登録受付中です。</span><small>76/90</small></li></ul>
+<h3 style="margin-top:14px">キーワード（フレーズ一致）</h3><p class="kw">相続 手続き 一覧 ／ 相続 やること リスト ／ 相続 手続き 期限 ／ 相続 手続き 自分で ／ 相続放棄 期限 ／ 死亡後 手続き 一覧</p>
+<p class="neg">除外：弁護士 ／ 税理士 ／ 司法書士 ／ 料金 ／ トラブル ／ 遺留分</p></div></div>
+<div><h3>リンク先（計測用パラメータつき）</h3><p class="url"><b>Google 検索広告</b>：https://lp.site-forge.jp/souzoku?utm_source=google&amp;utm_medium=cpc&amp;utm_campaign=souzoku</p></div><p class="note">士業の入札でクリック単価が高い（300〜1,000円）ので、1日の上限を守る。戸籍・登記を連想させる表現は審査で止まりやすい。</p></div>
+</section>
+</div>

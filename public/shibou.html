@@ -11,7 +11,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&family=Klee+One:wght@600&display=swap">
-<!-- 計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる -->
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="tracking-config.js"></script>
+<script src="tracking.js"></script>
 <script>document.documentElement.classList.add("js");</script>
 <style>
 :root {
@@ -871,7 +873,7 @@ footer .f-logo { font-family: var(--f-display); font-weight: 800; font-size: 18p
     }
     err.hidden = true;
     var data = { service: "shibou", email: email, answer: document.getElementById("signup-q").value, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
-    var done = function () { form.hidden = true; thanks.hidden = false; };
+    var done = function () { form.hidden = true; thanks.hidden = false; if (window.trackLead) window.trackLead("shibou"); };
     if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
     var btn = form.querySelector("button");
     btn.disabled = true; btn.textContent = "送信しています";

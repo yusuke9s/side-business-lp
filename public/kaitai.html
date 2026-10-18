@@ -11,7 +11,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=BIZ+UDPGothic:wght@400;700&display=swap">
-<!-- 計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる -->
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="tracking-config.js"></script>
+<script src="tracking.js"></script>
 <script>
 /* 動きを減らす設定でなければ .js を付ける（アニメーションの初期状態は .js のときだけ） */
 (function (d) { try { if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) d.documentElement.classList.add("js"); } catch (e) {} })(document);
@@ -1085,7 +1087,7 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
     }
     err.hidden = true;
     var data = { service: "kaitai", email: email, answer: document.getElementById("signup-q").value, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
-    var done = function () { form.hidden = true; thanks.hidden = false; };
+    var done = function () { form.hidden = true; thanks.hidden = false; if (window.trackLead) window.trackLead("kaitai"); };
     if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
     var btn = form.querySelector("button");
     btn.disabled = true; btn.textContent = "送信しています";

@@ -12,7 +12,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Yomogi&display=swap">
-<!-- 計測タグ（Googleアナリティクス、Meta・TikTokのピクセル）は公開時にここへ入れる -->
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="tracking-config.js"></script>
+<script src="tracking.js"></script>
 <style>
 :root{
   --mint:#1f7a62; --mint-d:#145c4a; --mint-dd:#0d4437; --mint-l:#dcf1e8; --mint-ll:#eff8f4;
@@ -1143,7 +1145,7 @@ footer .logo{color:#fff}
     }
     err.hidden = true;
     var data = { service: "pet", email: email, answer: document.getElementById("signup-q").value, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
-    var done = function () { form.hidden = true; thanks.hidden = false; };
+    var done = function () { form.hidden = true; thanks.hidden = false; if (window.trackLead) window.trackLead("pet"); };
     if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
     var btn = form.querySelector("button");
     btn.disabled = true; btn.textContent = "送信しています";
