@@ -1,0 +1,2438 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>贈答送り状メーカー（無料）</title>
+<meta name="description" content="お歳暮・贈答の注文（LINE・電話・FAXのメモ）から、ヤマト B2クラウド・佐川 e飛伝Ⅲ・ゆうパックの送り状取り込み用CSVと、お客さまごとの注文控えを作る無料ツールです。データはこの端末のブラウザにだけ保存されます。">
+<meta name="theme-color" content="#2a2017">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M8 4h18l8 8v24H8z' fill='%23d9b680' stroke='%232a2017' stroke-width='2.5'/%3E%3Ccircle cx='17' cy='12' r='3' fill='%23fffcf5' stroke='%232a2017' stroke-width='2'/%3E%3Cpath d='M13 21h14M13 26h14M13 31h9' stroke='%232a2017' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDGothic:wght@700&family=Yusei+Magic&display=swap">
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="/tracking-config.js"></script>
+<script src="/tracking.js"></script>
+<style>
+:root {
+  --kraft: #cfad7a; --kraft-d: #a98250; --kraft-l: #ead9b6; --kraft-ll: #f5ecd9;
+  --paper: #fffcf5; --paper2: #f8f1e3; --ink: #2a2017; --ink2: #4d3e2d; --mut: #6b5841; --line: #dccaa6; --line2: #c9b38a;
+  --shu: #b5381d; --shu-d: #8f2a14; --shu-l: #fbebe5; --ok: #2d6633; --ok-l: #e7f1e3;
+  --warn: #8a5300; --warn-l: #fff2d3; --cool: #2b5f8e; --cool-l: #e6eef6; --frz: #1c3c69;
+  --fd: "Yusei Magic", "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --fb: "BIZ UDPGothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  --fm: "BIZ UDGothic", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; color: var(--ink); font-family: var(--fb); font-size: 16px; line-height: 1.6;
+  background-color: var(--kraft);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(90deg, rgba(90,60,20,.045) 0 3px, transparent 3px 9px);
+  font-variant-numeric: tabular-nums;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+:focus-visible { outline: 3px solid var(--cool); outline-offset: 2px; }
+[hidden] { display: none !important; }
+svg.i { width: 20px; height: 20px; fill: currentColor; flex: none; }
+
+/* ---------- ヘッダー ---------- */
+.top { background: var(--kraft-l); border-bottom: 2px solid var(--ink); }
+.top-in { display: flex; align-items: center; gap: 10px; padding-block: 10px; }
+.logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.logo svg { width: 38px; height: 38px; flex: none; }
+.logo b { font-family: var(--fd); font-weight: 400; font-size: 21px; line-height: 1.15; letter-spacing: .02em; }
+.logo small { display: block; font-size: 11.5px; font-weight: 700; color: var(--ink2); letter-spacing: .04em; }
+.stamp { margin-left: auto; flex: none; display: grid; place-items: center; width: 52px; height: 52px; border: 2.5px solid var(--shu); border-radius: 50%; color: var(--shu); font-weight: 700; font-size: 13px; line-height: 1.1; text-align: center; transform: rotate(-9deg); background: rgba(255,252,245,.55); }
+.notice { background: var(--ink); color: #f3ead7; font-size: 13px; line-height: 1.55; }
+.notice .wrap { padding-block: 8px; display: flex; gap: 9px; align-items: flex-start; }
+.notice svg { width: 18px; height: 18px; margin-top: 1px; fill: #e9c98f; }
+.notice b { color: #f6d79b; }
+
+/* ---------- タブ ---------- */
+.tabs { position: sticky; top: 0; z-index: 40; background: var(--ink); box-shadow: 0 2px 0 rgba(0,0,0,.15); }
+.tabs .wrap { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; padding-block: 5px; }
+.tab { appearance: none; border: 0; background: transparent; color: #eadfc8; font-weight: 700; font-size: 12.5px; min-height: 50px; border-radius: 3px; cursor: pointer; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; line-height: 1.15; white-space: nowrap; position: relative; }
+.tab svg { width: 21px; height: 21px; fill: currentColor; }
+.tab[aria-selected="true"] { background: var(--paper); color: var(--ink); box-shadow: inset 0 3px 0 var(--shu); }
+.tab:hover:not([aria-selected="true"]) { background: #3c2f22; }
+.tab .dot { position: absolute; top: 5px; right: calc(50% - 20px); min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--shu); color: #fff; font-size: 11px; line-height: 18px; }
+
+/* ---------- 画面 ---------- */
+main { padding-block: 18px 40px; }
+.view { display: none; }
+.view.on { display: block; }
+.vhead { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.vtitle { font-family: var(--fd); font-weight: 400; font-size: 27px; line-height: 1.25; position: relative; }
+.vtitle small { display: block; font-family: var(--fb); font-weight: 700; font-size: 13px; letter-spacing: .03em; color: var(--ink2); margin-bottom: 2px; }
+.tape { display: inline-block; background: rgba(250,240,205,.78); padding: 2px 12px 3px; transform: rotate(-1.2deg); box-shadow: 0 1px 2px rgba(60,40,10,.25); border-left: 1px dashed rgba(120,90,40,.25); border-right: 1px dashed rgba(120,90,40,.25); }
+
+.card { position: relative; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: 0 1px 0 rgba(42,32,23,.15), 0 10px 18px -12px rgba(60,40,10,.55); padding: 16px 14px 18px; margin-bottom: 18px; }
+.chead { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.chead h2 { font-size: 18px; font-weight: 700; line-height: 1.35; flex: 1 1 0; min-width: 0; }
+.chead .aside { margin-left: auto; font-size: 13px; color: var(--mut); font-weight: 700; }
+.lbl { display: inline-block; flex: none; border: 1.5px solid var(--shu); color: var(--shu); font-weight: 700; font-size: 12.5px; letter-spacing: .12em; padding: 1px 8px; border-radius: 2px; background: #fff; }
+.lbl.ink { border-color: var(--ink); color: var(--ink); }
+.hint { font-size: 13.5px; color: var(--mut); line-height: 1.6; }
+.hint + .hint { margin-top: 4px; }
+.hint b { color: var(--ink); }
+
+.banner { display: flex; gap: 12px; align-items: flex-start; border: 1.5px solid var(--ink); background: var(--paper); padding: 12px 14px; margin-bottom: 16px; border-radius: 4px; font-size: 14.5px; line-height: 1.6; }
+.banner > svg { width: 22px; height: 22px; margin-top: 1px; }
+.banner .btns { margin-top: 10px; }
+.banner.sample { background: repeating-linear-gradient(-45deg, rgba(181,56,29,.06) 0 12px, transparent 12px 24px), var(--paper); border-color: var(--shu); }
+.banner.sample > svg { fill: var(--shu); }
+.banner.warn { background: var(--warn-l); border-color: var(--warn); }
+.banner.warn > svg { fill: var(--warn); }
+.banner b { font-weight: 700; }
+
+/* ---------- フォーム ---------- */
+.fgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.f { display: grid; gap: 4px; min-width: 0; align-content: start; }
+.f > span, .flabel { font-size: 13.5px; font-weight: 700; color: var(--ink2); }
+.f > span em, .flabel em { font-style: normal; font-weight: 400; color: var(--mut); font-size: 12.5px; margin-left: 4px; }
+.in, .f input, .f select, .f textarea {
+  width: 100%; min-height: 50px; padding: 10px 12px; font-size: 17px; background: #fff;
+  border: 1.5px solid var(--ink2); border-radius: 4px; -webkit-appearance: none; appearance: none; line-height: 1.4;
+}
+.f select, select.in { background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 18px) 52%, calc(100% - 12px) 52%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 34px; }
+.f input[type="date"] { min-width: 0; max-width: 100%; display: block; }
+.f input[type="date"]::-webkit-date-and-time-value { text-align: left; }
+.f textarea { min-height: 120px; resize: vertical; font-size: 16px; line-height: 1.6; }
+.f input:focus, .f select:focus, .f textarea:focus, .in:focus { border-color: var(--cool); outline: 2px solid rgba(43,95,142,.35); outline-offset: 0; }
+.f.bad input, .f.bad select, .in.bad { border-color: var(--shu); background: var(--shu-l); }
+.f.wrn input, .f.wrn select { border-color: var(--warn); background: var(--warn-l); }
+.fmsg { font-size: 12.5px; font-weight: 700; line-height: 1.45; }
+.fmsg.err { color: var(--shu-d); }
+.fmsg.wrn { color: var(--warn); }
+.fmsg.inf { color: var(--ok); }
+.mono, .f input.mono { font-family: var(--fm); letter-spacing: .04em; }
+.row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.row-nh { display: grid; grid-template-columns: minmax(0, 1fr) 108px; gap: 10px; }
+.row-zt { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; }
+.row-q { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; }
+
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); border: 1.5px solid var(--ink2); border-radius: 4px; overflow: hidden; background: #fff; }
+.seg button { appearance: none; border: 0; border-left: 1.5px solid var(--ink2); background: #fff; min-height: 48px; font-weight: 700; font-size: 15.5px; cursor: pointer; padding: 4px 4px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+.seg button:first-child { border-left: 0; }
+.seg button svg { width: 17px; height: 17px; fill: currentColor; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.seg.cool button[data-v="c"][aria-pressed="true"] { background: var(--cool); }
+.seg.cool button[data-v="f"][aria-pressed="true"] { background: var(--frz); }
+
+.stepper { display: grid; grid-template-columns: 46px minmax(0, 1fr) 46px; border: 1.5px solid var(--ink2); border-radius: 4px; overflow: hidden; background: #fff; min-height: 50px; }
+.stepper button { appearance: none; border: 0; background: var(--paper2); font-size: 22px; font-weight: 700; cursor: pointer; display: grid; place-items: center; }
+.stepper button svg { width: 18px; height: 18px; fill: currentColor; }
+.stepper input { border: 0 !important; text-align: center; font-size: 18px; font-weight: 700; min-width: 0; width: 100%; background: #fff; min-height: 0 !important; padding: 0 !important; outline: none !important; }
+
+.btn {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 50px; padding: 10px 18px; font-weight: 700; font-size: 16px; line-height: 1.3; text-decoration: none; cursor: pointer; text-align: center;
+  background: var(--paper); color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: 0 2px 0 var(--ink);
+  transition: transform .1s, box-shadow .1s, background-color .15s;
+}
+.btn:hover { background: #fff; }
+.btn:active { transform: translateY(2px); box-shadow: 0 0 0 var(--ink); }
+.btn.pri { background: var(--shu); color: #fff; border-color: var(--shu-d); box-shadow: 0 2px 0 var(--shu-d); }
+.btn.pri:hover { background: #c4421f; }
+.btn.ink { background: var(--ink); color: #fff; }
+.btn.ghost { box-shadow: none; border-color: var(--line2); background: transparent; }
+.btn.danger { color: var(--shu-d); border-color: var(--shu-d); box-shadow: 0 2px 0 var(--shu-d); }
+.btn.sm { min-height: 44px; padding: 6px 12px; font-size: 14.5px; }
+.btn.xs { min-height: 38px; padding: 4px 10px; font-size: 13.5px; box-shadow: none; }
+.btn.block { width: 100%; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.linkbtn { appearance: none; background: none; border: 0; padding: 8px 2px; min-height: 40px; font-weight: 700; font-size: 14.5px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; color: var(--ink); }
+.linkbtn.red { color: var(--shu-d); }
+
+/* ---------- 入力画面の配置 ---------- */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 22px; }
+.side .card { margin-bottom: 18px; }
+
+/* 依頼主 */
+.picker { margin-top: 10px; border: 1.5px dashed var(--line2); border-radius: 4px; padding: 10px; background: var(--paper2); }
+.plist { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.plist button { width: 100%; text-align: left; appearance: none; border: 1.5px solid var(--line2); background: #fff; border-radius: 4px; padding: 9px 12px; min-height: 52px; cursor: pointer; line-height: 1.4; }
+.plist button b { display: block; font-size: 16px; }
+.plist button span { font-size: 13px; color: var(--mut); }
+.plist button:hover { border-color: var(--ink); }
+.who { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.who .linkbtn { padding-block: 4px; min-height: 36px; }
+
+/* 届け先カード（小さな送り状） */
+.rlist { display: grid; gap: 12px; }
+.rec { position: relative; background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; box-shadow: 0 8px 14px -12px rgba(60,40,10,.6); }
+.rec::before { content: ""; position: absolute; left: 0; right: 0; top: -1.5px; height: 6px; background: radial-gradient(circle at 5px 0, var(--kraft) 2.4px, transparent 2.8px) 0 0 / 12px 6px repeat-x; pointer-events: none; }
+.rec-head { appearance: none; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: start; width: 100%; text-align: left; background: none; border: 0; padding: 14px 12px 12px; cursor: pointer; }
+.rno { font-family: var(--fm); font-size: 12px; font-weight: 700; color: var(--shu); border: 1.5px solid var(--shu); border-radius: 2px; padding: 0 5px; line-height: 1.6; margin-top: 3px; background: #fff; }
+.rname { display: block; font-size: 18px; font-weight: 700; line-height: 1.35; word-break: break-all; }
+.rname small { font-size: 13px; margin-left: 4px; font-weight: 700; color: var(--ink2); }
+.rname.empty { color: var(--mut); font-weight: 400; font-size: 16px; }
+.raddr { display: block; font-size: 13.5px; color: var(--ink2); line-height: 1.5; margin-top: 2px; word-break: break-all; }
+.zipbox { display: inline-flex; align-items: center; gap: 1px; font-family: var(--fm); font-size: 12.5px; margin-right: 6px; vertical-align: 1px; }
+.zipbox i { font-style: normal; display: inline-grid; place-items: center; width: 14px; height: 18px; border: 1px solid var(--shu); color: var(--ink); background: #fff; line-height: 1; }
+.zipbox s { text-decoration: none; color: var(--shu); margin: 0 1px; }
+.rchips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tag { position: relative; display: inline-flex; align-items: center; min-height: 26px; padding: 2px 10px 2px 20px; background: var(--kraft-l); border: 1px solid var(--kraft-d); border-radius: 3px 12px 12px 3px; font-size: 13px; font-weight: 700; line-height: 1.3; }
+.tag::before { content: ""; position: absolute; left: 7px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--paper); border: 1px solid var(--kraft-d); }
+.tag.none { background: var(--shu-l); border-color: var(--shu); color: var(--shu-d); }
+.chip { display: inline-flex; align-items: center; gap: 4px; min-height: 26px; padding: 2px 8px; border: 1px solid var(--line2); background: #fff; border-radius: 3px; font-size: 13px; font-weight: 700; line-height: 1.3; }
+.chip svg { width: 14px; height: 14px; }
+.chip.c { color: #fff; background: var(--cool); border-color: var(--cool); }
+.chip.f { color: #fff; background: var(--frz); border-color: var(--frz); }
+.rstat { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; padding: 1px 7px; border-radius: 10px; white-space: nowrap; }
+.badge svg { width: 14px; height: 14px; }
+.badge.err { background: var(--shu); color: #fff; }
+.badge.wrn { background: var(--warn-l); color: var(--warn); border: 1px solid var(--warn); }
+.badge.ok { background: var(--ok-l); color: var(--ok); }
+.caret { width: 22px; height: 22px; fill: var(--ink2); transition: transform .15s; }
+.rec.open .caret { transform: rotate(180deg); }
+.issues { list-style: none; margin: 0; padding: 0 12px 12px 12px; display: grid; gap: 3px; }
+.issues li { display: flex; gap: 6px; font-size: 13px; font-weight: 700; line-height: 1.45; }
+.issues li svg { width: 15px; height: 15px; margin-top: 2px; }
+.issues li.err { color: var(--shu-d); }
+.issues li.err svg { fill: var(--shu); }
+.issues li.wrn { color: var(--warn); }
+.issues li.wrn svg { fill: var(--warn); }
+.rec-body { border-top: 1.5px dashed var(--line2); padding: 14px 12px 14px; display: grid; gap: 12px; }
+.rec-foot { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
+.zipnote { font-size: 12.5px; font-weight: 700; color: var(--ok); }
+.addbar { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 14px; }
+.addbtn { min-height: 58px; font-size: 17px; border-style: dashed; box-shadow: none; background: rgba(255,252,245,.75); }
+
+/* 合計 */
+.sum { width: 100%; border-collapse: collapse; font-size: 15px; }
+.sum td { padding: 6px 0; border-bottom: 1px dashed var(--line); }
+.sum td:last-child { text-align: right; font-weight: 700; white-space: nowrap; padding-left: 10px; }
+.sum tr.total td { border-bottom: 0; border-top: 2px solid var(--ink); padding-top: 10px; }
+.sum tr.total td:last-child { font-family: var(--fd); font-weight: 400; font-size: 27px; }
+.sum .samp { color: var(--shu-d); font-size: 12px; font-weight: 700; }
+
+/* 貼り付け */
+.paste textarea { min-height: 170px; }
+.pres { margin-top: 16px; display: grid; gap: 12px; }
+.pres-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pres-head b { font-size: 16px; }
+.lefto { border: 1.5px solid var(--warn); background: var(--warn-l); border-radius: 4px; padding: 10px 12px; font-size: 14px; }
+.lefto b { color: var(--warn); display: flex; align-items: center; gap: 6px; }
+.lefto b svg { fill: var(--warn); width: 17px; height: 17px; }
+.lefto pre { margin: 6px 0 0; white-space: pre-wrap; word-break: break-all; font-family: var(--fb); font-size: 14px; background: #fff; border: 1px dashed var(--warn); padding: 8px 10px; border-radius: 3px; }
+.prow { border: 1.5px solid var(--ink2); background: #fff; border-radius: 4px; padding: 10px; display: grid; gap: 10px; }
+.prow.off { opacity: .55; }
+.prow-top { display: flex; align-items: center; gap: 10px; }
+.prow-top label { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; min-height: 40px; cursor: pointer; }
+.prow-top input[type="checkbox"] { width: 22px; height: 22px; accent-color: var(--shu); }
+.prow-top .badge { margin-left: auto; }
+.pgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+@media (max-width: 639px) { .pgrid .w { grid-column: 1 / -1; } }
+.pgrid .f input, .pgrid .f select { min-height: 46px; font-size: 16px; }
+.srcbox { font-size: 13px; }
+.srcbox summary { cursor: pointer; font-weight: 700; color: var(--ink2); min-height: 36px; display: flex; align-items: center; }
+.srcbox pre { margin: 4px 0 0; white-space: pre-wrap; word-break: break-all; font-family: var(--fb); background: var(--paper2); border-radius: 3px; padding: 8px 10px; }
+.pleft { border-left: 4px solid var(--warn); background: var(--warn-l); padding: 6px 10px; font-size: 13.5px; border-radius: 0 3px 3px 0; }
+.pleft b { color: var(--warn); }
+.pleft label { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-weight: 700; cursor: pointer; }
+.pleft input { width: 20px; height: 20px; accent-color: var(--warn); }
+.phead { display: none; }
+
+/* CSV 画面 */
+.carriers { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+.carrier { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; text-align: left; appearance: none; width: 100%; background: #fff; border: 1.5px solid var(--line2); border-radius: 4px; padding: 10px 12px; min-height: 60px; cursor: pointer; }
+.carrier .rad { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--ink2); background: #fff; display: grid; place-items: center; }
+.carrier[aria-checked="true"] { border-color: var(--ink); box-shadow: inset 5px 0 0 var(--shu); background: var(--paper); }
+.carrier[aria-checked="true"] .rad::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--shu); }
+.carrier b { display: block; font-size: 16px; line-height: 1.35; }
+.carrier span.d { display: block; font-size: 12.5px; color: var(--mut); line-height: 1.45; }
+.carrier .conf { display: inline-block; margin-left: 6px; font-size: 11.5px; font-weight: 700; padding: 0 6px; border-radius: 9px; border: 1px solid var(--ok); color: var(--ok); vertical-align: 2px; }
+.carrier .conf.part { border-color: var(--warn); color: var(--warn); }
+.olist { display: grid; gap: 6px; }
+.ocheck { display: flex; align-items: center; gap: 10px; border: 1.5px solid var(--line2); background: #fff; border-radius: 4px; padding: 8px 12px; min-height: 54px; cursor: pointer; }
+.ocheck input { width: 22px; height: 22px; accent-color: var(--shu); flex: none; }
+.ocheck .on { min-width: 0; line-height: 1.4; }
+.ocheck .on b { display: block; font-size: 15.5px; }
+.ocheck .on span { font-size: 12.5px; color: var(--mut); }
+.ocheck { flex-wrap: wrap; }
+.ocheck .on { flex: 1 1 160px; }
+.ocheck .badge { margin-left: auto; white-space: normal; max-width: 100%; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.checks li { border: 1.5px solid var(--line2); border-left-width: 5px; border-radius: 4px; background: #fff; padding: 8px 10px; font-size: 14px; line-height: 1.5; display: grid; gap: 4px; }
+.checks li.err { border-left-color: var(--shu); }
+.checks li.wrn { border-left-color: var(--warn); }
+.checks li.inf { border-left-color: var(--ok); }
+.checks .where { font-size: 12.5px; color: var(--mut); font-weight: 700; }
+.checks .what { font-weight: 700; }
+.checks .acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.badch { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 4px; border: 2px solid var(--shu); border-radius: 3px; background: var(--shu-l); font-size: 18px; font-weight: 700; margin: 0 4px; vertical-align: middle; }
+.dlbox { display: grid; gap: 10px; }
+.dlbox .btn.pri { min-height: 60px; font-size: 17px; }
+.counts { display: flex; gap: 8px; flex-wrap: wrap; }
+.prev-wrap { max-height: 420px; overflow: auto; border: 1.5px solid var(--line2); border-radius: 4px; background: #fff; }
+.prev { width: 100%; border-collapse: collapse; font-size: 13px; }
+.prev th, .prev td { border-bottom: 1px solid var(--line); padding: 5px 8px; text-align: left; vertical-align: top; }
+.prev th { width: 44%; font-weight: 700; color: var(--ink2); background: var(--paper2); }
+.prev td { font-family: var(--fm); word-break: break-all; }
+.prev tr.req th::after { content: "必須"; margin-left: 6px; font-size: 10.5px; color: var(--shu); border: 1px solid var(--shu); padding: 0 3px; border-radius: 2px; }
+.prev .n { color: var(--mut); font-family: var(--fm); font-size: 11.5px; margin-right: 6px; }
+.howto { margin: 6px 0 0; padding-left: 1.4em; font-size: 14px; line-height: 1.7; }
+.howto li + li { margin-top: 2px; }
+.src { font-size: 12.5px; color: var(--mut); word-break: break-all; }
+.src summary { cursor: pointer; font-weight: 700; min-height: 36px; display: flex; align-items: center; }
+.src a { display: block; margin-top: 4px; }
+
+/* 一覧 */
+.search { position: relative; }
+.search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); fill: var(--mut); }
+.search input { padding-left: 40px !important; }
+.plist2 { display: grid; gap: 10px; }
+.pcard { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; padding: 12px; display: grid; gap: 8px; }
+.pcard-h { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.pcard-h b { font-size: 17px; }
+.pcard-h .sub { font-size: 13px; color: var(--mut); width: 100%; margin-top: -4px; word-break: break-all; }
+.olines { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.olines li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; border-top: 1px dashed var(--line); padding-top: 6px; font-size: 14px; }
+.olines li .grow { flex: 1 1 100%; min-width: 0; }
+.olines li .btn.danger { margin-left: auto; }
+.nw { white-space: nowrap; }
+@media (min-width: 640px) { .olines li .grow { flex: 1 1 200px; } .olines li .btn.danger { margin-left: 0; } }
+.olines li.cur { font-weight: 700; }
+
+/* 設定 */
+.ptable { display: grid; gap: 10px; }
+.prod { border: 1.5px solid var(--line2); background: #fff; border-radius: 4px; padding: 10px; display: grid; gap: 8px; }
+.prod > .btn { justify-self: end; }
+.prod .row-pr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.rates { display: grid; gap: 8px; }
+.rrow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; border-bottom: 1px dashed var(--line); padding-bottom: 8px; }
+.rrow > b { font-size: 14.5px; }
+.rcells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.rcell { display: grid; gap: 2px; }
+.rcell span { font-size: 11.5px; font-weight: 700; color: var(--mut); }
+.rcell input { min-height: 44px !important; padding: 6px 8px !important; font-size: 16px !important; text-align: right; }
+.rcell input.samp { background: var(--warn-l); }
+.rhead { display: none; }
+.switch { display: flex; align-items: center; gap: 12px; cursor: pointer; font-weight: 700; min-height: 48px; }
+.switch input { width: 24px; height: 24px; accent-color: var(--shu); flex: none; }
+
+/* 注文書（A4） */
+.sheet-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; justify-content: space-between; margin-bottom: 12px; }
+.sheet-fit { overflow: hidden; }
+.sheet { width: 794px; min-height: 1123px; background: #fff; color: #111; padding: 40px 42px; box-shadow: 0 12px 26px -14px rgba(40,25,5,.7); transform-origin: top left; font-size: 12.5px; line-height: 1.5; }
+.s-top { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2.5px solid #111; padding-bottom: 8px; gap: 16px; }
+.s-title { font-size: 26px; font-weight: 700; letter-spacing: .3em; }
+.s-meta { text-align: right; font-size: 12px; line-height: 1.6; }
+.s-two { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-top: 14px; }
+.s-to .nm { font-size: 19px; font-weight: 700; border-bottom: 1px solid #111; padding-bottom: 2px; margin-bottom: 4px; }
+.s-to .nm small { font-size: 13px; margin-left: 6px; }
+.s-from { font-size: 12px; }
+.s-from b { font-size: 14px; }
+.s-amt { margin-top: 12px; display: flex; align-items: baseline; gap: 14px; border: 2px solid #111; padding: 8px 14px; }
+.s-amt b { font-size: 24px; letter-spacing: .02em; }
+.s-amt span { font-size: 12px; }
+.s-items { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 11.5px; }
+.s-items th, .s-items td { border: 1px solid #555; padding: 4px 5px; vertical-align: top; }
+.s-items th { background: #eee; font-weight: 700; text-align: center; white-space: nowrap; }
+.s-items td.r { text-align: right; white-space: nowrap; }
+.s-items td.c { text-align: center; }
+.s-items td.nw { white-space: nowrap; }
+.s-items .ad { font-size: 10.5px; color: #333; word-break: break-all; }
+.s-items .ck { width: 34px; }
+.s-items .ck i { display: inline-block; width: 14px; height: 14px; border: 1.5px solid #111; }
+.s-items tfoot td { font-weight: 700; background: #fafafa; }
+.s-note { margin-top: 10px; font-size: 11px; color: #333; }
+.s-note.red { color: #a1260f; font-weight: 700; }
+.s-memo { margin-top: 10px; border: 1px solid #999; min-height: 56px; padding: 6px 8px; font-size: 12px; white-space: pre-wrap; }
+
+/* フッター・トースト */
+footer { margin-top: 10px; background: var(--ink); color: #eadfc8; font-size: 13px; padding-block: 26px 34px; }
+footer .wrap { display: grid; gap: 8px; }
+footer .fl { font-family: var(--fd); font-size: 18px; color: #f6d79b; }
+footer .fsub { color: #c9bca2; font-size: 12.5px; }
+.toast { position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 4px; font-size: 14.5px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; max-width: calc(100% - 32px); text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+.toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.bar { position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: rgba(42,32,23,.97); border-top: 3px solid var(--shu); color: #fff; padding: 8px var(--gr) calc(8px + env(safe-area-inset-bottom, 0px)) var(--gl); }
+.bar-in { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.bar-t { min-width: 0; line-height: 1.2; }
+.bar-t small { display: block; font-size: 12px; font-weight: 700; color: #d9cdb3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-t b { font-family: var(--fd); font-weight: 400; font-size: 23px; color: #f6d79b; white-space: nowrap; }
+.bar .btn { margin-left: auto; white-space: nowrap; padding-inline: 14px; }
+body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+
+@media (min-width: 640px) {
+  .fgrid.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .fgrid.two .wide { grid-column: 1 / -1; }
+  .carriers { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pgrid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .pgrid .c2 { grid-column: span 2; } .pgrid .c3 { grid-column: span 3; } .pgrid .c4 { grid-column: span 4; } .pgrid .c6 { grid-column: span 6; }
+  .prod { grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1.3fr) auto; align-items: end; }
+  .prod .row-pr { display: contents; }
+  .rrow { grid-template-columns: 110px minmax(0, 1fr); align-items: center; }
+  .rcells { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .rcell span { display: none; }
+  .rhead { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--mut); }
+  .rhead div { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; text-align: center; }
+  .tab { font-size: 13.5px; flex-direction: row; gap: 7px; }
+  .tab .dot { position: static; margin-left: 2px; }
+}
+@media (min-width: 980px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 330px; }
+  .side { position: sticky; top: 76px; align-self: start; }
+  body.has-bar { padding-bottom: 0; }
+  .bar { display: none; }
+  .toast { bottom: 28px; }
+  .vtitle { font-size: 31px; }
+  .csvlay { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 22px; align-items: start; }
+}
+@media (max-width: 380px) {
+  .logo b { font-size: 18px; }
+  .stamp { width: 46px; height: 46px; font-size: 12px; }
+  .row-zt, .row-q { grid-template-columns: 132px minmax(0, 1fr); }
+  .tab { font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+/* ---------- 印刷 ---------- */
+@page { size: A4 portrait; margin: 10mm; }
+@media print {
+  html, body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .top, .notice, .tabs, .bar, footer, .toast, .sheet-tools, .view:not(#v-sheet), #sheetHint, .banner { display: none !important; }
+  main { padding: 0 !important; }
+  main > .wrap { max-width: none; padding: 0; }
+  #v-sheet { display: block !important; }
+  .sheet-fit { height: auto !important; overflow: visible; }
+  .sheet { transform: none !important; width: auto; min-height: 0; padding: 0; box-shadow: none; }
+  .sheet + .sheet { break-before: page; margin-top: 0; }
+  .s-items tr { break-inside: avoid; }
+}
+</style>
+</head>
+<body class="has-bar">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<!-- アイコン: Phosphor Icons (bold) https://phosphoricons.com/  MIT License, Copyright (c) 2023 Phosphor Icons -->
+<symbol id="i-package" viewBox="0 0 256 256"><path d="M225.6,62.64l-88-48.17a19.91,19.91,0,0,0-19.2,0l-88,48.17A20,20,0,0,0,20,80.19v95.62a20,20,0,0,0,10.4,17.55l88,48.17a19.89,19.89,0,0,0,19.2,0l88-48.17A20,20,0,0,0,236,175.81V80.19A20,20,0,0,0,225.6,62.64ZM128,36.57,200,76,178.57,87.73l-72-39.42Zm0,78.83L56,76,81.56,62l72,39.41ZM44,96.79l72,39.4v76.67L44,173.44Zm96,116.07V136.19l24-13.13V152a12,12,0,0,0,24,0V109.92l24-13.13v76.65Z"/></symbol>
+<symbol id="i-truck" viewBox="0 0 256 256"><path d="M255.14,115.54l-14-35A19.89,19.89,0,0,0,222.58,68H196V64a12,12,0,0,0-12-12H32A20,20,0,0,0,12,72V184a20,20,0,0,0,20,20H46.06a36,36,0,0,0,67.88,0h44.12a36,36,0,0,0,67.88,0H236a20,20,0,0,0,20-20V120A21.7,21.7,0,0,0,255.14,115.54ZM196,92h23.88l6.4,16H196ZM80,204a12,12,0,1,1,12-12A12,12,0,0,1,80,204Zm92-41.92A36.32,36.32,0,0,0,158.06,180H113.94a36,36,0,0,0-67.88,0H36V140H172ZM172,116H36V76H172Zm20,88a12,12,0,1,1,12-12A12,12,0,0,1,192,204Zm40-24h-6.06A36.09,36.09,0,0,0,196,156.23V132h36Z"/></symbol>
+<symbol id="i-clipboard-text" viewBox="0 0 256 256"><path d="M172,164a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h64A12,12,0,0,1,172,164Zm-12-52H96a12,12,0,0,0,0,24h64a12,12,0,0,0,0-24Zm60-64V216a20,20,0,0,1-20,20H56a20,20,0,0,1-20-20V48A20,20,0,0,1,56,28H90.53a51.88,51.88,0,0,1,74.94,0H200A20,20,0,0,1,220,48ZM100.29,60h55.42a28,28,0,0,0-55.42,0ZM196,52H178.59A52.13,52.13,0,0,1,180,64v8a12,12,0,0,1-12,12H88A12,12,0,0,1,76,72V64a52.13,52.13,0,0,1,1.41-12H60V212H196Z"/></symbol>
+<symbol id="i-printer" viewBox="0 0 256 256"><path d="M214.67,68H204V40a12,12,0,0,0-12-12H64A12,12,0,0,0,52,40V68H41.33C25.16,68,12,80.56,12,96v80a12,12,0,0,0,12,12H52v28a12,12,0,0,0,12,12H192a12,12,0,0,0,12-12V188h28a12,12,0,0,0,12-12V96C244,80.56,230.84,68,214.67,68ZM76,52H180V68H76ZM180,204H76V172H180Zm40-40H204v-4a12,12,0,0,0-12-12H64a12,12,0,0,0-12,12v4H36V96c0-2.17,2.44-4,5.33-4H214.67c2.89,0,5.33,1.83,5.33,4Zm-16-44a16,16,0,1,1-16-16A16,16,0,0,1,204,120Z"/></symbol>
+<symbol id="i-download-simple" viewBox="0 0 256 256"><path d="M228,144v64a12,12,0,0,1-12,12H40a12,12,0,0,1-12-12V144a12,12,0,0,1,24,0v52H204V144a12,12,0,0,1,24,0Zm-108.49,8.49a12,12,0,0,0,17,0l40-40a12,12,0,0,0-17-17L140,115V32a12,12,0,0,0-24,0v83L96.49,95.51a12,12,0,0,0-17,17Z"/></symbol>
+<symbol id="i-upload-simple" viewBox="0 0 256 256"><path d="M228,144v64a12,12,0,0,1-12,12H40a12,12,0,0,1-12-12V144a12,12,0,0,1,24,0v52H204V144a12,12,0,0,1,24,0ZM96.49,80.49,116,61v83a12,12,0,0,0,24,0V61l19.51,19.52a12,12,0,1,0,17-17l-40-40a12,12,0,0,0-17,0l-40,40a12,12,0,1,0,17,17Z"/></symbol>
+<symbol id="i-user" viewBox="0 0 256 256"><path d="M234.38,210a123.36,123.36,0,0,0-60.78-53.23,76,76,0,1,0-91.2,0A123.36,123.36,0,0,0,21.62,210a12,12,0,1,0,20.77,12c18.12-31.32,50.12-50,85.61-50s67.49,18.69,85.61,50a12,12,0,0,0,20.77-12ZM76,96a52,52,0,1,1,52,52A52.06,52.06,0,0,1,76,96Z"/></symbol>
+<symbol id="i-users" viewBox="0 0 256 256"><path d="M125.18,156.94a64,64,0,1,0-82.36,0,100.23,100.23,0,0,0-39.49,32,12,12,0,0,0,19.35,14.2,76,76,0,0,1,122.64,0,12,12,0,0,0,19.36-14.2A100.33,100.33,0,0,0,125.18,156.94ZM44,108a40,40,0,1,1,40,40A40,40,0,0,1,44,108Zm206.1,97.67a12,12,0,0,1-16.78-2.57A76.31,76.31,0,0,0,172,172a12,12,0,0,1,0-24,40,40,0,1,0-10.3-78.67,12,12,0,1,1-6.16-23.19,64,64,0,0,1,57.64,110.8,100.23,100.23,0,0,1,39.49,32A12,12,0,0,1,250.1,205.67Z"/></symbol>
+<symbol id="i-gear-six" viewBox="0 0 256 256"><path d="M128,76a52,52,0,1,0,52,52A52.06,52.06,0,0,0,128,76Zm0,80a28,28,0,1,1,28-28A28,28,0,0,1,128,156Zm113.86-49.57A12,12,0,0,0,236,98.34L208.21,82.49l-.11-31.31a12,12,0,0,0-4.25-9.12,116,116,0,0,0-38-21.41,12,12,0,0,0-9.68.89L128,37.27,99.83,21.53a12,12,0,0,0-9.7-.9,116.06,116.06,0,0,0-38,21.47,12,12,0,0,0-4.24,9.1l-.14,31.34L20,98.35a12,12,0,0,0-5.85,8.11,110.7,110.7,0,0,0,0,43.11A12,12,0,0,0,20,157.66l27.82,15.85.11,31.31a12,12,0,0,0,4.25,9.12,116,116,0,0,0,38,21.41,12,12,0,0,0,9.68-.89L128,218.73l28.14,15.74a12,12,0,0,0,9.7.9,116.06,116.06,0,0,0,38-21.47,12,12,0,0,0,4.24-9.1l.14-31.34,27.81-15.81a12,12,0,0,0,5.85-8.11A110.7,110.7,0,0,0,241.86,106.43Zm-22.63,33.18-26.88,15.28a11.94,11.94,0,0,0-4.55,4.59c-.54,1-1.11,1.93-1.7,2.88a12,12,0,0,0-1.83,6.31L184.13,199a91.83,91.83,0,0,1-21.07,11.87l-27.15-15.19a12,12,0,0,0-5.86-1.53h-.29c-1.14,0-2.3,0-3.44,0a12.08,12.08,0,0,0-6.14,1.51L93,210.82A92.27,92.27,0,0,1,71.88,199l-.11-30.24a12,12,0,0,0-1.83-6.32c-.58-.94-1.16-1.91-1.7-2.88A11.92,11.92,0,0,0,63.7,155L36.8,139.63a86.53,86.53,0,0,1,0-23.24l26.88-15.28a12,12,0,0,0,4.55-4.58c.54-1,1.11-1.94,1.7-2.89a12,12,0,0,0,1.83-6.31L71.87,57A91.83,91.83,0,0,1,92.94,45.17l27.15,15.19a11.92,11.92,0,0,0,6.15,1.52c1.14,0,2.3,0,3.44,0a12.08,12.08,0,0,0,6.14-1.51L163,45.18A92.27,92.27,0,0,1,184.12,57l.11,30.24a12,12,0,0,0,1.83,6.32c.58.94,1.16,1.91,1.7,2.88A11.92,11.92,0,0,0,192.3,101l26.9,15.33A86.53,86.53,0,0,1,219.23,139.61Z"/></symbol>
+<symbol id="i-plus" viewBox="0 0 256 256"><path d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z"/></symbol>
+<symbol id="i-trash" viewBox="0 0 256 256"><path d="M216,48H180V36A28,28,0,0,0,152,8H104A28,28,0,0,0,76,36V48H40a12,12,0,0,0,0,24h4V208a20,20,0,0,0,20,20H192a20,20,0,0,0,20-20V72h4a12,12,0,0,0,0-24ZM100,36a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4V48H100Zm88,168H68V72H188ZM116,104v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Zm48,0v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Z"/></symbol>
+<symbol id="i-copy" viewBox="0 0 256 256"><path d="M216,28H88A12,12,0,0,0,76,40V76H40A12,12,0,0,0,28,88V216a12,12,0,0,0,12,12H168a12,12,0,0,0,12-12V180h36a12,12,0,0,0,12-12V40A12,12,0,0,0,216,28ZM156,204H52V100H156Zm48-48H180V88a12,12,0,0,0-12-12H100V52H204Z"/></symbol>
+<symbol id="i-pencil-simple" viewBox="0 0 256 256"><path d="M230.14,70.54,185.46,25.85a20,20,0,0,0-28.29,0L33.86,149.17A19.85,19.85,0,0,0,28,163.31V208a20,20,0,0,0,20,20H92.69a19.86,19.86,0,0,0,14.14-5.86L230.14,98.82a20,20,0,0,0,0-28.28ZM91,204H52V165l84-84,39,39ZM192,103,153,64l18.34-18.34,39,39Z"/></symbol>
+<symbol id="i-warning" viewBox="0 0 256 256"><path d="M240.26,186.1,152.81,34.23h0a28.74,28.74,0,0,0-49.62,0L15.74,186.1a27.45,27.45,0,0,0,0,27.71A28.31,28.31,0,0,0,40.55,228h174.9a28.31,28.31,0,0,0,24.79-14.19A27.45,27.45,0,0,0,240.26,186.1Zm-20.8,15.7a4.46,4.46,0,0,1-4,2.2H40.55a4.46,4.46,0,0,1-4-2.2,3.56,3.56,0,0,1,0-3.73L124,46.2a4.77,4.77,0,0,1,8,0l87.44,151.87A3.56,3.56,0,0,1,219.46,201.8ZM116,136V104a12,12,0,0,1,24,0v32a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,176Z"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 256 256"><path d="M176.49,95.51a12,12,0,0,1,0,17l-56,56a12,12,0,0,1-17,0l-24-24a12,12,0,1,1,17-17L112,143l47.51-47.52A12,12,0,0,1,176.49,95.51ZM236,128A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128Z"/></symbol>
+<symbol id="i-x" viewBox="0 0 256 256"><path d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"/></symbol>
+<symbol id="i-magnifying-glass" viewBox="0 0 256 256"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></symbol>
+<symbol id="i-shield-check" viewBox="0 0 256 256"><path d="M208,36H48A20,20,0,0,0,28,56v56c0,54.29,26.32,87.22,48.4,105.29,23.71,19.39,47.44,26,48.44,26.29a12.1,12.1,0,0,0,6.32,0c1-.28,24.73-6.9,48.44-26.29,22.08-18.07,48.4-51,48.4-105.29V56A20,20,0,0,0,208,36Zm-4,76c0,35.71-13.09,64.69-38.91,86.15A126.28,126.28,0,0,1,128,219.38a126.14,126.14,0,0,1-37.09-21.23C65.09,176.69,52,147.71,52,112V60H204ZM79.51,144.49a12,12,0,1,1,17-17L112,143l47.51-47.52a12,12,0,0,1,17,17l-56,56a12,12,0,0,1-17,0Z"/></symbol>
+<symbol id="i-chat-text" viewBox="0 0 256 256"><path d="M216,44H40A20,20,0,0,0,20,64V224A19.82,19.82,0,0,0,31.56,242.1a20.14,20.14,0,0,0,8.49,1.9,19.91,19.91,0,0,0,12.82-4.72l.12-.11L84.47,212H216a20,20,0,0,0,20-20V64A20,20,0,0,0,216,44Zm-4,144H80a11.93,11.93,0,0,0-7.84,2.92L44,215.23V68H212ZM84,108A12,12,0,0,1,96,96h64a12,12,0,1,1,0,24H96A12,12,0,0,1,84,108Zm0,40a12,12,0,0,1,12-12h64a12,12,0,0,1,0,24H96A12,12,0,0,1,84,148Z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 256 256"><path d="M224,154.8l-47.09-21.11-.18-.08a19.94,19.94,0,0,0-19,1.75,13.08,13.08,0,0,0-1.12.84l-22.31,19c-13-7.05-26.43-20.37-33.49-33.21l19.06-22.66a11.76,11.76,0,0,0,.85-1.15,20,20,0,0,0,1.66-18.83,1.42,1.42,0,0,1-.08-.18L101.2,32A20.06,20.06,0,0,0,80.42,20.15,60.27,60.27,0,0,0,28,80c0,81.61,66.39,148,148,148a60.27,60.27,0,0,0,59.85-52.42A20.06,20.06,0,0,0,224,154.8ZM176,204A124.15,124.15,0,0,1,52,80,36.29,36.29,0,0,1,80.48,44.46l18.82,42L80.14,109.28a12,12,0,0,0-.86,1.16A20,20,0,0,0,78,130.08c9.42,19.28,28.83,38.56,48.31,48A20,20,0,0,0,146,176.63a11.63,11.63,0,0,0,1.11-.85l22.43-19.07,42,18.81A36.29,36.29,0,0,1,176,204Z"/></symbol>
+<symbol id="i-calendar-blank" viewBox="0 0 256 256"><path d="M208,28H188V24a12,12,0,0,0-24,0v4H92V24a12,12,0,0,0-24,0v4H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28ZM68,52a12,12,0,0,0,24,0h72a12,12,0,0,0,24,0h16V76H52V52ZM52,204V100H204V204Z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 256 256"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm68-84a12,12,0,0,1-12,12H128a12,12,0,0,1-12-12V72a12,12,0,0,1,24,0v44h44A12,12,0,0,1,196,128Z"/></symbol>
+<symbol id="i-snowflake" viewBox="0 0 256 256"><path d="M227.65,149.14a12,12,0,0,1-8.79,14.51l-20.67,5.08,5.4,20.16a12,12,0,0,1-23.18,6.22l-7.29-27.2L140,148.78V187l20.48,20.48a12,12,0,0,1-17,17L128,209l-15.51,15.52a12,12,0,0,1-17-17L116,187V148.78L82.88,167.91l-7.29,27.2a12,12,0,0,1-23.18-6.22l5.4-20.16-20.67-5.08a12,12,0,1,1,5.72-23.3l27.89,6.85L104,128,70.75,108.8l-27.89,6.85A11.8,11.8,0,0,1,40,116a12,12,0,0,1-2.85-23.65l20.67-5.08-5.4-20.16a12,12,0,0,1,23.18-6.22l7.29,27.2L116,107.21V69L95.52,48.48a12,12,0,0,1,17-17L128,47l15.51-15.52a12,12,0,1,1,17,17L140,69v38.24l33.12-19.12,7.29-27.2a12,12,0,0,1,23.18,6.22l-5.4,20.16,20.67,5.08A12,12,0,0,1,216,116a11.8,11.8,0,0,1-2.87-.35l-27.89-6.85L152,128l33.25,19.2,27.89-6.85A12,12,0,0,1,227.65,149.14Z"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 256 256"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></symbol>
+<symbol id="i-caret-down" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></symbol>
+<symbol id="i-file-csv" viewBox="0 0 256 256"><path d="M48,180c0,8.67,5.49,16,12,16a10.27,10.27,0,0,0,7.33-3.43,12,12,0,1,1,17.34,16.6A34,34,0,0,1,60,220C40.15,220,24,202,24,180s16.15-40,36-40a34,34,0,0,1,24.67,10.83,12,12,0,1,1-17.34,16.6A10.27,10.27,0,0,0,60,164C53.49,164,48,171.31,48,180Zm97.51-5.71c-5.13-3.45-11.33-5.24-16.8-6.82a79.5,79.5,0,0,1-7.91-2.59c2.45-1.18,9.71-1.3,16.07.33A12,12,0,0,0,143,142a69.24,69.24,0,0,0-12-1.86c-9.93-.66-18,1.08-24.1,5.17a24.45,24.45,0,0,0-10.69,17.76c-1.1,8.74,2.48,16.27,10.11,21.19,4.78,3.09,10.36,4.7,15.75,6.26,3,.89,7.94,2.3,9.88,3.53a2,2,0,0,1-.22.71c-1.36,1.55-9.57,1.79-16.39-.06a12,12,0,0,0-6.45,23.11A63.73,63.73,0,0,0,125.09,220c6.47,0,13.74-1.17,19.74-5.15a24.73,24.73,0,0,0,10.95-18C157,187.53,153.32,179.53,145.51,174.27ZM216,140.68A12,12,0,0,0,200.7,148L192,172.3,183.3,148A12,12,0,1,0,160.7,156l20,56a12,12,0,0,0,22.6,0l20-56A12,12,0,0,0,216,140.68ZM36,108V40A20,20,0,0,1,56,20h96a12,12,0,0,1,8.49,3.51l56,56A12,12,0,0,1,220,88v20a12,12,0,1,1-24,0v-4H148a12,12,0,0,1-12-12V44H60v64a12,12,0,1,1-24,0ZM160,80h23L160,57Z"/></symbol>
+<symbol id="i-floppy-disk" viewBox="0 0 256 256"><path d="M222.14,69.17,186.83,33.86A19.86,19.86,0,0,0,172.69,28H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V83.31A19.86,19.86,0,0,0,222.14,69.17ZM164,204H92V160h72Zm40,0H188V156a20,20,0,0,0-20-20H88a20,20,0,0,0-20,20v48H52V52H171l33,33ZM164,84a12,12,0,0,1-12,12H96a12,12,0,0,1,0-24h56A12,12,0,0,1,164,84Z"/></symbol>
+<symbol id="i-tag" viewBox="0 0 256 256"><path d="M246.15,133.18,146.83,33.86A19.85,19.85,0,0,0,132.69,28H40A12,12,0,0,0,28,40v92.69a19.85,19.85,0,0,0,5.86,14.14l99.32,99.32a20,20,0,0,0,28.28,0l84.69-84.69A20,20,0,0,0,246.15,133.18Zm-98.83,93.17L52,131V52h79l95.32,95.32ZM104,88A16,16,0,1,1,88,72,16,16,0,0,1,104,88Z"/></symbol>
+<symbol id="i-storefront" viewBox="0 0 256 256"><path d="M236,96a12,12,0,0,0-.44-3.3L221.2,42.51A20.08,20.08,0,0,0,202,28H54A20.08,20.08,0,0,0,34.8,42.51L20.46,92.7A12,12,0,0,0,20,96h0v16a43.94,43.94,0,0,0,16,33.92V216a12,12,0,0,0,12,12H208a12,12,0,0,0,12-12V145.92A43.94,43.94,0,0,0,236,112V96ZM57.05,52H199l9.14,32H47.91Zm91,56v4a20,20,0,0,1-40,0v-4ZM53,128.71A20,20,0,0,1,44,112v-4H84v4a20,20,0,0,1-20,20,19.76,19.76,0,0,1-9.07-2.2A11.54,11.54,0,0,0,53,128.71ZM196,204H60V155.81c1.32.12,2.65.19,4,.19a43.86,43.86,0,0,0,32-13.85,43.89,43.89,0,0,0,64,0A43.86,43.86,0,0,0,192,156c1.35,0,2.68-.07,4-.19Zm16-92a20,20,0,0,1-9,16.71,11.66,11.66,0,0,0-1.88,1.09A20,20,0,0,1,172,112v-4h40Z"/></symbol>
+<symbol id="i-list-checks" viewBox="0 0 256 256"><path d="M228,128a12,12,0,0,1-12,12H128a12,12,0,0,1,0-24h88A12,12,0,0,1,228,128ZM128,76h88a12,12,0,0,0,0-24H128a12,12,0,0,0,0,24Zm88,104H128a12,12,0,0,0,0,24h88a12,12,0,0,0,0-24ZM79.51,39.51,56,63l-7.51-7.52a12,12,0,0,0-17,17l16,16a12,12,0,0,0,17,0l32-32a12,12,0,0,0-17-17Zm0,64L56,127l-7.51-7.52a12,12,0,1,0-17,17l16,16a12,12,0,0,0,17,0l32-32a12,12,0,0,0-17-17Zm0,64L56,191l-7.51-7.52a12,12,0,1,0-17,17l16,16a12,12,0,0,0,17,0l32-32a12,12,0,0,0-17-17Z"/></symbol>
+<symbol id="i-arrow-counter-clockwise" viewBox="0 0 256 256"><path d="M228,128a100,100,0,0,1-98.66,100H128a99.39,99.39,0,0,1-68.62-27.29,12,12,0,0,1,16.48-17.45,76,76,0,1,0-1.57-109c-.13.13-.25.25-.39.37L54.89,92H72a12,12,0,0,1,0,24H24a12,12,0,0,1-12-12V56a12,12,0,0,1,24,0V76.72L57.48,57.06A100,100,0,0,1,228,128Z"/></symbol>
+<symbol id="i-map-pin" viewBox="0 0 256 256"><path d="M128,60a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,60Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,128,124Zm0-112a92.1,92.1,0,0,0-92,92c0,77.36,81.64,135.4,85.12,137.83a12,12,0,0,0,13.76,0,259,259,0,0,0,42.18-39C205.15,170.57,220,136.37,220,104A92.1,92.1,0,0,0,128,12Zm31.3,174.71A249.35,249.35,0,0,1,128,216.89a249.35,249.35,0,0,1-31.3-30.18C80,167.37,60,137.31,60,104a68,68,0,0,1,136,0C196,137.31,176,167.37,159.3,186.71Z"/></symbol>
+<symbol id="i-info" viewBox="0 0 256 256"><path d="M108,84a16,16,0,1,1,16,16A16,16,0,0,1,108,84Zm128,44A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128Zm-72,36.68V132a20,20,0,0,0-20-20,12,12,0,0,0-4,23.32V168a20,20,0,0,0,20,20,12,12,0,0,0,4-23.32Z"/></symbol>
+<symbol id="i-check" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></symbol>
+<symbol id="i-minus" viewBox="0 0 256 256"><path d="M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128Z"/></symbol>
+<symbol id="i-address-book" viewBox="0 0 256 256"><path d="M208,20H64A20,20,0,0,0,44,40V60H32a12,12,0,0,0,0,24H44v32H32a12,12,0,0,0,0,24H44v32H32a12,12,0,0,0,0,24H44v20a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V40A20,20,0,0,0,208,20Zm-4,192H68V44H204ZM100.8,171.37a48,48,0,0,1,70.4,0,12,12,0,0,0,17.6-16.32,72,72,0,0,0-19.21-14.68,44,44,0,1,0-67.19,0,72.12,72.12,0,0,0-19.2,14.68,12,12,0,0,0,17.6,16.32ZM116,112a20,20,0,1,1,20,20A20,20,0,0,1,116,112Z"/></symbol>
+<symbol id="i-eye" viewBox="0 0 256 256"><path d="M251,123.13c-.37-.81-9.13-20.26-28.48-39.61C196.63,57.67,164,44,128,44S59.37,57.67,33.51,83.52C14.16,102.87,5.4,122.32,5,123.13a12.08,12.08,0,0,0,0,9.75c.37.82,9.13,20.26,28.49,39.61C59.37,198.34,92,212,128,212s68.63-13.66,94.48-39.51c19.36-19.35,28.12-38.79,28.49-39.61A12.08,12.08,0,0,0,251,123.13Zm-46.06,33C183.47,177.27,157.59,188,128,188s-55.47-10.73-76.91-31.88A130.36,130.36,0,0,1,29.52,128,130.45,130.45,0,0,1,51.09,99.89C72.54,78.73,98.41,68,128,68s55.46,10.73,76.91,31.89A130.36,130.36,0,0,1,226.48,128,130.45,130.45,0,0,1,204.91,156.12ZM128,84a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,84Zm0,64a20,20,0,1,1,20-20A20,20,0,0,1,128,148Z"/></symbol>
+</svg>
+
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="./" aria-label="贈答送り状メーカー">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M5 9.5 L13 3 H35 V37 H13 L5 30.5 Z" fill="#d9b680" stroke="#2a2017" stroke-width="2"/><circle cx="12" cy="20" r="3" fill="#fffcf5" stroke="#2a2017" stroke-width="1.8"/><path d="M12 17 C 6 10, 2 12, 1 6" fill="none" stroke="#b5381d" stroke-width="1.8" stroke-linecap="round"/><path d="M19 12h11M19 17h11M19 22h11M19 27h7" stroke="#2a2017" stroke-width="2"/><rect x="25.5" y="25" width="7" height="7" fill="none" stroke="#b5381d" stroke-width="1.6" transform="rotate(-8 29 28.5)"/></svg>
+    <span><b>贈答送り状メーカー</b><small>お歳暮・贈答の送り状CSVを一気に作る</small></span>
+  </a>
+  <span class="stamp" aria-label="無料">無料<br>直販用</span>
+</div></header>
+<div class="notice"><div class="wrap">
+  <svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-shield-check"/></svg>
+  <p>入力したお名前・住所・電話番号は<b>この端末のブラウザにだけ</b>保存されます。サーバーには送りません。郵便番号から住所を調べるときだけ、<b>郵便番号（7けた）だけ</b>を住所検索サービスに問い合わせます（設定で止められます）。</p>
+</div></div>
+
+<nav class="tabs" aria-label="画面の切り替え"><div class="wrap" role="tablist">
+  <button class="tab" role="tab" data-view="order" aria-selected="true"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-note-pencil"/></svg>注文入力</button>
+  <button class="tab" role="tab" data-view="csv" aria-selected="false"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-truck"/></svg>送り状CSV<span class="dot" id="csvDot" hidden></span></button>
+  <button class="tab" role="tab" data-view="sheet" aria-selected="false"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-printer"/></svg>注文控え</button>
+  <button class="tab" role="tab" data-view="list" aria-selected="false"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-address-book"/></svg>お客さま</button>
+  <button class="tab" role="tab" data-view="setup" aria-selected="false"><svg viewBox="0 0 256 256" aria-hidden="true"><use href="#i-gear-six"/></svg>設定</button>
+</div></nav>
+
+<main><div class="wrap">
+  <div class="banner warn" id="noStore" hidden><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-warning"/></svg><div>この端末のブラウザでは保存ができません（プライベートモードなど）。ページを閉じると入力した内容は消えます。</div></div>
+
+  <!-- ================= 注文入力 ================= -->
+  <section class="view on" id="v-order" aria-labelledby="t-order">
+    <div class="vhead">
+      <h1 class="vtitle" id="t-order"><small id="orderNo">注文</small><span class="tape" id="orderTitle">新しい注文</span></h1>
+      <div class="btns"><button class="btn sm" type="button" data-act="new-order"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-plus"/></svg>新しい注文</button></div>
+    </div>
+    <div class="banner sample" id="sampleBanner" hidden>
+      <svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-info"/></svg>
+      <div><b>これはサンプルの注文です。</b>お客さま・届け先は架空のものです。どんな送り状CSVと注文控えができるか、そのまま「送り状CSV」「注文控え」で見られます。
+        <div class="btns"><button class="btn pri sm" type="button" data-act="clear-sample">サンプルを消して始める</button></div>
+      </div>
+    </div>
+    <div class="layout">
+      <div>
+        <!-- 依頼主 -->
+        <section class="card" aria-labelledby="h-sender">
+          <div class="chead"><span class="lbl">ご依頼主</span><h2 id="h-sender">注文したお客さま</h2></div>
+          <div class="who" id="whoLine"></div>
+          <div id="senderForm"></div>
+          <div class="picker" id="picker" hidden>
+            <label class="f search"><span class="vh">名前・電話で探す</span><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-magnifying-glass"/></svg><input type="search" id="pickQ" placeholder="名前・電話番号で探す" autocomplete="off"></label>
+            <ul class="plist" id="pickList"></ul>
+          </div>
+        </section>
+
+        <!-- 発送 -->
+        <section class="card" aria-labelledby="h-ship">
+          <div class="chead"><span class="lbl ink">発送</span><h2 id="h-ship">発送日と、送り状の「ご依頼主」欄</h2></div>
+          <div class="fgrid two">
+            <label class="f"><span>発送する日 <em>出荷予定日</em></span><input type="date" data-b="order:ship" id="shipDate"></label>
+            <div class="f"><span class="flabel">送り状の「ご依頼主」欄に印字するのは</span>
+              <div class="seg" role="group" aria-label="ご依頼主欄" id="fromSeg">
+                <button type="button" data-act="seg" data-b="order:from" data-v="cust">お客さま</button>
+                <button type="button" data-act="seg" data-b="order:from" data-v="farm">自分の農園</button>
+              </div>
+            </div>
+          </div>
+          <p class="hint" id="fromHint" style="margin-top:8px"></p>
+        </section>
+
+        <!-- 貼り付け -->
+        <section class="card paste" aria-labelledby="h-paste" id="pasteCard">
+          <div class="chead"><span class="lbl ink">貼り付け</span><h2 id="h-paste">LINEやメモの文章から届け先を読み取る</h2></div>
+          <label class="f"><span>届け先が書かれた文章をそのまま貼り付けてください <em>何件でも</em></span>
+            <textarea id="pasteText" placeholder="例）&#10;① 〒154-0001 東京都世田谷区池尻2-31-24&#10;髙橋 誠 様　090-0000-1234&#10;りんご5kg 1箱 12/10着 午前中&#10;&#10;② 山本由美子様 …"></textarea></label>
+          <div class="btns" style="margin-top:10px">
+            <button class="btn ink" type="button" data-act="parse"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-list-checks"/></svg>読み取る</button>
+            <button class="btn ghost sm" type="button" data-act="paste-clear">文章を消す</button>
+          </div>
+          <p class="hint" style="margin-top:8px">空いた行や「①」「1.」などの番号で1件ずつに分けます。郵便番号・電話番号・「〇〇様」・住所を見つけて表に並べます。読み取れなかった文字は消さずに、黄色い枠で表示します。</p>
+          <div id="pasteResult" class="pres" hidden></div>
+        </section>
+
+        <!-- 届け先 -->
+        <section aria-labelledby="h-recs">
+          <div class="vhead" style="margin:6px 0 10px">
+            <h2 class="vtitle" id="h-recs" style="font-size:24px"><small>お届け先</small><span id="recCount">0件</span></h2>
+            <div class="btns"><button class="btn sm ghost" type="button" data-act="open-all">すべて開く</button></div>
+          </div>
+          <div class="rlist" id="recList"></div>
+          <div class="addbar">
+            <button class="btn addbtn" type="button" data-act="add-rec"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-plus"/></svg>届け先を追加</button>
+          </div>
+          <label class="f" style="margin-top:18px"><span>この注文のメモ <em>注文控えに印刷されます。送り状には入りません</em></span><textarea data-b="order:memo" id="orderMemo" style="min-height:80px" placeholder="例）代金は振込。のし「御歳暮」"></textarea></label>
+        </section>
+      </div>
+
+      <aside class="side" aria-label="この注文の合計">
+        <div class="card" id="sideSum"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ================= 送り状CSV ================= -->
+  <section class="view" id="v-csv" aria-labelledby="t-csv">
+    <div class="vhead"><h1 class="vtitle" id="t-csv"><small>運送会社の送り状ソフトに取り込むファイル</small><span class="tape">送り状CSVを作る</span></h1></div>
+    <div class="csvlay">
+      <div>
+        <section class="card" aria-labelledby="h-car">
+          <div class="chead"><span class="lbl">1</span><h2 id="h-car">どこの送り状ソフトに取り込みますか</h2></div>
+          <div class="carriers" id="carriers" role="radiogroup" aria-labelledby="h-car"></div>
+          <div id="carOpts" style="margin-top:12px"></div>
+        </section>
+        <section class="card" aria-labelledby="h-ord">
+          <div class="chead"><span class="lbl">2</span><h2 id="h-ord">どの注文を入れますか</h2><span class="aside" id="ordSel"></span></div>
+          <div class="olist" id="olist"></div>
+          <div class="btns" style="margin-top:10px"><button class="btn xs ghost" type="button" data-act="osel-all">すべて選ぶ</button><button class="btn xs ghost" type="button" data-act="osel-new">まだ出していない注文だけ</button><button class="btn xs ghost" type="button" data-act="osel-cur">今の注文だけ</button></div>
+        </section>
+      </div>
+      <div>
+        <section class="card" aria-labelledby="h-chk">
+          <div class="chead"><span class="lbl">3</span><h2 id="h-chk">取り込む前のチェック</h2></div>
+          <div id="chkSum"></div>
+          <ul class="checks" id="checks" style="margin-top:10px"></ul>
+        </section>
+        <section class="card" aria-labelledby="h-dl">
+          <div class="chead"><span class="lbl">4</span><h2 id="h-dl">ファイルを作る</h2></div>
+          <div class="dlbox" id="dlbox"></div>
+        </section>
+        <section class="card" aria-labelledby="h-prev">
+          <div class="chead"><span class="lbl ink">中身</span><h2 id="h-prev">1件目の中身（列ごと）</h2></div>
+          <div id="prevBox"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 注文控え ================= -->
+  <section class="view" id="v-sheet" aria-labelledby="t-sheet">
+    <div class="sheet-tools">
+      <h1 class="vtitle" id="t-sheet"><small>A4縦・お客さまへの請求と、荷造りのチェックに</small><span class="tape">注文控え</span></h1>
+      <div class="btns">
+        <label class="f" style="min-width:220px"><span class="vh">印刷する注文</span><select id="sheetSel"></select></label>
+        <button class="btn pri" type="button" data-act="print"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-printer"/></svg>印刷 / PDFで保存</button>
+      </div>
+    </div>
+    <p class="hint" id="sheetHint" style="margin-bottom:12px">「印刷 / PDFで保存」を押すと印刷画面が開きます。PDFにするときは、送信先（プリンター）で「PDFに保存」を選んでください。</p>
+    <div class="banner warn" id="sheetSampleWarn" hidden><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-warning"/></svg><div>送料表がサンプルの金額のままです。<button class="linkbtn" type="button" data-go="setup" data-anchor="ratesCard">設定で自分の送料に直す</button></div></div>
+    <div class="sheet-fit" id="sheetFit"><div id="sheetBox"></div></div>
+  </section>
+
+  <!-- ================= お客さま ================= -->
+  <section class="view" id="v-list" aria-labelledby="t-list">
+    <div class="vhead"><h1 class="vtitle" id="t-list"><small>毎年のお客さまをすぐ呼び出す</small><span class="tape">お客さまと注文</span></h1>
+      <div class="btns"><button class="btn sm" type="button" data-act="new-order"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-plus"/></svg>新しい注文</button></div></div>
+    <label class="f search" style="margin-bottom:14px"><span class="vh">お客さまを探す</span><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-magnifying-glass"/></svg><input type="search" id="listQ" placeholder="名前・電話番号・住所で探す" autocomplete="off"></label>
+    <div class="plist2" id="plist2"></div>
+  </section>
+
+  <!-- ================= 設定 ================= -->
+  <section class="view" id="v-setup" aria-labelledby="t-setup">
+    <div class="vhead"><h1 class="vtitle" id="t-setup"><small>最初に一度だけ。あとから直せます</small><span class="tape">設定</span></h1></div>
+
+    <section class="card" aria-labelledby="h-farm" id="farmCard">
+      <div class="chead"><span class="lbl">発送元</span><h2 id="h-farm">自分の農園</h2></div>
+      <div class="fgrid two" id="farmForm"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-carset">
+      <div class="chead"><span class="lbl ink">運送会社</span><h2 id="h-carset">運送会社ごとの設定</h2></div>
+      <div class="fgrid two" id="carForm"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-prod" id="prodCard">
+      <div class="chead"><span class="lbl ink">商品</span><h2 id="h-prod">商品リスト</h2></div>
+      <div class="banner sample" id="prodSample" hidden><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-info"/></svg><div>最初に入っている商品と値段は<b>サンプル</b>です。自分の商品に書きかえてください。</div></div>
+      <p class="hint" style="margin-bottom:10px">品名は送り状にそのまま印字されます。佐川は全角16文字、ヤマト・ゆうパックは全角20〜25文字までです。値段は税込で入れてください。</p>
+      <div class="ptable" id="prodList"></div>
+      <div class="btns" style="margin-top:12px"><button class="btn sm" type="button" data-act="add-prod"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-plus"/></svg>商品を追加</button></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-rates" id="ratesCard">
+      <div class="chead"><span class="lbl ink">送料</span><h2 id="h-rates">送料表（届け先の地方 × サイズ）</h2></div>
+      <div class="banner sample" id="rateSample" hidden><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-warning"/></svg><div>黄色い欄は<b>サンプルの金額</b>です。運送会社と決めている送料（税込）に必ず直してください。注文控えの送料はこの表から計算します。</div></div>
+      <div class="rates" id="rateGrid"></div>
+      <h3 style="font-size:15px;margin:16px 0 6px">クール便の追加料金（サイズごと・1個あたり）</h3>
+      <div class="rates" id="coolGrid"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-opt">
+      <div class="chead"><span class="lbl ink">住所</span><h2 id="h-opt">郵便番号から住所を入れる</h2></div>
+      <label class="switch"><input type="checkbox" id="optZip">郵便番号を入れたら、都道府県と市区町村を自動で入れる</label>
+      <p class="hint">オンのときは、郵便番号（7けた）だけを住所検索サービス「zipcloud」（https://zipcloud.ibsnet.co.jp/）に問い合わせます。お名前や番地は送りません。オフにすると問い合わせはしませんが、郵便番号のけた数のチェックはします。</p>
+    </section>
+
+    <section class="card" aria-labelledby="h-data">
+      <div class="chead"><span class="lbl ink">保存</span><h2 id="h-data">データの保存と引っ越し</h2></div>
+      <p class="hint" style="margin-bottom:12px">データはこの端末のブラウザにだけ入っています。ブラウザの履歴やデータを消すと、お客さま名簿も注文も消えます。ときどき「バックアップを保存」で、ファイルにしておいてください。別のパソコン・スマホに移すときも、このファイルを使います。</p>
+      <div class="btns">
+        <button class="btn" type="button" data-act="backup"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-download-simple"/></svg>バックアップを保存</button>
+        <button class="btn" type="button" data-act="restore"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-upload-simple"/></svg>バックアップから戻す</button>
+        <button class="btn danger" type="button" data-act="wipe"><svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-trash"/></svg>すべて消す</button>
+      </div>
+      <p class="hint" id="backupInfo" style="margin-top:10px"></p>
+      <input type="file" id="restoreFile" accept=".json,application/json" hidden>
+    </section>
+  </section>
+</div></main>
+
+<footer><div class="wrap">
+  <span class="fl">贈答送り状メーカー</span>
+  <span><b>ご意見をください。</b>「うちの注文の形ではうまく読み取れない」「こうなったら使う」を info@site-forge.jp へ。いただいた内容に合わせて調整します。</span>
+  <span>運営：柴田裕将　お問い合わせ：info@site-forge.jp</span>
+  <span class="fsub">無料でお使いいただけます。送り状CSVの形式は各社の公開資料をもとに作っていますが、各社の仕様変更などで取り込めないことがあります。はじめて使うときは、1件だけで取り込みを試してください。送料・金額の正しさは保証しません。　<a href="/privacy.html">プライバシーポリシー</a></span>
+</div></footer>
+
+<div class="bar" id="bar"><div class="bar-in">
+  <div class="bar-t"><small id="barSub">届け先 0件</small><b id="barTotal">¥0</b></div>
+  <button class="btn pri" type="button" data-go="csv">送り状CSVへ<svg class="i" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+</div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="encoding.min.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  /* =====================================================================
+     送り状CSVのレイアウト（各社の公開資料。2026年10月に確認）
+     - ヤマト運輸 B2クラウド「基本レイアウト」（外部データから発行）95列・1行目に項目名
+         テンプレート: https://bmypage.kuronekoyamato.co.jp/bmypage/newb2web_template1.xls
+         データ交換規約（項目・文字数）: https://bmypage.kuronekoyamato.co.jp/bmypage/pdf/new_exchange1.pdf
+         FAQ: https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/812 （テンプレート・必須項目・列の削除や並び替え不可）
+              https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/576 （請求先顧客コード AN列・運賃管理番号 AP列）
+              https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/412 （JIS第一・第二水準以外の文字、住所のスペースは取り込めない）
+         ※文字コード Shift_JIS は公式資料で確認できていない（一般的な運用に合わせた）
+     - 佐川急便 e飛伝Ⅲ「標準_飛脚宅配便_CSV_ヘッダ有」74列・1行目に項目名・最大1,000行
+         操作マニュアル（飛脚宅配便）付録a-1「送り状データ取込レイアウト」2026/09/28版:
+         https://e-hiden3.sagawa-exp.co.jp/help_nsx/manual-takuhai.pdf
+         ※取り込み時の文字コードはマニュアルに記載なし（出力は標準UTF-8、従来はShift_JIS）
+     - 日本郵便 Webゆうパックプリント「出荷予定データ（標準フォーマット）」72列・見出し行なし
+         https://www.post.japanpost.jp/web-yu-packprint/contents/manual/Web_upload.html
+         サンプル: https://www.post.japanpost.jp/web-yu-packprint/contents/manual/yupack_sample.csv （Shift_JIS・CRLF・72列）
+     - 日本郵便 ゆうパックプリントR「標準フォーマットv1」51列
+         フィルタ設定別冊（フォーマット一覧）2024/10/1版:
+         https://www.post.japanpost.jp/yu-packprint-r/member/download/instructions/６－１．フィルタ設定別冊（フォーマット一覧）.pdf
+         ※「列見出し：あり（実際のデータには不要）」→見出し行なしで出力。クール等は「お客様指定配送種類」の条件設定が必要
+     ===================================================================== */
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function pad(n, w) { n = String(n); while (n.length < (w || 2)) n = "0" + n; return n; }
+  function iso(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function todayISO() { return iso(new Date()); }
+  function addDays(isoStr, n) { var p = isoStr.split("-"); var d = new Date(+p[0], +p[1] - 1, +p[2] + n); return iso(d); }
+  function dSlash(s) { return s ? s.replace(/-/g, "/") : ""; }
+  function dCompact(s) { return s ? s.replace(/-/g, "") : ""; }
+  function dJP(s) { if (!s) return ""; var p = s.split("-"); var d = new Date(+p[0], +p[1] - 1, +p[2]); return (+p[1]) + "/" + (+p[2]) + "（" + "日月火水木金土"[d.getDay()] + "）"; }
+  function daysBetween(a, b) { var pa = a.split("-"), pb = b.split("-"); return Math.round((new Date(+pb[0], +pb[1] - 1, +pb[2]) - new Date(+pa[0], +pa[1] - 1, +pa[2])) / 86400000); }
+  function yen(n) { return "¥" + Math.round(n || 0).toLocaleString("ja-JP"); }
+  function svg(name, cls) { return '<svg class="i' + (cls ? " " + cls : "") + '" viewBox="0 0 256 256" aria-hidden="true"><use href="#i-' + name + '"/></svg>'; }
+  var toastT;
+  function toast(msg) { var t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove("on"); }, 2600); }
+
+  /* ============ 保存（localStorage は失敗してもアプリを止めない） ============ */
+  var KEY = { data: "okurijo.data.v1", lead: "okurijo.lead", zip: "okurijo.zipcache", ui: "okurijo.ui" };
+  var memory = {};
+  var canStore = (function () { try { var t = "__ok"; localStorage.setItem(t, t); localStorage.removeItem(t); return true; } catch (e) { return false; } })();
+  function load(k, d) { try { var v = canStore ? localStorage.getItem(k) : memory[k]; return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function store(k, v) { var s = JSON.stringify(v); try { if (canStore) localStorage.setItem(k, s); else memory[k] = s; return true; } catch (e) { memory[k] = s; return false; } }
+
+  /* ============ 文字の整え ============ */
+  // 半角カナ → 全角カナ
+  var HK = "｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ";
+  var ZK = "。「」、・ヲァィゥェォャュョッーアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン゛゜";
+  function hanKana(s) {
+    return String(s || "").replace(/([ｳｶ-ﾄﾊ-ﾎ])ﾞ|([ﾊ-ﾎ])ﾟ|[｡-ﾟ]/g, function (m, a, b) {
+      if (a) { var c = ZK[HK.indexOf(a)]; return c === "ウ" ? "ヴ" : String.fromCharCode(c.charCodeAt(0) + 1); }
+      if (b) return String.fromCharCode(ZK[HK.indexOf(b)].charCodeAt(0) + 2);
+      return ZK[HK.indexOf(m)];
+    });
+  }
+  // 半角英数記号 → 全角（全角だけの欄に使う）
+  function zen(s) {
+    return hanKana(s).replace(/[!-~]/g, function (c) { return c === "-" ? "－" : String.fromCharCode(c.charCodeAt(0) + 0xFEE0); }).replace(/ /g, "　");
+  }
+  // Shift_JIS で同じ見た目になる文字へ（黙って置きかえても意味が変わらないものだけ）
+  var SAME = { "〜": "～", "−": "－", "‖": "∥", "—": "―", "¢": "￠", "£": "￡", "¬": "￢", "¥": "￥", "‑": "‐" };
+  function sjisPre(s) { return String(s == null ? "" : s).replace(/[〜−‖—¢£¬¥‑]/g, function (c) { return SAME[c]; }).replace(/[\r\n\t]+/g, " "); }
+  function oneLine(s) { return String(s == null ? "" : s).replace(/[\r\n\t]+/g, " ").trim(); }
+  function kataHira(s) { return String(s || "").replace(/[ァ-ヶ]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0x60); }); }
+  function digits(s) { return String(s || "").replace(/[０-９]/g, function (c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); }).replace(/\D/g, ""); }
+  function normTel(s) {
+    s = String(s || "").normalize("NFKC").replace(/[‐‑‒–—―−ｰー－]/g, "-").replace(/[()（）]/g, "-").replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+    return s.replace(/[^\d-]/g, "");
+  }
+  function telCheck(t) {
+    var d = digits(t);
+    if (!d) return null;
+    var need = /^0[5789]0/.test(d) || /^0800/.test(d) ? 11 : 10;
+    if (d.charAt(0) !== "0") return "電話番号は0から始まります";
+    if (d.length !== need) return "電話番号のけた数が合いません（" + d.length + "けた。" + (need === 11 ? "携帯は11けた" : "固定電話は10けた") + "）";
+    return null;
+  }
+  function fmtZip(z) { z = digits(z); return z.length === 7 ? z.slice(0, 3) + "-" + z.slice(3) : z; }
+
+  /* ============ 都道府県・地方 ============ */
+  var PREFS = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県","静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県","徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県","沖縄県"];
+  var REGIONS = [
+    ["北海道", ["北海道"]], ["北東北", ["青森県","岩手県","秋田県"]], ["南東北", ["宮城県","山形県","福島県"]],
+    ["関東", ["茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県","山梨県"]], ["信越", ["新潟県","長野県"]],
+    ["北陸", ["富山県","石川県","福井県"]], ["中部", ["岐阜県","静岡県","愛知県","三重県"]],
+    ["関西", ["滋賀県","京都府","大阪府","兵庫県","奈良県","和歌山県"]], ["中国", ["鳥取県","島根県","岡山県","広島県","山口県"]],
+    ["四国", ["徳島県","香川県","愛媛県","高知県"]], ["九州", ["福岡県","佐賀県","長崎県","熊本県","大分県","宮崎県","鹿児島県"]], ["沖縄", ["沖縄県"]]
+  ];
+  var SIZES = ["60", "80", "100", "120", "140", "160"];
+  function prefOf(a) { a = String(a || "").replace(/^\s+/, ""); for (var i = 0; i < PREFS.length; i++) if (a.indexOf(PREFS[i]) === 0) return PREFS[i]; return ""; }
+  function regionOf(p) { for (var i = 0; i < REGIONS.length; i++) if (REGIONS[i][1].indexOf(p) >= 0) return REGIONS[i][0]; return ""; }
+  // 「東京千代田区…」のように都府県の字が抜けたものを補う（「京都市」「大阪市」などはそのまま）
+  function fixPrefStem(a) {
+    a = String(a || "");
+    if (prefOf(a)) return a;
+    for (var i = 0; i < PREFS.length; i++) {
+      var p = PREFS[i], stem = p === "北海道" ? "" : p.slice(0, -1);
+      if (stem && a.indexOf(stem) === 0) {
+        var nx = a.charAt(stem.length);
+        if (nx && "市郡町村区".indexOf(nx) < 0) return p + a.slice(stem.length);
+      }
+    }
+    return a;
+  }
+  var SEIREI = ["札幌市","仙台市","さいたま市","千葉市","横浜市","川崎市","相模原市","新潟市","静岡市","浜松市","名古屋市","京都市","大阪市","堺市","神戸市","岡山市","広島市","北九州市","福岡市","熊本市"];
+  var ODD_CITY = ["大和郡山市","小郡市","蒲郡市","郡山市","郡上市","市川市","市原市","四日市市","廿日市市","野々市市","大町市","十日町市","町田市","村山市","東村山市","武蔵村山市","羽村市","大村市","田村市","村上市","上市町","市貝町","余市町"];
+  // 住所を 都道府県 / 市区町村 / それ以降 に分ける（郵便番号の検索結果があればそれを優先）
+  function splitAddr(addr, zip) {
+    addr = String(addr || "").replace(/\s+/g, "");
+    var pref = prefOf(addr), rest = addr.slice(pref.length), city = "";
+    var z = zipCache[digits(zip)];
+    if (z && z.city && rest.indexOf(z.city) === 0 && (!pref || pref === z.pref)) city = z.city;
+    if (!city) {
+      var i, m;
+      for (i = 0; i < SEIREI.length && !city; i++) if (rest.indexOf(SEIREI[i]) === 0) { m = rest.slice(SEIREI[i].length).match(/^(.{1,4}?区)/); city = SEIREI[i] + (m ? m[1] : ""); }
+      for (i = 0; i < ODD_CITY.length && !city; i++) if (rest.indexOf(ODD_CITY[i]) === 0) city = ODD_CITY[i];
+      if (!city && (m = rest.match(/^(.{1,6}?郡.{1,5}?[町村])/))) city = m[1];
+      if (!city && (m = rest.match(/^(.{1,7}?[市区町村])/))) city = m[1];
+    }
+    return { pref: pref, city: city, rest: rest.slice(city.length) };
+  }
+  var BLDG_RE = /(マンション|ハイツ|コーポ|アパート|ビル|荘|レジデンス|メゾン|パレス|ヒルズ|タワー|コート|ハウス|ガーデン|プラザ|シティ|団地|寮|号室|号棟|棟|\d+階|\d+F$|フラット|ハイム|ヴィラ|カーサ|シャトー|グラン|ドミール|サンライズ)/;
+  // 「…2-31-24 グリーンハイツ203」→ 住所 と 建物名
+  function splitBldg(a) {
+    a = String(a || "").trim();
+    var sp = a.split(/\s+/);
+    if (sp.length > 1) {
+      for (var k = 0; k < sp.length - 1; k++) {
+        var left = sp.slice(0, k + 1).join(""), right = sp.slice(k + 1).join(" ");
+        if (/\d/.test(left) && !/[市区郡]/.test(right) && !/^[\d-]+(番地?|号)?$/.test(sp[k + 1]) && !/^\d+(丁目|番|-)/.test(sp[k + 1])) return { addr: left, bldg: right };
+      }
+      a = sp.join("");
+    }
+    var re = /\d+(?:(?:-|丁目|番地|番|号|の)\d+)*(?:丁目|番地|番|号)?/g, m;
+    while ((m = re.exec(a))) {
+      var end = m.index + m[0].length, rest = a.slice(end);
+      if (rest && /^[^\d\-]/.test(rest) && !/[市区郡条丁目番]/.test(rest) && (!/[町村]/.test(rest) || BLDG_RE.test(rest))) return { addr: a.slice(0, end), bldg: rest };
+    }
+    return { addr: a, bldg: "" };
+  }
+
+  /* ============ Shift_JIS で書けるか ============ */
+  var sjCache = {};
+  // "ok" / "ext"（NEC特殊文字・IBM拡張文字などの機種依存文字） / "none"（Shift_JIS にない）
+  function sjisCls(ch) {
+    if (sjCache[ch]) return sjCache[ch];
+    var r = "ok";
+    if (ch.charCodeAt(0) >= 0x80 || ch.length > 1) {
+      var b = Encoding.convert(Encoding.stringToCode(ch), { to: "SJIS", from: "UNICODE" });
+      if (!b.length || (b.length === 1 && b[0] === 0x3F)) r = "none";
+      else if (b.length === 2 && (b[0] === 0x87 || b[0] === 0xED || b[0] === 0xEE || b[0] >= 0xF0)) r = "ext";
+      else if (b.length === 2 && b[0] >= 0x85 && b[0] <= 0x86) r = "ext";
+    }
+    return (sjCache[ch] = r);
+  }
+  function sjisLen(s) { var n = 0; Array.from(String(s || "")).forEach(function (c) { var cc = c.codePointAt(0); n += (cc < 0x80 || (cc >= 0xFF61 && cc <= 0xFF9F)) ? 1 : 2; }); return n; }
+  function badChars(s, extBad) {
+    var out = [];
+    Array.from(String(s || "")).forEach(function (c) { var k = sjisCls(c); if ((k === "none" || (extBad && k === "ext")) && out.indexOf(c) < 0) out.push(c); });
+    return out;
+  }
+  var SUGG = { "髙": "高", "﨑": "崎", "德": "徳", "濵": "濱", "栁": "柳", "𠮷": "吉", "隆": "隆", "神": "神", "塚": "塚", "晴": "晴", "淸": "清", "琇": "琇", "曻": "昇", "彅": "薙", "鄧": "鄧", "瀨": "瀬", "邉": "邉", "㈱": "（株）", "㈲": "（有）", "№": "No.", "℡": "TEL", "Ⅰ": "I", "Ⅱ": "II", "Ⅲ": "III", "Ⅳ": "IV", "ⅰ": "i", "ⅱ": "ii", "ⅲ": "iii", "㎏": "kg", "㎝": "cm", "㍉": "ミリ", "♡": "", "☆": "", "♪": "" };
+  "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳".split("").forEach(function (c, i) { SUGG[c] = String(i + 1); });
+
+  /* ============ 郵便番号 → 住所（zipcloud。CORS対応を確認済み） ============ */
+  var zipCache = load(KEY.zip, {});
+  var zipWait = {};
+  function lookupZip(zip) {
+    zip = digits(zip);
+    if (zip.length !== 7) return Promise.resolve(null);
+    if (Object.prototype.hasOwnProperty.call(zipCache, zip)) return Promise.resolve(zipCache[zip]);
+    if (!S.opts.zip || !window.fetch) return Promise.resolve(null);
+    if (zipWait[zip]) return zipWait[zip];
+    var ctl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 6000);
+    zipWait[zip] = fetch("https://zipcloud.ibsnet.co.jp/api/search?zipcode=" + zip, ctl ? { signal: ctl.signal } : {})
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        clearTimeout(timer); delete zipWait[zip];
+        var res = j && j.results;
+        var v = false;
+        if (res && res.length) {
+          var town = res[0].address3 || "";
+          for (var i = 1; i < res.length; i++) { var t = res[i].address3 || "", k = 0; while (k < town.length && town[k] === t[k]) k++; town = town.slice(0, k); }
+          v = { pref: res[0].address1, city: res[0].address2, town: town };
+        } else if (j && j.status === 200) v = false; else return null;
+        zipCache[zip] = v; store(KEY.zip, zipCache);
+        return v;
+      })
+      .catch(function () { clearTimeout(timer); delete zipWait[zip]; return null; });
+    return zipWait[zip];
+  }
+  // 郵便番号の結果で住所の頭を補う。戻り値：補ったときの説明
+  function fillFromZip(obj, z) {
+    if (!z) return "";
+    var a = obj.addr || "";
+    if (!a) { obj.addr = z.pref + z.city + z.town; return "郵便番号から住所を入れました。番地を続けて入れてください。"; }
+    if (!prefOf(a)) {
+      var add = z.pref;
+      if (a.indexOf(z.city) !== 0) {
+        var cityNoGun = z.city.replace(/^.+?郡/, "");
+        if (a.indexOf(cityNoGun) !== 0 && a.indexOf(z.city.replace(/(.+?市).+区$/, "$1")) !== 0) add += z.city;
+        else if (a.indexOf(cityNoGun) === 0 && cityNoGun !== z.city) add += z.city.slice(0, z.city.length - cityNoGun.length);
+      }
+      obj.addr = add + a;
+      return "郵便番号から「" + add + "」を頭に補いました。";
+    }
+    return "";
+  }
+
+  /* ============ データ ============ */
+  var S;
+  function sampleProducts() {
+    return [
+      { id: "p1", name: "りんご サンふじ 5kg", price: 4200, size: "100", cool: "n", care: "nama", sample: true },
+      { id: "p2", name: "りんご サンふじ 10kg", price: 7800, size: "120", cool: "n", care: "nama", sample: true },
+      { id: "p3", name: "りんごジュース 1L×6本", price: 3600, size: "80", cool: "n", care: "bin", sample: true },
+      { id: "p4", name: "シャインマスカット 2房", price: 5400, size: "60", cool: "c", care: "nama", sample: true },
+      { id: "p5", name: "長いも 5kg", price: 3000, size: "100", cool: "n", care: "", sample: true }
+    ];
+  }
+  function sampleRates() {
+    var base = { "北海道": 1500, "北東北": 900, "南東北": 1000, "関東": 1100, "信越": 1100, "北陸": 1200, "中部": 1200, "関西": 1300, "中国": 1500, "四国": 1500, "九州": 1700, "沖縄": 2000 };
+    var t = {};
+    REGIONS.forEach(function (r) { t[r[0]] = {}; SIZES.forEach(function (s, i) { t[r[0]][s] = { v: base[r[0]] + i * (r[0] === "沖縄" ? 600 : 300), s: true }; }); });
+    var c = {}; [300, 400, 600, 900, 1200, 1500].forEach(function (v, i) { c[SIZES[i]] = { v: v, s: true }; });
+    return { table: t, cool: c };
+  }
+  function blankSender() { return { name: "", hon: "様", zip: "", addr: "", bldg: "", tel: "" }; }
+  function newRec(from) {
+    var r = { id: uid(), name: "", hon: "様", zip: "", addr: "", bldg: "", tel: "", pid: "", item: "", qty: 1, date: "", time: "", cool: "n", memo: "" };
+    if (from) { r.pid = from.pid; r.item = from.item; r.date = from.date; r.time = from.time; r.cool = from.cool; }
+    else if (S && S.products[0]) { r.pid = S.products[0].id; r.cool = S.products[0].cool || "n"; }
+    return r;
+  }
+  function newOrder(cust) {
+    S.seq = (S.seq || 0) + 1;
+    var o = { id: uid(), no: S.seq, created: todayISO(), custId: cust ? cust.id : "", sender: cust ? copySender(cust) : blankSender(), from: "cust", ship: addDays(todayISO(), 1), memo: "", recs: [], exported: {} };
+    S.orders.push(o);
+    return o;
+  }
+  function copySender(c) { return { name: c.name || "", hon: "様", zip: c.zip || "", addr: c.addr || "", bldg: c.bldg || "", tel: c.tel || "" }; }
+  function sampleState() {
+    var st = { v: 1, seq: 0, farm: { name: "", zip: "", addr: "", bldg: "", tel: "" }, car: { b2cust: "", b2cls: "", b2fare: "01", sgcust: "", sgenc: "sjis", jphow: "0" },
+      products: sampleProducts(), rates: sampleRates(), customers: [], orders: [], cur: "", opts: { zip: true }, carrier: "b2", sampleShown: true };
+    S = st;
+    var y = new Date().getFullYear(), ship = y + "-12-08";
+    if (todayISO() > ship) ship = addDays(todayISO(), 1);
+    var c = { id: uid(), name: "佐藤 恵子", zip: "9800811", addr: "宮城県仙台市青葉区一番町9-9-9", bldg: "", tel: "022-000-0000", memo: "毎年お歳暮（サンプル）", sample: true };
+    st.customers.push(c);
+    var o = newOrder(c);
+    o.sample = true; o.ship = ship; o.memo = "（サンプル）代金は振込。のしは「御歳暮」";
+    var R = function (x) { var r = newRec(); for (var k in x) r[k] = x[k]; return r; };
+    o.recs = [
+      R({ name: "髙橋 誠", zip: "1540001", addr: "東京都世田谷区池尻2-31-24", bldg: "グリーンハイツ203", tel: "090-0000-1234", pid: "p1", time: "am" }),
+      R({ name: "山本 由美子", zip: "5600082", addr: "大阪府豊中市新千里東町3-5-12", tel: "06-0000-2222", pid: "p2", date: addDays(ship, 2), time: "14" }),
+      R({ name: "株式会社みどり商事 総務部", hon: "御中", zip: "0600042", addr: "北海道札幌市中央区大通西10-4", bldg: "南大通ビル5階", tel: "011-000-3333", pid: "p3", qty: 2 }),
+      R({ name: "田中 健一", zip: "8120011", addr: "福岡県福岡市博多区博多駅前4-10-8", tel: "092-000-4444", pid: "p4", cool: "c", date: addDays(ship, 3), time: "18" }),
+      R({ name: "中村 さくら", zip: "9000015", addr: "沖縄県那覇市久茂地2-22-10", bldg: "サンシャインコート久茂地ステーションフロント1205号室", tel: "098-000-5555", pid: "p1" })
+    ];
+    st.cur = o.id;
+    return st;
+  }
+  function migrate(d) {
+    if (!d || typeof d !== "object" || !Array.isArray(d.orders)) return null;
+    var base = { v: 1, seq: 0, farm: { name: "", zip: "", addr: "", bldg: "", tel: "" }, car: { b2cust: "", b2cls: "", b2fare: "01", sgcust: "", sgenc: "sjis", jphow: "0" }, products: [], rates: sampleRates(), customers: [], orders: [], cur: "", opts: { zip: true }, carrier: "b2" };
+    for (var k in base) if (d[k] == null) d[k] = base[k];
+    ["farm", "car", "opts"].forEach(function (k) { for (var j in base[k]) if (d[k][j] == null) d[k][j] = base[k][j]; });
+    d.orders.forEach(function (o) { o.recs = o.recs || []; o.exported = o.exported || {}; o.sender = o.sender || blankSender(); if (!o.from) o.from = "cust"; });
+    if (!d.orders.length) { S = d; newOrder(); }
+    if (!d.orders.some(function (o) { return o.id === d.cur; })) d.cur = d.orders[d.orders.length - 1].id;
+    return d;
+  }
+  var saveT, saveOk = true;
+  function save(now) {
+    clearTimeout(saveT);
+    var run = function () { saveOk = store(KEY.data, S); $("#noStore").hidden = canStore && saveOk; };
+    if (now) run(); else saveT = setTimeout(run, 250);
+  }
+
+  function cur() { for (var i = 0; i < S.orders.length; i++) if (S.orders[i].id === S.cur) return S.orders[i]; return S.orders[0]; }
+  function orderById(id) { for (var i = 0; i < S.orders.length; i++) if (S.orders[i].id === id) return S.orders[i]; return null; }
+  function prod(pid) { for (var i = 0; i < S.products.length; i++) if (S.products[i].id === pid) return S.products[i]; return null; }
+  function custById(id) { for (var i = 0; i < S.customers.length; i++) if (S.customers[i].id === id) return S.customers[i]; return null; }
+  function recItem(r) { var p = prod(r.pid); return p ? p.name : (r.item || ""); }
+  function labelSender(o) { return o.from === "farm" ? S.farm : o.sender; }
+
+  var TIMES = [["", "指定なし"], ["am", "午前中"], ["12", "12〜14時"], ["14", "14〜16時"], ["16", "16〜18時"], ["18", "18〜20時"], ["19", "19〜21時"]];
+  function timeLabel(t) { for (var i = 0; i < TIMES.length; i++) if (TIMES[i][0] === t) return TIMES[i][1]; return ""; }
+  var COOLS = [["n", "常温"], ["c", "冷蔵"], ["f", "冷凍"]];
+  var CARES = [["", "なし"], ["nama", "なまもの"], ["ware", "こわれもの"], ["bin", "ビン類"], ["ten", "天地無用"]];
+
+  /* ============ 金額 ============ */
+  function recCalc(r) {
+    var p = prod(r.pid), pref = prefOf(r.addr), reg = regionOf(pref), size = p ? p.size : "";
+    var unit = p ? (+p.price || 0) : 0, q = Math.max(0, +r.qty || 0);
+    var cell = reg && size && S.rates.table[reg] ? S.rates.table[reg][size] : null;
+    var ship = cell ? (+cell.v || 0) : null;
+    var coolAdd = r.cool !== "n" && size && S.rates.cool[size] ? (+S.rates.cool[size].v || 0) : 0;
+    return { unit: unit, goods: unit * q, ship: ship == null ? null : (ship + coolAdd) * q, reg: reg, size: size, sample: !!(cell && cell.s) || (coolAdd && S.rates.cool[size].s), noPrice: !p };
+  }
+  function orderCalc(o) {
+    var t = { goods: 0, ship: 0, boxes: 0, missingShip: 0, sample: false };
+    o.recs.forEach(function (r) { var c = recCalc(r); t.goods += c.goods; t.boxes += Math.max(0, +r.qty || 0); if (c.ship == null) t.missingShip++; else t.ship += c.ship; if (c.sample) t.sample = true; });
+    t.total = t.goods + t.ship;
+    return t;
+  }
+
+  /* ============ 入力チェック（運送会社に関係なく） ============ */
+  function addrIssues(obj, who, out, needTel) {
+    var z = digits(obj.zip);
+    if (!z) out.push({ f: "zip", lv: "err", m: who + "の郵便番号がありません" });
+    else if (z.length !== 7) out.push({ f: "zip", lv: "err", m: "郵便番号は7けたです（今は" + z.length + "けた）" });
+    else if (zipCache[z] === false) out.push({ f: "zip", lv: "wrn", m: "この郵便番号は見つかりませんでした。打ちまちがいがないか見てください" });
+    if (!oneLine(obj.addr)) out.push({ f: "addr", lv: "err", m: who + "の住所がありません" });
+    else {
+      var p = prefOf(obj.addr);
+      if (!p) out.push({ f: "addr", lv: "wrn", m: "住所に都道府県がありません（例：東京都…）" });
+      else if (z.length === 7 && zipCache[z] && zipCache[z].pref !== p) out.push({ f: "addr", lv: "wrn", m: "郵便番号は「" + zipCache[z].pref + "」ですが、住所は「" + p + "」です" });
+      if (!/[0-9０-９一二三四五六七八九十]/.test(obj.addr)) out.push({ f: "addr", lv: "wrn", m: "番地がないようです" });
+    }
+    if (!oneLine(obj.tel)) { if (needTel) out.push({ f: "tel", lv: "wrn", m: who + "の電話番号がありません（ヤマトは必須）" }); }
+    else { var tc = telCheck(obj.tel); if (tc) out.push({ f: "tel", lv: "err", m: tc }); }
+  }
+  function recIssues(r, o) {
+    var out = [];
+    if (!oneLine(r.name)) out.push({ f: "name", lv: "err", m: "お名前がありません" });
+    addrIssues(r, "お届け先", out, true);
+    if (!r.pid && !oneLine(r.item)) out.push({ f: "pid", lv: "err", m: "品名を選んでください" });
+    else if (!r.pid) out.push({ f: "pid", lv: "wrn", m: "商品リストにない品名です（値段・サイズがわかりません）" });
+    if (!(+r.qty >= 1)) out.push({ f: "qty", lv: "err", m: "個数は1以上にしてください" });
+    if (r.date && o && o.ship && r.date < o.ship) out.push({ f: "date", lv: "err", m: "お届け希望日が発送日より前です" });
+    if (r.date && o && o.ship && r.date === o.ship) out.push({ f: "date", lv: "wrn", m: "お届け希望日が発送日と同じです" });
+    if (r.date && o && o.ship && daysBetween(o.ship, r.date) > 14) out.push({ f: "date", lv: "wrn", m: "お届け希望日が発送日の15日以上あとです。発送日を確かめてください" });
+    return out;
+  }
+  function senderIssues(o) {
+    var out = [];
+    if (!oneLine(o.sender.name)) out.push({ f: "name", lv: o.from === "cust" ? "err" : "wrn", m: "お客さまのお名前がありません" });
+    if (o.from === "cust") addrIssues(o.sender, "ご依頼主", out, true);
+    return out;
+  }
+  function farmIssues() {
+    var out = [];
+    if (!oneLine(S.farm.name)) out.push({ f: "name", lv: "err", m: "農園の名前がありません" });
+    addrIssues(S.farm, "農園", out, true);
+    return out;
+  }
+
+  /* =====================================================================
+     貼り付けた文章の読み取り（ルールだけ。AIは使わない）
+     ===================================================================== */
+  var NUM_RE = /^(?:(?:No|NO|no)\.?\s*\d{1,2}\s*[.)、:]?\s*|#\s*\d{1,2}\s*|\d{1,2}\s*[.)、:](?!\d)\s*|[(\[【<]\s*\d{1,2}\s*[)\]】>]\s*)/;
+  var SEP_RE = /^[【\[<(]?\s*(?:お?届け?先|おとどけ先|送り?先|送付先|宛先|あて先|配送先|発送先)\s*\d*\s*(?:様)?\s*[】\]>)]?\s*:?\s*$/;
+  var DEST_PRE = /^[【\[]?\s*(?:お?届け?先|送り?先|送付先|宛先|配送先|発送先)\s*\d*\s*[】\]]?\s*:\s*/;
+  var SENDER_RE = /^[【\[<(]?\s*(?:ご?依頼主|依頼者|送り主|送り人|送付者|差出人|贈り主|注文者|ご注文者|注文主|お客様情報)\s*(?:様)?\s*[】\]>)]?\s*:?\s*/;
+  var LABELS = [
+    [/^(?:お名前|名前|氏名|宛名|おなまえ|受取人|受け取り人|受取人名)\s*:?\s*/, "name"],
+    [/^(?:ご住所|住所|所在地)\s*:?\s*/, "addr"],
+    [/^(?:電話番号|電話|TEL|Tel|tel|携帯(?:番号)?|連絡先|☎)\s*:?\s*/, "tel"],
+    [/^(?:郵便番号|〒)\s*:?\s*/, "zip"],
+    [/^(?:品名|商品名?|品物|ご注文品?|注文品|内容)\s*:?\s*/, "item"],
+    [/^(?:個数|数量|箱数)\s*:?\s*/, "qty"],
+    [/^(?:お届け(?:希望)?日|配達(?:希望)?日|希望日|着日|日付|到着日|お届け日時|配達日時)\s*:?\s*/, "date"],
+    [/^(?:お届け時間(?:帯)?|配達時間(?:帯)?|時間帯|希望時間|時間)\s*:?\s*/, "time"],
+    [/^(?:備考|メモ|その他|連絡事項|メッセージ)\s*:?\s*/, "memo"]
+  ];
+  var CHAT_RE = /(お願い|ありがと|よろしく|宜しく|お世話|いつも|今年|昨年|去年|です|ます|でした|ください|下さい|ので|けど|かしら|ね$|よ$|！|!|？|\?|。|、|[\u{1F300}-\u{1FAFF}☀-➿])/u;
+  var FILLER_RE = /^[\s、。,.!?・\-:()「」『』【】\[\]~〜～/]*(?:(?:の|で|を|に|は|が|と|へ|も|方|ほう|分|宛|あて|着|必着|指定|希望|お届け|配達|便|頃|ごろ|まで|くらい|で|を|お願い(?:します|いたします)?|ください|下さい|以上|です)[\s、。,.!?・\-:()「」~〜～/]*)*$/;
+
+  function prepParse(raw) {
+    var s = String(raw || "").replace(/\r\n?/g, "\n");
+    s = s.replace(/[①-⑳]/g, function (c) { return "\n" + (c.charCodeAt(0) - 0x245F) + ". "; });
+    s = s.replace(/[❶-❿]/g, function (c) { return "\n" + (c.charCodeAt(0) - 0x2775) + ". "; });
+    s = s.normalize("NFKC");
+    s = s.replace(/(\d)\s*[ー‐‑‒–—―−ｰ─━]\s*(?=\d)/g, "$1-").replace(/[‐‑‒–—―−─━]/g, "-");
+    s = s.replace(/[\t 　]/g, " ").replace(/ {2,}/g, " ");
+    return s;
+  }
+  function inYear(m, d) {
+    var now = new Date(), y = now.getFullYear();
+    var c = y + "-" + pad(m) + "-" + pad(d);
+    if (c < addDays(todayISO(), -10)) c = (y + 1) + "-" + pad(m) + "-" + pad(d);
+    return c;
+  }
+  function matchProduct(text) {
+    var t = kataHira(text.replace(/\s+/g, "")).toLowerCase().replace(/キロ|きろ/g, "kg");
+    var best = null, bestScore = 0, ties = [];
+    S.products.forEach(function (p) {
+      var n = kataHira(String(p.name).normalize("NFKC")).toLowerCase().replace(/キロ|きろ/g, "kg");
+      var specs = n.match(/\d+(?:\.\d+)?(?:kg|g|l|ml|本|房|玉|個|箱|パック|ぱっく|入)/g) || [];
+      var words = n.replace(/\d+(?:\.\d+)?(?:kg|g|l|ml|本|房|玉|個|箱|パック|ぱっく|入)/g, " ").split(/[^ぁ-んァ-ヶ一-龠々ーa-z]+/).filter(function (w) { return w.length >= 2; });
+      var sc = 0;
+      words.forEach(function (w) {
+        if (t.indexOf(w) >= 0) sc += 2 + Math.min(w.length, 8) / 10;
+        else { var runs = t.match(/[ぁ-ん一-龠々ー]{3,}/g) || []; if (runs.some(function (r) { return w.indexOf(r) >= 0; })) sc += 1; }
+      });
+      specs.forEach(function (sp) { var re = new RegExp("(^|[^\\d.])" + sp.replace(/\./g, "\\.")); if (re.test(t)) sc += 3; });
+      if (sc > bestScore) { bestScore = sc; best = p; ties = [p]; } else if (sc === bestScore && sc > 0) ties.push(p);
+    });
+    return bestScore >= 2 ? { p: best, ties: ties, score: bestScore } : null;
+  }
+  function isAddrLike(s) { return !!(prefOf(fixPrefStem(s)) || /[市区町村郡].*\d|\d+(?:-\d+){1,3}|丁目|番地|\d+番/.test(s)); }
+
+  // 1行から、郵便番号・電話・名前・住所などを取り出す
+  function scanLine(L, defHint) {
+    var f = { left: [] }, s = " " + L + " ", hint = defHint || "", m, i;
+    for (i = 0; i < LABELS.length; i++) { m = L.match(LABELS[i][0]); if (m && L.length > m[0].length - 1) { hint = LABELS[i][1]; s = " " + L.slice(m[0].length) + " "; break; } }
+    if (hint === "memo") { f.memo = s.trim(); return f; }
+    // 〒つきの郵便番号
+    s = s.replace(/(?:〒|郵便番号\s*:?)\s*(\d{3})\s*-?\s*(\d{4})(?!\d)/g, function (x, a, b) { f.zip = a + b; return " "; });
+    s = s.replace(/〒\s*([\d-]{3,9})/g, function (x, a) { if (!f.zip) f.zip = digits(a); return " "; });
+    // 電話番号（9〜12けたのものはけた違いでも電話として拾う）
+    var telHit = function (x, pre, t) { var d = digits(t); if (d.length < 9 || d.length > 12) return x; if (!f.tel) f.tel = normTel(t); else f.tel2 = normTel(t); return pre + " "; };
+    s = s.replace(/(^|[^\d-])(\(?0\d{1,4}\)?-?\(?\d{1,5}\)?-\d{3,5})(?![\d-])/g, telHit);
+    s = s.replace(/(^|[^\d-])(0\d{1,4} \d{1,4} \d{3,4})(?![\d-])/g, telHit);
+    s = s.replace(/(^|[^\d-])(0\d{8,11})(?![\d-])/g, telHit);
+    s = s.replace(/(TEL|Tel|tel|電話番号|電話|携帯|☎)\s*:?\s*(?=\s|$)/g, " ");
+    // ハイフンつきの郵便番号・7けた
+    s = s.replace(/(^|[^\d-])(\d{3})-(\d{4})(?![\d-])/g, function (x, pre, a, b) { if (f.zip) return x; f.zip = a + b; return pre + " "; });
+    if (!f.zip && (hint === "zip" || /^\s*\d{7}\s*$/.test(s))) s = s.replace(/(^|[^\d-])(\d{7})(?![\d-])/, function (x, pre, a) { f.zip = a; return pre + " "; });
+    if (!f.zip && hint === "zip") { var dz = digits(s); if (dz) { f.zip = dz; s = s.replace(/[\d-]+/, " "); } }
+    // 日付
+    s = s.replace(/(?:(\d{4})\s*[\/年.]\s*)?(\d{1,2})\s*(?:\/|月)\s*(\d{1,2})\s*日?(?:\s*\(\s*[月火水木金土日]\s*(?:曜日?)?\s*\))?/g, function (x, y, mo, d) {
+      mo = +mo; d = +d;
+      if (mo < 1 || mo > 12 || d < 1 || d > 31 || f.date) return x;
+      f.date = y ? (y + "-" + pad(mo) + "-" + pad(d)) : inYear(mo, d); return " ";
+    });
+    // 時間帯
+    s = s.replace(/午前中|午前|AM(?![a-z])|朝一番|朝一|朝/g, function (x) { if (f.time) return x; f.time = "am"; return " "; });
+    s = s.replace(/(\d{1,2})\s*(:00|時)?\s*(~|〜|～|から|-)\s*(\d{1,2})\s*(:00|時)?(?:頃|まで|の間)?/g, function (x, a, u1, sep, b, u2) {
+      if (f.time) return x;
+      if (!(u1 || u2 || sep !== "-" || hint === "time")) return x;
+      var k = +a + "-" + (+b), map = { "12-14": "12", "14-16": "14", "16-18": "16", "18-20": "18", "19-21": "19", "8-12": "am" };
+      if (!map[k]) return x;
+      f.time = map[k]; return " ";
+    });
+    s = s.replace(/19\s*時\s*(?:以降|から|~|〜)/, function (x) { if (f.time) return x; f.time = "19"; return " "; });
+    // クール
+    s = s.replace(/冷凍(?:便)?/g, function () { f.cool = "f"; return " "; });
+    s = s.replace(/クール(?:便)?|冷蔵(?:便)?|チルド/g, function () { if (f.cool !== "f") f.cool = "c"; return " "; });
+    s = s.replace(/常温/g, function () { if (!f.cool) f.cool = "n"; return " "; });
+    // 個数
+    s = s.replace(/(\d{1,3})\s*(?:箱|ケース|セット|個口|口|個(?!入)|つ)/, function (x, n) { if (f.qty) return x; f.qty = +n; return " "; });
+    s = s.replace(/[×xX*]\s*(\d{1,3})(?!\s*(?:kg|g|L|l|ml|mL|本|房|玉|\d))/, function (x, n) { if (f.qty) return x; f.qty = +n; return " "; });
+    if (!f.qty && hint === "qty") s = s.replace(/(\d{1,3})/, function (x, n) { f.qty = +n; return " "; });
+    // 「〇〇様」
+    var nm = s.match(/(^|\s)([^\s\d,、。:()\-]+(?:\s[^\s\d,、。:()\-]+){0,3})\s*(様|さま|サマ|殿|御中)(?=\s|$|[,、。]|へ|宛)/);
+    if (nm && !/(お客|皆|みな|各|奥|お子|ご家族|皆々)$/.test(nm[2])) {
+      var toks = nm[2].split(" "), keep = [];
+      for (i = toks.length - 1; i >= 0; i--) {
+        var tk = toks[i];
+        if (prefOf(tk) || /[市区町村郡]$/.test(tk) || BLDG_RE.test(tk) || keep.length >= 3) break;
+        keep.unshift(tk);
+      }
+      if (keep.length) {
+        f.name = keep.join(" "); f.hon = nm[3] === "御中" ? "御中" : nm[3] === "殿" ? "殿" : "様";
+        var full = nm[0], cut = full.lastIndexOf(keep[0]);
+        s = s.replace(full, (full.slice(0, cut)) + " ");
+      }
+    }
+    var rest = s.replace(/\s+/g, " ").trim().replace(/^[:・,、]\s*/, "");
+    if (!rest) return f;
+    if (hint === "tel" && !f.tel && /\d/.test(rest)) { f.tel = normTel(rest); return f; }
+    // 住所といっしょに書かれた品名（例：「…4号 りんご5kg」）
+    if (!f.pid && hint !== "item" && hint !== "name") {
+      var toks2 = rest.split(" ");
+      for (i = toks2.length - 1; i >= 0; i--) {
+        var tk2 = toks2[i];
+        if (!tk2 || prefOf(fixPrefStem(tk2)) || /[市区町村郡]/.test(tk2) || BLDG_RE.test(tk2) || /\d+-\d+/.test(tk2)) continue;
+        var mp2 = matchProduct(tk2);
+        if (mp2 && mp2.score >= 3 && toks2.length > 1) { f.pid = mp2.p.id; f.ties = mp2.ties.map(function (p) { return p.id; }); f.itemText = tk2; toks2.splice(i, 1); rest = toks2.join(" ").trim(); break; }
+      }
+      if (!rest) return f;
+    }
+    if (hint === "name" && !f.name) { f.name = rest.replace(/\s*(様|さま|殿)$/, ""); if (/御中$/.test(rest)) { f.hon = "御中"; f.name = rest.replace(/\s*御中$/, ""); } return f; }
+    // 品名
+    if (!isAddrLike(rest) || hint === "item") {
+      var mp = matchProduct(rest);
+      if (mp && (hint === "item" || mp.score >= 2)) { f.pid = mp.p.id; f.ties = mp.ties.map(function (p) { return p.id; }); f.itemText = rest; return f; }
+      if (hint === "item") { f.item = rest; return f; }
+    }
+    // 住所
+    var ra = fixPrefStem(rest), pi = -1;
+    for (i = 0; i < PREFS.length; i++) { var ix = ra.indexOf(PREFS[i]); if (ix >= 0 && (pi < 0 || ix < pi)) pi = ix; }
+    if (pi > 0) {
+      var before = ra.slice(0, pi).trim();
+      if (!f.name && before && !/\d/.test(before) && before.length <= 20 && !CHAT_RE.test(before)) { f.name = before; f.nameGuess = true; }
+      else if (before) f.left.push(before);
+      ra = ra.slice(pi);
+    }
+    if (pi >= 0 || hint === "addr" || isAddrLike(ra)) {
+      if (pi < 0 && !hint && BLDG_RE.test(ra) && !/[市区町村郡]/.test(ra) && !/\d+-\d+/.test(ra)) { f.bldgOnly = ra; return f; }
+      var sb = splitBldg(ra);
+      f.addr = sb.addr; f.bldg = sb.bldg; f.addrPref = !!prefOf(sb.addr);
+      return f;
+    }
+    if (BLDG_RE.test(rest) && /\d/.test(rest) && rest.length <= 30) { f.bldgOnly = rest; return f; }
+    // 名前らしい行（数字なし・短い・会話文でない）
+    if (!/\d/.test(rest) && rest.length <= 20 && !CHAT_RE.test(rest) && !FILLER_RE.test(rest)) { f.nameGuess = true; f.name = rest; return f; }
+    if (/(株式会社|有限会社|\(株\)|\(有\)|合同会社)/.test(rest) && rest.length <= 30) { f.nameGuess = true; f.name = rest; return f; }
+    if (!FILLER_RE.test(rest)) f.left.push(rest);
+    return f;
+  }
+
+  function parseText(raw) {
+    var lines = prepParse(raw).split("\n");
+    var recs = [], cur = null, brk = true, pendSrc = [];
+    function mk(kind) { cur = { kind: kind, name: "", hon: "様", zip: "", addr: "", bldg: "", tel: "", pid: "", item: "", qty: 0, date: "", time: "", cool: "", memo: [], src: pendSrc.splice(0), left: [], notes: [], ties: null }; recs.push(cur); return cur; }
+    function hasCore(r) { return !!(r.zip || r.addr || r.tel || (r.name && !r.nameGuess)); }
+    lines.forEach(function (L0) {
+      var L = L0.trim(), m, kind = "";
+      if (!L) { brk = true; return; }
+      if (SEP_RE.test(L)) { brk = true; pendSrc.push(L0.trim()); return; }
+      if ((m = L.match(DEST_PRE))) { brk = true; L = L.slice(m[0].length).trim(); }
+      if ((m = L.match(NUM_RE)) && m[0].length < L.length + 1) { brk = true; L = L.slice(m[0].length).trim(); }
+      if ((m = L.match(SENDER_RE)) && m[0].length > 0) { kind = "sender"; L = L.slice(m[0].length).trim(); }
+      if (kind) { mk("sender"); brk = false; if (!L) { cur.src.push(L0.trim()); return; } }
+      else if (brk || !cur) { if (!cur || hasCore(cur) || cur.left.length || cur.pid || cur.date || cur.memo.length) mk("rec"); else cur.src = cur.src.concat(pendSrc.splice(0)); brk = false; }
+      if (!L) { cur.src.push(L0.trim()); return; }
+      var f = scanLine(L);
+      // ほかの人の情報が来たら、新しい届け先に分ける
+      var clash = (f.zip && cur.zip && f.zip !== cur.zip) ||
+        (f.addr && f.addrPref && cur.addr) ||
+        (f.name && !f.nameGuess && cur.name && (!cur.nameGuess || cur.zip || cur.addr || cur.tel)) ||
+        (f.name && f.nameGuess && cur.name && (cur.zip || cur.addr));
+      if (clash) mk("rec");
+      cur.src.push(L0.trim());
+      if (f.memo) cur.memo.push(f.memo);
+      if (f.zip) cur.zip = f.zip;
+      if (f.tel) { if (!cur.tel) cur.tel = f.tel; else if (cur.tel !== f.tel) cur.left.push("もう1つの電話番号 " + f.tel); }
+      if (f.tel2) cur.left.push("もう1つの電話番号 " + f.tel2);
+      if (f.name) {
+        if (!cur.name) { cur.name = f.name; cur.nameGuess = !!f.nameGuess; if (f.hon) cur.hon = f.hon; }
+        else if (cur.nameGuess && !f.nameGuess) { cur.left.push(cur.name); cur.name = f.name; cur.nameGuess = false; if (f.hon) cur.hon = f.hon; }
+        else cur.left.push(f.name);
+      }
+      if (f.addr) {
+        if (!cur.addr) { cur.addr = f.addr; if (f.bldg) cur.bldg = f.bldg; }
+        else if (!cur.bldg && !f.addrPref) cur.bldg = (f.addr + (f.bldg ? " " + f.bldg : "")).trim();
+        else cur.left.push(f.addr + (f.bldg ? " " + f.bldg : ""));
+      }
+      if (f.bldgOnly) { if (cur.addr && !cur.bldg) cur.bldg = f.bldgOnly; else cur.left.push(f.bldgOnly); }
+      if (f.pid) { if (!cur.pid) { cur.pid = f.pid; cur.ties = f.ties; } else cur.left.push(f.itemText); }
+      if (f.item) { if (!cur.item && !cur.pid) cur.item = f.item; else cur.left.push(f.item); }
+      if (f.qty) cur.qty = cur.qty || f.qty;
+      if (f.date) { if (!cur.date) cur.date = f.date; }
+      if (f.time) { if (!cur.time) cur.time = f.time; }
+      if (f.cool) cur.cool = f.cool;
+      f.left.forEach(function (x) { cur.left.push(x); });
+    });
+    // 名前・住所などがない固まりは「全体の文章」として扱う（注文全体の品名や日付は既定値に使う）
+    var out = { sender: null, rows: [], left: [], def: {} };
+    var firstReal = -1;
+    recs.forEach(function (r, i) { if (firstReal < 0 && hasCore(r)) firstReal = i; });
+    recs.forEach(function (r, i) {
+      if (!hasCore(r)) {
+        if (i < firstReal || firstReal < 0) { if (r.pid && !out.def.pid) out.def.pid = r.pid; if (r.date && !out.def.date) out.def.date = r.date; if (r.time && !out.def.time) out.def.time = r.time; if (r.cool && !out.def.cool) out.def.cool = r.cool; }
+        out.left.push(r.src.join("\n"));
+        return;
+      }
+      if (r.kind === "sender" && !out.sender) { out.sender = r; return; }
+      out.rows.push(r);
+    });
+    var dp = out.def.pid ? prod(out.def.pid) : null;
+    out.rows.forEach(function (r) {
+      if (r.ties && r.ties.length > 1 && out.def.pid && r.ties.indexOf(out.def.pid) >= 0) r.pid = out.def.pid;
+      if (!r.pid && !r.item && out.def.pid) { r.pid = out.def.pid; r.notes.push("品名は文章のはじめの「" + dp.name + "」を入れました"); }
+      if (!r.date && out.def.date) r.date = out.def.date;
+      if (!r.time && out.def.time) r.time = out.def.time;
+      var p = prod(r.pid);
+      if (!r.cool) r.cool = out.def.cool || (p ? p.cool : "n") || "n";
+      if (!r.qty) r.qty = 1;
+      r.addr = fixPrefStem(r.addr);
+      r.memoText = r.memo.join(" ");
+      r.leftUse = true;
+    });
+    return out;
+  }
+
+  /* =====================================================================
+     運送会社ごとの列（並び順・文字数は冒頭のコメントの公式資料どおり）
+     u: "b" = Shift_JIS のバイト数（全角2・半角1）で数える / "c" = 文字数で数える
+     z: 全角に変換してから入れる欄 / w: 値の出どころ（rec=届け先, snd=依頼主, prod=商品, car=設定）
+     ===================================================================== */
+  function C(n, o) { o = o || {}; o.n = n; return o; }
+  function blanks(names) { return names.map(function (n) { return C(n); }); }
+  function nameOnly(s) { return oneLine(s).replace(/\s*(様|さま|殿|御中)$/, ""); }
+  function nsp(s) { return oneLine(s).replace(/[\s　]+/g, ""); }
+  // 全角16文字ずつの欄に、住所と建物名を詰める（佐川）
+  function packAddr(addr, bldg, zip, n, w) {
+    var sp = splitAddr(addr, zip), head = zen(sp.pref + sp.city), tail = zen(sp.rest), b = zen(nsp(bldg));
+    var segs = [head, tail, b].filter(function (x) { return x; }), slots = [], cur = "";
+    segs.forEach(function (seg) {
+      if ((cur + seg).length <= w) { cur += seg; return; }
+      if (cur) slots.push(cur);
+      cur = seg;
+      while (cur.length > w && slots.length < n - 1) { slots.push(cur.slice(0, w)); cur = cur.slice(w); }
+    });
+    if (cur) slots.push(cur);
+    while (slots.length > n) { var last = slots.pop(); slots[slots.length - 1] += last; }
+    while (slots.length < n) slots.push("");
+    return slots;
+  }
+  function splitName(name, w) {
+    var z = zen(name);
+    if (z.length <= w) return [z, ""];
+    var cut = z.lastIndexOf("　", w);
+    if (cut <= 0) cut = w;
+    return [z.slice(0, cut), z.slice(cut).replace(/^　/, "")];
+  }
+  // 都道府県 / 市区町村郡 / 丁目番地（ゆうパック Web）
+  function jpAddr(addr, zip) {
+    var sp = splitAddr(addr, zip), city = sp.city, rest = sp.rest, guessed = false;
+    if (!city && rest) { city = rest.slice(0, Math.max(1, 25 - sp.pref.length)); rest = rest.slice(city.length); guessed = true; }
+    return { pref: zen(sp.pref), city: zen(city), rest: zen(rest), guessed: guessed };
+  }
+  var CARE_B2 = { nama: "ナマモノ", ware: "ワレモノ", bin: "ビン類", ten: "天地無用" };
+  var B2_TIME = { am: "0812", "14": "1416", "16": "1618", "18": "1820", "19": "1921" };
+  var SG_TIME = { am: "01", "12": "12", "14": "14", "16": "16", "18": "18", "19": "19" };
+  var JP_TIME = { am: "51", "12": "52", "14": "53", "16": "54", "18": "55", "19": "57" };
+
+  var CAR = {};
+  CAR.b2 = {
+    id: "b2", name: "ヤマト運輸 B2クラウド", short: "ヤマト B2クラウド", sub: "外部データから発行（基本レイアウト）", conf: "公式資料で確認",
+    enc: "sjis", header: true, extBad: true, file: "yamato-b2",
+    how: ["B2クラウドにログインし、メニューの「外部データから発行」を開く", "「取込みパターン」で「基本レイアウト（csv,xls,xlsx）」を選ぶ", "「ファイル選択」でこのファイルを選び、「取込み開始」を押す", "取込み結果を確かめて「印刷内容の確認へ」→「発行開始」"],
+    notes: ["文字コードは Shift_JIS、1行目は項目名です（公式テンプレートと同じ並び・95列）。", "宅急便の「発払い」で作ります。クール宅急便は「クール区分」に入ります。", "敬称の欄は、テンプレートに「クロネコゆうメールのときに指定可能」とあるため空けています。送り状での敬称の出方は、試しの1件で確かめてください。"],
+    src: ["https://bmypage.kuronekoyamato.co.jp/bmypage/newb2web_template1.xls", "https://bmypage.kuronekoyamato.co.jp/bmypage/pdf/new_exchange1.pdf", "https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/812"],
+    cols: [
+      C("お客様管理番号", { v: function (x) { return x.o.no + "-" + (x.i + 1); }, max: 50, u: "c" }),
+      C("送り状種類", { v: function () { return "0"; }, req: true }),
+      C("クール区分", { v: function (x) { return { n: "0", c: "2", f: "1" }[x.r.cool] || "0"; } }),
+      C("伝票番号"),
+      C("出荷予定日", { v: function (x) { return dSlash(x.o.ship); }, req: true, w: "order", f: "ship" }),
+      C("お届け予定日", { v: function (x) { return dSlash(x.r.date); }, w: "rec", f: "date" }),
+      C("配達時間帯", { v: function (x) { return B2_TIME[x.r.time] || ""; } }),
+      C("お届け先コード"),
+      C("お届け先電話番号", { v: function (x) { return normTel(x.r.tel); }, max: 15, u: "c", req: true, w: "rec", f: "tel" }),
+      C("お届け先電話番号枝番"),
+      C("お届け先郵便番号", { v: function (x) { return fmtZip(x.r.zip); }, max: 8, u: "c", req: true, w: "rec", f: "zip" }),
+      C("お届け先住所", { v: function (x) { return nsp(x.r.addr); }, max: 64, u: "b", req: true, w: "rec", f: "addr", k: true }),
+      C("お届け先アパートマンション名", { v: function (x) { return nsp(x.r.bldg); }, max: 32, u: "b", w: "rec", f: "bldg", k: true }),
+      C("お届け先会社・部門１"), C("お届け先会社・部門２"),
+      C("お届け先名", { v: function (x) { return nameOnly(x.r.name); }, max: 32, u: "b", req: true, w: "rec", f: "name", k: true }),
+      C("お届け先名(ｶﾅ)"), C("敬称"), C("ご依頼主コード"),
+      C("ご依頼主電話番号", { v: function (x) { return normTel(x.snd.tel); }, max: 15, u: "c", req: true, w: "snd", f: "tel" }),
+      C("ご依頼主電話番号枝番"),
+      C("ご依頼主郵便番号", { v: function (x) { return fmtZip(x.snd.zip); }, max: 8, u: "c", req: true, w: "snd", f: "zip" }),
+      C("ご依頼主住所", { v: function (x) { return nsp(x.snd.addr); }, max: 64, u: "b", req: true, w: "snd", f: "addr", k: true }),
+      C("ご依頼主アパートマンション", { v: function (x) { return nsp(x.snd.bldg); }, max: 32, u: "b", w: "snd", f: "bldg", k: true }),
+      C("ご依頼主名", { v: function (x) { return nameOnly(x.snd.name); }, max: 32, u: "b", req: true, w: "snd", f: "name", k: true }),
+      C("ご依頼主名(ｶﾅ)"), C("品名コード１"),
+      C("品名１", { v: function (x) { return recItem(x.r); }, max: 50, u: "b", req: true, w: "prod", f: "name", k: true }),
+      C("品名コード２"), C("品名２"),
+      C("荷扱い１", { v: function (x) { return x.p ? (CARE_B2[x.p.care] || "") : ""; }, max: 20, u: "b" }),
+      C("荷扱い２"), C("記事"), C("ｺﾚｸﾄ代金引換額（税込)"), C("内消費税額等"), C("止置き"), C("営業所コード"),
+      C("発行枚数", { v: function (x) { return String(+x.r.qty || 1); }, max: 2, u: "c", w: "rec", f: "qty" }),
+      C("個数口表示フラグ"),
+      C("請求先顧客コード", { v: function () { return digits(S.car.b2cust); }, max: 12, u: "c", req: true, w: "car", f: "b2cust" }),
+      C("請求先分類コード", { v: function () { return digits(S.car.b2cls); }, max: 3, u: "c", w: "car", f: "b2cls" }),
+      C("運賃管理番号", { v: function () { return digits(S.car.b2fare); }, max: 2, u: "c", req: true, w: "car", f: "b2fare" })
+    ].concat(blanks(["クロネコwebコレクトデータ登録", "クロネコwebコレクト加盟店番号", "クロネコwebコレクト申込受付番号１", "クロネコwebコレクト申込受付番号２", "クロネコwebコレクト申込受付番号３", "お届け予定ｅメール利用区分", "お届け予定ｅメールe-mailアドレス", "入力機種", "お届け予定ｅメールメッセージ", "お届け完了ｅメール利用区分", "お届け完了ｅメールe-mailアドレス", "お届け完了ｅメールメッセージ", "クロネコ収納代行利用区分", "予備", "収納代行請求金額(税込)", "収納代行内消費税額等", "収納代行請求先郵便番号", "収納代行請求先住所", "収納代行請求先住所（アパートマンション名）", "収納代行請求先会社・部門名１", "収納代行請求先会社・部門名２", "収納代行請求先名(漢字)", "収納代行請求先名(カナ)", "収納代行問合せ先名(漢字)", "収納代行問合せ先郵便番号", "収納代行問合せ先住所", "収納代行問合せ先住所（アパートマンション名）", "収納代行問合せ先電話番号", "収納代行管理番号", "収納代行品名", "収納代行備考", "複数口くくりキー", "検索キータイトル1", "検索キー1", "検索キータイトル2", "検索キー2", "検索キータイトル3", "検索キー3", "検索キータイトル4", "検索キー4", "検索キータイトル5", "検索キー5", "予備", "予備", "投函予定メール利用区分", "投函予定メールe-mailアドレス", "投函予定メールメッセージ", "投函完了メール（お届け先宛）利用区分", "投函完了メール（お届け先宛）e-mailアドレス", "投函完了メール（お届け先宛）メールメッセージ", "投函完了メール（ご依頼主宛）利用区分", "投函完了メール（ご依頼主宛）e-mailアドレス", "投函完了メール（ご依頼主宛）メールメッセージ"])),
+    rowCheck: function (x, iss) {
+      if (x.r.time === "12") iss("err", "ヤマトには「12〜14時」の指定がありません。ほかの時間帯にしてください", x.where("time"));
+      if (+x.r.qty > 99) iss("err", "ヤマトの発行枚数は99までです", x.where("qty"));
+      var sp = splitAddr(x.r.addr, x.r.zip);
+      if (sp.city && sp.city.length > 12) iss("wrn", "市区郡町村が12文字をこえています（B2クラウドの住所欄は「市区郡町村12文字＋町・番地16文字」）", x.where("addr"));
+      if (sjisLen(sp.rest) > 32) iss("wrn", "町・番地の部分が全角16文字をこえています。B2クラウドで住所エラーになることがあります。建物名の欄に分けてください", x.where("addr"));
+      if (/[\s　]/.test(oneLine(x.r.addr) + oneLine(x.r.bldg))) iss("inf", "住所・建物名のスペースは取りました（B2クラウドはスペースがあると取り込めません）", x.where("addr"));
+    },
+    globalCheck: function (iss) {
+      var c = digits(S.car.b2cust);
+      if (!c) iss("err", "設定の「B2クラウドの請求先顧客コード」が空です。B2クラウドの「1件ずつ発行」の請求先欄で確かめて入れてください", { src: "car", f: "b2cust" });
+      else if (c.length < 9 || c.length > 12) iss("err", "請求先顧客コードのけた数が合いません（9〜12けた）", { src: "car", f: "b2cust" });
+      if (!digits(S.car.b2fare)) iss("err", "設定の「運賃管理番号」が空です（ふつうは 01）", { src: "car", f: "b2fare" });
+    }
+  };
+
+  var SG_HEAD = ["お届け先コード取得区分", "お届け先コード", "お届け先電話番号", "お届け先郵便番号", "お届け先住所１", "お届け先住所２", "お届け先住所３", "お届け先名称１", "お届け先名称２", "お客様管理番号", "お客様コード", "部署ご担当者コード取得区分", "部署ご担当者コード", "部署ご担当者名称", "荷送人電話番号", "ご依頼主コード取得区分", "ご依頼主コード", "ご依頼主電話番号", "ご依頼主郵便番号", "ご依頼主住所１", "ご依頼主住所２", "ご依頼主名称１", "ご依頼主名称２", "荷姿", "品名１", "品名２", "品名３", "品名４", "品名５", "荷札荷姿", "荷札品名１", "荷札品名２", "荷札品名３", "荷札品名４", "荷札品名５", "荷札品名６", "荷札品名７", "荷札品名８", "荷札品名９", "荷札品名１０", "荷札品名１１", "出荷個数", "スピード指定", "クール便指定", "配達日", "配達指定時間帯", "配達指定時間（時分）", "代引金額", "消費税", "決済種別", "保険金額", "指定シール１", "指定シール２", "指定シール３", "営業所受取", "SRC区分", "営業所受取営業所コード", "元着区分", "メールアドレス", "ご不在時連絡先", "出荷日", "お問い合せ送り状No.", "出荷場印字区分", "集約解除指定", "編集０１", "編集０２", "編集０３", "編集０４", "編集０５", "編集０６", "編集０７", "編集０８", "編集０９", "編集１０"];
+  function sgCols() {
+    var defs = {
+      "お届け先電話番号": { v: function (x) { return normTel(x.r.tel); }, max: 14, u: "c", w: "rec", f: "tel" },
+      "お届け先郵便番号": { v: function (x) { return fmtZip(x.r.zip); }, max: 8, u: "c", w: "rec", f: "zip" },
+      "お届け先住所１": { v: function (x) { return x.ra[0]; }, max: 16, u: "c", req: true, w: "rec", f: "addr" },
+      "お届け先住所２": { v: function (x) { return x.ra[1]; }, max: 16, u: "c", w: "rec", f: "addr" },
+      "お届け先住所３": { v: function (x) { return x.ra[2]; }, max: 16, u: "c", w: "rec", f: "bldg" },
+      "お届け先名称１": { v: function (x) { return x.rn[0]; }, max: 16, u: "c", req: true, w: "rec", f: "name" },
+      "お届け先名称２": { v: function (x) { return x.rn[1]; }, max: 16, u: "c", w: "rec", f: "name" },
+      "お客様管理番号": { v: function (x) { return x.o.no + "-" + (x.i + 1); }, max: 16, u: "c" },
+      "お客様コード": { v: function () { return digits(S.car.sgcust); }, max: 12, u: "c", w: "car", f: "sgcust" },
+      "ご依頼主電話番号": { v: function (x) { return normTel(x.snd.tel); }, max: 14, u: "c", w: "snd", f: "tel" },
+      "ご依頼主郵便番号": { v: function (x) { return fmtZip(x.snd.zip); }, max: 8, u: "c", w: "snd", f: "zip" },
+      "ご依頼主住所１": { v: function (x) { return x.sa[0]; }, max: 16, u: "c", w: "snd", f: "addr" },
+      "ご依頼主住所２": { v: function (x) { return x.sa[1]; }, max: 16, u: "c", w: "snd", f: "addr" },
+      "ご依頼主名称１": { v: function (x) { return x.sn[0]; }, max: 16, u: "c", w: "snd", f: "name" },
+      "ご依頼主名称２": { v: function (x) { return x.sn[1]; }, max: 16, u: "c", w: "snd", f: "name" },
+      "品名１": { v: function (x) { return zen(recItem(x.r)); }, max: 16, u: "c", w: "prod", f: "name" },
+      "出荷個数": { v: function (x) { return String(+x.r.qty || 1); }, max: 3, u: "c", w: "rec", f: "qty" },
+      "スピード指定": { v: function () { return "000"; } },
+      "クール便指定": { v: function (x) { return { n: "001", c: "002", f: "003" }[x.r.cool] || "001"; } },
+      "配達日": { v: function (x) { return dCompact(x.r.date); }, w: "rec", f: "date" },
+      "配達指定時間帯": { v: function (x) { return SG_TIME[x.r.time] || ""; } },
+      "指定シール１": { v: function (x) { return x.p ? ({ ware: "011", bin: "011", ten: "013" }[x.p.care] || "") : ""; } },
+      "営業所受取": { v: function () { return "0"; } },
+      "SRC区分": { v: function () { return "0"; } },
+      "元着区分": { v: function () { return "1"; } },
+      "出荷日": { v: function (x) { return dCompact(x.o.ship); }, w: "order", f: "ship" }
+    };
+    return SG_HEAD.map(function (n) { return C(n, defs[n] ? Object.assign({}, defs[n]) : {}); });
+  }
+  CAR.sagawa = {
+    id: "sagawa", name: "佐川急便 e飛伝Ⅲ", short: "佐川 e飛伝Ⅲ", sub: "送り状データ取込（標準_飛脚宅配便_CSV_ヘッダ有）", conf: "公式資料で確認",
+    enc: "sjis", header: true, extBad: false, file: "sagawa-ehiden3",
+    how: ["e飛伝Ⅲで「宅配便送り状」→「送り状データ取込」を開く", "サービスを選び、テンプレートは「共通テンプレートを使用」→「標準_飛脚宅配便_CSV_ヘッダ有」", "「ファイルを選択」でこのファイルを選び、出荷日を選んで「直接取込」を押す"],
+    notes: ["1行目は項目名です（74列。マニュアル付録a-1の並び）。1回に取り込めるのは1,000行までです。", "住所・名前は全角16文字ずつの欄に分けて入れます。", "取り込み時の文字コードはマニュアルに書かれていません。文字化けしたら下の「文字コード」を切りかえてください。", "送り状の敬称の欄はありません。"],
+    src: ["https://e-hiden3.sagawa-exp.co.jp/help_nsx/manual-takuhai.pdf"],
+    cols: sgCols(),
+    prep: function (x) {
+      x.ra = packAddr(x.r.addr, x.r.bldg, x.r.zip, 3, 16);
+      x.sa = packAddr(x.snd.addr, x.snd.bldg, x.snd.zip, 2, 16);
+      x.rn = splitName(nameOnly(x.r.name), 16);
+      x.sn = splitName(nameOnly(x.snd.name), 16);
+    },
+    rowCheck: function (x, iss) { if (+x.r.qty > 999) iss("err", "出荷個数は999までです", x.where("qty")); },
+    globalCheck: function (iss, rows) {
+      if (rows.length + 1 > 1000) iss("err", "e飛伝Ⅲに1回で取り込めるのは1,000行（項目名の行をふくむ）までです。注文を分けて出してください", { src: "none" });
+    }
+  };
+
+  CAR.jpweb = {
+    id: "jpweb", name: "ゆうパック Webゆうパックプリント", short: "Webゆうパックプリント", sub: "出荷予定データ（標準フォーマット）", conf: "公式資料で確認",
+    enc: "sjis", header: false, extBad: false, noComma: true, file: "yupack-web",
+    how: ["Webゆうパックプリントにログインし、「出荷予定データ一覧」で「アップロード」を選ぶ", "「ファイル変換定義」は標準フォーマットを選ぶ", "「参照」でこのファイルを選び、「アップロード」を押す", "エラーのときは「エラー内容ダウンロード」で中身を確かめる"],
+    notes: ["見出しの行はありません（72列。公式サンプルと同じ形・Shift_JIS）。", "住所は「都道府県」「市区町村郡」「丁目番地号」「建物名」に分けて、全角で入れます。", "ゆうパックの保冷は「チルド」だけです。"],
+    src: ["https://www.post.japanpost.jp/web-yu-packprint/contents/manual/Web_upload.html", "https://www.post.japanpost.jp/web-yu-packprint/contents/manual/yupack_sample.csv"],
+    cols: [
+      C("商品", { v: function () { return "1"; }, req: true }),
+      C("着払/代引", { v: function () { return "0"; } }),
+      C("ゴルフ/スキー/空港"), C("往復"), C("書留/特定記録"), C("配達方法"),
+      C("作成数", { v: function (x) { return String(+x.r.qty || 1); }, max: 2, u: "c", w: "rec", f: "qty" }),
+      C("お届け先のお名前", { v: function (x) { return zen(nameOnly(x.r.name)); }, max: 25, u: "c", req: true, w: "rec", f: "name" }),
+      C("お届け先の敬称", { v: function (x) { return x.r.hon === "なし" ? "" : (x.r.hon || "様"); }, max: 2, u: "c" }),
+      C("お届け先のお名前（カナ）"),
+      C("お届け先の郵便番号", { v: function (x) { return digits(x.r.zip); }, max: 7, u: "c", req: true, w: "rec", f: "zip" }),
+      C("お届け先の都道府県", { v: function (x) { return x.ja.pref; }, max: 5, u: "c", w: "rec", f: "addr" }),
+      C("お届け先の市区町村郡", { v: function (x) { return x.ja.city; }, max: 25, u: "c", req: true, w: "rec", f: "addr" }),
+      C("お届け先の丁目番地号", { v: function (x) { return x.ja.rest; }, max: 25, u: "c", w: "rec", f: "addr" }),
+      C("お届け先の建物名・部屋番号など", { v: function (x) { return zen(oneLine(x.r.bldg)); }, max: 25, u: "c", w: "rec", f: "bldg" }),
+      C("お届け先の電話番号", { v: function (x) { return normTel(x.r.tel); }, max: 13, u: "c", w: "rec", f: "tel" }),
+      C("お届け先の法人名"), C("お届け先の部署名"), C("お届け先のメールアドレス"), C("空港略称"), C("空港コード"), C("受取人様のお名前"),
+      C("ご依頼主のお名前", { v: function (x) { return zen(nameOnly(x.snd.name)); }, max: 25, u: "c", req: true, w: "snd", f: "name" }),
+      C("ご依頼主の敬称"), C("ご依頼主のお名前（カナ）"),
+      C("ご依頼主の郵便番号", { v: function (x) { return digits(x.snd.zip); }, max: 7, u: "c", req: true, w: "snd", f: "zip" }),
+      C("ご依頼主の都道府県", { v: function (x) { return x.js.pref; }, max: 5, u: "c", w: "snd", f: "addr" }),
+      C("ご依頼主の市区町村郡", { v: function (x) { return x.js.city; }, max: 25, u: "c", req: true, w: "snd", f: "addr" }),
+      C("ご依頼主の丁目番地号", { v: function (x) { return x.js.rest; }, max: 25, u: "c", w: "snd", f: "addr" }),
+      C("ご依頼主の建物名・部屋番号など", { v: function (x) { return zen(oneLine(x.snd.bldg)); }, max: 25, u: "c", w: "snd", f: "bldg" }),
+      C("ご依頼主の電話番号", { v: function (x) { return normTel(x.snd.tel); }, max: 13, u: "c", w: "snd", f: "tel" }),
+      C("ご依頼主の法人名"), C("ご依頼主の部署名"), C("ご依頼主のメールアドレス"),
+      C("品名", { v: function (x) { return zen(recItem(x.r)); }, max: 20, u: "c", req: true, w: "prod", f: "name" }),
+      C("品名番号"), C("個数"), C("発送予定日"),
+      C("発送予定時間帯", { v: function () { return "0"; } }),
+      C("セキュリティ", { v: function () { return "0"; } }),
+      C("重量"), C("損害要償額"),
+      C("保冷", { v: function (x) { return x.r.cool === "n" ? "0" : "1"; } }),
+      C("取扱上の注意　こわれもの", { v: function (x) { return x.p && x.p.care === "ware" ? "1" : "0"; } }),
+      C("取扱上の注意　なまもの", { v: function (x) { return x.p && x.p.care === "nama" ? "1" : "0"; } }),
+      C("取扱上の注意　ビン類", { v: function (x) { return x.p && x.p.care === "bin" ? "1" : "0"; } }),
+      C("取扱上の注意　逆さま厳禁", { v: function (x) { return x.p && x.p.care === "ten" ? "1" : "0"; } }),
+      C("取扱上の注意　下積み厳禁", { v: function () { return "0"; } }),
+      C("予備", { v: function () { return "0"; } }),
+      C("差出予定日", { v: function (x) { return dCompact(x.o.ship); }, w: "order", f: "ship" }),
+      C("差出予定時間帯", { v: function () { return "0"; } }),
+      C("配達希望日", { v: function (x) { return dCompact(x.r.date); }, w: "rec", f: "date" }),
+      C("配達希望時間帯", { v: function (x) { return JP_TIME[x.r.time] || ""; } }),
+      C("クラブ本数"), C("ご使用日(プレー日)"), C("ご使用時間"), C("搭乗日"), C("搭乗時間"), C("搭乗便名"), C("復路発送予定日"), C("お支払方法"), C("摘要/記事"),
+      C("サイズ", { v: function (x) { return x.p ? pad(x.p.size, 3) : ""; } }),
+      C("差出方法", { v: function () { return S.car.jphow === "1" ? "1" : "0"; } }),
+      C("割引", { v: function () { return "0"; }, req: true }),
+      C("代金引換金額"), C("うち消費税等"),
+      C("配達予定日通知 (お届け先)", { v: function () { return "0"; } }),
+      C("配達完了通知 (お届け先)", { v: function () { return "0"; } }),
+      C("不在持戻り通知 (お届け先)", { v: function () { return "0"; } }),
+      C("郵便局留通知 (お届け先)", { v: function () { return "0"; } }),
+      C("配達完了通知 (依頼主)", { v: function () { return "0"; } })
+    ],
+    prep: function (x) { x.ja = jpAddr(x.r.addr, x.r.zip); x.js = jpAddr(x.snd.addr, x.snd.zip); },
+    rowCheck: function (x, iss) {
+      if (x.r.cool === "f") iss("err", "ゆうパックに冷凍はありません（保冷はチルドだけ）。冷蔵にするか、ほかの運送会社で出してください", x.where("cool"));
+      if (+x.r.qty > 10) iss("err", "Webゆうパックプリントの作成数は10までです。届け先を分けてください", x.where("qty"));
+      if (x.r.date && x.o.ship && daysBetween(x.o.ship, x.r.date) > 14) iss("err", "配達希望日は差出予定日から14日以内にしてください", x.where("date"));
+      if (x.ja.pref.length + x.ja.city.length > 25) iss("err", "都道府県と市区町村郡は合わせて25文字までです", x.where("addr"));
+      if (x.ja.guessed) iss("wrn", "市区町村の区切りがわからなかったので、住所の前のほうを「市区町村郡」に入れました", x.where("addr"));
+      if (x.r.hon === "なし") iss("inf", "敬称「なし」はWebゆうパックプリントでは「様」になります", x.where("name"));
+    },
+    globalCheck: function (iss, rows) {
+      rows.forEach(function (x) { if (x.o.ship && daysBetween(todayISO(), x.o.ship) > 100) iss("err", "差出予定日は今日から100日以内にしてください", { src: "order", oid: x.o.id, f: "ship" }); });
+    }
+  };
+
+  CAR.yupri = {
+    id: "yupri", name: "ゆうパック ゆうプリR", short: "ゆうプリR", sub: "標準フォーマットv1（パソコンのソフト）", conf: "公式資料で確認・要設定", part: true,
+    enc: "sjis", header: false, extBad: false, noComma: true, file: "yupri-r-v1",
+    how: ["はじめに一度だけ：ゆうプリRの「フィルタ設定」で「新規」→ フィルタの種類「発送データ」「詳細編集」→ フォーマット種別「標準フォーマットv1」", "同じフィルタの条件設定で、「お客様指定配送種類」の「通常」「チルド」「冷凍」を、使う送り状の種類に結びつける", "そのフィルタでこのファイルを取り込む"],
+    notes: ["51列・見出しの行なし・Shift_JIS で作ります（資料の「列見出し：あり（実際のデータには不要）」に合わせました）。", "クール（チルド・冷凍）は「お客様指定配送種類」の列に「通常」「チルド」「冷凍」と入れます。ゆうプリR側で結びつけの設定がいります。", "敬称はフィルタの設定で決めます。"],
+    src: ["https://www.post.japanpost.jp/yu-packprint-r/member/download/instructions/６－１．フィルタ設定別冊（フォーマット一覧）.pdf"],
+    cols: [
+      C("予約・確定識別コード"),
+      C("発送予定日", { v: function (x) { return dCompact(x.o.ship); }, w: "order", f: "ship" }),
+      C("予備１"), C("予備２"), C("予備３"),
+      C("伝票個数", { v: function (x) { return String(+x.r.qty || 1); }, w: "rec", f: "qty" }),
+      C("お問い合わせ番号"),
+      C("お客様側管理番号", { v: function (x) { return x.o.no + "-" + (x.i + 1); } }),
+      C("予備４"), C("予備５"),
+      C("ご依頼主名", { v: function (x) { return nameOnly(x.snd.name); }, max: 100, u: "b", w: "snd", f: "name", k: true }),
+      C("ご依頼主電話番号", { v: function (x) { return normTel(x.snd.tel); }, w: "snd", f: "tel" }),
+      C("ご依頼主郵便番号", { v: function (x) { return fmtZip(x.snd.zip); }, w: "snd", f: "zip" }),
+      C("ご依頼主住所", { v: function (x) { return (oneLine(x.snd.addr) + (oneLine(x.snd.bldg) ? "　" + oneLine(x.snd.bldg) : "")); }, max: 150, u: "b", w: "snd", f: "addr", k: true }),
+      C("お届け先名", { v: function (x) { return nameOnly(x.r.name); }, max: 100, u: "b", req: true, w: "rec", f: "name", k: true }),
+      C("お届け先電話番号", { v: function (x) { return normTel(x.r.tel); }, w: "rec", f: "tel" }),
+      C("お届け先郵便番号", { v: function (x) { return digits(x.r.zip); }, max: 7, u: "c", req: true, w: "rec", f: "zip" }),
+      C("お届け先住所", { v: function (x) { return (oneLine(x.r.addr) + (oneLine(x.r.bldg) ? "　" + oneLine(x.r.bldg) : "")); }, max: 150, u: "b", req: true, w: "rec", f: "addr", k: true }),
+      C("お届け希望年月日", { v: function (x) { return dCompact(x.r.date); }, w: "rec", f: "date" }),
+      C("お届け希望時間帯", { v: function (x) { return JP_TIME[x.r.time] || "00"; } }),
+      C("代金引換金額"), C("消費税額等"),
+      C("品名１", { v: function (x) { return recItem(x.r); }, max: 50, u: "b", w: "prod", f: "name", k: true }),
+      C("品名２"), C("品名３"), C("損害要償額"),
+      C("サイズ", { v: function (x) { return x.p ? pad(x.p.size, 3) : ""; } }),
+      C("記事１"), C("記事２"), C("フリー項目３"), C("フリー項目４"),
+      C("お届け予定メールサービス", { v: function () { return "0"; } }),
+      C("お届け完了メールサービス", { v: function () { return "0"; } }),
+      C("ご不在連絡メールサービス", { v: function () { return "0"; } }),
+      C("予備６"), C("お届け先 メールアドレス"), C("ご依頼主 メールアドレス"), C("予備７"), C("予備８"), C("予備９"), C("予備１０"), C("自由使用欄"),
+      C("コンビニ等判別コード", { v: function () { return "0"; } }),
+      C("通販業者コード"), C("コンビニコード"), C("コンビニ名"), C("店舗コード"), C("店舗名"), C("認証番号"),
+      C("お客様指定配送種類", { v: function (x) { return { n: "通常", c: "チルド", f: "冷凍" }[x.r.cool] || "通常"; }, max: 20, u: "b" }),
+      C("予備１１")
+    ],
+    rowCheck: function (x, iss) {
+      if (x.r.date && x.o.ship && daysBetween(x.o.ship, x.r.date) > 14) iss("wrn", "配達希望日が発送日から14日以上先です", x.where("date"));
+    },
+    globalCheck: function () {}
+  };
+
+  CAR.generic = {
+    id: "generic", name: "ふつうのCSV（Excel用）", short: "ふつうのCSV", sub: "項目名つき・UTF-8。ほかのソフトで項目を結びつけるとき用", conf: "",
+    enc: "utf8bom", header: true, extBad: false, file: "okurijo-data",
+    how: ["Excelやスプレッドシートでそのまま開けます", "運送会社のソフトの「新規レイアウト」「独自テンプレート」などで、列を1つずつ結びつけて取り込むときに使えます"],
+    notes: ["文字コードは UTF-8（BOMつき）。1行目は項目名です。"],
+    src: [],
+    cols: [
+      C("注文番号", { v: function (x) { return x.o.no + "-" + (x.i + 1); } }),
+      C("お客さま（注文者）", { v: function (x) { return nameOnly(x.o.sender.name); } }),
+      C("送り状の依頼主", { v: function (x) { return nameOnly(x.snd.name); }, w: "snd", f: "name" }),
+      C("依頼主郵便番号", { v: function (x) { return fmtZip(x.snd.zip); }, w: "snd", f: "zip" }),
+      C("依頼主住所", { v: function (x) { return oneLine(x.snd.addr); }, w: "snd", f: "addr" }),
+      C("依頼主建物名", { v: function (x) { return oneLine(x.snd.bldg); }, w: "snd", f: "bldg" }),
+      C("依頼主電話番号", { v: function (x) { return normTel(x.snd.tel); }, w: "snd", f: "tel" }),
+      C("お届け先名", { v: function (x) { return nameOnly(x.r.name); }, w: "rec", f: "name" }),
+      C("敬称", { v: function (x) { return x.r.hon === "なし" ? "" : x.r.hon; } }),
+      C("お届け先郵便番号", { v: function (x) { return fmtZip(x.r.zip); }, w: "rec", f: "zip" }),
+      C("都道府県", { v: function (x) { return splitAddr(x.r.addr, x.r.zip).pref; } }),
+      C("市区町村", { v: function (x) { return splitAddr(x.r.addr, x.r.zip).city; } }),
+      C("町名・番地", { v: function (x) { return splitAddr(x.r.addr, x.r.zip).rest; } }),
+      C("お届け先住所（全部）", { v: function (x) { return oneLine(x.r.addr); }, w: "rec", f: "addr" }),
+      C("建物名・部屋番号", { v: function (x) { return oneLine(x.r.bldg); }, w: "rec", f: "bldg" }),
+      C("お届け先電話番号", { v: function (x) { return normTel(x.r.tel); }, w: "rec", f: "tel" }),
+      C("品名", { v: function (x) { return recItem(x.r); }, w: "prod", f: "name" }),
+      C("個数", { v: function (x) { return String(+x.r.qty || 1); } }),
+      C("サイズ", { v: function (x) { return x.p ? x.p.size : ""; } }),
+      C("クール", { v: function (x) { return { n: "常温", c: "冷蔵", f: "冷凍" }[x.r.cool] || "常温"; } }),
+      C("発送日", { v: function (x) { return dSlash(x.o.ship); } }),
+      C("お届け希望日", { v: function (x) { return dSlash(x.r.date); } }),
+      C("時間帯", { v: function (x) { return x.r.time ? timeLabel(x.r.time) : ""; } }),
+      C("商品代（税込）", { v: function (x) { return String(recCalc(x.r).goods); } }),
+      C("送料（税込）", { v: function (x) { var c = recCalc(x.r); return c.ship == null ? "" : String(c.ship); } }),
+      C("メモ", { v: function (x) { return oneLine(x.r.memo); } })
+    ],
+    rowCheck: function () {}, globalCheck: function () {}
+  };
+  var CAR_ORDER = ["b2", "sagawa", "jpweb", "yupri", "generic"];
+
+  function recLabel(o, i, r) { return "注文No." + o.no + "（" + (nameOnly(o.sender.name) || "お客さま未入力") + "）の " + (i + 1) + "件目「" + (nameOnly(r.name) || "名前なし") + "」"; }
+
+  function buildExport(cid, oids) {
+    var car = CAR[cid], issues = [], seen = {}, rows = [], ctxs = [];
+    var sjis = car.enc === "sjis" && !(cid === "sagawa" && S.car.sgenc === "utf8");
+    function iss(lv, msg, where, extra) {
+      where = where || { src: "none" };
+      var k = lv + "|" + msg + "|" + (where.src || "") + (where.oid || "") + (where.rid || "") + (where.pid || "") + (where.f || "");
+      if (seen[k]) return;
+      seen[k] = 1;
+      var o = { lv: lv, msg: msg, where: where };
+      if (extra) for (var e in extra) o[e] = extra[e];
+      issues.push(o);
+    }
+    var list = oids.map(orderById).filter(function (o) { return o && o.recs.length; });
+    list.forEach(function (o) {
+      var snd = labelSender(o);
+      var sndWhere = function (f) { return o.from === "farm" ? { src: "farm", f: f, label: "自分の農園（設定）" } : { src: "sender", oid: o.id, f: f, label: "注文No." + o.no + " のご依頼主" }; };
+      if (o.from === "farm") farmIssues().forEach(function (x) { iss(x.lv, x.m, sndWhere(x.f)); });
+      else senderIssues(o).forEach(function (x) { iss(x.lv, x.m, sndWhere(x.f)); });
+      o.recs.forEach(function (r, i) {
+        var lab = recLabel(o, i, r);
+        var where = function (f) { return { src: "rec", oid: o.id, rid: r.id, f: f, label: lab }; };
+        recIssues(r, o).forEach(function (x) {
+          if (x.f === "tel" && x.lv === "wrn" && cid !== "b2") return;
+          iss(x.f === "tel" && cid === "b2" && !oneLine(r.tel) ? "err" : x.lv, x.m, where(x.f));
+        });
+        var x = { o: o, r: r, i: i, snd: snd, p: prod(r.pid), where: where };
+        if (car.prep) car.prep(x);
+        car.rowCheck(x, iss);
+        ctxs.push(x);
+      });
+    });
+    var commaFixed = false;
+    ctxs.forEach(function (x) {
+      var vals = car.cols.map(function (col) {
+        var v = col.v ? col.v(x) : "";
+        v = oneLine(v);
+        if (col.k) v = hanKana(v);
+        if (cid !== "generic") v = sjisPre(v);
+        if (cid !== "generic" && v.indexOf(",") >= 0) { v = v.replace(/,/g, "，"); commaFixed = true; }
+        var wh;
+        if (col.w === "rec") wh = x.where(col.f);
+        else if (col.w === "snd") wh = x.o.from === "farm" ? { src: "farm", f: col.f, label: "自分の農園（設定）" } : { src: "sender", oid: x.o.id, f: col.f, label: "注文No." + x.o.no + " のご依頼主" };
+        else if (col.w === "prod") wh = x.p ? { src: "prod", pid: x.p.id, f: "name", label: "商品「" + x.p.name + "」" } : x.where("pid");
+        else if (col.w === "car") wh = { src: "car", f: col.f, label: "設定（運送会社）" };
+        else if (col.w === "order") wh = { src: "order", oid: x.o.id, f: col.f, label: "注文No." + x.o.no };
+        else wh = x.where("");
+        if (col.req && !v && col.w !== "car") iss("err", "「" + col.n + "」が空です（必須）", wh);
+        if (col.max && v) {
+          var len = col.u === "b" ? sjisLen(v) : Array.from(v).length;
+          if (len > col.max) {
+            var hint = col.u === "b" ? "全角" + Math.floor(col.max / 2) + "文字（半角" + col.max + "文字）まで。今は全角換算で約" + Math.ceil(len / 2) + "文字" : col.max + "文字まで。今は" + len + "文字";
+            iss("err", "「" + col.n + "」が長すぎます（" + hint + "）。自動では切りません。短くしてください", wh, { col: col.n, val: v });
+          }
+        }
+        if (cid !== "generic" && v && (sjis || car.extBad)) {
+          var bad = badChars(v, car.extBad);
+          bad.forEach(function (ch) {
+            var k = sjisCls(ch);
+            var msg = k === "none" ? "「" + ch + "」は Shift_JIS にない文字です。送り状ソフトでは「?」になってしまいます" : (car.extBad ? "「" + ch + "」は JIS第1・第2水準にない文字（機種依存文字）です。B2クラウドでは取り込めません" : "「" + ch + "」は機種依存文字です");
+            iss("err", msg, wh, { ch: ch, sug: Object.prototype.hasOwnProperty.call(SUGG, ch) ? SUGG[ch] : null });
+          });
+        } else if (cid !== "generic" && v && !sjis) {
+          badChars(v, false).forEach(function (ch) { iss("wrn", "「" + ch + "」は昔の文字コード（Shift_JIS）にない文字です。送り状にきちんと出るか確かめてください", wh, { ch: ch, sug: SUGG[ch] || null }); });
+        }
+        if (sjis && !car.extBad && v) {
+          Array.from(v).forEach(function (ch) { if (sjisCls(ch) === "ext") iss("wrn", "「" + ch + "」は機種依存文字です。送り状で正しく印字されるか確かめてください", wh, { ch: ch, sug: SUGG[ch] || null }); });
+        }
+        return v;
+      });
+      rows.push(vals);
+    });
+    car.globalCheck(iss, ctxs);
+    if (commaFixed) iss("inf", "半角のカンマ「,」は全角の「，」にしました（CSVの区切りとまちがわれないように）", { src: "none" });
+    var order = { err: 0, wrn: 1, inf: 2 };
+    issues.sort(function (a, b) { return order[a.lv] - order[b.lv]; });
+    return { car: car, rows: rows, ctxs: ctxs, issues: issues, sjis: sjis, count: rows.length, orders: list };
+  }
+  function csvField(v, quoteAll) { v = String(v == null ? "" : v); return (quoteAll || /[",\r\n]/.test(v)) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  function toCSV(ex) {
+    var lines = [];
+    if (ex.car.header) lines.push(ex.car.cols.map(function (c) { return csvField(c.n); }).join(","));
+    ex.rows.forEach(function (r) { lines.push(r.map(function (v) { return csvField(v); }).join(",")); });
+    return lines.join("\r\n") + "\r\n";
+  }
+  function encodeCSV(ex, text) {
+    if (ex.sjis) {
+      text = Array.from(text).map(function (c) { return sjisCls(c) === "none" ? "〓" : c; }).join("");
+      return new Uint8Array(Encoding.convert(Encoding.stringToCode(text), { to: "SJIS", from: "UNICODE" }));
+    }
+    var u = new TextEncoder().encode(text);
+    if (ex.car.enc === "utf8bom") { var b = new Uint8Array(u.length + 3); b.set([0xEF, 0xBB, 0xBF]); b.set(u, 3); return b; }
+    return u;
+  }
+  function downloadBytes(bytes, name, mime) {
+    var blob = new Blob([bytes], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = name; a.rel = "noopener";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  }
+  function trackOnce() {
+    if (load(KEY.lead, false)) return;
+    store(KEY.lead, true);
+    try { if (window.trackLead) window.trackLead("okurijo"); } catch (e) { /* 計測の失敗で処理を止めない */ }
+  }
+
+  /* =====================================================================
+     画面
+     ===================================================================== */
+  var view = "order", openRec = {}, P = null, csvSel = null, lastEx = null, showAllCols = false, pickOpen = false, editCust = "";
+  function sel(opts, v) { return opts.map(function (o) { return '<option value="' + esc(o[0]) + '"' + (String(o[0]) === String(v) ? " selected" : "") + ">" + esc(o[1]) + "</option>"; }).join(""); }
+  function prodOpts(v) { return S.products.map(function (p) { return [p.id, p.name + "　" + yen(p.price)]; }).concat([["", "その他（品名を自由に入れる）"]]); }
+  function zipBox(z) {
+    z = digits(z);
+    if (z.length !== 7) return z ? '<span class="zipbox">〒' + esc(z) + "</span>" : "";
+    var c = z.split("").map(function (d) { return "<i>" + d + "</i>"; });
+    return '<span class="zipbox" aria-label="郵便番号 ' + fmtZip(z) + '">' + c.slice(0, 3).join("") + "<s>-</s>" + c.slice(3).join("") + "</span>";
+  }
+  function issueList(list) {
+    if (!list.length) return "";
+    return '<ul class="issues">' + list.map(function (x) { return '<li class="' + x.lv + '">' + svg(x.lv === "err" ? "warning" : "info") + "<span>" + esc(x.m) + "</span></li>"; }).join("") + "</ul>";
+  }
+  function badgeFor(list) {
+    var e = list.filter(function (x) { return x.lv === "err"; }).length, w = list.filter(function (x) { return x.lv === "wrn"; }).length;
+    if (e) return '<span class="badge err">' + svg("warning") + "直す " + e + "</span>";
+    if (w) return '<span class="badge wrn">注意 ' + w + "</span>";
+    return '<span class="badge ok">' + svg("check") + "OK</span>";
+  }
+  function markFields(root, list) {
+    $$(".f[data-fw]", root).forEach(function (el) { el.classList.remove("bad", "wrn"); });
+    list.forEach(function (x) { var el = $('.f[data-fw="' + x.f + '"]', root); if (el) el.classList.add(x.lv === "err" ? "bad" : x.lv === "wrn" ? "wrn" : "x"); });
+  }
+  function go(v, anchor) {
+    view = v;
+    $$(".tab").forEach(function (t) { t.setAttribute("aria-selected", t.dataset.view === v ? "true" : "false"); });
+    $$(".view").forEach(function (s) { s.classList.toggle("on", s.id === "v-" + v); });
+    document.body.classList.toggle("has-bar", v === "order");
+    $("#bar").hidden = v !== "order";
+    render();
+    if (anchor) { var a = document.getElementById(anchor); if (a) { a.scrollIntoView({ block: "start" }); return; } }
+    window.scrollTo(0, 0);
+  }
+  function render() {
+    if (view === "order") renderOrder();
+    else if (view === "csv") renderCsv();
+    else if (view === "sheet") renderSheet();
+    else if (view === "list") renderList();
+    else if (view === "setup") renderSetup();
+    renderDot();
+  }
+  function renderDot() {
+    var n = S.orders.filter(function (o) { return o.recs.length && !Object.keys(o.exported || {}).length; }).length;
+    var d = $("#csvDot"); d.hidden = !n; d.textContent = n;
+  }
+
+  /* ---------- 注文入力 ---------- */
+  function senderFields(o) {
+    var s = o.sender;
+    return '<div class="fgrid">' +
+      '<label class="f" data-fw="name"><span>お名前 <em>「様」はいりません</em></span><input data-b="snd:name" value="' + esc(s.name) + '" autocomplete="off" placeholder="例：佐藤 恵子"></label>' +
+      '<div class="row-zt"><label class="f" data-fw="zip"><span>郵便番号</span><input class="mono" inputmode="numeric" data-b="snd:zip" value="' + esc(fmtZip(s.zip)) + '" maxlength="8" autocomplete="off" placeholder="9800811"></label>' +
+      '<label class="f" data-fw="tel"><span>電話番号</span><input type="tel" inputmode="tel" data-b="snd:tel" value="' + esc(s.tel) + '" autocomplete="off" placeholder="022-000-0000"></label></div>' +
+      '<p class="zipnote" id="zn-snd"></p>' +
+      '<label class="f" data-fw="addr"><span>住所 <em>都道府県から番地まで</em></span><input data-b="snd:addr" value="' + esc(s.addr) + '" autocomplete="off"></label>' +
+      '<label class="f" data-fw="bldg"><span>建物名・部屋番号 <em>なければ空のまま</em></span><input data-b="snd:bldg" value="' + esc(s.bldg) + '" autocomplete="off"></label>' +
+      '</div><div id="sndIssues" style="margin-top:8px"></div>';
+  }
+  function renderWho(o) {
+    var c = o.custId ? custById(o.custId) : null, h;
+    if (c) h = '<span class="badge ok">' + svg("address-book") + "名簿のお客さま</span>" + '<button class="linkbtn" type="button" data-act="pick-open">ほかのお客さまを選ぶ</button>';
+    else h = '<span class="hint">はじめてのお客さまは、そのまま入力すると名簿に入ります。</span>' + (S.customers.length ? '<button class="linkbtn" type="button" data-act="pick-open">名簿から選ぶ（' + S.customers.length + "人）</button>" : "");
+    $("#whoLine").innerHTML = h;
+    $("#picker").hidden = !pickOpen;
+    if (pickOpen) renderPick();
+  }
+  function renderPick() {
+    var q = ($("#pickQ").value || "").replace(/\s/g, "");
+    var list = S.customers.filter(function (c) { return !q || (c.name + c.tel + c.addr).replace(/\s/g, "").indexOf(q) >= 0 || digits(c.tel).indexOf(digits(q) || "@@") >= 0; }).slice(0, 8);
+    $("#pickList").innerHTML = list.length ? list.map(function (c) {
+      return '<li><button type="button" data-act="pick" data-id="' + c.id + '"><b>' + esc(c.name || "（名前なし）") + ' 様</b><span>' + esc(fmtZip(c.zip) + " " + c.addr + " " + c.tel) + "</span></button></li>";
+    }).join("") : '<li class="hint">見つかりません</li>';
+  }
+  function renderSenderIssues(o) {
+    var list = senderIssues(o).filter(function (x) { return !(x.f === "tel" && x.lv === "wrn" && o.from === "farm"); });
+    var box = $("#sndIssues");
+    if (box) box.innerHTML = o.from === "cust" ? issueList(list) : "";
+    markFields($("#senderForm"), o.from === "cust" ? list : []);
+  }
+  function fromHint(o) {
+    if (o.from === "cust") return "送り状の「ご依頼主」欄に、注文したお客さまのお名前・住所・電話番号が入ります（贈答品でよく使う形です。各社の取り扱いは事前に確かめてください）。";
+    var f = S.farm;
+    return f.name ? "送り状の「ご依頼主」欄に、自分の農園（" + esc(f.name) + "）が入ります。" : '送り状の「ご依頼主」欄に自分の農園が入りますが、まだ農園の情報が入っていません。<button class="linkbtn" type="button" data-go="setup" data-anchor="farmCard">設定で入れる</button>';
+  }
+  function renderOrder() {
+    var o = cur();
+    $("#orderNo").textContent = "注文No." + o.no + "　" + dJP(o.created) + " 受付" + (o.sample ? "（サンプル）" : "");
+    $("#orderTitle").textContent = oneLine(o.sender.name) ? nameOnly(o.sender.name) + " 様の注文" : "新しい注文";
+    $("#sampleBanner").hidden = !o.sample;
+    renderWho(o);
+    $("#senderForm").innerHTML = senderFields(o);
+    renderSenderIssues(o);
+    $("#shipDate").value = o.ship || "";
+    $$("#fromSeg button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === o.from ? "true" : "false"); });
+    $("#fromHint").innerHTML = fromHint(o);
+    $("#orderMemo").value = o.memo || "";
+    renderRecs();
+    renderSide();
+  }
+  function recHead(r, i, o) {
+    var list = recIssues(r, o), c = recCalc(r), item = recItem(r);
+    var chips = '<span class="tag' + (item ? "" : " none") + '">' + esc(item || "品名なし") + " ×" + esc(r.qty || 0) + "</span>";
+    if (r.date || r.time) chips += '<span class="chip">' + svg("calendar-blank") + esc((r.date ? dJP(r.date) : "") + (r.date && r.time ? " " : "") + (r.time ? timeLabel(r.time) : "")) + "</span>";
+    if (r.cool !== "n") chips += '<span class="chip ' + r.cool + '">' + svg("snowflake") + (r.cool === "f" ? "冷凍" : "冷蔵") + "</span>";
+    if (c.ship != null && c.goods) chips += '<span class="chip">' + yen(c.goods + c.ship) + "</span>";
+    var nm = oneLine(r.name) ? esc(nameOnly(r.name)) + "<small>" + esc(r.hon === "なし" ? "" : r.hon) + "</small>" : "（お名前を入れてください）";
+    return '<span class="rno">' + pad(i + 1) + '</span><span class="rsum"><b class="rname' + (oneLine(r.name) ? "" : " empty") + '">' + nm + '</b><span class="raddr">' + zipBox(r.zip) + esc(oneLine(r.addr) + (oneLine(r.bldg) ? " " + oneLine(r.bldg) : "")) + '</span><span class="rchips">' + chips + '</span></span><span class="rstat">' + badgeFor(list) + svg("caret-down", "caret") + "</span>";
+  }
+  function recBody(r) {
+    var id = r.id, B = function (f) { return 'data-b="rec:' + id + ":" + f + '"'; };
+    return '<div class="fgrid">' +
+      '<div class="row-nh"><label class="f" data-fw="name"><span>お名前</span><input ' + B("name") + ' value="' + esc(r.name) + '" autocomplete="off" placeholder="例：山田 花子"></label>' +
+      '<label class="f"><span>敬称</span><select ' + B("hon") + ">" + sel([["様", "様"], ["御中", "御中"], ["殿", "殿"], ["なし", "なし"]], r.hon) + "</select></label></div>" +
+      '<div class="row-zt"><label class="f" data-fw="zip"><span>郵便番号</span><input class="mono" inputmode="numeric" ' + B("zip") + ' value="' + esc(fmtZip(r.zip)) + '" maxlength="8" autocomplete="off" placeholder="1540001"></label>' +
+      '<label class="f" data-fw="tel"><span>電話番号</span><input type="tel" inputmode="tel" ' + B("tel") + ' value="' + esc(r.tel) + '" autocomplete="off" placeholder="090-0000-0000"></label></div>' +
+      '<p class="zipnote" id="zn-' + id + '"></p>' +
+      '<label class="f" data-fw="addr"><span>住所 <em>都道府県から番地まで</em></span><input ' + B("addr") + ' value="' + esc(r.addr) + '" autocomplete="off"></label>' +
+      '<label class="f" data-fw="bldg"><span>建物名・部屋番号 <em>なければ空のまま</em></span><input ' + B("bldg") + ' value="' + esc(r.bldg) + '" autocomplete="off"></label>' +
+      '<label class="f" data-fw="pid"><span>品名</span><select ' + B("pid") + ">" + sel(prodOpts(), r.pid) + "</select></label>" +
+      '<label class="f" data-fw="item"' + (r.pid ? " hidden" : "") + '><span>品名（自由入力）</span><input ' + B("item") + ' value="' + esc(r.item) + '" autocomplete="off" placeholder="例：ラ・フランス 3kg"></label>' +
+      '<div class="row-q"><div class="f" data-fw="qty"><span class="flabel">個数（箱）</span><div class="stepper"><button type="button" data-act="qty" data-rid="' + id + '" data-d="-1" aria-label="1つ減らす">' + svg("minus") + '</button><input inputmode="numeric" aria-label="個数" ' + B("qty") + ' value="' + esc(r.qty) + '"><button type="button" data-act="qty" data-rid="' + id + '" data-d="1" aria-label="1つ増やす">' + svg("plus") + "</button></div></div>" +
+      '<label class="f" data-fw="date"><span>お届け希望日 <em>なければ空</em></span><input type="date" ' + B("date") + ' value="' + esc(r.date) + '"></label></div>' +
+      '<div class="row2"><label class="f" data-fw="time"><span>時間帯</span><select ' + B("time") + ">" + sel(TIMES, r.time) + "</select></label>" +
+      '<div class="f" data-fw="cool"><span class="flabel">温度</span><div class="seg cool" role="group" aria-label="温度">' + COOLS.map(function (c) { return '<button type="button" data-act="seg" data-b="rec:' + id + ':cool" data-v="' + c[0] + '" aria-pressed="' + (r.cool === c[0]) + '">' + (c[0] !== "n" ? svg("snowflake") : "") + c[1] + "</button>"; }).join("") + "</div></div></div>" +
+      '<label class="f"><span>メモ <em>注文控えだけに印刷。送り状には入りません</em></span><input ' + B("memo") + ' value="' + esc(r.memo) + '" autocomplete="off"></label>' +
+      "</div>" +
+      '<div class="rec-foot"><div class="btns"><button class="btn xs" type="button" data-act="dup-rec" data-rid="' + id + '">' + svg("copy") + 'コピー</button><button class="btn xs danger" type="button" data-act="del-rec" data-rid="' + id + '">' + svg("trash") + '削除</button></div><button class="btn sm ink" type="button" data-act="next-rec" data-rid="' + id + '">次の届け先へ' + svg("arrow-right") + "</button></div>";
+  }
+  function recCard(r, i, o) {
+    var open = !!openRec[r.id];
+    return '<article class="rec' + (open ? " open" : "") + '" id="rec-' + r.id + '" data-rid="' + r.id + '"><button class="rec-head" type="button" data-act="toggle-rec" data-rid="' + r.id + '" aria-expanded="' + open + '">' + recHead(r, i, o) + '</button><div class="rec-iss">' + issueList(recIssues(r, o)) + '</div><div class="rec-body"' + (open ? "" : " hidden") + ">" + (open ? recBody(r) : "") + "</div></article>";
+  }
+  function renderRecs() {
+    var o = cur();
+    $("#recCount").textContent = o.recs.length + "件";
+    $("#recList").innerHTML = o.recs.length ? o.recs.map(function (r, i) { return recCard(r, i, o); }).join("") : '<p class="card hint" style="margin:0">まだ届け先がありません。下の「届け先を追加」か、上の「貼り付け」から入れてください。</p>';
+    o.recs.forEach(function (r) { if (openRec[r.id]) markFields($("#rec-" + r.id), recIssues(r, o)); });
+  }
+  function refreshRec(r) {
+    var o = cur(), i = o.recs.indexOf(r), el = $("#rec-" + r.id);
+    if (!el) return;
+    $(".rec-head", el).innerHTML = recHead(r, i, o);
+    var list = recIssues(r, o);
+    $(".rec-iss", el).innerHTML = issueList(list);
+    markFields(el, list);
+  }
+  function renderSide() {
+    var o = cur(), t = orderCalc(o), e = 0, w = 0;
+    o.recs.forEach(function (r) { recIssues(r, o).forEach(function (x) { if (x.lv === "err") e++; else if (x.lv === "wrn") w++; }); });
+    senderIssues(o).forEach(function (x) { if (o.from === "cust") { if (x.lv === "err") e++; else if (x.lv === "wrn") w++; } });
+    var shipLabel = "送料" + (t.sample ? ' <span class="samp">サンプル料金</span>' : "") + (t.missingShip ? ' <span class="samp">' + t.missingShip + "件は計算できず</span>" : "");
+    $("#sideSum").innerHTML = '<div class="chead"><span class="lbl ink">合計</span><h2>この注文</h2></div>' +
+      '<table class="sum"><tr><td>届け先</td><td>' + o.recs.length + "件（" + t.boxes + "箱）</td></tr><tr><td>商品代</td><td>" + yen(t.goods) + "</td></tr><tr><td>" + shipLabel + "</td><td>" + yen(t.ship) + '</td></tr><tr class="total"><td>合計（税込）</td><td>' + yen(t.total) + "</td></tr></table>" +
+      '<p class="hint" style="margin:8px 0 12px">' + (e ? '<b style="color:var(--shu-d)">直すところが ' + e + " か所</b>あります。" : "直すところはありません。") + (w ? "注意が " + w + " か所。" : "") + "</p>" +
+      '<div class="btns"><button class="btn pri block" type="button" data-go="csv">' + svg("truck") + "送り状CSVを作る</button>" + '<button class="btn block" type="button" data-go="sheet">' + svg("printer") + "注文控えを印刷</button></div>";
+    $("#barTotal").textContent = yen(t.total);
+    $("#barSub").textContent = "届け先 " + o.recs.length + "件" + (e ? "・直すところ " + e : "");
+  }
+
+  /* ---------- 貼り付け結果 ---------- */
+  function pIssues(r) { var x = recIssues(r, cur()); if (r.left && r.left.length && r.leftUse === false) x.push({ f: "", lv: "wrn", m: "読み取れなかった文字があります（メモに入れない設定）" }); return x; }
+  function pRow(r, k) {
+    var B = function (f) { return 'data-b="p:' + k + ":" + f + '"'; };
+    var list = pIssues(r);
+    var h = '<div class="prow' + (r.use === false ? " off" : "") + '" id="prow-' + k + '">' +
+      '<div class="prow-top"><label><input type="checkbox" data-b="p:' + k + ':use"' + (r.use === false ? "" : " checked") + "> " + (k + 1) + "件目を追加する</label>" + '<span class="pbadge">' + badgeFor(list) + "</span></div>" +
+      '<div class="pgrid">' +
+      '<label class="f c3 w" data-fw="name"><span>お名前</span><input ' + B("name") + ' value="' + esc(r.name) + '"></label>' +
+      '<label class="f" data-fw="hon"><span>敬称</span><select ' + B("hon") + ">" + sel([["様", "様"], ["御中", "御中"], ["殿", "殿"], ["なし", "なし"]], r.hon) + "</select></label>" +
+      '<label class="f c2" data-fw="zip"><span>郵便番号</span><input class="mono" inputmode="numeric" ' + B("zip") + ' value="' + esc(fmtZip(r.zip)) + '"></label>' +
+      '<label class="f c4 w" data-fw="addr"><span>住所</span><input ' + B("addr") + ' value="' + esc(r.addr) + '"></label>' +
+      '<label class="f c2" data-fw="bldg"><span>建物名</span><input ' + B("bldg") + ' value="' + esc(r.bldg) + '"></label>' +
+      '<label class="f c2" data-fw="tel"><span>電話番号</span><input type="tel" ' + B("tel") + ' value="' + esc(r.tel) + '"></label>' +
+      '<label class="f c4 w" data-fw="pid"><span>品名</span><select ' + B("pid") + ">" + sel(prodOpts(), r.pid) + "</select></label>" +
+      (r.pid ? "" : '<label class="f c6 w" data-fw="item"><span>品名（自由入力）</span><input ' + B("item") + ' value="' + esc(r.item) + '"></label>') +
+      '<label class="f" data-fw="qty"><span>個数</span><input inputmode="numeric" ' + B("qty") + ' value="' + esc(r.qty) + '"></label>' +
+      '<label class="f c2" data-fw="date"><span>お届け希望日</span><input type="date" ' + B("date") + ' value="' + esc(r.date) + '"></label>' +
+      '<label class="f c2" data-fw="time"><span>時間帯</span><select ' + B("time") + ">" + sel(TIMES, r.time) + "</select></label>" +
+      '<label class="f" data-fw="cool"><span>温度</span><select ' + B("cool") + ">" + sel(COOLS, r.cool) + "</select></label>" +
+      "</div>" + '<div class="piss">' + issueList(list) + "</div>";
+    if (r.notes && r.notes.length) h += '<p class="fmsg inf">' + r.notes.map(esc).join("<br>") + "</p>";
+    if (r.memoText) h += '<p class="hint">メモ欄に入れます：' + esc(r.memoText) + "</p>";
+    if (r.left && r.left.length) h += '<div class="pleft"><b>どの欄にも入らなかった文字：</b>' + esc(r.left.join(" ／ ")) + '<label><input type="checkbox" data-b="p:' + k + ':leftUse"' + (r.leftUse === false ? "" : " checked") + ">この届け先のメモに入れる</label></div>";
+    h += '<details class="srcbox"><summary>元の文を見る</summary><pre>' + esc(r.src.join("\n")) + "</pre></details></div>";
+    return h;
+  }
+  function renderPaste() {
+    var box = $("#pasteResult");
+    if (!P) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    var n = P.rows.filter(function (r) { return r.use !== false; }).length, h = "";
+    h += '<div class="pres-head"><b>読み取り結果：届け先 ' + P.rows.length + "件</b>" + '<span class="hint">赤い欄・黄色い欄を確かめて、直してから追加してください。</span></div>';
+    if (P.sender) {
+      var s = P.sender;
+      h += '<div class="lefto" style="border-color:var(--ink);background:var(--paper2)"><b style="color:var(--ink)">' + svg("user") + "ご依頼主らしい情報がありました</b>" +
+        '<pre>' + esc([s.name, fmtZip(s.zip), s.addr + (s.bldg ? " " + s.bldg : ""), s.tel].filter(Boolean).join("\n")) + "</pre>" +
+        '<div class="btns" style="margin-top:8px"><button class="btn xs" type="button" data-act="p-sender">この内容をご依頼主に入れる</button></div></div>';
+    }
+    if (P.left.length) {
+      h += '<div class="lefto"><b>' + svg("warning") + "届け先に入れなかった文章（消していません）</b><pre>" + esc(P.left.join("\n\n")) + "</pre>" +
+        '<div class="btns" style="margin-top:8px"><button class="btn xs" type="button" data-act="p-memo">注文のメモに入れる</button></div></div>';
+    }
+    if (!P.rows.length) h += '<p class="hint">届け先を見つけられませんでした。1件ずつ空いた行で区切るか、「〒」「様」「電話」などを入れてみてください。</p>';
+    h += P.rows.map(pRow).join("");
+    if (P.rows.length) h += '<div class="btns"><button class="btn pri" type="button" data-act="p-add"' + (n ? "" : " disabled") + ">" + svg("plus") + "チェックした " + n + " 件を届け先に追加</button>" + '<button class="btn ghost" type="button" data-act="p-cancel">やめる</button></div>';
+    box.innerHTML = h;
+    P.rows.forEach(function (r, k) { markFields($("#prow-" + k), pIssues(r)); });
+  }
+  function refreshPRow(k) {
+    var r = P.rows[k], el = $("#prow-" + k);
+    if (!el) return;
+    var list = pIssues(r);
+    $(".pbadge", el).innerHTML = badgeFor(list);
+    $(".piss", el).innerHTML = issueList(list);
+    el.classList.toggle("off", r.use === false);
+    markFields(el, list);
+    var n = P.rows.filter(function (x) { return x.use !== false; }).length, b = $('[data-act="p-add"]');
+    if (b) { b.disabled = !n; b.innerHTML = svg("plus") + "チェックした " + n + " 件を届け先に追加"; }
+  }
+  function doParse() {
+    var txt = $("#pasteText").value;
+    if (!txt.trim()) { toast("文章を貼り付けてください"); return; }
+    P = parseText(txt);
+    P.rows.forEach(function (r) { r.use = true; });
+    renderPaste();
+    P.rows.forEach(function (r, k) {
+      if (digits(r.zip).length === 7) lookupZip(r.zip).then(function (z) {
+        if (!P || P.rows[k] !== r) return;
+        var msg = fillFromZip(r, z);
+        if (msg) { r.notes.push(msg); var el = $("#prow-" + k); if (el) el.outerHTML = pRow(r, k); markFields($("#prow-" + k), pIssues(r)); }
+        else refreshPRow(k);
+      });
+    });
+    var first = $("#pasteResult");
+    if (first) first.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+  function addParsed() {
+    var o = cur(), added = 0;
+    if (o.recs.length === 1 && !oneLine(o.recs[0].name) && !oneLine(o.recs[0].addr) && !digits(o.recs[0].zip)) o.recs = [];
+    P.rows.forEach(function (r) {
+      if (r.use === false) return;
+      var n = newRec();
+      ["name", "hon", "zip", "addr", "bldg", "tel", "pid", "item", "qty", "date", "time", "cool"].forEach(function (k) { n[k] = r[k]; });
+      n.zip = digits(n.zip); n.qty = Math.max(1, parseInt(r.qty, 10) || 1);
+      var memo = [];
+      if (r.memoText) memo.push(r.memoText);
+      if (r.left && r.left.length && r.leftUse !== false) memo.push(r.left.join(" ／ "));
+      n.memo = memo.join(" ／ ");
+      o.recs.push(n); added++;
+    });
+    P = null; $("#pasteText").value = "";
+    save(); renderPaste(); renderRecs(); renderSide(); renderDot();
+    toast(added + "件を届け先に追加しました");
+    var l = $("#h-recs"); if (l) l.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
+  /* ---------- 送り状CSV ---------- */
+  function renderCsv() {
+    var cid = S.carrier || "b2";
+    if (!csvSel) { csvSel = {}; csvSel[cur().id] = true; }
+    $("#carriers").innerHTML = CAR_ORDER.map(function (k) {
+      var c = CAR[k];
+      return '<button type="button" class="carrier" role="radio" data-act="car" data-id="' + k + '" aria-checked="' + (k === cid) + '"><span class="rad"></span><span><b>' + esc(c.name) + (c.conf ? '<span class="conf' + (c.part ? " part" : "") + '">' + esc(c.conf) + "</span>" : "") + '</b><span class="d">' + esc(c.sub) + "</span></span></button>";
+    }).join("");
+    var car = CAR[cid], o = "";
+    if (cid === "b2") {
+      o += '<div class="fgrid two" style="margin-bottom:12px">' +
+        '<label class="f wide" data-fw="b2cust"><span>請求先顧客コード <em>B2クラウドの「1件ずつ発行」の請求先欄の数字（9〜12けた）</em></span><input class="mono" inputmode="numeric" data-b="car:b2cust" value="' + esc(S.car.b2cust) + '" placeholder="例：0312340000"></label>' +
+        '<label class="f"><span>請求先分類コード <em>なければ空</em></span><input class="mono" inputmode="numeric" data-b="car:b2cls" value="' + esc(S.car.b2cls) + '" placeholder="例：001"></label>' +
+        '<label class="f"><span>運賃管理番号 <em>ふつうは 01</em></span><input class="mono" inputmode="numeric" data-b="car:b2fare" value="' + esc(S.car.b2fare) + '"></label></div>';
+    }
+    if (cid === "sagawa") {
+      o += '<div class="f" style="margin-bottom:12px"><span class="flabel">文字コード</span><div class="seg" role="group" aria-label="文字コード">' +
+        '<button type="button" data-act="seg" data-b="car:sgenc" data-v="sjis" aria-pressed="' + (S.car.sgenc !== "utf8") + '">Shift_JIS（従来）</button><button type="button" data-act="seg" data-b="car:sgenc" data-v="utf8" aria-pressed="' + (S.car.sgenc === "utf8") + '">UTF-8</button></div></div>';
+    }
+    if (cid === "jpweb") {
+      o += '<div class="f" style="margin-bottom:12px"><span class="flabel">荷物の出し方</span><div class="seg" role="group" aria-label="差出方法">' +
+        '<button type="button" data-act="seg" data-b="car:jphow" data-v="0" aria-pressed="' + (S.car.jphow !== "1") + '">集荷に来てもらう</button><button type="button" data-act="seg" data-b="car:jphow" data-v="1" aria-pressed="' + (S.car.jphow === "1") + '">郵便局に持ち込む</button></div></div>';
+    }
+    o += '<p class="hint"><b>取り込みかた</b></p><ol class="howto">' + car.how.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol>";
+    o += '<ul class="howto" style="list-style:disc;margin-top:8px">' + car.notes.map(function (x) { return '<li class="hint">' + esc(x) + "</li>"; }).join("") + "</ul>";
+    if (car.src.length) o += '<details class="src" style="margin-top:8px"><summary>もとにした公式資料（' + car.src.length + "）</summary>" + car.src.map(function (u) { return '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(decodeURI(u)) + "</a>"; }).join("") + "</details>";
+    $("#carOpts").innerHTML = o;
+    var orders = S.orders.slice().reverse().filter(function (x) { return x.recs.length; });
+    $("#olist").innerHTML = orders.length ? orders.map(function (x) {
+      var ex = x.exported || {}, done = Object.keys(ex).map(function (k) { return CAR[k] ? CAR[k].short + " " + ex[k].slice(5).replace("-", "/") : ""; }).filter(Boolean).join("、");
+      return '<label class="ocheck"><input type="checkbox" data-act="osel" data-id="' + x.id + '"' + (csvSel[x.id] ? " checked" : "") + '><span class="on"><b>No.' + x.no + "　" + esc(nameOnly(x.sender.name) || "（お客さま未入力）") + (x.sample ? "（サンプル）" : "") + "</b><span>届け先 " + x.recs.length + "件・発送 " + esc(x.ship ? dJP(x.ship) : "未定") + "</span></span>" + (done ? '<span class="badge ok">' + esc(done) + " 出力済み</span>" : '<span class="badge wrn">まだ</span>') + "</label>";
+    }).join("") : '<p class="hint">届け先の入った注文がありません。</p>';
+    var ids = orders.filter(function (x) { return csvSel[x.id]; }).map(function (x) { return x.id; });
+    $("#ordSel").textContent = ids.length + "件の注文を選択中";
+    renderChecks(cid, ids);
+  }
+  function whereText(w) { return w.label || (w.src === "car" ? "設定（運送会社）" : w.src === "farm" ? "自分の農園（設定）" : ""); }
+  function renderChecks(cid, ids) {
+    var ex = lastEx = buildExport(cid, ids);
+    var e = ex.issues.filter(function (x) { return x.lv === "err"; }).length, w = ex.issues.filter(function (x) { return x.lv === "wrn"; }).length;
+    $("#chkSum").innerHTML = ex.count ? '<div class="counts">' + (e ? '<span class="badge err">' + svg("warning") + "直すところ " + e + "</span>" : '<span class="badge ok">' + svg("check") + "エラーなし</span>") + (w ? '<span class="badge wrn">注意 ' + w + "</span>" : "") + '<span class="hint">届け先 ' + ex.count + "件</span></div>" : '<p class="hint">注文を選んでください。</p>';
+    $("#checks").innerHTML = ex.issues.map(function (x, k) {
+      var acts = "";
+      if (x.where && x.where.src && x.where.src !== "none") acts += '<button class="btn xs" type="button" data-act="fix-go" data-k="' + k + '">' + svg("pencil-simple") + "直す</button>";
+      if (x.ch && x.sug != null) acts += '<button class="btn xs" type="button" data-act="fix-ch" data-k="' + k + '">「' + esc(x.ch) + "」を「" + esc(x.sug || "（消す）") + "」に置きかえる</button>";
+      var msg = esc(x.msg);
+      if (x.ch) msg = msg.replace("「" + esc(x.ch) + "」", '<span class="badch">' + esc(x.ch) + "</span>");
+      return '<li class="' + x.lv + '"><span class="where">' + esc(whereText(x.where)) + '</span><span class="what">' + msg + "</span>" + (x.val ? '<span class="src">今の内容：' + esc(x.val) + "</span>" : "") + (acts ? '<span class="acts">' + acts + "</span>" : "") + "</li>";
+    }).join("");
+    var car = ex.car, h = "";
+    if (ex.count) {
+      h += '<p class="hint"><b>はじめての運送会社では、取り込む前にまず1件だけで取り込みを試してください。</b>うまく取り込めて送り状の見本が正しく出るのを確かめてから、全部を取り込みます。</p>';
+      if (e) h += '<p class="fmsg err">' + svg("warning") + " 直すところが " + e + " か所あります。このまま作ると、取り込みで止まったり、送り状がまちがって印字されたりします。</p>";
+      h += '<button class="btn pri block" type="button" data-act="dl"' + (e ? ' aria-disabled="true"' : "") + ">" + svg("download-simple") + esc(car.short) + "用のCSVを作る（" + ex.count + "件）</button>";
+      h += '<div class="btns"><button class="btn sm" type="button" data-act="dl-one">' + svg("file-csv") + "1件目だけで試しのファイルを作る</button>" + (e ? '<button class="linkbtn red" type="button" data-act="dl-force">エラーがあるまま作る</button>' : "") + "</div>";
+      h += '<p class="hint">' + (ex.sjis ? "文字コード：Shift_JIS" : car.enc === "utf8bom" ? "文字コード：UTF-8（BOMつき）" : "文字コード：UTF-8") + "・" + (car.header ? "1行目は項目名" : "見出しの行なし") + "・" + car.cols.length + "列・改行 CRLF</p>";
+    }
+    $("#dlbox").innerHTML = h;
+    renderPreview(ex);
+  }
+  function renderPreview(ex) {
+    var box = $("#prevBox");
+    if (!ex.rows.length) { box.innerHTML = '<p class="hint">選んだ注文に届け先がありません。</p>'; return; }
+    var r = ex.rows[0];
+    var rows = ex.car.cols.map(function (c, i) { return { c: c, i: i, v: r[i] }; }).filter(function (x) { return showAllCols || x.v || x.c.req; });
+    box.innerHTML = '<p class="hint" style="margin-bottom:8px">' + ex.car.cols.length + "列のうち、" + (showAllCols ? "すべての列" : "値が入る列と必須の列") + "を表示しています。</p>" +
+      '<div class="prev-wrap"><table class="prev"><tbody>' + rows.map(function (x) { return "<tr" + (x.c.req ? ' class="req"' : "") + '><th><span class="n">' + (x.i + 1) + "</span>" + esc(x.c.n) + "</th><td>" + (x.v ? esc(x.v) : '<span style="color:var(--shu)">（空）</span>') + "</td></tr>"; }).join("") + "</tbody></table></div>" +
+      '<button class="linkbtn" type="button" data-act="toggle-cols">' + (showAllCols ? "値が入る列だけにする" : "すべての列を見る") + "</button>";
+  }
+  function doDownload(mode) {
+    var ex = lastEx;
+    if (!ex || !ex.count) return;
+    var e = ex.issues.filter(function (x) { return x.lv === "err"; }).length;
+    if (mode === "normal" && e) { toast("先に「直すところ」を直してください"); var c = $("#checks"); if (c) c.scrollIntoView({ block: "start", behavior: "smooth" }); return; }
+    if (mode === "force" && !window.confirm("エラーが " + e + " か所あります。このまま作ると取り込めない行があります。作りますか？")) return;
+    var use = mode === "one" ? { car: ex.car, rows: ex.rows.slice(0, 1), sjis: ex.sjis } : ex;
+    var bytes = encodeCSV(use, toCSV(use));
+    var name = ex.car.file + "_" + dCompact(todayISO()) + "_" + (mode === "one" ? "test1" : ex.count) + ".csv";
+    downloadBytes(bytes, name, ex.sjis ? "text/csv;charset=shift_jis" : "text/csv;charset=utf-8");
+    if (mode !== "one") ex.orders.forEach(function (o) { o.exported = o.exported || {}; o.exported[ex.car.id] = todayISO(); });
+    trackOnce();
+    save(true);
+    toast("「" + name + "」を保存しました");
+    renderCsv();
+  }
+  function fixGo(w) {
+    if (!w) return;
+    if (w.src === "rec" || w.src === "sender" || w.src === "order") {
+      S.cur = w.oid; save();
+      if (w.src === "rec") openRec[w.rid] = true;
+      go("order");
+      var target = w.src === "rec" ? $("#rec-" + w.rid) : w.src === "order" ? $("#shipDate") : $("#senderForm");
+      if (target) target.scrollIntoView({ block: "center" });
+      var inp = w.src === "rec" ? $('[data-b="rec:' + w.rid + ":" + (w.f || "name") + '"]') : w.src === "order" ? $("#shipDate") : $('[data-b="snd:' + (w.f || "name") + '"]');
+      if (inp) setTimeout(function () { try { inp.focus({ preventScroll: true }); } catch (er) { inp.focus(); } }, 60);
+    } else if (w.src === "farm") { go("setup", "farmCard"); var fi = $('[data-b="farm:' + (w.f || "name") + '"]'); if (fi) fi.focus(); }
+    else if (w.src === "prod") { go("setup", "prodCard"); var pi = $('[data-b="prod:' + w.pid + ':name"]'); if (pi) { pi.scrollIntoView({ block: "center" }); pi.focus(); } }
+    else if (w.src === "car") { var ci = $('[data-b="car:' + w.f + '"]'); if (ci) { ci.scrollIntoView({ block: "center" }); ci.focus(); } else go("setup"); }
+  }
+  function fixChar(x) {
+    var w = x.where, rep = function (s) { return String(s || "").split(x.ch).join(x.sug); };
+    var target = null;
+    if (w.src === "rec") { var o = orderById(w.oid); o.recs.forEach(function (r) { if (r.id === w.rid) target = r; }); }
+    else if (w.src === "sender") { target = orderById(w.oid).sender; var cu = custById(orderById(w.oid).custId); if (cu) ["name", "addr", "bldg"].forEach(function (k) { cu[k] = rep(cu[k]); }); }
+    else if (w.src === "farm") target = S.farm;
+    else if (w.src === "prod") target = prod(w.pid);
+    if (!target) return;
+    ["name", "addr", "bldg", "item"].forEach(function (k) { if (target[k] != null) target[k] = rep(target[k]); });
+    save(); toast("「" + x.ch + "」を「" + (x.sug || "（なし）") + "」に置きかえました"); renderCsv();
+  }
+
+  /* ---------- 注文控え ---------- */
+  function sheetHTML(o) {
+    var t = orderCalc(o), s = o.sender, f = S.farm;
+    var rows = o.recs.map(function (r, i) {
+      var c = recCalc(r);
+      var dt = (r.date ? dJP(r.date).replace("（", "<br>（") : "指定なし") + (r.time ? "<br>" + timeLabel(r.time) : "");
+      return "<tr><td class=\"c\">" + (i + 1) + "</td><td><b>" + esc(nameOnly(r.name)) + "</b> " + esc(r.hon === "なし" ? "" : r.hon) + '<div class="ad">〒' + esc(fmtZip(r.zip)) + " " + esc(oneLine(r.addr) + " " + oneLine(r.bldg)) + "<br>TEL " + esc(r.tel) + (r.memo ? "<br>メモ：" + esc(r.memo) : "") + "</div></td>" +
+        "<td>" + esc(recItem(r)) + (r.cool !== "n" ? "<br><b>" + (r.cool === "f" ? "冷凍" : "冷蔵") + "</b>" : "") + "</td><td class=\"r\">" + esc(r.qty) + "</td><td class=\"r\">" + (c.noPrice ? "—" : yen(c.goods)) + "</td><td class=\"r\">" + (c.ship == null ? "—" : yen(c.ship)) + (c.reg ? '<div class="ad">' + esc(c.reg) + " " + esc(c.size) + "</div>" : "") + "</td><td class=\"nw\">" + dt + '</td><td class="c ck"><i></i></td><td class="c ck"><i></i></td></tr>';
+    }).join("");
+    var notes = '<p class="s-note">送料は、届け先の地方とサイズから送料表で計算しています（クール便は追加料金をふくみます）。金額は税込です。</p>';
+    if (t.sample) notes += '<p class="s-note red">※送料表がサンプルの金額のままです。設定で自分の送料に直してください。</p>';
+    if (t.missingShip) notes += '<p class="s-note red">※送料を計算できない届け先が ' + t.missingShip + " 件あります（—の行）。住所の都道府県・品名を確かめてください。</p>";
+    return '<div class="sheet"><div class="s-top"><div class="s-title">ご注文控え</div><div class="s-meta">注文No. ' + o.no + "<br>受付日 " + esc(dSlash(o.created)) + "<br>発送予定日 " + esc(o.ship ? dSlash(o.ship) : "未定") + "</div></div>" +
+      '<div class="s-two"><div class="s-to"><div class="nm">' + esc(nameOnly(s.name) || "　") + "<small>様</small></div>〒" + esc(fmtZip(s.zip)) + " " + esc(oneLine(s.addr) + " " + oneLine(s.bldg)) + "<br>TEL " + esc(s.tel) + "</div>" +
+      '<div class="s-from"><b>' + esc(f.name || "（農園名は設定で入れてください）") + "</b>" + (f.zip || f.addr ? "<br>〒" + esc(fmtZip(f.zip)) + " " + esc(oneLine(f.addr) + " " + oneLine(f.bldg)) : "") + (f.tel ? "<br>TEL " + esc(f.tel) : "") + "</div></div>" +
+      '<div class="s-amt"><span>ご請求金額（税込）</span><b>' + yen(t.total) + "</b><span>商品代 " + yen(t.goods) + " ＋ 送料 " + yen(t.ship) + "</span></div>" +
+      '<table class="s-items"><thead><tr><th>No</th><th>お届け先</th><th>品名</th><th>個数</th><th>商品代</th><th>送料</th><th>お届け日時</th><th class="ck">梱包</th><th class="ck">発送</th></tr></thead><tbody>' + rows + "</tbody>" +
+      '<tfoot><tr><td colspan="3">合計　' + o.recs.length + "件</td><td class=\"r\">" + t.boxes + '</td><td class="r">' + yen(t.goods) + '</td><td class="r">' + yen(t.ship) + '</td><td colspan="3"></td></tr></tfoot></table>' + notes +
+      (o.memo ? '<div class="s-memo">' + esc(o.memo) + "</div>" : "") + "</div>";
+  }
+  function renderSheet() {
+    var opts = S.orders.slice().reverse().map(function (o) { return [o.id, "No." + o.no + " " + (nameOnly(o.sender.name) || "（お客さま未入力）") + " 様（" + o.recs.length + "件）"]; });
+    $("#sheetSel").innerHTML = sel(opts, S.cur);
+    var o = cur();
+    $("#sheetBox").innerHTML = sheetHTML(o);
+    $("#sheetSampleWarn").hidden = !orderCalc(o).sample;
+    fitSheet();
+  }
+  function fitSheet() {
+    var fit = $("#sheetFit"), sh = $("#sheetBox .sheet");
+    if (!sh || !fit.offsetParent) return;
+    var s = Math.min(1, fit.clientWidth / 794);
+    sh.style.transform = s < 1 ? "scale(" + s + ")" : "";
+    fit.style.height = Math.ceil(sh.offsetHeight * s) + "px";
+  }
+
+  /* ---------- お客さま ---------- */
+  function renderList() {
+    var q = ($("#listQ").value || "").replace(/\s/g, "");
+    var byCust = {};
+    S.orders.forEach(function (o) { var k = o.custId || "_"; (byCust[k] = byCust[k] || []).push(o); });
+    var cards = S.customers.filter(function (c) { return !q || (c.name + c.tel + c.addr).replace(/\s/g, "").indexOf(q) >= 0; }).map(function (c) { return { c: c, orders: (byCust[c.id] || []).slice().reverse() }; });
+    cards.sort(function (a, b) { var la = a.orders[0] ? a.orders[0].created : "", lb = b.orders[0] ? b.orders[0].created : ""; return lb < la ? -1 : lb > la ? 1 : 0; });
+    var h = cards.map(function (x) {
+      var c = x.c;
+      var head = '<div class="pcard-h"><b>' + esc(c.name || "（名前なし）") + " 様</b>" + (c.sample ? '<span class="badge wrn">サンプル</span>' : "") + '<span class="sub">' + esc(fmtZip(c.zip) + " " + c.addr + " " + c.bldg) + '　<span class="nw">' + esc(c.tel) + "</span></span></div>";
+      var body = editCust === c.id ? '<div class="fgrid two">' +
+        '<label class="f"><span>お名前</span><input data-b="cust:' + c.id + ':name" value="' + esc(c.name) + '"></label><label class="f"><span>電話番号</span><input type="tel" data-b="cust:' + c.id + ':tel" value="' + esc(c.tel) + '"></label>' +
+        '<label class="f"><span>郵便番号</span><input class="mono" inputmode="numeric" data-b="cust:' + c.id + ':zip" value="' + esc(fmtZip(c.zip)) + '"></label><label class="f"><span>住所</span><input data-b="cust:' + c.id + ':addr" value="' + esc(c.addr) + '"></label>' +
+        '<label class="f wide"><span>建物名・部屋番号</span><input data-b="cust:' + c.id + ':bldg" value="' + esc(c.bldg) + '"></label><label class="f wide"><span>メモ</span><input data-b="cust:' + c.id + ':memo" value="' + esc(c.memo || "") + '"></label></div>' +
+        '<div class="btns"><button class="btn xs ink" type="button" data-act="cust-done">閉じる</button><button class="btn xs danger" type="button" data-act="cust-del" data-id="' + c.id + '">名簿から消す</button></div>' : (c.memo ? '<p class="hint">' + esc(c.memo) + "</p>" : "");
+      var lines = x.orders.map(function (o) { return orderLine(o); }).join("");
+      return '<div class="pcard">' + head + body + (lines ? '<ul class="olines">' + lines + "</ul>" : '<p class="hint">注文はまだありません。</p>') +
+        '<div class="btns"><button class="btn xs pri" type="button" data-act="cust-new" data-id="' + c.id + '">' + svg("plus") + "新しい注文</button>" + (x.orders.length ? '<button class="btn xs" type="button" data-act="ord-copy" data-id="' + x.orders[0].id + '">' + svg("copy") + "前回と同じ届け先で注文</button>" : "") + (editCust === c.id ? "" : '<button class="btn xs ghost" type="button" data-act="cust-edit" data-id="' + c.id + '">' + svg("pencil-simple") + "編集</button>") + "</div></div>";
+    }).join("");
+    var loose = (byCust._ || []).slice().reverse();
+    if (loose.length && !q) h += '<div class="pcard"><div class="pcard-h"><b>お客さまの名前がない注文</b></div><ul class="olines">' + loose.map(orderLine).join("") + "</ul></div>";
+    $("#plist2").innerHTML = h || '<p class="card hint">' + (q ? "見つかりません。" : "まだお客さまがいません。「注文入力」でご依頼主を入れると、ここに入ります。") + "</p>";
+  }
+  function orderLine(o) {
+    var t = orderCalc(o), ex = Object.keys(o.exported || {});
+    return '<li' + (o.id === S.cur ? ' class="cur"' : "") + '><span class="grow">No.' + o.no + "　" + esc(dJP(o.created)) + " 受付・届け先 " + o.recs.length + "件・" + yen(t.total) + (ex.length ? "・CSV出力済み" : "") + (o.id === S.cur ? "（入力中）" : "") + "</span>" +
+      '<button class="btn xs" type="button" data-act="ord-open" data-id="' + o.id + '">開く</button><button class="btn xs ghost" type="button" data-act="ord-copy" data-id="' + o.id + '">' + svg("copy") + 'コピー</button><button class="btn xs ghost danger" type="button" data-act="ord-del" data-id="' + o.id + '" aria-label="注文No.' + o.no + 'を消す">' + svg("trash") + "</button></li>";
+  }
+
+  /* ---------- 設定 ---------- */
+  function renderSetup() {
+    var f = S.farm, B = function (k) { return 'data-b="farm:' + k + '"'; };
+    $("#farmForm").innerHTML =
+      '<label class="f wide" data-fw="name"><span>農園の名前</span><input ' + B("name") + ' value="' + esc(f.name) + '" autocomplete="organization" placeholder="例：〇〇りんご園"></label>' +
+      '<label class="f" data-fw="zip"><span>郵便番号</span><input class="mono" inputmode="numeric" ' + B("zip") + ' value="' + esc(fmtZip(f.zip)) + '" maxlength="8"></label>' +
+      '<label class="f" data-fw="tel"><span>電話番号</span><input type="tel" inputmode="tel" ' + B("tel") + ' value="' + esc(f.tel) + '"></label>' +
+      '<p class="zipnote wide" id="zn-farm"></p>' +
+      '<label class="f wide" data-fw="addr"><span>住所 <em>都道府県から番地まで</em></span><input ' + B("addr") + ' value="' + esc(f.addr) + '"></label>' +
+      '<label class="f wide" data-fw="bldg"><span>建物名など <em>なければ空</em></span><input ' + B("bldg") + ' value="' + esc(f.bldg) + '"></label>' +
+      '<p class="hint wide">注文控えの発送元と、送り状の「ご依頼主」を「自分の農園」にしたときに使います。</p>';
+    markFields($("#farmForm"), farmIssues().filter(function (x) { return oneLine(S.farm.name) || x.f !== "name"; }).filter(function () { return !!(f.name || f.addr || f.zip); }));
+    var c = S.car;
+    $("#carForm").innerHTML =
+      '<label class="f" data-fw="b2cust"><span>ヤマト：請求先顧客コード <em>9〜12けた</em></span><input class="mono" inputmode="numeric" data-b="car:b2cust" value="' + esc(c.b2cust) + '"></label>' +
+      '<div class="row2"><label class="f"><span>請求先分類コード</span><input class="mono" inputmode="numeric" data-b="car:b2cls" value="' + esc(c.b2cls) + '"></label><label class="f"><span>運賃管理番号</span><input class="mono" inputmode="numeric" data-b="car:b2fare" value="' + esc(c.b2fare) + '"></label></div>' +
+      '<p class="hint wide">ヤマトの3つの番号は、B2クラウドの「1件ずつ発行」の画面の「請求先」に出ている数字です（例：お客様コードが「031234XXXX-001」なら、請求先顧客コード「031234XXXX」・分類コード「001」）。</p>' +
+      '<label class="f"><span>佐川：お客様コード <em>12けた・なければ空</em></span><input class="mono" inputmode="numeric" data-b="car:sgcust" value="' + esc(c.sgcust) + '"></label>';
+    $("#prodSample").hidden = !S.products.some(function (p) { return p.sample; });
+    $("#prodList").innerHTML = S.products.map(function (p) {
+      var P2 = function (k) { return 'data-b="prod:' + p.id + ":" + k + '"'; };
+      var sg = zen(p.name).length;
+      return '<div class="prod" id="prod-' + p.id + '"><label class="f"><span>品名 <em>' + sg + "文字" + (sg > 16 ? "（佐川は16文字まで）" : "") + "</em></span><input " + P2("name") + ' value="' + esc(p.name) + '"></label>' +
+        '<div class="row-pr"><label class="f"><span>値段（税込）</span><input inputmode="numeric" ' + P2("price") + ' value="' + esc(p.price) + '"></label>' +
+        '<label class="f"><span>サイズ</span><select ' + P2("size") + ">" + sel(SIZES.map(function (s) { return [s, s + "サイズ"]; }), p.size) + "</select></label></div>" +
+        '<div class="row-pr"><label class="f"><span>温度（初めの値）</span><select ' + P2("cool") + ">" + sel(COOLS, p.cool) + "</select></label>" +
+        '<label class="f"><span>荷扱い</span><select ' + P2("care") + ">" + sel(CARES, p.care) + "</select></label></div>" +
+        '<button class="btn xs danger" type="button" data-act="del-prod" data-id="' + p.id + '" aria-label="' + esc(p.name) + 'を消す">' + svg("trash") + "消す</button></div>";
+    }).join("");
+    var anySample = false;
+    $("#rateGrid").innerHTML = '<div class="rhead"><span>地方</span><div>' + SIZES.map(function (s) { return "<span>" + s + "</span>"; }).join("") + "</div></div>" + REGIONS.map(function (r) {
+      return '<div class="rrow"><b>' + r[0] + (r[1].length > 1 ? '<span class="hint" style="display:block;font-weight:400;font-size:11.5px">' + r[1].map(function (p) { return p.replace(/[都府県]$/, ""); }).join("・") + "</span>" : "") + '</b><div class="rcells">' + SIZES.map(function (s) {
+        var cell = S.rates.table[r[0]][s]; if (cell.s) anySample = true;
+        return '<label class="rcell"><span>' + s + 'サイズ</span><input inputmode="numeric" class="in' + (cell.s ? " samp" : "") + '" data-b="rate:' + r[0] + ":" + s + '" value="' + esc(cell.v) + '" aria-label="' + r[0] + " " + s + 'サイズの送料"></label>';
+      }).join("") + "</div></div>";
+    }).join("");
+    $("#coolGrid").innerHTML = '<div class="rrow"><b>クール便</b><div class="rcells">' + SIZES.map(function (s) {
+      var cell = S.rates.cool[s]; if (cell.s) anySample = true;
+      return '<label class="rcell"><span>' + s + 'サイズ</span><input inputmode="numeric" class="in' + (cell.s ? " samp" : "") + '" data-b="cool:' + s + '" value="' + esc(cell.v) + '" aria-label="クール便 ' + s + 'サイズの追加料金"></label>';
+    }).join("") + "</div></div>";
+    $("#rateSample").hidden = !anySample;
+    $("#optZip").checked = !!S.opts.zip;
+    $("#backupInfo").textContent = S.lastBackup ? "前にバックアップを保存した日：" + dJP(S.lastBackup) : "まだバックアップを保存していません。";
+  }
+
+  /* =====================================================================
+     操作
+     ===================================================================== */
+  function findRec(rid) { var o = cur(); for (var i = 0; i < o.recs.length; i++) if (o.recs[i].id === rid) return o.recs[i]; return null; }
+  function syncCustomer(o) {
+    var s = o.sender, c = o.custId ? custById(o.custId) : null;
+    if (!c && oneLine(s.name)) { c = { id: uid(), name: "", zip: "", addr: "", bldg: "", tel: "", memo: "" }; S.customers.push(c); o.custId = c.id; renderWho(o); }
+    if (c) { c.name = s.name; c.zip = digits(s.zip); c.addr = s.addr; c.bldg = s.bldg; c.tel = s.tel; c.sample = false; }
+  }
+  function zipAssist(obj, zipEl, noteId, addrSel, after) {
+    var note = document.getElementById(noteId);
+    lookupZip(obj.zip).then(function (z) {
+      if (note) note.textContent = "";
+      if (z === false) { if (note) { note.textContent = "この郵便番号は見つかりませんでした。"; note.style.color = "var(--warn)"; } }
+      else if (z) {
+        var msg = fillFromZip(obj, z);
+        var a = $(addrSel);
+        if (msg && a) { a.value = obj.addr; if (note) { note.textContent = msg; note.style.color = ""; } }
+        else if (note && !prefOf(obj.addr) === false && z.pref !== prefOf(obj.addr)) { note.textContent = "郵便番号は「" + z.pref + z.city + "」です。"; note.style.color = "var(--warn)"; }
+        if (a && document.activeElement === zipEl && msg) { a.focus(); try { a.setSelectionRange(a.value.length, a.value.length); } catch (e) {} }
+      }
+      if (after) after();
+      save();
+    });
+  }
+  function setBound(b, v, el, ev) {
+    var p = b.split(":"), o = cur(), f, r;
+    switch (p[0]) {
+      case "order":
+        o[p[1]] = v;
+        if (p[1] === "ship") { o.recs.forEach(refreshRec); renderSide(); }
+        if (p[1] === "from") { $("#fromHint").innerHTML = fromHint(o); renderSenderIssues(o); renderSide(); }
+        break;
+      case "snd":
+        f = p[1];
+        o.sender[f] = f === "zip" ? digits(v) : v;
+        syncCustomer(o);
+        if (f === "name") $("#orderTitle").textContent = oneLine(v) ? nameOnly(v) + " 様の注文" : "新しい注文";
+        renderSenderIssues(o); renderSide();
+        if (f === "zip" && digits(v).length === 7 && ev === "input") zipAssist(o.sender, el, "zn-snd", '[data-b="snd:addr"]', function () { syncCustomer(o); renderSenderIssues(o); });
+        break;
+      case "rec":
+        r = findRec(p[1]); f = p[2];
+        if (!r) return;
+        if (f === "qty") r.qty = Math.min(999, parseInt(digits(v), 10) || 0);
+        else if (f === "zip") r.zip = digits(v);
+        else r[f] = v;
+        if (f === "pid") {
+          var pr = prod(v), card = $("#rec-" + r.id), itemF = card && $('.f[data-fw="item"]', card);
+          if (itemF) itemF.hidden = !!v;
+          if (pr && pr.cool) { r.cool = pr.cool; if (card) $$('[data-b="rec:' + r.id + ':cool"]', card).forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.v === r.cool ? "true" : "false"); }); }
+        }
+        refreshRec(r); renderSide();
+        if (f === "zip" && r.zip.length === 7 && ev === "input") zipAssist(r, el, "zn-" + r.id, '[data-b="rec:' + r.id + ':addr"]', function () { refreshRec(r); renderSide(); });
+        break;
+      case "p":
+        r = P && P.rows[+p[1]]; f = p[2];
+        if (!r) return;
+        if (f === "use" || f === "leftUse") r[f] = !!el.checked;
+        else if (f === "zip") r.zip = digits(v);
+        else r[f] = v;
+        if (f === "pid") { var k = +p[1]; var row = $("#prow-" + k); if (row) { row.outerHTML = pRow(r, k); } }
+        refreshPRow(+p[1]);
+        if (f === "zip" && digits(v).length === 7 && ev === "input") lookupZip(r.zip).then(function (z) { var m = fillFromZip(r, z); if (m) { r.notes.push(m); var a = $('[data-b="p:' + p[1] + ':addr"]'); if (a) a.value = r.addr; } refreshPRow(+p[1]); });
+        return;
+      case "farm":
+        f = p[1]; S.farm[f] = f === "zip" ? digits(v) : v;
+        if (f === "zip" && digits(v).length === 7 && ev === "input") zipAssist(S.farm, el, "zn-farm", '[data-b="farm:addr"]');
+        break;
+      case "car":
+        S.car[p[1]] = v;
+        if (view === "csv") { save(); var ids = Object.keys(csvSel || {}).filter(function (k) { return csvSel[k]; }); if (p[1] === "sgenc" || p[1] === "jphow") renderCsv(); else renderChecks(S.carrier, S.orders.filter(function (x) { return ids.indexOf(x.id) >= 0; }).map(function (x) { return x.id; })); return; }
+        break;
+      case "prod":
+        r = prod(p[1]); if (!r) return;
+        r[p[2]] = p[2] === "price" ? (parseInt(digits(v), 10) || 0) : v;
+        r.sample = false;
+        if (p[2] === "name") { var lab = el.parentNode.querySelector("em"); if (lab) lab.textContent = zen(v).length + "文字"; }
+        $("#prodSample").hidden = !S.products.some(function (x) { return x.sample; });
+        break;
+      case "rate":
+      case "cool":
+        var cell = p[0] === "rate" ? S.rates.table[p[1]][p[2]] : S.rates.cool[p[1]];
+        cell.v = parseInt(digits(v), 10) || 0; cell.s = false;
+        el.classList.remove("samp");
+        $("#rateSample").hidden = !$$("#rateGrid input.samp, #coolGrid input.samp").length;
+        break;
+      case "cust":
+        r = custById(p[1]); if (!r) return;
+        r[p[2]] = p[2] === "zip" ? digits(v) : v; r.sample = false;
+        break;
+    }
+    save();
+    if (p[0] !== "rec" && p[0] !== "snd") renderDot();
+  }
+  function cleanup(el) {
+    var b = el.dataset.b; if (!b) return;
+    var p = b.split(":"), f = p[0] === "rec" || p[0] === "p" || p[0] === "cust" || p[0] === "prod" ? p[2] : p[1];
+    var obj = p[0] === "rec" ? findRec(p[1]) : p[0] === "snd" ? cur().sender : p[0] === "farm" ? S.farm : p[0] === "p" ? (P && P.rows[+p[1]]) : p[0] === "cust" ? custById(p[1]) : null;
+    if (!obj) return;
+    if (f === "zip") { el.value = fmtZip(obj.zip); }
+    else if (f === "tel" && obj.tel) { obj.tel = normTel(obj.tel); el.value = obj.tel; }
+    else if (f === "name" && (p[0] === "rec" || p[0] === "p" || p[0] === "snd")) {
+      var m = String(obj.name || "").match(/^(.*?)\s*(様|さま|殿|御中)$/);
+      if (m && m[1]) {
+        obj.name = m[1]; el.value = m[1];
+        if (p[0] !== "snd") { obj.hon = m[2] === "御中" ? "御中" : m[2] === "殿" ? "殿" : "様"; var hs = $('[data-b="' + p[0] + ":" + p[1] + ':hon"]'); if (hs) hs.value = obj.hon; }
+      }
+    } else if (f === "qty" && p[0] === "rec") { if (!(obj.qty >= 1)) obj.qty = 1; el.value = obj.qty; }
+    else if (f === "addr" || f === "bldg") { obj[f] = String(obj[f] || "").replace(/^\s+|\s+$/g, ""); }
+    if (p[0] === "rec") refreshRec(obj);
+    if (p[0] === "snd") syncCustomer(cur());
+    if (p[0] === "p") refreshPRow(+p[1]);
+    save();
+  }
+  function focusRecName(rid) { var i = $('[data-b="rec:' + rid + ':name"]'); if (i) { i.scrollIntoView({ block: "center" }); try { i.focus({ preventScroll: true }); } catch (e) { i.focus(); } } }
+  function replaceCard(r) { var o = cur(), el = $("#rec-" + r.id); if (el) { el.outerHTML = recCard(r, o.recs.indexOf(r), o); if (openRec[r.id]) markFields($("#rec-" + r.id), recIssues(r, o)); } }
+  function startOrder(o) { S.cur = o.id; if (!o.recs.length) { var r = newRec(); o.recs.push(r); openRec = {}; openRec[r.id] = true; } pickOpen = false; P = null; csvSel = null; save(); go("order"); }
+  function copyOrder(src) {
+    var c = src.custId ? custById(src.custId) : null;
+    var o = newOrder(c);
+    if (!c) o.sender = JSON.parse(JSON.stringify(src.sender));
+    o.from = src.from;
+    o.recs = src.recs.map(function (r) { var n = JSON.parse(JSON.stringify(r)); n.id = uid(); n.date = ""; return n; });
+    openRec = {};
+    startOrder(o);
+    toast("前回の届け先 " + o.recs.length + "件をコピーしました。お届け日などを確かめてください");
+  }
+
+  document.addEventListener("input", function (e) {
+    var el = e.target;
+    if (el.id === "pickQ") return renderPick();
+    if (el.id === "listQ") return renderList();
+    if (el.dataset && el.dataset.b && el.type !== "checkbox") setBound(el.dataset.b, el.value, el, "input");
+  });
+  document.addEventListener("change", function (e) {
+    var el = e.target;
+    if (el.id === "optZip") { S.opts.zip = el.checked; save(); return; }
+    if (el.id === "sheetSel") { S.cur = el.value; save(); renderSheet(); return; }
+    if (el.id === "restoreFile") return restore(el);
+    if (el.dataset && el.dataset.act === "osel") { csvSel[el.dataset.id] = el.checked; renderCsv(); return; }
+    if (el.dataset && el.dataset.b && (el.tagName === "SELECT" || el.type === "checkbox" || el.type === "date")) setBound(el.dataset.b, el.type === "checkbox" ? el.checked : el.value, el, "change");
+  });
+  document.addEventListener("focusout", function (e) { if (e.target.dataset && e.target.dataset.b && e.target.tagName === "INPUT") cleanup(e.target); });
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-act],[data-go],.tab");
+    if (!t) return;
+    if (t.classList.contains("tab")) return go(t.dataset.view);
+    if (t.dataset.go) { if (t.dataset.go === "csv") { csvSel = null; } return go(t.dataset.go, t.dataset.anchor); }
+    var a = t.dataset.act, o = cur(), r, i, x;
+    if (a === "osel") return;
+    switch (a) {
+      case "new-order": startOrder(newOrder()); focusRecName(""); var sn = $('[data-b="snd:name"]'); if (sn) sn.focus(); break;
+      case "clear-sample":
+        S.orders = S.orders.filter(function (x) { return !x.sample; });
+        S.customers = S.customers.filter(function (x) { return !x.sample; });
+        S.sampleShown = false;
+        startOrder(S.orders.length ? S.orders[S.orders.length - 1] : newOrder());
+        var nm = $('[data-b="snd:name"]'); if (nm) nm.focus();
+        toast("サンプルを消しました。お客さまの名前から入れてください");
+        break;
+      case "pick-open": pickOpen = !pickOpen; renderWho(o); if (pickOpen) { $("#pickQ").value = ""; renderPick(); $("#pickQ").focus(); } break;
+      case "pick":
+        x = custById(t.dataset.id); if (!x) return;
+        o.custId = x.id; o.sender = copySender(x); pickOpen = false; save(); renderOrder(); toast(x.name + " 様を入れました"); break;
+      case "seg":
+        setBound(t.dataset.b, t.dataset.v, t, "change");
+        $$('[data-act="seg"][data-b="' + t.dataset.b + '"]').forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.v === t.dataset.v ? "true" : "false"); });
+        break;
+      case "parse": doParse(); break;
+      case "paste-clear": $("#pasteText").value = ""; P = null; renderPaste(); break;
+      case "p-cancel": P = null; renderPaste(); break;
+      case "p-add": addParsed(); break;
+      case "p-sender":
+        if (!P || !P.sender) return;
+        o.sender = { name: P.sender.name, hon: "様", zip: digits(P.sender.zip), addr: P.sender.addr, bldg: P.sender.bldg, tel: P.sender.tel };
+        o.custId = ""; syncCustomer(o); save(); renderOrder(); renderPaste(); toast("ご依頼主に入れました"); break;
+      case "p-memo": o.memo = (o.memo ? o.memo + "\n" : "") + P.left.join("\n"); $("#orderMemo").value = o.memo; save(); toast("注文のメモに入れました"); break;
+      case "add-rec":
+        r = newRec(o.recs[o.recs.length - 1]); o.recs.push(r); openRec = {}; openRec[r.id] = true; save(); renderRecs(); renderSide(); focusRecName(r.id); break;
+      case "open-all":
+        var allOpen = o.recs.every(function (x) { return openRec[x.id]; });
+        o.recs.forEach(function (x) { openRec[x.id] = !allOpen; }); renderRecs(); break;
+      case "toggle-rec": r = findRec(t.dataset.rid); if (!r) return; openRec[r.id] = !openRec[r.id]; replaceCard(r); break;
+      case "qty":
+        r = findRec(t.dataset.rid); if (!r) return;
+        r.qty = Math.max(1, Math.min(999, (+r.qty || 0) + (+t.dataset.d)));
+        $('[data-b="rec:' + r.id + ':qty"]').value = r.qty; refreshRec(r); renderSide(); save(); break;
+      case "dup-rec":
+        r = findRec(t.dataset.rid); i = o.recs.indexOf(r);
+        x = JSON.parse(JSON.stringify(r)); x.id = uid(); o.recs.splice(i + 1, 0, x); openRec = {}; openRec[x.id] = true; save(); renderRecs(); renderSide(); focusRecName(x.id); toast("コピーしました。名前と住所を書きかえてください"); break;
+      case "del-rec":
+        r = findRec(t.dataset.rid); if (!r) return;
+        if ((oneLine(r.name) || oneLine(r.addr)) && !window.confirm("「" + (nameOnly(r.name) || "この届け先") + "」を消しますか？")) return;
+        o.recs.splice(o.recs.indexOf(r), 1); save(); renderRecs(); renderSide(); renderDot(); break;
+      case "next-rec":
+        r = findRec(t.dataset.rid); i = o.recs.indexOf(r);
+        openRec = {};
+        if (o.recs[i + 1]) x = o.recs[i + 1]; else { x = newRec(r); o.recs.push(x); }
+        openRec[x.id] = true; save(); renderRecs(); renderSide(); focusRecName(x.id); break;
+      case "car": S.carrier = t.dataset.id; save(); renderCsv(); break;
+      case "osel-all": S.orders.forEach(function (x) { csvSel[x.id] = true; }); renderCsv(); break;
+      case "osel-new": csvSel = {}; S.orders.forEach(function (x) { if (!Object.keys(x.exported || {}).length) csvSel[x.id] = true; }); renderCsv(); break;
+      case "osel-cur": csvSel = {}; csvSel[S.cur] = true; renderCsv(); break;
+      case "fix-go": fixGo(lastEx.issues[+t.dataset.k].where); break;
+      case "fix-ch": fixChar(lastEx.issues[+t.dataset.k]); break;
+      case "dl": doDownload("normal"); break;
+      case "dl-one": doDownload("one"); break;
+      case "dl-force": doDownload("force"); break;
+      case "toggle-cols": showAllCols = !showAllCols; renderPreview(lastEx); break;
+      case "print": renderSheet(); window.print(); break;
+      case "cust-new": x = custById(t.dataset.id); startOrder(newOrder(x)); break;
+      case "cust-edit": editCust = t.dataset.id; renderList(); break;
+      case "cust-done": editCust = ""; renderList(); break;
+      case "cust-del":
+        x = custById(t.dataset.id);
+        if (!x || !window.confirm("「" + x.name + "」様を名簿から消しますか？（注文は残ります）")) return;
+        S.customers = S.customers.filter(function (c) { return c !== x; });
+        S.orders.forEach(function (oo) { if (oo.custId === x.id) oo.custId = ""; });
+        editCust = ""; save(); renderList(); break;
+      case "ord-open": x = orderById(t.dataset.id); if (x) { openRec = {}; startOrder(x); } break;
+      case "ord-copy": x = orderById(t.dataset.id); if (x) copyOrder(x); break;
+      case "ord-del":
+        x = orderById(t.dataset.id);
+        if (!x || !window.confirm("注文No." + x.no + "（" + (nameOnly(x.sender.name) || "名前なし") + "）を消しますか？")) return;
+        S.orders = S.orders.filter(function (oo) { return oo !== x; });
+        if (!S.orders.length) newOrder();
+        if (!orderById(S.cur)) S.cur = S.orders[S.orders.length - 1].id;
+        save(); renderList(); renderDot(); break;
+      case "add-prod":
+        x = { id: "p" + uid(), name: "", price: 0, size: "80", cool: "n", care: "" }; S.products.push(x); save(); renderSetup();
+        var pn = $('[data-b="prod:' + x.id + ':name"]'); if (pn) { pn.scrollIntoView({ block: "center" }); pn.focus(); } break;
+      case "del-prod":
+        x = prod(t.dataset.id); if (!x) return;
+        var used = S.orders.some(function (oo) { return oo.recs.some(function (rr) { return rr.pid === x.id; }); });
+        if (!window.confirm("「" + (x.name || "この商品") + "」を消しますか？" + (used ? "\n使っている届け先は「その他（自由入力）」になります。" : ""))) return;
+        S.orders.forEach(function (oo) { oo.recs.forEach(function (rr) { if (rr.pid === x.id) { rr.pid = ""; rr.item = x.name; } }); });
+        S.products = S.products.filter(function (p) { return p !== x; }); save(); renderSetup(); break;
+      case "backup": backup(); break;
+      case "restore": $("#restoreFile").value = ""; $("#restoreFile").click(); break;
+      case "wipe":
+        if (!window.confirm("この端末に保存した、お客さま・注文・設定をすべて消します。元に戻せません。先にバックアップを保存しましたか？")) return;
+        try { if (canStore) { localStorage.removeItem(KEY.data); localStorage.removeItem(KEY.zip); } } catch (er) {}
+        S = sampleState(); S.orders = []; S.customers = []; S.seq = 0; S.sampleShown = false;
+        startOrder(newOrder()); toast("すべて消しました"); break;
+    }
+  });
+
+  function backup() {
+    S.lastBackup = todayISO(); save(true);
+    var data = { app: "okurijo", version: 1, saved: new Date().toISOString(), data: S };
+    downloadBytes(new TextEncoder().encode(JSON.stringify(data, null, 1)), "okurijo-backup_" + dCompact(todayISO()) + ".json", "application/json");
+    renderSetup(); toast("バックアップを保存しました");
+  }
+  function restore(input) {
+    var file = input.files && input.files[0]; if (!file) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      var j; try { j = JSON.parse(fr.result); } catch (e) { j = null; }
+      if (!j || j.app !== "okurijo" || !j.data) { toast("このファイルは、贈答送り状メーカーのバックアップではありません"); return; }
+      var d = migrate(j.data);
+      if (!d) { toast("バックアップの中身が読めませんでした"); return; }
+      if (!window.confirm("今のデータを、このバックアップ（" + String(j.saved || "").slice(0, 10) + "・注文" + d.orders.length + "件・お客さま" + d.customers.length + "人）に置きかえます。よろしいですか？")) return;
+      S = d; openRec = {}; P = null; csvSel = null; save(true); go("order"); toast("バックアップから戻しました");
+    };
+    fr.readAsText(file);
+  }
+
+  /* ============ はじめ ============ */
+  S = migrate(load(KEY.data, null)) || sampleState();
+  save(true);
+  (function () { var o = cur(); if (!o.recs.length) { var r = newRec(); o.recs.push(r); openRec[r.id] = true; } })();
+  window.addEventListener("resize", fitSheet);
+  window.addEventListener("beforeprint", function () { $("#sheetBox").innerHTML = sheetHTML(cur()); var sh = $("#sheetBox .sheet"); if (sh) sh.style.transform = ""; });
+  window.addEventListener("afterprint", function () { if (view === "sheet") fitSheet(); });
+  go("order");
+  window.__okurijo = { parseText: parseText, buildExport: buildExport, toCSV: toCSV, encodeCSV: encodeCSV, state: function () { return S; }, sjisCls: sjisCls, splitAddr: splitAddr, splitBldg: splitBldg, CAR: CAR, hanKana: hanKana, zen: zen, save: function () { save(true); } };
+})();
+</script>
+</body>
+</html>
