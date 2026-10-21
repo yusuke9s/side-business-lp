@@ -1,0 +1,460 @@
+<title>困りごとランキング</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=BIZ+UDPGothic:wght@400;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* 採点表：左に順位と名前、右に5項目の目盛り。上に結論、下に法則と注意 */
+:root {
+  --paper: #f3f5f2;
+  --sheet: #ffffff;
+  --ink: #1b2622;
+  --muted: #5b6863;
+  --rule: #d7ddd9;
+  --grid: #e6ebe7;
+  --accent: #23614f;
+  --accent-soft: #dcebe5;
+  --mark: #f3cf55;
+  --mark-ink: #4a3a00;
+  --warn: #a2471b;
+  --warn-soft: #f7e4d9;
+  --dot-off: #dfe5e1;
+  --f-display: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-body: "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121815; --sheet: #19211d; --ink: #e5ece8; --muted: #9aa8a2; --rule: #2d3833; --grid: #1d2622;
+    --accent: #7cc7ae; --accent-soft: #1f3a31; --mark: #e2bd3f; --mark-ink: #2a2000; --warn: #f0a07a; --warn-soft: #3a2419; --dot-off: #2c3631;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121815; --sheet: #19211d; --ink: #e5ece8; --muted: #9aa8a2; --rule: #2d3833; --grid: #1d2622;
+  --accent: #7cc7ae; --accent-soft: #1f3a31; --mark: #e2bd3f; --mark-ink: #2a2000; --warn: #f0a07a; --warn-soft: #3a2419; --dot-off: #2c3631;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 64px;
+  display: grid; gap: 48px;
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 900; text-wrap: balance; margin: 0; line-height: 1.3; }
+h1 { font-size: clamp(30px, 6vw, 48px); letter-spacing: .02em; }
+h2 { font-size: clamp(20px, 3.4vw, 26px); }
+h3 { font-size: 17px; }
+p { margin: 0; }
+.eyebrow { font-family: var(--f-num); font-size: 12px; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+.lead { max-width: 62ch; color: var(--muted); }
+.head { display: grid; gap: 14px; }
+.sources { display: flex; flex-wrap: wrap; gap: 8px; }
+.src { font-size: 13px; padding: 2px 10px; border: 1px solid var(--rule); background: var(--sheet); border-radius: 999px; }
+.src b { font-family: var(--f-num); font-weight: 600; margin-right: 4px; color: var(--accent); }
+
+section { display: grid; gap: 18px; }
+.sec-head { display: grid; gap: 6px; }
+
+/* 結論 */
+.picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.pick { background: var(--sheet); border: 1px solid var(--rule); padding: 20px; display: grid; gap: 10px; align-content: start; position: relative; }
+.pick .when { font-family: var(--f-num); font-size: 12px; font-weight: 600; color: var(--mark-ink); background: var(--mark); justify-self: start; padding: 1px 8px; }
+.pick p { font-size: 14px; }
+.pick .next { border-top: 1px dashed var(--rule); padding-top: 10px; font-size: 13.5px; }
+.pick .next b { color: var(--accent); }
+.later { background: var(--sheet); border: 1px solid var(--rule); border-left: 4px solid var(--muted); padding: 14px 18px; font-size: 14px; }
+
+/* 採点表 */
+.controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font: 700 13px var(--f-body); color: var(--ink); background: var(--sheet);
+  border: 1px solid var(--rule); padding: 5px 12px; cursor: pointer; border-radius: 999px;
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+.chip:focus-visible, .sortbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sortlabel { font-size: 13px; color: var(--muted); }
+select.sortbtn { font: 700 13px var(--f-body); color: var(--ink); background: var(--sheet); border: 1px solid var(--rule); padding: 5px 8px; }
+
+.board { background: var(--sheet); border: 1px solid var(--rule); }
+.row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 290px 64px;
+  gap: 16px; padding: 16px 18px; border-top: 1px solid var(--rule); align-items: start;
+}
+.row:first-child { border-top: 0; }
+.row.top { background: linear-gradient(90deg, var(--accent-soft), transparent 60%); }
+.rank { font-family: var(--f-num); font-weight: 600; font-size: 26px; line-height: 1; padding-top: 4px; }
+.body { min-width: 0; display: grid; gap: 6px; }
+.title-line { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline; }
+.title-line h3 { font-size: 17px; }
+.field { font-size: 12px; font-weight: 700; padding: 0 8px; border: 1px solid currentColor; border-radius: 999px; color: var(--accent); white-space: nowrap; }
+.who { font-size: 13px; color: var(--muted); }
+.quote { font-size: 14px; border-left: 3px solid var(--rule); padding-left: 10px; }
+.idea { font-size: 14px; }
+.idea b { color: var(--accent); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 12px; padding: 1px 8px; background: var(--accent-soft); color: var(--ink); }
+.tag.time { background: var(--mark); color: var(--mark-ink); font-weight: 700; }
+.tag.risk { background: var(--warn-soft); color: var(--warn); font-weight: 700; }
+
+.meters { display: grid; gap: 4px; padding-top: 4px; }
+.meter { display: grid; grid-template-columns: 92px auto; align-items: center; gap: 8px; font-size: 12.5px; }
+.meter span { color: var(--muted); white-space: nowrap; }
+.dots { display: flex; gap: 4px; }
+.dots i { width: 14px; height: 10px; background: var(--dot-off); display: block; }
+.dots i.on { background: var(--accent); }
+.total { text-align: right; font-family: var(--f-num); font-weight: 600; font-size: 28px; line-height: 1; padding-top: 2px; }
+.total small { display: block; font-size: 11px; color: var(--muted); font-weight: 500; margin-top: 4px; }
+
+.legend { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.legend div { background: var(--sheet); border: 1px solid var(--rule); padding: 10px 12px; font-size: 13px; }
+.legend b { display: block; font-family: var(--f-display); font-size: 14px; }
+
+/* 法則 */
+.laws { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.law { background: var(--sheet); border: 1px solid var(--rule); padding: 18px 20px; display: grid; gap: 8px; align-content: start; }
+.law p { font-size: 14px; }
+.law ul { margin: 0; padding-left: 1.2em; font-size: 13.5px; color: var(--muted); }
+
+/* 草野球 */
+.split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
+.panel { background: var(--sheet); border: 1px solid var(--rule); padding: 18px 20px; display: grid; gap: 10px; align-content: start; }
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 4px; }
+.flow div { padding: 10px 8px; font-size: 13px; text-align: center; border: 1px solid var(--rule); margin-left: -1px; display: grid; gap: 2px; }
+.flow div b { font-family: var(--f-display); font-size: 14px; }
+.flow div.gap { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); position: relative; z-index: 1; }
+.flow div small { color: var(--muted); }
+.flow div.gap small { color: var(--warn); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 700; color: var(--muted); font-size: 12px; }
+td.num { font-family: var(--f-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tablebox { overflow-x: auto; }
+
+.notes { display: grid; gap: 8px; font-size: 14px; }
+.notes li { margin-bottom: 4px; }
+.notes ul { margin: 0; padding-left: 1.2em; }
+.proto { background: var(--ink); color: var(--paper); padding: 20px 22px; display: grid; gap: 8px; }
+.proto a { color: var(--mark); font-weight: 700; word-break: break-all; }
+.proto p { font-size: 14px; }
+.foot { font-size: 12.5px; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .picks, .laws, .split { grid-template-columns: 1fr; }
+  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .row { grid-template-columns: 40px minmax(0, 1fr) 56px; }
+  .meters { grid-column: 2 / 4; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 4px 12px; }
+  .total { grid-column: 3; grid-row: 1; }
+}
+@media (max-width: 480px) {
+  .row { grid-template-columns: 30px minmax(0, 1fr) 48px; gap: 10px; padding: 14px 12px; }
+  .rank { font-size: 20px; }
+  .total { font-size: 22px; }
+  .meters { grid-column: 1 / 4; }
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .row { transition: background-color .2s; }
+}
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <div class="eyebrow">2026年10月21日 · ニッチの困りごと調査</div>
+    <h1>困りごとランキング</h1>
+    <p class="lead">4つの調査で集めた困りごと13件と、試作中の解体見積メーカーを、同じ物差しで採点しました。生の声、実際にお金が動いている証拠、既存ツールの弱さ、一人で作れるか、営業なしで届くかの5項目です。</p>
+    <div class="sources">
+      <span class="src"><b>01</b>草野球の困りごと（声）</span>
+      <span class="src"><b>02</b>草野球の市場とお金</span>
+      <span class="src"><b>03</b>草野球アプリの競合と口コミ</span>
+      <span class="src"><b>04</b>地域・趣味の運営（PTA・町内会・スポ少）</span>
+      <span class="src"><b>05</b>小さな商売・職人</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="h-picks">
+    <div class="sec-head">
+      <div class="eyebrow">結論</div>
+      <h2 id="h-picks">同点1位の3つを、時期をずらして試す</h2>
+      <p class="lead">3つとも合計19点です。どれも売れる時期や期限が決まっているので、その順に着手します。</p>
+    </div>
+    <div class="picks">
+      <article class="pick">
+        <span class="when">今すぐ · 12月中旬まで</span>
+        <h3>農家の贈答注文を送り状CSVに</h3>
+        <p>1人が10か所に送る贈答注文を、LINEや電話から手で転記しています。今がお歳暮の繁忙期です。</p>
+        <p class="next"><b>次の一手：</b>貼り付けた注文をヤマト・佐川の送り状CSVに変える無料ツールを作り、農家の集まるSNSや検索で反応を見る。</p>
+      </article>
+      <article class="pick">
+        <span class="when">11月前半</span>
+        <h3>民泊の宿泊税の月計表</h3>
+        <p>東京は2027年4月から民泊も課税です。事前の手続きは2026年12月末まで。代行が1物件月1万円で売られています。</p>
+        <p class="next"><b>次の一手：</b>AirbnbなどのOTAが代わりに徴収するかを先に確かめる。徴収しないなら、予約CSVから月計表を作るLPと試作。</p>
+      </article>
+      <article class="pick">
+        <span class="when">1〜2月</span>
+        <h3>旗当番表の自動作成</h3>
+        <p>「名簿作成は誰もやりたがらない作業」。お金はほぼ払われませんが、検索で人が来る入口になります。</p>
+        <p class="next"><b>次の一手：</b>年度替わりの3〜4月に間に合うよう、名簿CSVから条件つきで当番を割り振る無料ツールを出す。</p>
+      </article>
+    </div>
+    <p class="later"><b>草野球は後回し：</b>痛みと空白はいちばん大きい（「試合が成立しない」）のですが、助っ人が集まる密度を作るまで回りません。やるなら1つの地域に絞って、欠員が出たら近くの助っ人に自動で声がかかる仕組みから。チームへの売り込みは11〜2月が窓口です。</p>
+  </section>
+
+  <section aria-labelledby="h-board">
+    <div class="sec-head">
+      <div class="eyebrow">採点表</div>
+      <h2 id="h-board">14件の比較</h2>
+    </div>
+    <div class="legend" aria-label="採点の項目">
+      <div><b>痛み</b>どれだけ困っていて、どれだけ頻繁か</div>
+      <div><b>お金の流れ</b>代行や有料ツールに実際に払っているか</div>
+      <div><b>空白</b>既存の解決策がどれだけ弱いか</div>
+      <div><b>作りやすさ</b>一人とAIで、すぐ試作できるか</div>
+      <div><b>届けやすさ</b>営業せずに検索・SNS・口コミで届くか</div>
+    </div>
+    <div class="controls">
+      <div class="chips" role="group" aria-label="分野で絞り込む" id="filters"></div>
+      <label class="sortlabel" for="sort">並べ替え
+        <select class="sortbtn" id="sort">
+          <option value="total">合計</option>
+          <option value="0">痛み</option>
+          <option value="1">お金の流れ</option>
+          <option value="2">空白</option>
+          <option value="3">作りやすさ</option>
+          <option value="4">届けやすさ</option>
+        </select>
+      </label>
+    </div>
+    <div class="board" id="board"></div>
+    <p class="foot">各項目1〜5点、合計25点。点数は調査結果をもとにした見立てで、同点は試しやすい順に並べています。</p>
+  </section>
+
+  <section aria-labelledby="h-laws">
+    <div class="sec-head">
+      <div class="eyebrow">4つの調査に共通していたこと</div>
+      <h2 id="h-laws">売れる困りごとの4つの形</h2>
+    </div>
+    <div class="laws">
+      <div class="law">
+        <h3>期限のある制度変更</h3>
+        <p>法律が変わると、新しい面倒な作業が一斉に生まれます。ツールが追いつく前が狙い目です。</p>
+        <ul><li>民泊の宿泊税（東京は2027年4月、手続きは12月末まで）</li><li>インボイスの仕入税額控除が80%から70%に（2026年10月）</li><li>休日部活の地域展開（2026年度から）</li></ul>
+      </div>
+      <div class="law">
+        <h3>お金を払って手放している作業</h3>
+        <p>代行が売れている作業は、払う意思が証明済みです。代行より安く、速くすれば乗り換える理由になります。</p>
+        <ul><li>宿泊税の月計表の代行：1物件月1万円</li><li>安全書類の代行：1現場5,000円で53件</li><li>草野球の私設リーグ参加費：年3.3万〜14.5万円</li></ul>
+      </div>
+      <div class="law">
+        <h3>全員にアプリを入れさせない</h3>
+        <p>草野球アプリが広まらない一番の理由は、得をするのは幹事だけなのに全員の登録が要ることでした。幹事1人で完結するか、LINEのURLで答えられる形にします。</p>
+        <ul><li>後発のDagoutやScoreQは「アプリ不要」「ログイン不要」を売りにしている</li></ul>
+      </div>
+      <div class="law">
+        <h3>無料の道具が集客の入口になる</h3>
+        <p>旗当番表や回覧板の順番表は検索が多いのに、お金はほぼ払われません。無料で出して人を集め、有料の機能（会費の台帳など）につなげます。</p>
+        <ul><li>知恵袋の「回覧順番表をスマホで作りたい」は2.7万閲覧</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-yakyu">
+    <div class="sec-head">
+      <div class="eyebrow">最初の例として挙がった分野</div>
+      <h2 id="h-yakyu">草野球で分かったこと</h2>
+    </div>
+    <div class="split">
+      <div class="panel">
+        <h3>試合が成立するまでの流れと、ツールの空白</h3>
+        <div class="flow" aria-label="試合が成立するまでの流れ">
+          <div><b>出欠</b><small>LINE・アプリで足りている</small></div>
+          <div class="gap"><b>欠員の補充</b><small>掲示板・XのDMを手作業</small></div>
+          <div class="gap"><b>対戦相手</b><small>直前のドタキャン</small></div>
+          <div class="gap"><b>グラウンド</b><small>自治体ごとに抽選・確定作業</small></div>
+        </div>
+        <p>出欠ツールは「足りない」と分かった時点で役目を終えます。そこから先をつなぐツールは見つかりませんでした。機能は飽和していて、2026年だけで約30本の草野球アプリが出ていますが、ほとんどは評価0〜10件です。</p>
+        <p class="quote">「毎週水曜日になると、LINEの出欠確認に頭を抱える。『今週、あと2人足りない』」（note）</p>
+      </div>
+      <div class="panel">
+        <h3>お金が動いているところ</h3>
+        <div class="tablebox">
+          <table>
+            <thead><tr><th>項目</th><th>金額</th><th>払う人</th></tr></thead>
+            <tbody>
+              <tr><td>私設リーグの参加費</td><td class="num">年3.3万〜14.5万円</td><td>チーム</td></tr>
+              <tr><td>審判代</td><td class="num">1試合5,000〜7,000円</td><td>チームの割り勘</td></tr>
+              <tr><td>グラウンド代（公営）</td><td class="num">2時間2,100〜4,700円</td><td>チームの割り勘</td></tr>
+              <tr><td>助っ人の参加費</td><td class="num">1,000〜20,000円</td><td>チーム</td></tr>
+              <tr><td>TeamHub 有料プラン</td><td class="num">月2,000円</td><td>代表</td></tr>
+              <tr><td>ScoreQ Teamプラン</td><td class="num">月1,400円</td><td>代表</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>ツールそのものへの課金は小さく、払う意思があるのは「試合が成立すること」です。一般登録チームは15,695（2025年、2008年から57%減）で、1都3県に34.8%が集中しています。</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-notes">
+    <div class="sec-head">
+      <div class="eyebrow">注意</div>
+      <h2 id="h-notes">まだ確かめていないこと</h2>
+    </div>
+    <div class="notes">
+      <ul>
+        <li><b>民泊の宿泊税：</b>OTAや民泊の管理ソフトが自動で集計・徴収するようになると、困りごと自体が消えます。ホスト本人の「面倒だ」という声も見つかっていません。申告書の作成代行は税理士法に触れるおそれがあるため、作るのは集計表までです。</li>
+        <li><b>農家の贈答：</b>払う意思の証拠は弱めです。無料ツールで反応を見てから値段を考えます。</li>
+        <li><b>地域クラブの事務：</b>国のガイドラインの数字や、実際に使われているツールの事業者は要約経由で、一次情報は未確認です。自治体が一括で大手に発注する可能性があります。</li>
+        <li><b>草野球：</b>LaBOLA野球、G-LEAGUE、グラナビ東京、草野球公園3番地の現状は確認できていません。TeamHubの55万チームは全競技の累計登録数です。</li>
+      </ul>
+    </div>
+  </section>
+
+  <aside class="proto" aria-labelledby="h-proto">
+    <div class="eyebrow" style="color:inherit;opacity:.7">試作品</div>
+    <h2 id="h-proto">解体見積メーカーの試作版を公開しました</h2>
+    <p>構造と坪数から内訳つきの見積書を作り、A4で印刷・PDF保存、請求書への変換までできます。データはその端末のブラウザにだけ保存され、単価はすべてサンプルです。</p>
+    <p><a href="http://lp.site-forge.jp/app/kaitai/">lp.site-forge.jp/app/kaitai/</a></p>
+  </aside>
+</div>
+
+<script>
+var FIELDS = ["すべて", "小さな商売", "地域・趣味", "草野球", "試作中"];
+var AXES = ["痛み", "お金の流れ", "空白", "作りやすさ", "届けやすさ"];
+var ITEMS = [
+  { name: "農家の贈答注文を送り状CSVに", field: "小さな商売", s: [4,3,4,5,3],
+    who: "LINE・電話・FAXで注文を受けて直販している農家",
+    quote: "「LINE注文は住所の転記…事務作業がパンク」",
+    idea: "貼り付けた注文を、ヤマト・佐川の送り状CSVに変換。1人10か所の贈答にも対応",
+    tags: [["time","今がお歳暮の繁忙期"]] },
+  { name: "民泊・小さな宿の宿泊税の月計表", field: "小さな商売", s: [4,4,4,4,3],
+    who: "自分で運営している民泊ホスト・簡易宿所",
+    quote: "代行が1物件月1万円で売られている。宿泊ゼロの月も申告が必要",
+    idea: "OTAの予約CSVから、自治体ごとの月計表と納める額を出す",
+    tags: [["time","東京の事前手続きは12月末まで"],["risk","要確認：OTAが代わりに徴収するか"]] },
+  { name: "旗当番表の自動作成", field: "地域・趣味", s: [4,2,4,5,4],
+    who: "PTAの地区委員・子ども会の係",
+    quote: "「名簿作成は誰もやりたがらない作業となっていました」",
+    idea: "名簿CSVから、同じペアを避けるなどの条件つきで割り振り、地区別に印刷、毎月リマインド",
+    tags: [["time","年度替わり（3〜4月）"],["","無料で集客の入口に"]] },
+  { name: "草野球の試合成立（欠員の自動補充）", field: "草野球", s: [5,3,5,3,2],
+    who: "草野球チームの代表",
+    quote: "「毎週水曜日になると、LINEの出欠確認に頭を抱える。『今週、あと2人足りない』」",
+    idea: "LINEのURLで出欠、締切で不足を検知し、近くの助っ人・対戦相手に自動で募集",
+    tags: [["time","売り込みは11〜2月"],["risk","助っ人が集まるまで回らない"]] },
+  { name: "清掃業者の顧客台帳とLINE予約", field: "小さな商売", s: [4,4,3,4,2],
+    who: "マッチングサイト経由で受注するエアコン清掃・ハウスクリーニング業者",
+    quote: "「手数料22%に決済手数料4.5%、取りすぎて怖い」",
+    idea: "年1回のリピート客を自分の台帳で管理し、時期が来たらLINEで直接予約を案内",
+    tags: [] },
+  { name: "町内会費の集金と照合台帳", field: "地域・趣味", s: [4,3,3,4,3],
+    who: "町内会の班長・会計",
+    quote: "「何度行ってピンポン鳴らしても出てくれない人も数人いて、数日でやっと終わりました」",
+    idea: "現金・振込・PayPayの入金を世帯ごとに照合し、未払いだけを一覧に",
+    tags: [] },
+  { name: "草野球のグラウンド確保の手伝い", field: "草野球", s: [4,2,5,3,3],
+    who: "草野球チームの代表・グラウンド担当",
+    quote: "都立公園は当選後に確定作業をしないと無効。空き枠は22日0時から先着",
+    idea: "自治体ごとの抽選日・確定期限・キャンセル期限をまとめてリマインド",
+    tags: [["risk","自治体ごとに仕組みがばらばら"]] },
+  { name: "解体見積メーカー", field: "試作中", s: [3,3,3,5,3],
+    who: "小さな解体業者",
+    quote: "最初の10案の1つ。試作版を公開済み",
+    idea: "構造と坪数から内訳つきの見積書、請求書への変換まで。単価は自社のものに置き換える",
+    tags: [["","試作版あり"]] },
+  { name: "小さな下請の安全書類", field: "小さな商売", s: [3,4,3,3,3],
+    who: "1〜5人の職人・下請",
+    quote: "代行が1現場5,000円で53件売れていて、リピートもある",
+    idea: "作業員・資格の台帳を一度入れれば、元請ごとの様式を自動で作る",
+    tags: [] },
+  { name: "スポ少の配車・当番・精算", field: "地域・趣味", s: [4,3,3,3,3],
+    who: "少年野球・サッカーの保護者会",
+    quote: "「うちの少年団は配車する親がいつも同じで、毎回私も車を出している状態です」",
+    idea: "試合ごとにLINEで車を出せるか集め、自動で割り振り、ガソリン代を精算",
+    tags: [["risk","競合Dagoutがほぼ毎日更新"]] },
+  { name: "個人教室の振替管理", field: "地域・趣味", s: [3,4,2,4,3],
+    who: "ピアノ・書道・英語などの個人教室",
+    quote: "月謝制で振替の回数や期限の管理が手作業",
+    idea: "振替の申請・残り回数・期限を生徒ごとに管理",
+    tags: [["risk","既存ツールが多い"]] },
+  { name: "部活の地域クラブの事務", field: "地域・趣味", s: [4,4,3,2,2],
+    who: "休日部活の地域展開で運営を担う保護者会",
+    quote: "「月額2500円の費用が発生…ストンと胸落ちしないのだ」",
+    idea: "名簿・保険・会費・謝金・配車と、保護者向けの収支公開ページ",
+    tags: [["time","2026年度から本格化"],["risk","自治体が大手に一括発注する可能性"]] },
+  { name: "一人サロンの当日キャンセル防止", field: "小さな商売", s: [4,3,2,3,3],
+    who: "一人で営業するサロン・整体・パーソナルトレーナー",
+    quote: "一人サロンへのアンケートで、全員が月1回以上経験",
+    idea: "前日の確認連絡とキャンセル待ちの自動案内に絞る",
+    tags: [["risk","既存の予約ツールが多い"]] },
+  { name: "草野球の私設リーグ運営", field: "草野球", s: [3,4,3,3,2],
+    who: "私設リーグの運営者",
+    quote: "参加費はチームあたり年3.3万〜14.5万円。管理はExcelや古いツール",
+    idea: "日程・グラウンド割り当て・星取表・参加費の集金をまとめる",
+    tags: [["risk","リーグへの営業が必要"]] }
+];
+ITEMS.forEach(function (it, i) { it.order = i; it.total = it.s.reduce(function (a, b) { return a + b; }, 0); });
+
+var state = { field: "すべて", sort: "total" };
+try { var saved = JSON.parse(localStorage.getItem("rank-view") || "null"); if (saved) state = saved; } catch (e) {}
+
+function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+function renderFilters() {
+  document.getElementById("filters").innerHTML = FIELDS.map(function (f) {
+    return '<button type="button" class="chip" id="f-' + f + '" aria-pressed="' + (state.field === f) + '" data-f="' + f + '">' + f + '</button>';
+  }).join("");
+  document.getElementById("sort").value = state.sort;
+}
+
+function renderBoard() {
+  var key = state.sort;
+  var list = ITEMS.filter(function (it) { return state.field === "すべて" || it.field === state.field; })
+    .sort(function (a, b) {
+      var va = key === "total" ? a.total : a.s[+key], vb = key === "total" ? b.total : b.s[+key];
+      return vb - va || b.total - a.total || a.order - b.order;
+    });
+  var best = Math.max.apply(null, ITEMS.map(function (it) { return it.total; }));
+  document.getElementById("board").innerHTML = list.map(function (it, i) {
+    var meters = it.s.map(function (v, k) {
+      var dots = ""; for (var d = 1; d <= 5; d++) dots += '<i class="' + (d <= v ? "on" : "") + '"></i>';
+      return '<div class="meter"><span>' + AXES[k] + '</span><div class="dots" role="img" aria-label="' + AXES[k] + ' ' + v + '点">' + dots + '</div></div>';
+    }).join("");
+    var tags = it.tags.map(function (t) { return '<span class="tag ' + t[0] + '">' + esc(t[1]) + '</span>'; }).join("");
+    return '<div class="row' + (it.total === best ? " top" : "") + '">' +
+      '<div class="rank">' + (i + 1) + '</div>' +
+      '<div class="body"><div class="title-line"><h3>' + esc(it.name) + '</h3><span class="field">' + it.field + '</span></div>' +
+      '<div class="who">' + esc(it.who) + '</div>' +
+      '<p class="quote">' + esc(it.quote) + '</p>' +
+      '<p class="idea"><b>作るもの：</b>' + esc(it.idea) + '</p>' +
+      (tags ? '<div class="tags">' + tags + '</div>' : '') + '</div>' +
+      '<div class="meters">' + meters + '</div>' +
+      '<div class="total">' + it.total + '<small>/ 25</small></div></div>';
+  }).join("");
+}
+
+function save() { try { localStorage.setItem("rank-view", JSON.stringify(state)); } catch (e) {} }
+
+document.getElementById("filters").addEventListener("click", function (e) {
+  var b = e.target.closest("[data-f]"); if (!b) return;
+  state.field = b.getAttribute("data-f"); save(); renderFilters(); renderBoard();
+});
+document.getElementById("sort").addEventListener("change", function (e) {
+  state.sort = e.target.value; save(); renderBoard();
+});
+renderFilters(); renderBoard();
+</script>
