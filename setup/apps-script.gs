@@ -5,10 +5,13 @@
  * ウェブアプリとしてデプロイする。手順は setup/SETUP.md を参照。
  *
  * 登録があるたびに「登録」シートへ1行追加する。
+ * ご意見フォーム（type: "feedback"）は、あわせて「ご意見」シートにも項目ごとに1行追加する。
  */
 
 const SHEET_NAME = '登録';
 const HEADERS = ['受信日時', 'サービス', 'メールアドレス', '質問の回答', 'ページ', 'URLパラメータ', '参照元', '送信日時（端末）'];
+const FEEDBACK_SHEET = 'ご意見';
+const FEEDBACK_HEADERS = ['受信日時', 'サービス', 'メールアドレス', '会社名', '今の作り方', '欲しい機能', '専用版', 'ご意見', 'ページ', 'URLパラメータ'];
 const SERVICES = ['pet', 'kaitai', 'eisei', 'koumuin', 'receipt', 'taikyo', 'watch', 'shibou', 'renai', 'souzoku'];
 
 function doPost(e) {
@@ -32,6 +35,21 @@ function doPost(e) {
       clip_(data.referrer),
       clip_(data.sentAt),
     ]);
+    if (data.type === 'feedback' && data.feedback) {
+      const f = data.feedback;
+      getNamedSheet_(FEEDBACK_SHEET, FEEDBACK_HEADERS).appendRow([
+        new Date(),
+        service,
+        email,
+        clip_(f.company),
+        clip_(f.method),
+        clip_(f.wants),
+        clip_(f.custom),
+        clip_(f.comment, 2000),
+        clip_(data.page),
+        clip_(data.query),
+      ]);
+    }
     return json_({ ok: true });
   } finally {
     lock.releaseLock();
@@ -56,9 +74,20 @@ function getSheet_() {
   return sheet;
 }
 
-function clip_(v) {
+function getNamedSheet_(name, headers) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+    sheet.appendRow(headers);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+function clip_(v, max) {
   // 数式として解釈されないよう先頭の記号を無害化し、長さを制限する
-  const s = String(v == null ? '' : v).slice(0, 500);
+  const s = String(v == null ? '' : v).slice(0, max || 500);
   return /^[=+\-@]/.test(s) ? "'" + s : s;
 }
 

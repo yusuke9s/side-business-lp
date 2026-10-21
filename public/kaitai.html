@@ -128,6 +128,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .chips span:nth-child(-n+3) { background: var(--k); color: var(--y); }
 .hero-body .btn { margin-top: 28px; }
 .cta-note { font-size: 13px; margin-top: 14px; font-weight: 700; }
+.text-cta { display: inline-block; margin-top: 10px; font-size: 15px; color: var(--k); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.text-cta b { background: var(--k); color: var(--y); padding: 0 .3em; text-decoration: none; }
+.text-cta:hover b { background: #fff; color: var(--k); }
 
 .hero-vis { grid-area: vis; position: relative; align-self: center; margin: 24px 0 10px; }
 .frame { position: relative; border: 4px solid var(--k); box-shadow: 14px 14px 0 var(--k); transform: rotate(1.4deg); background: var(--k); }
@@ -357,6 +360,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 #signup-form label { display: block; font-weight: 700; font-size: 15px; margin-bottom: 18px; }
 #signup-form input, #signup-form select { display: block; width: 100%; margin-top: 8px; font: inherit; font-size: 16px; font-weight: 400; padding: 13px 14px; border: 3px solid var(--k); border-radius: 0; background: #fff; color: var(--k); }
 #signup-form input:focus, #signup-form select:focus { background: #fffbea; }
+#signup-form textarea { display: block; width: 100%; margin-top: 8px; font: inherit; font-size: 16px; font-weight: 400; padding: 12px 14px; border: 3px solid var(--k); border-radius: 0; background: #fff; color: var(--k); min-height: 120px; resize: vertical; line-height: 1.7; }
+#signup-form textarea:focus { background: #fffbea; }
+#signup-form .opt { font-weight: 400; font-size: 13px; color: #4a4636; margin-left: 6px; }
+#signup-form fieldset { border: 0; margin: 0 0 18px; padding: 0; }
+#signup-form legend { font-weight: 700; font-size: 15px; padding: 0; margin-bottom: 8px; }
+.wants { display: flex; flex-wrap: wrap; gap: 8px; }
+#signup-form .wants label { margin: 0; font-weight: 700; font-size: 14px; }
+#signup-form .wants label { position: relative; }
+.wants input { position: absolute; left: 0; top: 0; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.wants span { display: inline-block; border: 2px solid var(--k); padding: 6px 12px; background: #fff; cursor: pointer; line-height: 1.4; }
+.wants input:checked + span { background: var(--k); color: var(--y); }
+.wants input:focus-visible + span { outline: 3px solid var(--y); outline-offset: 2px; }
+#signup-form .custom { display: flex; gap: 12px; align-items: flex-start; background: var(--y); border: 3px solid var(--k); padding: 12px 14px; cursor: pointer; }
+#signup-form .custom input { width: 22px; height: 22px; margin: 3px 0 0; flex: none; accent-color: var(--k); }
+#signup-form .custom small { display: block; font-weight: 400; font-size: 13px; }
+.made { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; max-width: 34em; }
+.made li { display: flex; gap: 12px; align-items: flex-start; font-weight: 700; }
+.made li::before { content: ""; flex: none; width: 22px; height: 22px; margin-top: 3px; background: var(--y) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%231d1f22' stroke-width='3.6' stroke-linecap='square'/%3E%3C/svg%3E") center / 80% no-repeat; }
+.made-note { margin-top: 14px; font-size: 14px; color: #eee8d6; max-width: 34em; }
 #signup-form .btn { width: 100%; box-shadow: 6px 6px 0 var(--y), 6px 6px 0 3px var(--k); }
 #signup-form .btn:hover { box-shadow: 9px 9px 0 var(--y), 9px 9px 0 3px var(--k); }
 .err { color: #b3261e; font-weight: 700; font-size: 14px; margin: -6px 0 14px; }
@@ -454,8 +476,8 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
 <body>
 
 <div class="tape" aria-hidden="true"><div class="tape-track">
-  <span>KAITAI MITSUMORI MAKER</span><span>事前登録受付中</span><span>解体工事の見積書を、現場でつくる</span><span>木造・鉄骨・RC</span>
-  <span>KAITAI MITSUMORI MAKER</span><span>事前登録受付中</span><span>解体工事の見積書を、現場でつくる</span><span>木造・鉄骨・RC</span>
+  <span>KAITAI MITSUMORI MAKER</span><span>試作版を無料公開中</span><span>解体工事の見積書を、現場でつくる</span><span>木造・鉄骨・RC</span>
+  <span>KAITAI MITSUMORI MAKER</span><span>試作版を無料公開中</span><span>解体工事の見積書を、現場でつくる</span><span>木造・鉄骨・RC</span>
 </div></div>
 
 <header class="top"><div class="wrap top-in">
@@ -463,8 +485,8 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
     <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" fill="#1d1f22"/><path d="M10 8h14l6 6v18H10z" fill="#f2b705"/><path d="M24 8v6h6" fill="none" stroke="#1d1f22" stroke-width="2"/><path d="M14 19h12M14 23h12M14 27h7" stroke="#1d1f22" stroke-width="2.2"/><path d="M4 36 L12 30" stroke="#f2b705" stroke-width="3"/></svg>
     <span>解体見積メーカー</span>
   </a>
-  <span class="badge">事前登録受付中</span>
-  <a class="top-cta" href="#signup">先行登録（無料）</a>
+  <span class="badge">試作版を無料公開中</span>
+  <a class="top-cta" href="app/kaitai/">試作版を使う</a>
 </div></header>
 
 <main>
@@ -678,8 +700,9 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
     <div class="hero-body">
       <p class="sub">木造・鉄骨・RCの構造と坪数、付帯工事、産廃の品目を選ぶと、内訳つきの見積書PDFができあがります。現地調査のその場でスマホから作って、LINEで送れます。</p>
       <div class="chips" aria-label="選べる項目"><span>木造</span><span>鉄骨</span><span>RC</span><span>付帯工事</span><span>産廃の品目</span><span>運搬</span></div>
-      <a class="btn" href="#signup">先行登録する（無料）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></a>
-      <p class="cta-note">現在準備中です。公開時にメールでお知らせします。</p>
+      <a class="btn" href="app/kaitai/">試作版を無料で使う<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></a>
+      <p class="cta-note">登録不要。入力した内容は、お使いの端末の中にだけ保存されます。</p>
+      <a class="text-cta" href="#signup">ご意見をくださった方に、<b>御社専用版を無料でお作りします</b></a>
     </div>
   </div>
 </section>
@@ -926,7 +949,7 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
     <p class="price-note">いずれも税込・予定価格です。</p>
     <div class="perk rv">
       <span class="kico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M208,128v72a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V128Z" opacity="0.2"/><path d="M216,72H180.92c.39-.33.79-.65,1.17-1A29.53,29.53,0,0,0,192,49.57,32.62,32.62,0,0,0,158.44,16,29.53,29.53,0,0,0,137,25.91a54.94,54.94,0,0,0-9,14.48,54.94,54.94,0,0,0-9-14.48A29.53,29.53,0,0,0,97.56,16,32.62,32.62,0,0,0,64,49.57,29.53,29.53,0,0,0,73.91,71c.38.33.78.65,1.17,1H40A16,16,0,0,0,24,88v32a16,16,0,0,0,16,16v64a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM149,36.51a13.69,13.69,0,0,1,10-4.5h.49A16.62,16.62,0,0,1,176,49.08a13.69,13.69,0,0,1-4.5,10c-9.49,8.4-25.24,11.36-35,12.4C137.7,60.89,141,45.5,149,36.51Zm-64.09.36A16.63,16.63,0,0,1,96.59,32h.49a13.69,13.69,0,0,1,10,4.5c8.39,9.48,11.35,25.2,12.39,34.92-9.72-1-25.44-4-34.92-12.39a13.69,13.69,0,0,1-4.5-10A16.6,16.6,0,0,1,84.87,36.87ZM40,88h80v32H40Zm16,48h64v64H56Zm144,64H136V136h64Zm16-80H136V88h80v32Z"/></svg></span>
-      <p><b>先行登録の特典</b>先行登録の方は、公開後14日間無料でお試しいただけます。</p>
+      <p><b>ご意見をくださった方へ</b>製品版の公開後、14日間無料でお試しいただけます。試作版の機能は、ずっと無料で使えます。</p>
     </div>
   </div>
 </section>
@@ -955,9 +978,15 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
 <section class="sec block signup dark grid-bg cut-t" id="signup"><div class="wrap signup-grid">
   <div>
     <div class="rv">
-      <p class="kicker" style="color:var(--y)">ENTRY</p>
-      <h2 class="h2 sec-title"><span class="lb">先行登録（無料）</span></h2>
-      <p class="lead sec-lead">メールアドレスを登録すると、公開時にお知らせします。登録しても料金はかかりません。</p>
+      <p class="kicker" style="color:var(--y)">VOICE</p>
+      <h2 class="h2 sec-title"><span class="lb">ご意見をください</span></h2>
+      <p class="lead sec-lead">試作版を無料で公開しています。使ってみて「ここがこうなら使う」「この機能があれば払う」を教えてください。ご意見をくださった方には、<b>御社専用の見積メーカーを無料でお作りします</b>（先着10社）。</p>
+      <ul class="made">
+        <li>御社の単価・項目・産廃の係数を最初から入れておきます</li>
+        <li>会社名・住所・登録番号を入れた見積書にします</li>
+        <li>今お使いの見積書の書式に、できるだけ寄せます</li>
+      </ul>
+      <p class="made-note">単価などの情報は公開しません。専用版は、御社だけにお送りするリンクでお渡しします。今お使いの見積書（Excelや写真）は、こちらからの返信メールに添付してください。</p>
     </div>
     <!-- 写真差し替え候補: 解体後に新しい家が建つ・更地のイメージ写真 -->
     <div class="close-vis rv" style="--d:.15s">
@@ -999,14 +1028,30 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
   <div class="form-card rv" style="--d:.1s">
     <form class="card" id="signup-form" novalidate>
       <label for="signup-email">メールアドレス<input id="signup-email" type="email" autocomplete="email" placeholder="name@example.com" required></label>
-      <label for="signup-q">主な工事<select id="signup-q"><option value="">選んでください（任意）</option><option>解体工事</option><option>外壁・屋根塗装</option><option>リフォーム</option><option>その他</option></select></label>
+      <label for="signup-company">会社名・屋号<span class="opt">任意</span><input id="signup-company" type="text" autocomplete="organization" maxlength="60" placeholder="例：○○解体工業"></label>
+      <label for="signup-q">今の見積書の作り方<span class="opt">任意</span><select id="signup-q"><option value="">選んでください</option><option>Excel</option><option>手書き</option><option>見積・請求書ソフト</option><option>事務員や家族に頼んでいる</option><option>その他</option></select></label>
+      <fieldset>
+        <legend>あったら使う機能<span class="opt">いくつでも</span></legend>
+        <div class="wants" id="signup-wants">
+          <label><input type="checkbox" value="LINEで送る"><span>LINEで送る</span></label>
+          <label><input type="checkbox" value="ネットに保存（消えない）"><span>ネットに保存（消えない）</span></label>
+          <label><input type="checkbox" value="ロゴ・社印"><span>ロゴ・社印</span></label>
+          <label><input type="checkbox" value="Excel単価の取り込み"><span>Excelの単価を取り込む</span></label>
+          <label><input type="checkbox" value="現場写真"><span>現場写真を付ける</span></label>
+          <label><input type="checkbox" value="社員と共有"><span>社員と共有</span></label>
+          <label><input type="checkbox" value="入金の管理"><span>受注・入金の管理</span></label>
+          <label><input type="checkbox" value="マニフェスト"><span>産廃のマニフェスト</span></label>
+        </div>
+      </fieldset>
+      <label for="signup-comment">ご意見・こうなったら使う<span class="opt">任意</span><textarea id="signup-comment" maxlength="1500" placeholder="例：重機回送を距離で計算したい。見積書に工期の欄がほしい。"></textarea></label>
+      <label class="custom" for="signup-custom"><input id="signup-custom" type="checkbox" checked><span>御社専用版を作ってほしい（無料）<small>こちらからメールでご連絡し、単価や書式を伺います。</small></span></label>
       <p class="err" id="signup-error" role="alert" hidden></p>
-      <button class="cta btn" type="submit">先行登録する（無料）</button>
-      <p class="privacy">ご登録のメールアドレスは、このサービスの公開のご案内にのみ使用します。</p>
+      <button class="cta btn" type="submit">送る（無料）</button>
+      <p class="privacy">ご入力の内容は、ご返信・専用版の作成・サービスの改善にのみ使用します。<a href="privacy.html" style="color:inherit">プライバシーポリシー</a></p>
     </form>
     <div class="thanks" id="signup-thanks" hidden role="status">
-      <h3>ご登録ありがとうございます</h3>
-      <p>公開の準備ができしだい、メールでお知らせします。</p>
+      <h3>ありがとうございます</h3>
+      <p>いただいたご意見はすべて読みます。専用版をご希望の方には、info@site-forge.jp から折り返しご連絡します。</p>
       <small id="signup-preview" hidden>確認用のページのため、今回の入力は送信されていません。</small>
     </div>
   </div>
@@ -1019,7 +1064,7 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
   <span><a href="privacy.html" style="color:inherit">プライバシーポリシー</a></span>
 </div></footer>
 
-<div class="sticky" id="sticky"><a class="btn on-dark" href="#signup">先行登録する（無料）<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></a></div>
+<div class="sticky" id="sticky"><a class="btn on-dark" href="#signup">御社専用版を無料でつくる<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3"/></svg></a></div>
 
 <script>
 /* 演出：スクロール出現・図面の線・見積書のプリントとカウントアップ・追従ボタン */
@@ -1086,7 +1131,13 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
       return;
     }
     err.hidden = true;
-    var data = { service: "kaitai", email: email, answer: document.getElementById("signup-q").value, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
+    var val = function (id) { return document.getElementById(id).value.trim(); };
+    var wants = Array.prototype.map.call(document.querySelectorAll("#signup-wants input:checked"), function (c) { return c.value; });
+    var custom = document.getElementById("signup-custom").checked;
+    var fb = { company: val("signup-company"), method: val("signup-q"), wants: wants.join("、"), custom: custom ? "希望" : "", comment: val("signup-comment") };
+    // 受付側が古い版でも残るよう、要点を1つの文にまとめて answer にも入れる（500字まで）
+    var summary = ["[ご意見]", fb.company && "会社:" + fb.company, fb.method && "作り方:" + fb.method, fb.wants && "欲しい:" + fb.wants, custom && "専用版:希望", fb.comment && "意見:" + fb.comment].filter(Boolean).join(" / ");
+    var data = { service: "kaitai", type: "feedback", feedback: fb, email: email, answer: summary, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
     var done = function () { form.hidden = true; thanks.hidden = false; if (window.trackLead) window.trackLead("kaitai"); };
     if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
     var btn = form.querySelector("button");
@@ -1095,7 +1146,7 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
     fetch(FORM_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) })
       .then(function () { done(); })
       .catch(function () {
-        btn.disabled = false; btn.textContent = "先行登録する（無料）";
+        btn.disabled = false; btn.textContent = "送る（無料）";
         err.textContent = "送信できませんでした。通信状況を確認して、もう一度お試しください。";
         err.hidden = false;
       });
