@@ -328,6 +328,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .plate .pl { font-weight: 700; font-size: 16px; display: inline-block; background: var(--k); color: var(--y); padding: 2px 12px; }
 .plate .pv { display: block; font-family: var(--fd); font-size: clamp(42px, 6vw, 66px); line-height: 1.15; margin-top: 12px; letter-spacing: -.01em; }
 .plate .pv small { font-size: .4em; margin-left: 4px; }
+.plate:hover { transform: none; }
+.plate.free { background: #fff; border-color: #fff; }
+.plate .pv .yr { display: block; font-family: var(--fb); font-weight: 700; font-size: 15px; letter-spacing: 0; margin-top: 2px; }
+.plate .pfor { margin-top: 10px; font-weight: 700; font-size: 15px; }
+.plan-list { list-style: none; padding: 14px 0 0; margin: 14px 0 0; border-top: 3px solid var(--k); display: grid; gap: 8px; }
+.plan-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; font-weight: 700; line-height: 1.6; }
+.plan-list li::before { content: ""; flex: none; width: 18px; height: 18px; margin-top: 4px; background: var(--k) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23f2b705' stroke-width='3.6' stroke-linecap='square'/%3E%3C/svg%3E") center / 80% no-repeat; }
+.plan-list li.all { font-weight: 400; }
+.plan-list li small { display: block; font-weight: 400; font-size: 13px; }
+.plate .soon { display: inline-block; margin-left: 8px; font-size: 12px; font-weight: 700; border: 2px solid var(--k); padding: 0 8px; vertical-align: middle; }
 .price-note { margin-top: 18px; font-size: 14px; color: #eee8d6; }
 .perk { position: relative; margin-top: 30px; max-width: 900px; display: flex; gap: 18px; align-items: center; background: #fff; color: var(--k); border: 10px solid transparent; border-image: repeating-linear-gradient(-45deg, var(--y) 0 10px, var(--k) 10px 20px) 10; padding: 18px 22px; font-weight: 700; font-size: 17px; }
 .perk .kico { --s: 66px; animation: bob 3s ease-in-out infinite; }
@@ -943,10 +953,31 @@ footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
       <h2 class="h2"><span class="lb">料金</span></h2>
     </div>
     <div class="price-wrap">
-      <div class="plate rv" style="--d:.05s"><span class="pl">月額</span><span class="pv">4,980<small>円</small></span></div>
-      <div class="plate rv" style="--d:.18s"><span class="pl">年払い</span><span class="pv">49,800<small>円</small></span></div>
+      <div class="plate free rv" style="--d:.05s">
+        <span class="pl">無料プラン</span><span class="pv">0<small>円</small><span class="yr">今すぐ使えます・登録不要</span></span>
+        <ul class="plan-list">
+          <li>構造・坪数から内訳つきの見積書</li>
+          <li>産廃の数量を自動で概算</li>
+          <li>A4で印刷・PDFで保存</li>
+          <li>見積書を請求書に変換（登録番号つき）</li>
+          <li>自社の単価を登録</li>
+          <li><span>見積の一覧・複製<small>データはお使いの端末にだけ保存されます</small></span></li>
+        </ul>
+      </div>
+      <div class="plate rv" style="--d:.18s">
+        <span class="pl">有料プラン</span><span class="soon">準備中</span><span class="pv">1,480<small>円／月</small><span class="yr">年払いなら14,800円（2か月分お得）</span></span>
+        <ul class="plan-list">
+          <li class="all">無料プランの機能すべてに加えて</li>
+          <li><span>ネットに保存<small>機種変更しても消えない。スマホとパソコンで同じデータ</small></span></li>
+          <li>見積書をLINE・メールでそのまま送る</li>
+          <li>ロゴ・社印の入った見積書</li>
+          <li>Excelの単価表を取り込む</li>
+          <li>現場写真を見積に付ける</li>
+          <li>受注・請求・入金の状況を一覧で管理</li>
+        </ul>
+      </div>
     </div>
-    <p class="price-note">いずれも税込・予定価格です。</p>
+    <p class="price-note">有料プランの料金は税込・予定価格です。機能はご意見の多いものから順に作ります。</p>
     <div class="perk rv">
       <span class="kico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 256 256" fill="currentColor"><path d="M208,128v72a8,8,0,0,1-8,8H56a8,8,0,0,1-8-8V128Z" opacity="0.2"/><path d="M216,72H180.92c.39-.33.79-.65,1.17-1A29.53,29.53,0,0,0,192,49.57,32.62,32.62,0,0,0,158.44,16,29.53,29.53,0,0,0,137,25.91a54.94,54.94,0,0,0-9,14.48,54.94,54.94,0,0,0-9-14.48A29.53,29.53,0,0,0,97.56,16,32.62,32.62,0,0,0,64,49.57,29.53,29.53,0,0,0,73.91,71c.38.33.78.65,1.17,1H40A16,16,0,0,0,24,88v32a16,16,0,0,0,16,16v64a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM149,36.51a13.69,13.69,0,0,1,10-4.5h.49A16.62,16.62,0,0,1,176,49.08a13.69,13.69,0,0,1-4.5,10c-9.49,8.4-25.24,11.36-35,12.4C137.7,60.89,141,45.5,149,36.51Zm-64.09.36A16.63,16.63,0,0,1,96.59,32h.49a13.69,13.69,0,0,1,10,4.5c8.39,9.48,11.35,25.2,12.39,34.92-9.72-1-25.44-4-34.92-12.39a13.69,13.69,0,0,1-4.5-10A16.6,16.6,0,0,1,84.87,36.87ZM40,88h80v32H40Zm16,48h64v64H56Zm144,64H136V136h64Zm16-80H136V88h80v32Z"/></svg></span>
       <p><b>ご意見をくださった方へ</b>製品版の公開後、14日間無料でお試しいただけます。試作版の機能は、ずっと無料で使えます。</p>
