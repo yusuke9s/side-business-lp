@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>B2クラウドの外部データ取り込み：CSVの作り方とエラーの直し方</title>
+<meta name="description" content="ヤマトB2クラウドの「外部データから発行」で使うCSV・Excelの作り方と、取り込みエラーの直し方。必須項目、住所の文字数、使えない漢字（髙・﨑など）、請求先コード、「取り込みに失敗しました」の原因をヤマトのFAQから整理。">
+<link rel="canonical" href="https://lp.site-forge.jp/guide/b2-cloud-csv">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="site-forge.jp 無料ツールのガイド">
+<meta property="og:title" content="B2クラウドの外部データ取り込み：CSVの作り方とエラーの直し方">
+<meta property="og:description" content="必須項目、住所の文字数、使えない漢字、請求先エラー、「取り込みに失敗しました」の原因と直し方。">
+<meta property="og:url" content="https://lp.site-forge.jp/guide/b2-cloud-csv">
+<meta property="article:published_time" content="2026-10-29">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#2a2017">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M8 4h18l8 8v24H8z' fill='%23d9b680' stroke='%232a2017' stroke-width='2.5'/%3E%3Ccircle cx='17' cy='12' r='3' fill='%23fffcf5' stroke='%232a2017' stroke-width='2'/%3E%3Cpath d='M13 21h14M13 26h14M13 31h9' stroke='%232a2017' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDGothic:wght@700&family=Yusei+Magic&display=swap">
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="/tracking-config.js"></script>
+<script src="/tracking.js"></script>
+<link rel="stylesheet" href="/guide/guide.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "B2クラウドの外部データ取り込み：CSVの作り方とエラーの直し方",
+  "description": "ヤマトB2クラウドの「外部データから発行」で使うCSV・Excelの作り方と、取り込みエラーの直し方。",
+  "datePublished": "2026-10-29",
+  "dateModified": "2026-10-29",
+  "inLanguage": "ja",
+  "author": { "@type": "Person", "name": "柴田裕将" },
+  "publisher": { "@type": "Person", "name": "柴田裕将" },
+  "mainEntityOfPage": "https://lp.site-forge.jp/guide/b2-cloud-csv"
+}
+</script>
+</head>
+<body class="t-okuri">
+<a class="skip" href="#main">本文へ移動</a>
+<header class="gh"><div class="wrap">
+  <a class="gh-logo" href="/guide/">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 4h18l8 8v24H8z" fill="#d9b680" stroke="#2a2017" stroke-width="2.5"/><circle cx="17" cy="12" r="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/><path d="M13 21h14M13 26h14M13 31h9" stroke="#2a2017" stroke-width="2.5"/></svg>
+    <span><b>贈答の発送ガイド</b><small>送り状・お歳暮の準備</small></span>
+  </a>
+  <a class="gh-tool" href="/app/okurijo/">贈答送り状メーカー</a>
+</div></header>
+
+<div class="wrap">
+<nav class="crumb" aria-label="現在の位置"><ol><li><a href="/guide/">ガイド一覧</a></li><li>贈答の発送</li><li aria-current="page">B2クラウドのCSVとエラー</li></ol></nav>
+</div>
+
+<main id="main"><div class="wrap">
+<article class="art">
+  <p class="kicker">ヤマト B2クラウド</p>
+  <h1>B2クラウドの外部データ取り込み：CSVの作り方とエラーの直し方</h1>
+  <p class="lede">B2クラウドの「外部データから発行」は、表のデータから送り状をまとめて作れる便利な機能です。一方で、住所のスペースや1文字の漢字で取り込めないことがあります。ファイルの作り方と、エラーが出たときの直し方を、ヤマト運輸のFAQとテンプレートの説明をもとにまとめました。</p>
+  <p class="byline"><span>公開日 <time datetime="2026-10-29">2026年10月29日</time></span><span>運営：柴田裕将</span></p>
+
+  <div class="answer">
+    <p class="lbl">先に結論</p>
+    <ul>
+      <li>いちばん確実なのは、ヤマトの<strong>基本レイアウトテンプレート</strong>の並びどおりに入れることです。<strong>列の削除や並べ替えはしない</strong>でください。</li>
+      <li>住所は<strong>全角32文字まで</strong>（都道府県4＋市区郡町村12＋町・番地16）。<strong>建物名は別の列</strong>に分け、住所の途中にスペースを入れません。</li>
+      <li><strong>JIS第一・第二水準にない文字</strong>（「髙」「﨑」「①」「㈱」など）は取り込めないことがあります。</li>
+      <li>「請求先」のエラーは、<strong>請求先顧客コード・請求先分類コード・運賃管理番号</strong>を「1件ずつ発行」の請求先欄で確かめて入れれば直ります。</li>
+      <li>Excelで「取り込みに失敗しました」と出たら、<strong>関数・セルの結合・セル内の改行・パスワード</strong>を疑います。</li>
+    </ul>
+  </div>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <p id="toc-h">この記事の目次</p>
+    <ol>
+      <li><a href="#two">取り込み方は2つ（基本レイアウトと新規レイアウト）</a></li>
+      <li><a href="#make">基本レイアウトのファイルの作り方</a></li>
+      <li><a href="#steps">取り込みの手順</a></li>
+      <li><a href="#errors">エラー別の直し方</a></li>
+      <li><a href="#chars">使えない漢字・記号の置きかえ</a></li>
+      <li><a href="#excel">ExcelやCSVで起きやすいこと</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="two"><span class="no">1</span>取り込み方は2つ（基本レイアウトと新規レイアウト）</h2>
+  <div class="tbl" role="region" aria-label="基本レイアウトと新規レイアウトの違い" tabindex="0">
+    <table>
+      <thead><tr><th></th><th>基本レイアウト</th><th>新規レイアウト</th></tr></thead>
+      <tbody>
+        <tr><th>ファイル</th><td>ヤマトのテンプレートの並びに合わせる</td><td>自分の表のままでよい</td></tr>
+        <tr><th>B2クラウドでの設定</th><td>いらない</td><td>列と項目の「紐付け」がいる（保存すれば次から不要）</td></tr>
+        <tr><th>向いている人</th><td>新しく表を作る人</td><td>すでに顧客台帳や注文表がある人</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>この記事では主に基本レイアウトで説明します。新規レイアウトの紐付けのやり方は、<a href="/guide/line-chumon-okurijo#mapping">自分の表のまま取り込む設定</a>で説明しています。どちらでも、文字数や使える文字のきまりは同じです。</p>
+
+  <h2 id="make"><span class="no">2</span>基本レイアウトのファイルの作り方</h2>
+  <p>ヤマトビジネスメンバーズのFAQから「基本レイアウトテンプレート」（Excel）をダウンロードします。1行目に項目名と入力の説明があり、95の列が並んでいます。背景の色で、入れるべき列がわかるようになっています。</p>
+  <ul>
+    <li><strong>青</strong>：必須の項目</li>
+    <li><strong>水色</strong>：必須ではない項目（必要なら入れる）</li>
+    <li><strong>灰色</strong>：入力しない項目</li>
+  </ul>
+  <p>使わない列があっても、<strong>列を消したり並べ替えたりはしない</strong>でください（ヤマトのFAQに明記されています）。</p>
+  <h3>宅急便（発払い）で必ず入れる項目</h3>
+  <p>テンプレートで「宅急便_必須項目」とされている列です。データ交換規約にある最大文字数も並べました。</p>
+  <div class="tbl wide kw" role="region" aria-label="宅急便の必須項目と最大文字数" tabindex="0">
+    <table>
+      <thead><tr><th>列</th><th>項目</th><th>最大文字数・形</th><th>入れ方の例</th></tr></thead>
+      <tbody>
+        <tr><td class="c">B</td><th>送り状種類</th><td>半角数字1文字</td><td><code>0</code>（発払い）</td></tr>
+        <tr><td class="c">E</td><th>出荷予定日</th><td>半角10文字</td><td><code>2026/12/08</code></td></tr>
+        <tr><td class="c">I</td><th>お届け先電話番号</th><td>半角数字15文字（ハイフン含む）</td><td><code>090-0000-1234</code></td></tr>
+        <tr><td class="c">K</td><th>お届け先郵便番号</th><td>半角8文字（ハイフンなし7文字も可）</td><td><code>154-0001</code></td></tr>
+        <tr><td class="c">L</td><th>お届け先住所</th><td>全角32文字／半角64文字</td><td>東京都世田谷区池尻2-31-24</td></tr>
+        <tr><td class="c">P</td><th>お届け先名</th><td>全角16文字／半角32文字</td><td>山本由美子</td></tr>
+        <tr><td class="c">T</td><th>ご依頼主電話番号</th><td>半角数字15文字（ハイフン含む）</td><td><code>0172-00-0000</code></td></tr>
+        <tr><td class="c">V</td><th>ご依頼主郵便番号</th><td>半角8文字（ハイフンなし7文字も可）</td><td><code>036-0000</code></td></tr>
+        <tr><td class="c">W</td><th>ご依頼主住所</th><td>全角32文字／半角64文字</td><td>（贈り主の住所）</td></tr>
+        <tr><td class="c">Y</td><th>ご依頼主名</th><td>全角16文字／半角32文字</td><td>（贈り主の名前）</td></tr>
+        <tr><td class="c">AB</td><th>品名１</th><td>全角25文字／半角50文字</td><td>りんご5kg</td></tr>
+        <tr><td class="c">AN</td><th>請求先顧客コード</th><td>半角数字（12文字まで）</td><td>「1件ずつ発行」の請求先欄で確認</td></tr>
+        <tr><td class="c">AP</td><th>運賃管理番号</th><td>半角数字2文字</td><td><code>01</code> など（同上）</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="scroll-hint">表は横に動かせます。</p>
+  <p>列の記号（A、B、…）はテンプレートをExcelで開いたときの位置です。電話番号・郵便番号・住所の例は架空のものです。</p>
+  <h3>よく使う任意の項目</h3>
+  <ul>
+    <li><strong>クール区分</strong>（C列）：<code>0</code>か空白＝通常、<code>1</code>＝冷凍、<code>2</code>＝冷蔵。発払い・コレクト・着払いのときだけ使えます。</li>
+    <li><strong>お届け予定日</strong>（F列）：<code>2026/12/10</code> の形。空欄なら印字されません。</li>
+    <li><strong>配達時間帯</strong>（G列）：<code>0812</code>＝午前中、<code>1416</code>＝14〜16時、<code>1618</code>、<code>1820</code>、<code>1921</code>。12〜14時はありません。</li>
+    <li><strong>アパートマンション名</strong>（M列）：全角16文字／半角32文字。</li>
+    <li><strong>荷扱い１</strong>（AE列）：全角10文字。「ナマモノ」など。</li>
+    <li><strong>発行枚数</strong>（AL列）：同じ届け先に複数個口を送るとき。</li>
+  </ul>
+  <h3>住所の文字数の考え方</h3>
+  <p>B2クラウドの住所欄は、都道府県・市区郡町村・町番地を合わせて全角32文字までです。マンション名まで入れると、すぐにこえてしまいます。</p>
+  <figure class="fig fig-n">
+    <svg viewBox="0 0 340 214" role="img" aria-labelledby="f2t f2d">
+      <title id="f2t">B2クラウドの住所欄の文字数</title>
+      <desc id="f2d">お届け先住所は都道府県4文字、市区郡町村12文字、町・番地16文字の合計全角32文字まで。建物名は別の欄に全角16文字まで。</desc>
+      <g font-size="13" fill="#2a2017">
+        <text x="10" y="20" font-weight="700" font-size="14">お届け先住所（全角32文字まで）</text>
+        <rect x="10" y="30" width="40" height="34" fill="#b5381d" stroke="#2a2017" stroke-width="1.2"/>
+        <rect x="50" y="30" width="120" height="34" fill="#ead9b6" stroke="#2a2017" stroke-width="1.2"/>
+        <rect x="170" y="30" width="160" height="34" fill="#fffcf5" stroke="#2a2017" stroke-width="1.2"/>
+        <g stroke="#2a2017" stroke-opacity=".18">
+          <path d="M20 30v34M30 30v34M40 30v34M60 30v34M70 30v34M80 30v34M90 30v34M100 30v34M110 30v34M120 30v34M130 30v34M140 30v34M150 30v34M160 30v34M180 30v34M190 30v34M200 30v34M210 30v34M220 30v34M230 30v34M240 30v34M250 30v34M260 30v34M270 30v34M280 30v34M290 30v34M300 30v34M310 30v34M320 30v34"/>
+        </g>
+        <text x="30" y="52" text-anchor="middle" fill="#fff" font-weight="700" font-size="12">4</text>
+        <text x="110" y="52" text-anchor="middle" font-weight="700">12</text>
+        <text x="250" y="52" text-anchor="middle" font-weight="700">16</text>
+        <path d="M30 66v12M110 66v12M250 66v12" stroke="#2a2017" stroke-width="1.2"/>
+        <text x="10" y="92">都道府県</text>
+        <text x="80" y="92">市区郡町村</text>
+        <text x="215" y="92">町・番地</text>
+        <text x="10" y="132" font-weight="700" font-size="14">アパートマンション名（別の欄・全角16文字まで）</text>
+        <rect x="10" y="142" width="160" height="34" fill="#fffcf5" stroke="#2a2017" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <g stroke="#2a2017" stroke-opacity=".18"><path d="M20 142v34M30 142v34M40 142v34M50 142v34M60 142v34M70 142v34M80 142v34M90 142v34M100 142v34M110 142v34M120 142v34M130 142v34M140 142v34M150 142v34M160 142v34"/></g>
+        <text x="90" y="164" text-anchor="middle" font-weight="700">16</text>
+        <text x="10" y="204" fill="#4d3e2d" font-size="12">1マス＝全角1文字（半角なら2文字分）</text>
+      </g>
+    </svg>
+    <figcaption>図：お届け先住所と建物名の文字数（データ交換規約・FAQ 1002より）</figcaption>
+  </figure>
+
+  <h2 id="steps"><span class="no">3</span>取り込みの手順</h2>
+  <ol class="steps">
+    <li>B2クラウドのメニューから<kbd>外部データから発行</kbd>を開きます。</li>
+    <li>「取込みパターン」で<kbd>基本レイアウト (csv,xls,xlsx)</kbd>を選びます。</li>
+    <li><kbd>ファイル選択</kbd>で作ったファイルを選び、<kbd>取込み開始</kbd>を押します。</li>
+    <li>「取込み結果」画面では、修正が必要なデータと、確認が必要なデータに色のついた印がつきます。修正が必要なデータは、直すまで発行できません。<kbd>編集</kbd>で1件ずつ直すか、出荷予定日や請求先のように全部同じものは、<kbd>選択</kbd>にチェックを入れて<kbd>複数行変更</kbd>でまとめて直せます。</li>
+    <li>エラーが消えたら、発行するデータを選んで<kbd>印刷内容の確認へ</kbd>→<kbd>発行開始</kbd>。</li>
+  </ol>
+  <div class="tip">
+    <b>はじめは1件で試す</b>
+    <p>最初は届け先1件だけのファイルで取り込み、印刷の向きや印字の位置まで確かめてから全件を入れると、やり直しが少なくて済みます。B2クラウドには「テスト印刷」もあります。</p>
+  </div>
+
+  <h2 id="errors"><span class="no">4</span>エラー別の直し方</h2>
+
+  <h3>「取り込みに失敗しました。指定したファイルを確認してください。」</h3>
+  <p>Excelファイルを取り込んだときに出るエラーです。ヤマトのFAQでは、次の原因が挙げられています。</p>
+  <ul>
+    <li>ファイルに<strong>パスワード</strong>がかかっている → パスワードを外す</li>
+    <li><strong>関数</strong>（数式）が入っている → 新しいExcelファイルに「値貼り付け」してから取り込む</li>
+    <li>ファイルが壊れている → 同じく新しいファイルに「値貼り付け」する</li>
+    <li>1件のデータが<strong>複数行</strong>になっている、<strong>セルの結合</strong>がある、<strong>セルの中で改行</strong>している</li>
+    <li>データが縦（列ごと）に並んでいる</li>
+  </ul>
+  <p>あわせて、取り込めるのは<strong>いちばん左のシートだけ</strong>です。2枚目以降のシートに入力したデータは読まれません。</p>
+
+  <h3>住所欄がエラーになる</h3>
+  <p>ヤマトのFAQ（1002）が挙げている原因と直し方です。</p>
+  <div class="tbl" role="region" aria-label="住所欄エラーの原因と直し方" tabindex="0">
+    <table>
+      <thead><tr><th>原因</th><th>直し方</th></tr></thead>
+      <tbody>
+        <tr><th>郵便番号や住所が誤っている</th><td>日本郵便の住所データと照らし合わせる。ビルや大学の事業所個別の郵便番号には対応していない</td></tr>
+        <tr><th>表記が日本郵便と違う</th><td>例：横浜市「保土ケ谷区」を「保土ヶ谷区」（小さいヶ）と書くとエラーになることがある</td></tr>
+        <tr><th>住所の途中にスペース</th><td>「東京都　千代田区…」のスペースを消す。スペースより後ろがエラーになる</td></tr>
+        <tr><th>文字数オーバー</th><td>マンション名を別の列（アパートマンション名）に移す</td></tr>
+        <tr><th>紐付けの誤り（新規レイアウト）</th><td>住所以外の列が住所に入っていないか、取込みパターンを見直す</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>同じFAQには、建物名を同じ欄に書く場合は「町・番地のあとに全角スペースを入れる」方法も書かれています（アパートマンション名の欄に入力があれば、そちらが優先されます）。ただ、まちがいが少ないのは、はじめから建物名を別の列に分けておくやり方です。</p>
+
+  <h3>「請求先が設定されていません」など、請求先のエラー</h3>
+  <p>外部データから発行するとき、請求先は必須です。テンプレートでは次の3つの列に入れます。</p>
+  <ul>
+    <li><strong>AN列</strong> 請求先顧客コード（半角数字）</li>
+    <li><strong>AO列</strong> 請求先分類コード（半角数字3桁。ない場合は空欄）</li>
+    <li><strong>AP列</strong> 運賃管理番号（半角数字2桁）</li>
+  </ul>
+  <p>値は、B2クラウドの<kbd>1件ずつ発行</kbd>を開き、「基本情報」の「請求先」欄に出ている数字で確かめます。ヤマトのFAQの例では、ログインに使うお客様コードのハイフンのあとが2桁なら分類コードは空欄・運賃管理番号は <code>01</code>、ハイフンのあとが「3桁＋2桁」なら3桁が分類コードになります。自分の番号は必ず画面で確かめてください。</p>
+  <p>新規レイアウトや保存した取込みパターンを使っている場合は、レイアウト項目の「ご請求先顧客コード」などを選んで<kbd>固定値入力</kbd>すれば、全部の行に同じ値が入ります。</p>
+
+  <h3>文字数オーバー（品名・名前など）</h3>
+  <p>文字数のきまりは「全角／半角」の両方で書かれています（例：お届け先名は全角16文字／半角32文字）。全角と半角がまざると数えにくいので、迷ったら全角で数えて上限に収まるようにします。新規レイアウトでは、レイアウト項目をクリックすると画面の上で文字数の制限を確かめられます。</p>
+
+  <h2 id="chars"><span class="no">5</span>使えない漢字・記号の置きかえ</h2>
+  <p>ヤマトのFAQでは「JIS第一水準、第二水準以外のデータ」は正常に取り込めず、一部の環境依存文字もエラーになることがある、とされています。お名前や住所でよく出てくるのは次のような文字です。</p>
+  <div class="tbl" role="region" aria-label="置きかえが必要になりやすい文字" tabindex="0">
+    <table>
+      <thead><tr><th>文字</th><th>どんな文字か</th><th>置きかえの例</th></tr></thead>
+      <tbody>
+        <tr><th class="c">髙</th><td>はしごだか（環境依存文字）</td><td>高</td></tr>
+        <tr><th class="c">﨑</th><td>たつさき（環境依存文字）</td><td>崎</td></tr>
+        <tr><th class="c">德</th><td>環境依存文字</td><td>徳</td></tr>
+        <tr><th class="c">𠮷</th><td>つちよし（Shift_JISにない文字）</td><td>吉</td></tr>
+        <tr><th class="c">① ②</th><td>丸数字（環境依存文字）</td><td>1　2</td></tr>
+        <tr><th class="c">㈱ ㈲</th><td>かっこ付きの略号（環境依存文字）</td><td>（株）（有）</td></tr>
+        <tr><th class="c">Ⅰ Ⅱ</th><td>ローマ数字（環境依存文字）</td><td>I　II</td></tr>
+        <tr><th class="c">㎏</th><td>単位の記号（環境依存文字）</td><td>kg</td></tr>
+        <tr><th class="c">♡ や絵文字</th><td>Shift_JISにない記号</td><td>消す</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>人の名前の漢字を変えることになるので、気になる場合は、その1件だけ手書きの送り状にする方法もあります。Windowsの日本語入力で、変換候補に「環境依存」と表示される文字は要注意、と覚えておくと見つけやすくなります。</p>
+
+  <h2 id="excel"><span class="no">6</span>ExcelやCSVで起きやすいこと</h2>
+  <h3>先頭の0が消える・日付の形が変わる</h3>
+  <p>CSVをExcelで開くと、郵便番号や電話番号の先頭の0が消えたり、<code>2026/12/08</code> が別の形に変わったりすることがあります。郵便番号・電話番号・日付の列は、入力する前にセルの書式を「文字列」にしておきます。</p>
+  <h3>CSVの文字化け</h3>
+  <p>B2クラウドが受け付けるCSVの文字コードは、今回確認したヤマトの公開資料（FAQ・データ交換規約）には書かれていませんでした。CSVで文字化けする場合は、テンプレートのExcel（xls・xlsx）のまま取り込む方法があります（基本レイアウトはcsv・xls・xlsxのどれでも取り込めます）。</p>
+  <h3>1行目の見出し</h3>
+  <p>基本レイアウトのテンプレートは1行目が見出しです。新規レイアウトの場合は「取込み開始行」の初期値が1行目なので、自分の表に見出しの行があるときは<strong>2行目</strong>に変えます。</p>
+
+  <aside class="tool" aria-labelledby="tool-h">
+    <p class="t-lbl">取り込む前にまとめて確かめたいとき</p>
+    <p class="t-name" id="tool-h">贈答送り状メーカー<span class="nb">（無料）</span></p>
+    <p>届け先を入れると、B2クラウドの基本レイアウト（95列）の並びでCSVを作るブラウザのツールです。取り込む前に、次のことを知らせます。</p>
+    <ul>
+      <li>JIS第一・第二水準にない文字（置きかえの候補つき）</li>
+      <li>住所・名前・品名の文字数オーバー、住所のスペース</li>
+      <li>郵便番号・電話番号の書き間違い、請求先顧客コードの入れ忘れ</li>
+    </ul>
+    <a class="btn" href="/app/okurijo/">送り状メーカーでB2用CSVを作る<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
+    <p class="fine">登録は不要。入力した内容は端末のブラウザの中にだけ保存されます。はじめは1件だけで取り込みを試してください。</p>
+  </aside>
+
+  <section class="related" aria-labelledby="rel-h">
+    <h2 id="rel-h">あわせて読む</h2>
+    <ul>
+      <li><a href="/guide/oseibo-okurijo">お歳暮の送り状を一括で作る方法（ヤマト・佐川・ゆうパック別）</a><span>3社の取り込み手順と、列・文字数・時間帯コードの違い</span></li>
+      <li><a href="/guide/line-chumon-okurijo">LINE・電話の贈答注文を打ち直さずに送り状にする方法</a><span>注文の受け方を決めて、自分の表のまま取り込む</span></li>
+    </ul>
+  </section>
+
+  <section class="sources" aria-labelledby="src-h">
+    <h2 id="src-h">出典</h2>
+    <p class="chk">いずれも2026年10月29日確認。</p>
+    <ol>
+      <li>ヤマト運輸「B2クラウドで、外部データから発行を行なう際のテンプレートはありますか。」（FAQ 812） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/812">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/812</a></li>
+      <li>ヤマト運輸 B2クラウド 基本レイアウトテンプレート（Excel・各列の説明） <a href="https://bmypage.kuronekoyamato.co.jp/bmypage/newb2web_template1.xls">https://bmypage.kuronekoyamato.co.jp/bmypage/newb2web_template1.xls</a></li>
+      <li>ヤマト運輸 B2クラウド 送り状発行データレイアウト（データ交換規約） <a href="https://bmypage.kuronekoyamato.co.jp/bmypage/pdf/new_exchange1.pdf">https://bmypage.kuronekoyamato.co.jp/bmypage/pdf/new_exchange1.pdf</a></li>
+      <li>ヤマト運輸「B2クラウドで『基本レイアウトテンプレート』のExcelファイルを使用し、送り状（伝票）を発行したい。」（FAQ 2491） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/2491">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/2491</a></li>
+      <li>ヤマト運輸「データをうまく取り込むことができません。取り込むことができないデータレイアウトなどありますか？」（FAQ 412） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/412">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/412</a></li>
+      <li>ヤマト運輸「『外部データから発行』で、データを取り込むと住所欄がエラーになる。」（FAQ 1002） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1002">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1002</a></li>
+      <li>ヤマト運輸「Excelファイルを外部データとして取り込むと『取り込みに失敗しました。指定したファイルを確認してください。』とエラー表示されます。」（FAQ 1197） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1197">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1197</a></li>
+      <li>ヤマト運輸「『外部データから発行』時の請求先顧客コードがわかりません。」（FAQ 576） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/576">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/576</a></li>
+      <li>ヤマト運輸「B2クラウドで、オリジナルのExcel・CSVデータを使用して送り状を発行したい。」（FAQ 1156） <a href="https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1156">https://b-faq.kuronekoyamato.co.jp/app/answers/detail/a_id/1156</a></li>
+    </ol>
+    <p>文字の分類（JIS第一・第二水準にあるか）は、文字コードの変換表（JIS X 0208 と Windows の Shift_JIS）で運営者が確かめたものです。</p>
+  </section>
+
+  <p class="disclaimer">この記事は、ヤマト運輸が公開している資料をもとに運営者がまとめたものです。運営者はヤマト運輸とは関係がありません。画面の名前や仕様は変わることがあるため、実際の操作はヤマト運輸の最新の案内で確かめてください。</p>
+</article>
+</div></main>
+
+<footer class="gf"><div class="wrap">
+  <span class="fl">贈答送り状メーカー ガイド</span>
+  <span>運営：柴田裕将　お問い合わせ：info@site-forge.jp</span>
+  <span><a href="/guide/">ガイド一覧</a>　<a href="/privacy">プライバシーポリシー</a></span>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Airbnbの宿泊税設定と申告｜集めた額と納める額がずれる理由</title>
+<meta name="description" content="Airbnbは日本の宿泊税を代わりに納めていません。カスタム税金ツールで集めた宿泊税はホストに送金され、申告・納入はホストが行います。設定でできること・できないこと、集めた額と納める額がずれる理由、月末の確かめ方を計算例つきで説明します。">
+<link rel="canonical" href="https://lp.site-forge.jp/guide/airbnb-shukuhakuzei">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="site-forge.jp 無料ツールのガイド">
+<meta property="og:title" content="Airbnbの宿泊税設定と申告｜集めた額と納める額がずれる理由">
+<meta property="og:description" content="カスタム税金ツールの設定でできること・できないこと、ずれる理由、月末の確かめ方。">
+<meta property="og:url" content="https://lp.site-forge.jp/guide/airbnb-shukuhakuzei">
+<meta property="article:published_time" content="2026-10-29">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1f3550">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='4' fill='%231f3550'/%3E%3Crect x='9' y='7' width='22' height='27' rx='1.5' fill='%23f6f1e4'/%3E%3Cpath d='M13 14h14M13 19h14M13 24h14M13 29h9' stroke='%23b9a77e' stroke-width='1.6'/%3E%3Ccircle cx='27' cy='29' r='4.2' fill='%23c4472d'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Shippori+Mincho+B1:wght@700;800&display=swap">
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="/tracking-config.js"></script>
+<script src="/tracking.js"></script>
+<link rel="stylesheet" href="/guide/guide.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Airbnbで宿泊税を集めても申告は自分で：カスタム税の限界と、集めた額と納める額がずれる理由",
+  "description": "Airbnbのカスタム税金ツールで集めた宿泊税はホストに送金され、申告・納入はホストが行う。集めた額と納める額がずれる理由と月末の確かめ方。",
+  "datePublished": "2026-10-29",
+  "dateModified": "2026-10-29",
+  "inLanguage": "ja",
+  "author": { "@type": "Person", "name": "柴田裕将" },
+  "publisher": { "@type": "Person", "name": "柴田裕将" },
+  "mainEntityOfPage": "https://lp.site-forge.jp/guide/airbnb-shukuhakuzei"
+}
+</script>
+</head>
+<body class="t-yado">
+<a class="skip" href="#main">本文へ移動</a>
+<header class="gh"><div class="wrap">
+  <a class="gh-logo" href="/guide/">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="4" fill="#2b4a6f"/><rect x="9" y="7" width="22" height="27" rx="1.5" fill="#f6f1e4"/><path d="M13 14h14M13 19h14M13 24h14M13 29h9" stroke="#b9a77e" stroke-width="1.6"/><circle cx="27" cy="29" r="4.2" fill="#c4472d"/></svg>
+    <span><b>宿泊税のガイド</b><small>民泊・小さな宿の申告</small></span>
+  </a>
+  <a class="gh-tool" href="/app/minpaku-tax/">宿泊税 月計表メーカー</a>
+</div></header>
+
+<div class="wrap">
+<nav class="crumb" aria-label="現在の位置"><ol><li><a href="/guide/">ガイド一覧</a></li><li>宿泊税</li><li aria-current="page">Airbnbの宿泊税と申告</li></ol></nav>
+</div>
+
+<main id="main"><div class="wrap">
+<article class="art">
+  <p class="kicker">Airbnb ホスト 宿泊税</p>
+  <h1>Airbnbで宿泊税を集めても申告は自分で：カスタム税の限界と、集めた額と納める額がずれる理由</h1>
+  <p class="lede">Airbnbには、ゲストから税金を一緒に集める「カスタム税金ツール」があります。ただ、日本の宿泊税をAirbnbが自治体に納めてくれるわけではありません。設定でできること・できないことと、集めた額と納める額がずれる理由を、Airbnbのヘルプセンターと自治体の資料をもとに整理しました。</p>
+  <p class="byline"><span>公開日 <time datetime="2026-10-29">2026年10月29日</time></span><span>運営：柴田裕将</span></p>
+
+  <div class="answer">
+    <p class="lbl">先に結論</p>
+    <ul>
+      <li>2026年10月29日時点で、Airbnbが税金を代わりに徴収・納付している地域の一覧に<strong>日本は入っていません</strong>。</li>
+      <li>カスタム税金ツールで集めた宿泊税は<strong>ホストに送金</strong>され、<strong>申告と納入はホスト</strong>が行います。</li>
+      <li>ツールの課税方法は「予約ごとの割合」「ゲスト1人あたり」「1泊あたり」「ゲスト1人1泊あたり」の4つで、<strong>料金に応じて税額が段階的に変わるしくみや、13,000円未満は課税しないといった線</strong>を、そのまま表す設定はヘルプには見当たりません。</li>
+      <li>そのため、集めた額と納める額はずれることがあります。納めるのは集めた額ではなく、<strong>宿泊ごとに条例のきまりで計算した額</strong>です。月末に予約ごとに計算し直しましょう。</li>
+    </ul>
+  </div>
+
+  <nav class="toc" aria-labelledby="toc-h">
+    <p id="toc-h">この記事の目次</p>
+    <ol>
+      <li><a href="#who">Airbnbは宿泊税を代わりに納めてくれるのか</a></li>
+      <li><a href="#tool">カスタム税金ツールでできること</a></li>
+      <li><a href="#gap">集めた額と納める額がずれる7つの理由</a></li>
+      <li><a href="#example">計算例（東京都・京都市）</a></li>
+      <li><a href="#month">月末にやること</a></li>
+      <li><a href="#price">料金に含めて受け取る場合の注意</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="who"><span class="no">1</span>Airbnbは宿泊税を代わりに納めてくれるのか</h2>
+  <p>Airbnbのヘルプ記事「Airbnbによる税徴収・納付代行が可能な地域」には、Airbnbがホストに代わって税金を徴収・納付している国や地域が並んでいます。2026年10月29日に確認したとき、そこにはフランス・イタリア・ドイツ・インド・マレーシア・台湾やアメリカの各州などがありましたが、<strong>日本はありませんでした</strong>。</p>
+  <p>一方、宿泊税のしくみでは、宿泊者から税を預かって自治体に申告・納入するのは施設の経営者（特別徴収義務者）です。東京都・京都市・福岡市の手引きには、宿泊者が宿泊税相当額を払っていなくても、課税される宿泊があれば、特別徴収義務者が申告・納入する義務がある、とはっきり書かれています。</p>
+  <figure class="fig fig-n">
+    <svg viewBox="0 0 340 330" role="img" aria-labelledby="f6t f6d">
+      <title id="f6t">Airbnbのカスタム税金と宿泊税のお金の流れ</title>
+      <desc id="f6d">ゲストは宿泊料金とカスタム税金をAirbnbに支払う。Airbnbはサービス料を差し引き、カスタム税金を含めてホストに送金する。ホストが宿泊ごとに税額を計算し、自治体に申告・納入する。Airbnbは日本の宿泊税を自治体に納めない。</desc>
+      <defs><marker id="f6a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1f3550"/></marker></defs>
+      <g font-size="13" fill="#1c2229">
+        <rect x="20" y="8" width="300" height="56" rx="3" fill="#fff" stroke="#1f3550" stroke-width="1.3"/>
+        <text x="36" y="32" font-weight="700" font-size="14">ゲスト</text>
+        <text x="36" y="52" font-size="12.5">宿泊料金＋清掃料＋カスタム税金を支払う</text>
+        <line x1="170" y1="64" x2="170" y2="88" stroke="#1f3550" stroke-width="1.6" marker-end="url(#f6a)"/>
+        <rect x="20" y="92" width="300" height="56" rx="3" fill="#fff" stroke="#1f3550" stroke-width="1.3"/>
+        <text x="36" y="116" font-weight="700" font-size="14">Airbnb</text>
+        <text x="36" y="136" font-size="12.5">サービス料を差し引き、税金ごとホストへ送金</text>
+        <line x1="170" y1="148" x2="170" y2="172" stroke="#1f3550" stroke-width="1.6" marker-end="url(#f6a)"/>
+        <rect x="20" y="176" width="300" height="56" rx="3" fill="#e6ebf1" stroke="#1f3550" stroke-width="1.3"/>
+        <text x="36" y="200" font-weight="700" font-size="14">ホスト（特別徴収義務者）</text>
+        <text x="36" y="220" font-size="12.5">宿泊ごとに税額を計算し、月ごとに申告</text>
+        <line x1="170" y1="232" x2="170" y2="256" stroke="#1f3550" stroke-width="1.6" marker-end="url(#f6a)"/>
+        <rect x="20" y="260" width="300" height="56" rx="3" fill="#1f3550"/>
+        <text x="36" y="284" font-weight="700" font-size="14" fill="#f3efe4">自治体（都税事務所・市など）</text>
+        <text x="36" y="304" font-size="12.5" fill="#f3efe4">申告書を受け取り、宿泊税が納入される</text>
+        <path d="M320 120c18 0 18 168 0 168" fill="none" stroke="#c4472d" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <circle cx="328" cy="204" r="9" fill="#fff" stroke="#c4472d" stroke-width="1.6"/>
+        <path d="M322 198l12 12M334 198l-12 12" stroke="#c4472d" stroke-width="1.8"/>
+      </g>
+    </svg>
+    <figcaption>図：Airbnbから自治体へ直接納める流れ（右の点線）は、日本ではない。</figcaption>
+  </figure>
+
+  <h2 id="tool"><span class="no">2</span>カスタム税金ツールで<span class="nb">できること</span></h2>
+  <p>Airbnbのヘルプ記事「宿泊リスティングに税目を追加する」（日本語は自動翻訳）に書かれている内容です。</p>
+  <h3>選べる課税方法は4つ</h3>
+  <ul>
+    <li><strong>予約ごとの割合</strong>（例：3％）。この方法だけ、課税の基準にする料金（基本料金・清掃料金・リネン料金・管理費など）を選べます。</li>
+    <li><strong>ゲスト1人あたりの料金</strong></li>
+    <li><strong>1泊あたりの料金</strong></li>
+    <li><strong>ゲスト1人あたりの1泊あたりの料金</strong>（例：1人1泊200円）</li>
+  </ul>
+  <p>ほかに、長期滞在の免除、1人1泊あたりの上限額、季節ごとの税率を設定できます。Airbnbのサービス料と保証金には税金を追加できません。</p>
+  <h3>設定の手順（パソコン）</h3>
+  <ol class="steps">
+    <li><kbd>リスティング</kbd>をクリックし、編集するリスティングを選ぶ</li>
+    <li>リスティング編集ツールで<kbd>設定</kbd>→「設定の編集」で<kbd>税金</kbd></li>
+    <li><kbd>税目を追加</kbd>をクリックし、税目と課税方法を選んで請求額を入れる</li>
+    <li>宿泊税の登録番号（納税義務者番号）を入れ、長期滞在の免除の有無を選ぶ</li>
+    <li>規約に同意して<kbd>保存</kbd></li>
+  </ol>
+  <p>ヘルプには「ホストが追加した税金はゲストに請求され、ホストが税務当局に納付するためにホストに送金されます」とあります。</p>
+
+  <h2 id="gap"><span class="no">3</span>集めた額と納める額がずれる7つの理由</h2>
+  <h3>1. 料金に応じた段階の税額を表せない</h3>
+  <p>京都市は1人1泊の料金で5段階、大阪府・札幌市は3段階、福岡市は2段階の税額です。ヘルプにある設定は「割合」か「決まった金額」なので、料金によって200円になったり1,000円になったりするしくみを、1つの設定でそのまま表すことはできません。</p>
+  <h3>2. 「○円未満は課税しない」線を表せない</h3>
+  <p>東京都（2027年4月から）は13,000円未満、大阪府は5,000円未満の宿泊は課税されません。「予約ごとの割合3％」と設定すると、線より下の予約にも3％がかかります。</p>
+  <h3>3. 判定は「1人1泊」、割合は「予約全体」</h3>
+  <p>自治体は、料金を泊数と人数で割った<strong>1人1泊の金額</strong>で課税するかどうかを決めます。同じ料金の予約でも、2人なら課税、4人なら課税されない、ということが起きます。予約全体にかける割合では、この違いが出ません。</p>
+  <h3>4. 端数のきまりが違う</h3>
+  <p>東京都は、1人1泊の宿泊料金の<strong>100円未満を切り捨ててから</strong>3％をかけます（13,550円なら405円）。予約全体に3％をかけると、数円ずつずれます。</p>
+  <h3>5. 宿泊料金の範囲が違う</h3>
+  <p>自治体の宿泊料金には、清掃料や予約サイトの手数料も含みます（東京都・京都市）。<strong>ホストサービス料を引かれたあとの受取金</strong>で納める額を計算すると、少なく出ます。逆に、ゲスト側のAirbnbサービス料が宿泊料金に入るかどうかは自治体の資料からははっきりしないので、迷う場合は自治体に確かめてください。</p>
+  <h3>6. 人数が予約のときと違う</h3>
+  <p>税額は実際に泊まった人数で決まります。予約後に人数が変わった、料金のかからない乳幼児がいた、などのときは、Airbnbで集まった額と合わなくなります。乳幼児や子どもの扱いは自治体の手引きの計算例で確かめてください。</p>
+  <h3>7. 税率が変わる日をまたぐ予約</h3>
+  <p>宿泊税は、予約した日ではなく<strong>泊まる日</strong>の税率で決まります（東京都Q29）。京都市（2026年3月）や大阪府（2025年9月）のように税率が変わった場合、変わる前に受けた予約で集めた額では足りないことがあります。</p>
+
+  <h2 id="example"><span class="no">4</span>計算例（東京都・京都市）</h2>
+  <h3>東京都（2027年4月以降の宿泊）：「予約ごとの割合3％」に設定した場合</h3>
+  <p>課税の基準は基本料金と清掃料金。料金は消費税を含まない金額です。</p>
+  <div class="tbl xwide" role="region" aria-label="東京都の計算例" tabindex="0">
+    <table>
+      <thead><tr><th>予約</th><th>料金</th><th class="r">1人1泊</th><th class="r">Airbnbで集まる額</th><th class="r">納める額</th><th>差</th></tr></thead>
+      <tbody>
+        <tr><th>①</th><td class="nw">2泊・2人<br>54,000円</td><td class="r">13,500円</td><td class="r">1,620円</td><td class="r">405円×4＝1,620円</td><td>なし</td></tr>
+        <tr><th>②</th><td class="nw">2泊・4人<br>54,000円</td><td class="r">6,750円</td><td class="r">1,620円</td><td class="r">0円</td><td class="nw">1,620円 集めすぎ</td></tr>
+        <tr><th>③</th><td class="nw">1泊・2人<br>27,100円</td><td class="r">13,550円</td><td class="r">813円</td><td class="r">405円×2＝810円</td><td class="nw">3円 集めすぎ</td></tr>
+        <tr><th>④</th><td class="nw">1泊・1人<br>12,000円</td><td class="r">12,000円</td><td class="r">360円</td><td class="r">0円</td><td class="nw">360円 集めすぎ</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="scroll-hint">表は横に動かせます。</p>
+  <h3>京都市：「ゲスト1人1泊あたり400円」に設定した場合</h3>
+  <div class="tbl xwide" role="region" aria-label="京都市の計算例" tabindex="0">
+    <table>
+      <thead><tr><th>予約</th><th>料金</th><th class="r">1人1泊</th><th class="r">Airbnbで集まる額</th><th class="r">納める額</th><th>差</th></tr></thead>
+      <tbody>
+        <tr><th>⑤</th><td class="nw">1泊・4人<br>22,000円</td><td class="r">5,500円</td><td class="r">400円×4＝1,600円</td><td class="r">200円×4＝800円</td><td class="nw">800円 集めすぎ</td></tr>
+        <tr><th>⑥</th><td class="nw">2泊・2人<br>88,000円</td><td class="r">22,000円</td><td class="r">400円×4＝1,600円</td><td class="r">1,000円×4＝4,000円</td><td class="nw">2,400円 足りない</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="scroll-hint">表は横に動かせます。</p>
+  <p>⑥のように足りない場合も、納める額は変わりません。特別徴収義務者は、宿泊者から受け取れていなくても、課税される宿泊の分を申告・納入します。集めすぎた分をどう扱うか（ゲストへの返金など）は、自治体に確かめてください。</p>
+
+  <h2 id="month"><span class="no">5</span>月末にやること</h2>
+  <ol class="steps">
+    <li><strong>予約の一覧を書き出す</strong>：Airbnbの<kbd>ホスティング収入</kbd>から「今後の受取金」か「送金済み」を開き、<kbd>レポートを取得</kbd>でCSVを作れます（ヘルプ「ホスティング収入レポートをダウンロードする」）。CSVにはホスティング収入、ホストサービス料、清掃料金などが入ります。人数が入っていない場合は、予約の画面で確かめます。</li>
+    <li><strong>予約ごとに1人1泊を出す</strong>：（宿泊料＋清掃料など、ホストサービス料を引く前）÷泊数÷人数。</li>
+    <li><strong>泊まった日ごとに並べる</strong>：月をまたぐ連泊は、泊まった日の月に入れます。</li>
+    <li><strong>自治体のきまりで税額を出す</strong>：区分ごとの延べ宿泊数×税額。これが申告する額です。</li>
+    <li><strong>Airbnbで集まった額と比べる</strong>：差が大きければ、設定を見直します。</li>
+    <li><strong>申告書を出し、納入する</strong>：多くの自治体で翌月末日まで。宿泊がない月も申告書を出します。</li>
+  </ol>
+  <p>日ごとの表の作り方は<a href="/guide/shukuhakuzei-gekkeihyo">宿泊税の月計表の書き方</a>にまとめています。Booking.comなどほかの予約サイトの予約も、同じ表に入れて数えます。</p>
+
+  <h2 id="price"><span class="no">6</span>料金に含めて受け取る場合の注意</h2>
+  <p>カスタム税金ツールを使わず、宿泊税の分を宿泊料金に上乗せしておくやり方もあります。ただし東京都のよくある質問（Q41）では、領収書には「宿泊税」の名称と額を表示するよう求められていて、名称と額がはっきり表示されていない場合は、宿泊税の分も消費税の課税対象になるとされています。どちらの受け取り方にするかは、自治体や税理士に相談して決めてください。</p>
+
+  <aside class="tool" aria-labelledby="tool-h">
+    <p class="t-lbl">予約ごとの計算し直しを自動で</p>
+    <p class="t-name" id="tool-h">宿泊税 月計表メーカー<span class="nb">（無料・試作版）</span></p>
+    <p>AirbnbやBooking.comの予約CSVを読み込み、予約ごとに1人1泊の宿泊料金を出して、自治体のきまりで宿泊日ごとの表と税額を作るブラウザのツールです。</p>
+    <ul>
+      <li>受取金が手数料を引いた額のときは、手数料率から引く前の金額に戻して計算</li>
+      <li>東京都（2027年4月以降）、京都市、大阪府、福岡市、札幌市、北海道、沖縄県に対応</li>
+      <li>入力した内容は端末のブラウザの中にだけ保存されます</li>
+    </ul>
+    <a class="btn" href="/app/minpaku-tax/">月計表メーカーで予約を読み込む<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6"/></svg></a>
+    <p class="fine">計算・集計の補助をするツールです。申告書の作成と提出はご自身で行ってください。</p>
+  </aside>
+
+  <section class="related" aria-labelledby="rel-h">
+    <h2 id="rel-h">あわせて読む</h2>
+    <ul>
+      <li><a href="/guide/tokyo-minpaku-shukuhakuzei">東京都の宿泊税、民泊も2027年4月から：対象・税率・13,000円の線・12月末までの手続き</a><span>登録の手続き、計算例、毎月の申告</span></li>
+      <li><a href="/guide/shukuhakuzei-gekkeihyo">宿泊税の月計表の書き方（東京・京都・大阪・福岡・札幌の違い）</a><span>日ごとの数え方、記入例、自治体ごとの違い</span></li>
+    </ul>
+  </section>
+
+  <section class="sources" aria-labelledby="src-h">
+    <h2 id="src-h">出典</h2>
+    <p class="chk">いずれも2026年10月29日確認。</p>
+    <ol>
+      <li>Airbnb ヘルプセンター「Airbnbによる税徴収・納付代行が可能な地域」 <a href="https://www.airbnb.jp/help/article/2509">https://www.airbnb.jp/help/article/2509</a></li>
+      <li>Airbnb ヘルプセンター「宿泊リスティングに税目を追加する」（自動翻訳の記事） <a href="https://www.airbnb.jp/help/article/2523">https://www.airbnb.jp/help/article/2523</a></li>
+      <li>Airbnb ヘルプセンター「Airbnbによる税金の徴収・納付代行の仕組み」 <a href="https://www.airbnb.jp/help/article/1036">https://www.airbnb.jp/help/article/1036</a></li>
+      <li>Airbnb ヘルプセンター「ホスティング収入レポートをダウンロードする」 <a href="https://www.airbnb.jp/help/article/3632">https://www.airbnb.jp/help/article/3632</a></li>
+      <li>東京都主税局「よくある質問（宿泊事業者向け）」Q28・Q29・Q33・Q41 <a href="https://www.tax.metro.tokyo.lg.jp/kazei/leisure/shuk/jigyousha/qa">https://www.tax.metro.tokyo.lg.jp/kazei/leisure/shuk/jigyousha/qa</a></li>
+      <li>東京都主税局「宿泊税の手引 ～旅館・ホテルの経営者の皆様へ～」（特別徴収制度） <a href="https://www.tax.metro.tokyo.lg.jp/documents/d/tax/shuk-jigyousha-2-tebiki-r8">https://www.tax.metro.tokyo.lg.jp/documents/d/tax/shuk-jigyousha-2-tebiki-r8</a></li>
+      <li>東京都主税局「宿泊事業者のみなさまへ 宿泊税の手続きをお願いします！」（宿泊料金に含まれるもの） <a href="https://www.tax.metro.tokyo.lg.jp/documents/d/tax/shukuhakujigyousha_chirashi">https://www.tax.metro.tokyo.lg.jp/documents/d/tax/shukuhakujigyousha_chirashi</a></li>
+      <li>京都市「宿泊税について」（税率） <a href="https://www.city.kyoto.lg.jp/gyozai/page/0000236942.html">https://www.city.kyoto.lg.jp/gyozai/page/0000236942.html</a></li>
+      <li>京都市「よくある質問：宿泊施設を経営されている方向け（宿泊料金について）」Q5（OTAの手数料） <a href="https://www.city.kyoto.lg.jp/gyozai/page/0000249214.html">https://www.city.kyoto.lg.jp/gyozai/page/0000249214.html</a></li>
+      <li>京都市「宿泊税 特別徴収の手引」 <a href="https://www.city.kyoto.lg.jp/gyozai/cmsfiles/contents/0000236/236946/sintebiki83-.pdf">https://www.city.kyoto.lg.jp/gyozai/cmsfiles/contents/0000236/236946/sintebiki83-.pdf</a></li>
+      <li>福岡市「宿泊税 特別徴収事務の手引き」 <a href="https://www.city.fukuoka.lg.jp/zaisei/zeisei/life/documents/jimutebiki.pdf">https://www.city.fukuoka.lg.jp/zaisei/zeisei/life/documents/jimutebiki.pdf</a></li>
+    </ol>
+  </section>
+
+  <p class="disclaimer">この記事は、Airbnbと各自治体が公開している情報をもとに運営者がまとめた一般的な情報で、税務の助言ではありません。宿泊税の申告・納入は、特別徴収義務者であるご自身が行うものです。個別の扱いは、施設のある自治体の担当窓口か税理士に確かめてください。Airbnbの画面や機能は変わることがあります。運営者はAirbnbとも自治体とも関係がありません。</p>
+</article>
+</div></main>
+
+<footer class="gf"><div class="wrap">
+  <span class="fl">宿泊税 月計表メーカー ガイド</span>
+  <span>運営：柴田裕将　お問い合わせ：info@site-forge.jp</span>
+  <span><a href="/guide/">ガイド一覧</a>　<a href="/privacy">プライバシーポリシー</a></span>
+</div></footer>
+</body>
+</html>
