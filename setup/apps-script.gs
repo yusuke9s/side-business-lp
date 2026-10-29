@@ -12,7 +12,7 @@ const SHEET_NAME = '登録';
 const HEADERS = ['受信日時', 'サービス', 'メールアドレス', '質問の回答', 'ページ', 'URLパラメータ', '参照元', '送信日時（端末）'];
 const FEEDBACK_SHEET = 'ご意見';
 const FEEDBACK_HEADERS = ['受信日時', 'サービス', 'メールアドレス', '会社名', '今の作り方', '欲しい機能', '専用版', 'ご意見', 'ページ', 'URLパラメータ'];
-const SERVICES = ['pet', 'kaitai', 'eisei', 'koumuin', 'receipt', 'taikyo', 'watch', 'shibou', 'renai', 'souzoku'];
+const SERVICES = ['pet', 'kaitai', 'eisei', 'koumuin', 'receipt', 'taikyo', 'watch', 'shibou', 'renai', 'souzoku', 'okurijo', 'minpaku-tax'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();

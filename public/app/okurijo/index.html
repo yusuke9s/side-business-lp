@@ -13,6 +13,7 @@
 <!-- 計測タグ：IDは tracking-config.js で設定 -->
 <script src="/tracking-config.js"></script>
 <script src="/tracking.js"></script>
+<script src="/form-config.js"></script>
 <style>
 :root {
   --kraft: #cfad7a; --kraft-d: #a98250; --kraft-l: #ead9b6; --kraft-ll: #f5ecd9;
@@ -275,6 +276,21 @@ main { padding-block: 18px 40px; }
 .badch { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 4px; border: 2px solid var(--shu); border-radius: 3px; background: var(--shu-l); font-size: 18px; font-weight: 700; margin: 0 4px; vertical-align: middle; }
 .dlbox { display: grid; gap: 10px; }
 .dlbox .btn.pri { min-height: 60px; font-size: 17px; }
+.paid { border-style: dashed; background: var(--kraft-ll); }
+.paid .soon { font-size: 12px; font-weight: 700; color: var(--shu-d); border: 1.5px solid var(--shu-d); padding: 0 8px; border-radius: 3px; margin-left: 8px; white-space: nowrap; }
+.paid p { font-size: 14.5px; margin: 6px 0 10px; }
+.paid .price { font-family: var(--fd); font-size: 22px; }
+.paid .price small { font-family: var(--fb); font-size: 13px; color: var(--mut); margin-left: 6px; }
+.pw { list-style: none; padding: 0; margin: 10px 0 12px; display: grid; gap: 8px; }
+.pw label { display: flex; gap: 10px; align-items: flex-start; background: var(--paper); border: 1.5px solid var(--line2); border-radius: 4px; padding: 10px 12px; cursor: pointer; font-weight: 700; font-size: 15px; line-height: 1.5; }
+.pw label small { display: block; font-weight: 400; font-size: 13px; color: var(--mut); }
+.pw input { width: 22px; height: 22px; margin: 1px 0 0; flex: none; accent-color: var(--shu); }
+.pw label:has(input:checked) { border-color: var(--shu); background: var(--shu-l); }
+.paid .pform { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.paid input[type=email] { width: 100%; min-height: 48px; font: inherit; font-size: 16px; padding: 10px 12px; border: 1.5px solid var(--ink); border-radius: 4px; background: #fff; color: var(--ink); }
+.paid .msg { font-size: 14px; font-weight: 700; margin-top: 8px; }
+.paid .msg.err { color: var(--shu-d); }
+.paid .msg.ok { color: var(--ok); }
 .counts { display: flex; gap: 8px; flex-wrap: wrap; }
 .prev-wrap { max-height: 420px; overflow: auto; border: 1.5px solid var(--line2); border-radius: 4px; background: #fff; }
 .prev { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -580,6 +596,25 @@ body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
         <section class="card" aria-labelledby="h-dl">
           <div class="chead"><span class="lbl">4</span><h2 id="h-dl">ファイルを作る</h2></div>
           <div class="dlbox" id="dlbox"></div>
+        </section>
+        <section class="card paid" aria-labelledby="h-paid" id="paidCard">
+          <div class="chead"><h2 id="h-paid">有料版を考えています<span class="soon">準備中</span></h2></div>
+          <p>今の機能は、これからも無料で使えます。そのうえで、次のような機能を足した有料版を考えています。<b>使いたいものに印をつけて送ってください。</b>希望の多いものから作ります。</p>
+          <p class="price">年 6,800円<small>税込・予定価格。お中元とお歳暮の両方で使えます</small></p>
+          <ul class="pw" id="paidWants">
+            <li><label><input type="checkbox" value="注文フォーム"><span>お客さまが自分で届け先を入れる注文フォーム<small>URLをLINEで送るだけ。住所の打ち直しがなくなります</small></span></label></li>
+            <li><label><input type="checkbox" value="ネット保存・共有"><span>ネットに保存して、家族やパートさんと共有<small>スマホとパソコンで同じ注文を見られます</small></span></label></li>
+            <li><label><input type="checkbox" value="請求・入金管理"><span>請求書と入金の管理<small>誰がまだ払っていないか、一覧で分かります</small></span></label></li>
+            <li><label><input type="checkbox" value="今年の案内"><span>去年のお客さまに、今年の案内を送る<small>去年の注文から、案内の文面と送り先の一覧を作ります</small></span></label></li>
+          </ul>
+          <div class="pform">
+            <label for="paidEmail" style="font-weight:700;font-size:14.5px">メールアドレス<span style="font-weight:400;color:var(--mut);margin-left:6px">準備ができたらお知らせします</span></label>
+            <input type="email" id="paidEmail" autocomplete="email" placeholder="name@example.com">
+            <textarea id="paidNote" rows="3" maxlength="1000" placeholder="ほかに欲しい機能や、ご意見があればどうぞ（任意）" style="width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1.5px solid var(--ink);border-radius:4px;background:#fff;color:var(--ink)"></textarea>
+            <button type="button" class="btn pri block" id="paidSend">使いたい機能を送る</button>
+          </div>
+          <p class="msg" id="paidMsg" role="status" hidden></p>
+          <p style="font-size:12.5px;color:var(--mut);margin:8px 0 0">送られるのは、印をつけた機能・メールアドレス・ご意見だけです。注文や住所は送られません。</p>
         </section>
         <section class="card" aria-labelledby="h-prev">
           <div class="chead"><span class="lbl ink">中身</span><h2 id="h-prev">1件目の中身（列ごと）</h2></div>
@@ -1798,7 +1833,7 @@ body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
       '<label class="f" data-fw="item"' + (r.pid ? " hidden" : "") + '><span>品名（自由入力）</span><input ' + B("item") + ' value="' + esc(r.item) + '" autocomplete="off" placeholder="例：ラ・フランス 3kg"></label>' +
       '<div class="row-q"><div class="f" data-fw="qty"><span class="flabel">個数（箱）</span><div class="stepper"><button type="button" data-act="qty" data-rid="' + id + '" data-d="-1" aria-label="1つ減らす">' + svg("minus") + '</button><input inputmode="numeric" aria-label="個数" ' + B("qty") + ' value="' + esc(r.qty) + '"><button type="button" data-act="qty" data-rid="' + id + '" data-d="1" aria-label="1つ増やす">' + svg("plus") + "</button></div></div>" +
       '<label class="f" data-fw="date"><span>お届け希望日 <em>なければ空</em></span><input type="date" ' + B("date") + ' value="' + esc(r.date) + '"></label></div>' +
-      '<div class="row2"><label class="f" data-fw="time"><span>時間帯</span><select ' + B("time") + ">" + sel(TIMES, r.time) + "</select></label>" +
+      '<div class="pform"><label class="f" data-fw="time"><span>時間帯</span><select ' + B("time") + ">" + sel(TIMES, r.time) + "</select></label>" +
       '<div class="f" data-fw="cool"><span class="flabel">温度</span><div class="seg cool" role="group" aria-label="温度">' + COOLS.map(function (c) { return '<button type="button" data-act="seg" data-b="rec:' + id + ':cool" data-v="' + c[0] + '" aria-pressed="' + (r.cool === c[0]) + '">' + (c[0] !== "n" ? svg("snowflake") : "") + c[1] + "</button>"; }).join("") + "</div></div></div>" +
       '<label class="f"><span>メモ <em>注文控えだけに印刷。送り状には入りません</em></span><input ' + B("memo") + ' value="' + esc(r.memo) + '" autocomplete="off"></label>' +
       "</div>" +
@@ -2123,7 +2158,7 @@ body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
     var c = S.car;
     $("#carForm").innerHTML =
       '<label class="f" data-fw="b2cust"><span>ヤマト：請求先顧客コード <em>9〜12けた</em></span><input class="mono" inputmode="numeric" data-b="car:b2cust" value="' + esc(c.b2cust) + '"></label>' +
-      '<div class="row2"><label class="f"><span>請求先分類コード</span><input class="mono" inputmode="numeric" data-b="car:b2cls" value="' + esc(c.b2cls) + '"></label><label class="f"><span>運賃管理番号</span><input class="mono" inputmode="numeric" data-b="car:b2fare" value="' + esc(c.b2fare) + '"></label></div>' +
+      '<div class="pform"><label class="f"><span>請求先分類コード</span><input class="mono" inputmode="numeric" data-b="car:b2cls" value="' + esc(c.b2cls) + '"></label><label class="f"><span>運賃管理番号</span><input class="mono" inputmode="numeric" data-b="car:b2fare" value="' + esc(c.b2fare) + '"></label></div>' +
       '<p class="hint wide">ヤマトの3つの番号は、B2クラウドの「1件ずつ発行」の画面の「請求先」に出ている数字です（例：お客様コードが「031234XXXX-001」なら、請求先顧客コード「031234XXXX」・分類コード「001」）。</p>' +
       '<label class="f"><span>佐川：お客様コード <em>12けた・なければ空</em></span><input class="mono" inputmode="numeric" data-b="car:sgcust" value="' + esc(c.sgcust) + '"></label>';
     $("#prodSample").hidden = !S.products.some(function (p) { return p.sample; });
@@ -2431,6 +2466,35 @@ body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
   window.addEventListener("afterprint", function () { if (view === "sheet") fitSheet(); });
   go("order");
   window.__okurijo = { parseText: parseText, buildExport: buildExport, toCSV: toCSV, encodeCSV: encodeCSV, state: function () { return S; }, sjisCls: sjisCls, splitAddr: splitAddr, splitBldg: splitBldg, CAR: CAR, hanKana: hanKana, zen: zen, save: function () { save(true); } };
+})();
+</script>
+<script>
+/* 有料版の希望を送る（注文や住所は送らない） */
+(function () {
+  var btn = document.getElementById("paidSend"), msg = document.getElementById("paidMsg");
+  if (!btn) return;
+  function say(t, ok) { msg.textContent = t; msg.className = "msg " + (ok ? "ok" : "err"); msg.hidden = false; }
+  btn.addEventListener("click", function () {
+    var email = document.getElementById("paidEmail").value.trim();
+    var wants = Array.prototype.map.call(document.querySelectorAll("#paidWants input:checked"), function (c) { return c.value; });
+    var note = document.getElementById("paidNote").value.trim();
+    if (!wants.length && !note) { say("使いたい機能に印をつけるか、ご意見を書いてください。"); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say("メールアドレスの形式を確認してください（例：name@example.com）。"); return; }
+    var fb = { company: "", method: "", wants: wants.join("、"), custom: "", comment: note };
+    var summary = ["[有料版の希望]", fb.wants && "欲しい:" + fb.wants, note && "意見:" + note].filter(Boolean).join(" / ");
+    var data = { service: "okurijo", type: "feedback", feedback: fb, email: email, answer: summary, page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
+    var done = function () {
+      btn.disabled = true; btn.textContent = "送りました";
+      say("ありがとうございます。準備ができたら、info@site-forge.jp からお知らせします。", true);
+      try { if (window.fbq) window.fbq("track", "CompleteRegistration", { content_name: "okurijo-paid" }); } catch (e) {}
+    };
+    var ep = window.FORM_ENDPOINT || "";
+    if (!ep) { done(); return; }
+    btn.disabled = true; btn.textContent = "送っています";
+    fetch(ep, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) })
+      .then(done)
+      .catch(function () { btn.disabled = false; btn.textContent = "使いたい機能を送る"; say("送れませんでした。通信状況を確かめて、もう一度お試しください。"); });
+  });
 })();
 </script>
 </body>
