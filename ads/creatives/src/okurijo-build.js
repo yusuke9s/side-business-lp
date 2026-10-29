@@ -202,7 +202,7 @@ function sheet(x, y, w, fs, rows, opt = {}) {
   const body = rows.map((r, k) => `<tr><td class="n">${k + 1}</td><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
   return `<div class="sheet" style="left:${x}px;top:${y}px;width:${w}px;font-size:${fs}px;${opt.rot ? `transform:rotate(${opt.rot}deg);` : ""}">
   ${opt.tabs === false ? "" : tabs}
-  <div class="sheet-h">${ic("csv")}${opt.file || "送り状_取り込み用.csv"}</div>
+  <div class="sheet-h">${ic("csv")}${opt.file || "送り状取り込み用.csv"}</div>
   <table>${head}${body}</table>
 </div>`;
 }
@@ -327,7 +327,7 @@ ${cta(86, 1550, 46, "width:908px")}
 // ===== B: 束になった送り状 → CSV（運送会社のタブ） =====
 const HL_B = (fs, x, y) => `<h1 class="abs hl" style="left:${x}px;top:${y}px;font-size:${fs}px"><span class="ln">お歳暮の送り状、</span><span class="ln"><em>まとめて一気に。</em></span></h1>`;
 const stack = (x, y, w, fs, dy, list, rots) => list.map((r, k) => rec(r, x + k * 6, y + k * dy, w, fs, { noIss: true, noTag: k < list.length - 1, noAddr: k < list.length - 1, rot: rots[k], z: k + 1 })).join("");
-const STACK = [R.tanaka, R.midori, R.yamamoto, R.takahashi];
+const STACK = [R.tanaka, Object.assign({}, R.midori, { name: "株式会社みどり商事" }), R.yamamoto, R.takahashi];
 
 designs["B-feed"] = [1080, 1350, () => `
 <div class="gum" style="right:-70px;top:24px;width:320px;height:64px;transform:rotate(36deg)"></div>
@@ -340,7 +340,7 @@ ${stack(44, 534, 540, 24, 58, STACK, [-4, -3, -2, -1])}
 ${cord(604, 590, 220, 260, "M10 30 C 130 10, 180 80, 170 196", "M140 188 L170 234 L198 182 Z")}
 ${sheet(330, 916, 710, 26, ROWS.slice(0, 4), { c1: 30, c2: 23 })}
 ${rei(948, 880)}
-${apple(160, 1066, 96, -10, "f1")}
+${apple(60, 1086, 80, 12, "f0")}${apple(150, 1066, 96, -10, "f1")}
 ${cta(56, 1172, 40)}
 `];
 
