@@ -15,10 +15,10 @@
 <script src="/tracking.js"></script>
 <style>
 :root {
-  --ai: #1f3550; --ai2: #2b4a6f; --ai3: #e6ebf1; --ai4: #c9d4e1;
-  --paper: #fbf8f0; --paper2: #f4eedf; --card: #fffdf8;
-  --rule: #d9cdb0; --rule2: #ebe3cf; --ink: #1c2229; --mut: #5d584c;
-  --shu: #c4472d; --shu2: #fbe9e3; --ok: #2c6a40; --okbg: #e8f2ea; --warn: #8a5a00; --warnbg: #fdf3dc;
+  --ai: #1f3550; --ai2: #2b4a6f; --ai3: #e7ecf2; --ai4: #c3cfdd;
+  --paper: #faf7ef; --paper2: #f2ecdd; --card: #fffdf9;
+  --rule: #d6cab0; --rule2: #ebe4d2; --ink: #1a2027; --mut: #4a463e;
+  --shu: #b23c25; --shu2: #fbe9e3; --ok: #24603a; --okbg: #e8f2ea; --warn: #6e4700; --warnbg: #fdf3dc;
   --fd: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --fb: "BIZ UDPGothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
   --fm: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -27,307 +27,275 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0; color: var(--ink); font-family: var(--fb); font-size: 15.5px; line-height: 1.65;
-  background-color: var(--paper);
-  background-image:
-    linear-gradient(90deg, transparent 0, transparent calc(var(--gl) + 10px), rgba(196,71,45,.16) calc(var(--gl) + 10px), rgba(196,71,45,.16) calc(var(--gl) + 11px), transparent calc(var(--gl) + 11px)),
-    repeating-linear-gradient(180deg, transparent 0, transparent 31px, rgba(185,167,126,.20) 31px, rgba(185,167,126,.20) 32px);
-  font-variant-numeric: tabular-nums;
-}
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: var(--fb); font-size: 17px; line-height: 1.7; font-variant-numeric: tabular-nums; }
 button, input, select, textarea { font: inherit; color: inherit; }
 a { color: var(--ai2); }
 h1, h2, h3, p { margin: 0; }
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.wrap { max-width: 1240px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
 :focus-visible { outline: 3px solid #2f6fd6; outline-offset: 2px; }
 [hidden] { display: none !important; }
 .ic { width: 20px; height: 20px; flex: none; fill: currentColor; }
-.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.dim { color: var(--mut); }
+.hint { font-size: 15px; color: var(--mut); line-height: 1.6; }
 
 /* ---------- ヘッダー ---------- */
 .top { background: var(--ai); color: #f3efe4; }
-.top-in { display: flex; align-items: center; gap: 12px; padding-block: 10px; }
+.top-in { display: flex; align-items: center; gap: 12px; padding-block: 6px; min-height: 64px; }
 .logo { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; min-width: 0; }
-.logo svg { width: 34px; height: 34px; flex: none; }
-.logo b { font-family: var(--fd); font-weight: 800; font-size: 19px; letter-spacing: .04em; line-height: 1.2; white-space: nowrap; }
-.logo small { display: block; font-size: 11px; letter-spacing: .08em; opacity: .75; }
-.top .free { margin-left: auto; flex: none; font-size: 12px; font-weight: 700; border: 1px solid rgba(243,239,228,.5); padding: 3px 9px; border-radius: 2px; white-space: nowrap; }
-.notice { background: #142538; color: #e9e4d6; font-size: 12.5px; line-height: 1.55; }
-.notice .wrap { padding-block: 7px; display: flex; gap: 8px; align-items: flex-start; }
-.notice .ic { width: 16px; height: 16px; margin-top: 2px; color: #e3c48a; }
+.logo svg { width: 32px; height: 32px; flex: none; }
+.logo b { font-family: var(--fd); font-weight: 800; font-size: 18px; letter-spacing: .04em; white-space: nowrap; }
+.menu { margin-left: auto; position: relative; }
+.menu-btn { appearance: none; display: inline-flex; align-items: center; gap: 6px; min-height: 52px; padding: 6px 14px; background: transparent; color: #fff; border: 1px solid rgba(243,239,228,.55); border-radius: 4px; font-weight: 700; font-size: 16px; cursor: pointer; }
+.menu-btn:hover { background: var(--ai2); }
+.menu-list { position: absolute; right: 0; top: calc(100% + 6px); z-index: 60; min-width: 240px; margin: 0; padding: 6px; list-style: none; background: var(--card); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 16px 40px -16px rgba(20,37,56,.45); }
+.menu-list button { appearance: none; display: flex; align-items: center; gap: 10px; width: 100%; min-height: 52px; padding: 8px 12px; border: 0; border-radius: 4px; background: transparent; font-size: 17px; font-weight: 700; color: var(--ai); text-align: left; cursor: pointer; }
+.menu-list button:hover, .menu-list button[aria-current="page"] { background: var(--ai3); }
 
-/* ---------- 導入 ---------- */
-.intro { border-bottom: 1px solid var(--rule); background: linear-gradient(180deg, var(--paper2), rgba(244,238,223,0)); }
-.intro .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 18px; align-items: center; padding-block: 18px 14px; }
-.intro h1 { font-family: var(--fd); font-weight: 800; font-size: clamp(22px, 3.2vw, 32px); line-height: 1.35; letter-spacing: .02em; }
+/* ---------- 見出し・手順 ---------- */
+.intro .wrap { padding-block: 16px 12px; }
+.intro h1 { font-family: var(--fd); font-weight: 800; font-size: clamp(23px, 3vw, 30px); line-height: 1.35; letter-spacing: .02em; }
 .intro h1 em { font-style: normal; color: var(--shu); }
-.intro p { margin-top: 8px; color: var(--mut); max-width: 44em; }
-.steps { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: 12px; padding: 0; list-style: none; font-size: 13px; font-weight: 700; }
-.steps li { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--rule); padding: 4px 10px 4px 4px; border-radius: 2px; }
-.steps li span { display: inline-grid; place-items: center; width: 22px; height: 22px; background: var(--ai); color: #fff; font-size: 12px; border-radius: 1px; }
-.hero-art { width: 100%; height: auto; display: block; }
-.hero-art .draw { stroke-dasharray: 420; stroke-dashoffset: 0; }
-.js .hero-art .draw { animation: draw 1.4s ease-out both; }
-.js .hero-art .tag { transform-origin: 262px 30px; animation: sway 6s ease-in-out infinite; }
-@keyframes draw { from { stroke-dashoffset: 420; } to { stroke-dashoffset: 0; } }
-@keyframes sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(3deg); } }
+.intro p { margin-top: 4px; font-size: 15px; color: var(--mut); }
+.stepbar { position: sticky; top: 0; z-index: 30; background: var(--paper); border-bottom: 1px solid var(--rule); }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 8px 0; list-style: none; max-width: 720px; }
+.step { appearance: none; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 56px; padding: 6px 8px; border: 1px solid var(--ai4); border-radius: 6px; background: var(--card); color: var(--ai); font-weight: 700; font-size: 16px; cursor: pointer; line-height: 1.3; }
+.step:hover { border-color: var(--ai); }
+.step .n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid currentColor; font-size: 14px; flex: none; }
+.step[aria-current="step"] { background: var(--ai); border-color: var(--ai); color: #fff; }
 
-/* ---------- 操作バー・タブ ---------- */
-.bar { position: sticky; top: 0; z-index: 30; background: var(--paper); border-bottom: 2px solid var(--ai); box-shadow: 0 2px 0 rgba(31,53,80,.06); }
-.bar-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding-block: 8px; }
-.ctx { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1 1 360px; flex-wrap: wrap; }
-.ctx label { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--mut); min-width: 0; }
-.ctx select { min-height: 40px; max-width: 240px; padding: 4px 30px 4px 10px; border: 1px solid #a99c7c; border-radius: 2px; background: #fff; font-weight: 700; color: var(--ink); min-width: 0; }
-.mchip { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 700; color: var(--ai); background: var(--ai3); padding: 4px 9px; border-radius: 2px; white-space: nowrap; }
-.month { display: inline-flex; align-items: stretch; border: 1px solid #a99c7c; border-radius: 2px; background: #fff; }
-.month button { appearance: none; border: 0; background: transparent; width: 38px; min-height: 40px; cursor: pointer; font-size: 18px; line-height: 1; color: var(--ai); }
-.month button:hover { background: var(--ai3); }
-.month output { display: grid; place-items: center; min-width: 7.6em; padding: 0 4px; font-weight: 700; border-inline: 1px solid var(--rule); font-size: 15px; white-space: nowrap; }
-.tabs { display: grid; grid-template-columns: repeat(5, minmax(0, auto)); gap: 2px; flex: 0 1 auto; }
-.tab { appearance: none; border: 0; background: transparent; color: var(--ai); font-weight: 700; font-size: 14px; min-height: 42px; padding: 4px 12px; border-radius: 2px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; border-bottom: 3px solid transparent; }
-.tab .ic { width: 18px; height: 18px; }
-.tab:hover { background: var(--ai3); }
-.tab[aria-selected="true"] { background: var(--ai); color: #fff; }
-
-/* ---------- 画面 ---------- */
-main { padding-block: 16px 36px; }
+/* ---------- 共通部品 ---------- */
+main { padding-block: 14px 28px; }
 .view { display: none; }
 .view.on { display: block; }
-.js .view.on { animation: vin .22s ease-out; }
-@keyframes vin { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-.sec-h { display: flex; align-items: flex-end; justify-content: space-between; gap: 8px 14px; flex-wrap: wrap; margin: 4px 0 10px; }
-.sec-h h2 { font-family: var(--fd); font-weight: 800; font-size: 21px; letter-spacing: .03em; line-height: 1.35; display: flex; align-items: center; gap: 8px; }
-.sec-h h2 .ic { width: 22px; height: 22px; color: var(--shu); }
-.sec-h p { color: var(--mut); font-size: 13.5px; }
-.card { background: var(--card); border: 1px solid var(--rule); border-top: 3px solid var(--ai); border-radius: 2px; padding: 16px; margin-bottom: 18px; box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 8px 22px -18px rgba(31,53,80,.45); }
-.card h3 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
-.card h3 .ic { color: var(--ai2); }
-.hint { font-size: 13px; color: var(--mut); line-height: 1.6; }
-.hint b { color: var(--ink); }
-.sample { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; background: var(--warnbg); border: 1px solid #e4cf9a; border-left: 4px solid #c99a2e; padding: 10px 14px; border-radius: 2px; margin-bottom: 16px; font-size: 14px; }
-.sample b { color: var(--warn); }
-.sample .btn { margin-left: auto; }
-
-/* ---------- フォーム ---------- */
-.grid { display: grid; gap: 12px 14px; }
-.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.js .view.on { animation: vin .2s ease-out; }
+@keyframes vin { from { opacity: 0; } to { opacity: 1; } }
+.card { background: var(--card); border: 1px solid var(--rule); border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+.narrow { max-width: 620px; }
+.h2 { font-family: var(--fd); font-weight: 800; font-size: 22px; line-height: 1.4; margin-bottom: 12px; }
+.h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.grid { display: grid; gap: 14px; }
 .g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .f { display: grid; gap: 4px; min-width: 0; align-content: start; }
-.f > span { font-size: 13px; font-weight: 700; }
-.f > span em { font-style: normal; font-weight: 400; color: var(--mut); font-size: 12px; margin-left: 4px; }
-.f input, .f select, .f textarea { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid #a99c7c; border-radius: 2px; background: #fff; font-size: 16px; min-width: 0; }
-.f input[type="number"], .f input.r { text-align: right; }
-.f textarea { min-height: 70px; resize: vertical; }
-.f input:focus, .f select:focus, .f textarea:focus { border-color: var(--ai2); }
-.f .sub { font-size: 12px; color: var(--mut); }
-.span2 { grid-column: span 2; }
-.span4 { grid-column: 1 / -1; }
-.chk { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; cursor: pointer; }
-.chk input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--ai); }
-.btns { display: flex; flex-wrap: wrap; gap: 8px; }
-.btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 8px 15px; border: 1px solid var(--ai); background: #fff; color: var(--ai); font-weight: 700; font-size: 14.5px; border-radius: 2px; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background .15s, color .15s, box-shadow .15s; }
+.f > span { font-size: 15px; font-weight: 700; }
+.f > span em { font-style: normal; font-weight: 400; color: var(--mut); margin-left: 4px; }
+.f input, .f select, .f textarea { width: 100%; min-height: 52px; padding: 8px 12px; border: 1px solid #9c8f70; border-radius: 4px; background: #fff; font-size: 17px; min-width: 0; }
+.f input.r { text-align: right; }
+.f input:focus, .f select:focus { border-color: var(--ai2); }
+.full { grid-column: 1 / -1; }
+.chk { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; cursor: pointer; padding: 6px 0; }
+.chk input { width: 22px; height: 22px; margin: 2px 0 0; flex: none; accent-color: var(--ai); }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 10px 18px; border: 1.5px solid var(--ai); background: #fff; color: var(--ai); font-weight: 700; font-size: 17px; border-radius: 6px; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background .15s; }
 .btn:hover { background: var(--ai3); }
 .btn.pri { background: var(--ai); color: #fff; }
 .btn.pri:hover { background: var(--ai2); }
-.btn.shu { background: var(--shu); border-color: var(--shu); color: #fff; }
-.btn.shu:hover { background: #a93a24; }
+.btn.big { width: 100%; min-height: 58px; font-size: 18px; }
 .btn.ghost { border-color: transparent; background: transparent; }
-.btn.ghost:hover { background: var(--ai3); }
 .btn.danger { color: var(--shu); border-color: var(--shu); }
 .btn.danger:hover { background: var(--shu2); }
-.btn.sm { min-height: 36px; padding: 4px 10px; font-size: 13.5px; }
-.btn .ic { width: 18px; height: 18px; }
-.drop { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; align-items: center; border: 1.5px dashed #a99c7c; border-radius: 3px; padding: 16px; background: repeating-linear-gradient(180deg, #fff 0, #fff 23px, var(--rule2) 23px, var(--rule2) 24px); cursor: pointer; transition: border-color .15s, background-color .15s; }
-.drop:hover, .drop.over { border-color: var(--ai2); }
-.drop.over { background: var(--ai3); }
-.drop .big { grid-row: span 2; display: grid; place-items: center; width: 52px; height: 52px; background: var(--ai); color: #fff; border-radius: 2px; }
-.drop .big .ic { width: 28px; height: 28px; }
-.drop b { font-size: 15.5px; }
-.drop span { font-size: 13px; color: var(--mut); }
-.split { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-.msg { font-size: 13.5px; padding: 8px 12px; border-radius: 2px; border: 1px solid; margin-top: 10px; }
+.btn .ic { width: 20px; height: 20px; }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.link { appearance: none; border: 0; background: transparent; padding: 10px 4px; min-height: 48px; color: var(--ai2); font-weight: 700; font-size: 17px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link.danger { color: var(--shu); }
+details.more { margin-top: 12px; border-top: 1px solid var(--rule2); }
+details.more > summary { list-style: none; display: flex; align-items: center; gap: 8px; min-height: 52px; cursor: pointer; font-weight: 700; color: var(--ai2); font-size: 16px; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::before { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .15s; margin: 0 4px; flex: none; }
+details.more[open] > summary::before { transform: rotate(45deg); }
+.more-b { padding: 2px 0 8px; font-size: 15px; line-height: 1.7; }
+.more-b p + p, .more-b p + ul, .more-b ul + p { margin-top: 6px; }
+.more-b ul { margin: 0; padding-left: 1.2em; }
+.msg { font-size: 16px; padding: 10px 14px; border-radius: 6px; border: 1px solid; margin-top: 12px; }
 .msg.ok { color: var(--ok); background: var(--okbg); border-color: #b6d4bd; }
 .msg.warn { color: var(--warn); background: var(--warnbg); border-color: #e4cf9a; }
 .msg.err { color: var(--shu); background: var(--shu2); border-color: #eab8aa; }
+.msg .btn { margin-top: 8px; }
 
-/* ---------- 取り込み設定 ---------- */
-.mapbox { border: 1px solid var(--rule); background: #fff; padding: 14px; border-radius: 2px; margin-top: 14px; }
-.mapgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px 12px; }
-.mapgrid .f select { min-height: 40px; font-size: 14px; padding: 4px 8px; }
-.listing-pick { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; }
+/* ---------- 見本・施設チップ・月 ---------- */
+.sample { display: flex; flex-wrap: nowrap; align-items: center; gap: 6px 12px; background: var(--warnbg); border: 1px solid #e4cf9a; padding: 6px 6px 6px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 16px; }
+.sample b { color: var(--warn); }
+.sample .btn { margin-left: auto; min-height: 52px; background: transparent; }
+.ctx { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+.chip { appearance: none; display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 6px 14px; flex: 1 1 260px; min-width: 0; max-width: 520px; border: 1px solid var(--rule); background: var(--card); border-radius: 6px; cursor: pointer; text-align: left; font-size: 16px; }
+.chip:hover { border-color: var(--ai); }
+.chip .ic { color: var(--ai2); }
+.chip span:first-of-type { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700; }
+.chip .chg { color: var(--ai2); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; flex: none; }
+.month { display: inline-flex; align-items: stretch; border: 1px solid #9c8f70; border-radius: 6px; background: #fff; flex: 0 0 auto; }
+.month button { appearance: none; border: 0; background: transparent; width: 52px; min-height: 52px; cursor: pointer; font-size: 22px; line-height: 1; color: var(--ai); }
+.month button:hover { background: var(--ai3); }
+.month output { display: grid; place-items: center; min-width: 7.4em; padding: 0 4px; font-weight: 700; font-size: 18px; border-inline: 1px solid var(--rule); white-space: nowrap; }
 
-/* ---------- 罫線の表（宿帳） ---------- */
-.tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--rule); background: #fff; }
-table.led { width: 100%; border-collapse: collapse; font-size: 14px; }
-table.led th, table.led td { border-bottom: 1px solid var(--rule2); padding: 7px 9px; text-align: left; vertical-align: top; }
-table.led thead th { background: var(--ai); color: #fff; font-size: 12.5px; font-weight: 700; position: sticky; top: 0; white-space: nowrap; border-bottom: 0; }
-table.led td.r, table.led th.r { text-align: right; white-space: nowrap; }
-table.led td.nw { white-space: nowrap; }
-table.led tbody tr:hover td { background: #fbf6ea; }
-table.led tfoot td { font-weight: 700; border-top: 2px solid var(--ai); background: var(--paper2); }
-.src { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; padding: 1px 8px 1px 6px; border-radius: 2px; background: var(--ai3); color: var(--ai); white-space: nowrap; }
-.src::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid currentColor; background: #fff; }
-.src.s-airbnb { background: #fbe6e6; color: #9b2c2c; }
-.src.s-booking { background: #e2ebf7; color: #1f4f8f; }
-.src.s-direct { background: #e8f0e6; color: #2c6a40; }
-.ref { display: block; font-family: var(--fm); font-size: 12px; color: var(--mut); margin-top: 2px; word-break: break-all; }
-.cls { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 7px; border-radius: 2px; white-space: nowrap; }
-.cls.t { background: var(--shu2); color: #9c3520; }
-.cls.ex { background: #ecebe6; color: #555; }
-.cls.out { background: transparent; color: var(--mut); border: 1px dashed #b9b1a0; }
-.dim { color: var(--mut); font-size: 12.5px; }
-.diff-bad { color: var(--shu); font-weight: 700; }
-.diff-ok { color: var(--ok); font-weight: 700; }
-.rowbtns { display: flex; gap: 4px; justify-content: flex-end; flex-wrap: nowrap; }
-.iconbtn { appearance: none; border: 1px solid transparent; background: transparent; width: 36px; height: 36px; display: inline-grid; place-items: center; border-radius: 2px; cursor: pointer; color: var(--ai); }
-.iconbtn:hover { background: var(--ai3); border-color: var(--ai4); }
-.iconbtn.del { color: var(--shu); }
-.iconbtn.del:hover { background: var(--shu2); border-color: #eab8aa; }
-tr.expl td { background: #fcfaf4 !important; padding: 0; }
-.calc { font-size: 13.5px; line-height: 1.7; padding: 10px 14px 12px; border-left: 3px solid var(--shu); margin: 0 0 0 12px; }
-.calc ol { margin: 0; padding-left: 1.4em; }
-.calc li { margin: 1px 0; }
+/* ---------- ② 予約 ---------- */
+.drop { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 84px; padding: 14px 18px; border: 2px solid var(--ai); border-radius: 8px; background: var(--ai); color: #fff; cursor: pointer; transition: background .15s, border-color .15s; }
+.drop:hover { background: var(--ai2); }
+.drop.over { background: var(--ai3); color: var(--ai); border-style: dashed; }
+.drop .ic { width: 34px; height: 34px; }
+.drop b { display: block; font-size: 19px; line-height: 1.35; }
+.drop small { display: block; font-size: 15px; opacity: .9; margin-top: 2px; }
+.or { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; }
+.lh { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.lh .h3 { margin: 0; }
+.bklist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule2); }
+.bkrow { border-bottom: 1px solid var(--rule2); }
+.bk-main { appearance: none; display: grid; grid-template-columns: minmax(0, 1fr) auto 18px; grid-template-areas: "d t c" "m f c"; gap: 0 12px; align-items: center; width: 100%; min-height: 68px; padding: 10px 4px; border: 0; background: transparent; text-align: left; cursor: pointer; }
+.bk-main:hover { background: #fbf6ea; }
+.bk-main::after { content: ""; grid-area: c; width: 9px; height: 9px; border-right: 2px solid var(--ai2); border-bottom: 2px solid var(--ai2); transform: rotate(45deg); justify-self: center; transition: transform .15s; }
+.bk-main[aria-expanded="true"]::after { transform: rotate(-135deg); }
+.bk-d { grid-area: d; font-weight: 700; font-size: 17px; }
+.bk-m { grid-area: m; font-size: 15px; color: var(--mut); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bk-t { grid-area: t; font-weight: 700; font-size: 18px; text-align: right; white-space: nowrap; }
+.bk-f { grid-area: f; font-size: 14px; text-align: right; white-space: nowrap; color: var(--mut); }
+.bk-f.bad { color: var(--shu); font-weight: 700; }
+.bk-x { padding: 0 0 14px; }
+.bk-ref { font-size: 15px; color: var(--mut); margin-bottom: 6px; word-break: break-all; }
+.bk-x .btns { margin-top: 10px; }
+.bk-sum { display: flex; justify-content: space-between; gap: 10px; padding: 12px 4px 4px; font-size: 17px; }
+.empty { padding: 18px 4px; color: var(--mut); }
+.calc { font-size: 15px; line-height: 1.75; padding: 10px 14px; border-left: 3px solid var(--shu); background: #fcfaf4; }
+.calc ol { margin: 0; padding-left: 1.3em; }
 .calc .nights { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 6px; }
-.calc .nt { font-size: 12px; border: 1px solid var(--rule); background: #fff; padding: 1px 7px; border-radius: 2px; white-space: nowrap; }
+.calc .nt { font-size: 13px; border: 1px solid var(--rule); background: #fff; padding: 1px 7px; border-radius: 3px; white-space: nowrap; }
 .calc .nt.in { border-color: var(--ai2); }
 .calc .nt.outm { opacity: .6; }
-.empty { padding: 26px 16px; text-align: center; color: var(--mut); }
-.tools { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.diff-bad { color: var(--shu); font-weight: 700; }
+.diff-ok { color: var(--ok); font-weight: 700; }
 
-/* ---------- 月計表 ---------- */
-.sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border: 1px solid var(--rule); background: #fff; margin-bottom: 16px; }
-.sum div { padding: 12px 14px; border-right: 1px solid var(--rule2); min-width: 0; }
-.sum div:last-child { border-right: 0; }
-.sum small { display: block; font-size: 12.5px; color: var(--mut); font-weight: 700; }
-.sum b { display: block; font-size: 26px; line-height: 1.25; font-weight: 700; white-space: nowrap; }
-.sum b span { font-size: 14px; margin-left: 2px; }
-.sum .tax b { color: var(--shu); }
-.regime { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 13.5px; margin-bottom: 12px; }
-.regime b { font-size: 15px; }
-.zero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; border: 1px solid #e4cf9a; background: var(--warnbg); padding: 14px; border-radius: 2px; margin-bottom: 16px; }
-.zero .ic { width: 26px; height: 26px; color: var(--warn); }
-.zero b { display: block; font-size: 16px; margin-bottom: 2px; }
-.mgrid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 18px; align-items: start; }
-table.gk { width: 100%; border-collapse: collapse; font-size: 13.5px; background: #fff; }
-table.gk th, table.gk td { border: 1px solid #cfc2a2; padding: 4px 8px; text-align: right; white-space: nowrap; }
-table.gk thead th { background: var(--paper2); font-size: 12px; font-weight: 700; text-align: center; vertical-align: bottom; line-height: 1.35; }
-table.gk thead th small { display: block; font-weight: 400; font-size: 11px; color: var(--mut); }
+/* 取り込み */
+.imp { margin-top: 14px; border: 1px solid var(--rule); border-radius: 6px; background: #fff; padding: 14px; }
+.imp-h { font-size: 17px; }
+.imp-h span { display: block; color: var(--mut); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.imp fieldset { border: 0; padding: 0; margin: 10px 0 0; min-width: 0; }
+.imp legend { font-weight: 700; font-size: 15px; padding: 0; }
+.fee { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; font-size: 16px; }
+.fee-l { flex-basis: 100%; font-weight: 700; font-size: 15px; }
+.fee .hint { flex: 1 1 160px; }
+.fee input { width: 96px; min-height: 52px; padding: 8px 10px; border: 1px solid #9c8f70; border-radius: 4px; text-align: right; font-size: 17px; }
+.imp-n { margin: 12px 0 10px; font-size: 17px; }
+.mapgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px 12px; }
+.tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--rule); background: #fff; }
+table.led { width: 100%; border-collapse: collapse; font-size: 14px; }
+table.led th, table.led td { border-bottom: 1px solid var(--rule2); padding: 6px 8px; text-align: left; white-space: nowrap; }
+table.led thead th { background: var(--paper2); font-size: 13px; }
+table.led .r { text-align: right; }
+
+/* ---------- ③ 月計表 ---------- */
+#gkBody { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-template-areas: "top daily" "act daily" "rest daily" "x daily"; gap: 0 22px; align-items: start; }
+#gkTop { grid-area: top; } #gkActions { grid-area: act; } #gkRest { grid-area: rest; } #gkDaily { grid-area: daily; }
+.total { background: var(--card); border: 1px solid var(--rule); border-top: 3px solid var(--shu); border-radius: 6px; padding: 16px 18px; margin-bottom: 14px; }
+.total-l { font-size: 16px; font-weight: 700; color: var(--mut); }
+.total-n { font-size: 20px; font-weight: 700; color: var(--shu); line-height: 1.2; margin-top: 2px; }
+.total-n b { font-size: 46px; letter-spacing: .01em; }
+.total-s { font-size: 16px; margin-top: 4px; }
+.due { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--rule2); font-size: 16px; }
+.due span { display: block; font-size: 14px; color: var(--mut); }
+.zero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; border: 1px solid #e4cf9a; background: var(--warnbg); padding: 12px 14px; border-radius: 6px; margin-bottom: 14px; font-size: 16px; }
+.zero .ic { width: 24px; height: 24px; color: var(--warn); margin-top: 2px; }
+.zero b { display: block; font-size: 17px; }
+.copy { border: 1px solid var(--rule); background: #fff; border-radius: 6px; overflow: hidden; margin-bottom: 14px; }
+.copy h3 { padding: 10px 14px; background: var(--ai); color: #fff; font-size: 17px; }
+.copy table { width: 100%; border-collapse: collapse; font-size: 16px; }
+.copy td, .copy th { padding: 8px 14px; border-bottom: 1px solid var(--rule2); text-align: right; }
+.copy th { text-align: left; font-weight: 400; }
+.copy th small { display: block; font-size: 14px; color: var(--mut); }
+.copy td { white-space: nowrap; vertical-align: top; }
+.copy tr.tot th, .copy tr.tot td { font-weight: 700; font-size: 18px; border-top: 2px solid var(--ai); border-bottom: 0; }
+.copy tr.tot td { color: var(--shu); }
+.copy .foot { padding: 8px 14px 10px; font-size: 14px; color: var(--mut); }
+#gkActions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+#gkActions .pri { grid-column: 1 / -1; }
+.recon { border: 1px solid var(--rule); background: var(--card); border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; font-size: 16px; }
+.recon ul { margin: 6px 0 0; padding-left: 1.2em; font-size: 15px; }
+details.daily { border: 1px solid var(--rule); background: var(--card); border-radius: 6px; padding: 0 14px; margin-bottom: 14px; }
+details.daily > summary { list-style: none; display: flex; align-items: center; gap: 10px; min-height: 56px; cursor: pointer; font-weight: 700; color: var(--ai); font-size: 17px; }
+details.daily > summary::-webkit-details-marker { display: none; }
+details.daily > summary::after { content: ""; margin-left: auto; width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+details.daily[open] > summary::after { transform: rotate(-135deg); }
+details.daily .hint { margin-bottom: 8px; }
+details.daily .tbl-scroll { margin-bottom: 14px; }
+table.gk { width: 100%; border-collapse: collapse; font-size: 14.5px; background: #fff; }
+table.gk th, table.gk td { border: 1px solid #d3c7a8; padding: 4px 8px; text-align: right; white-space: nowrap; }
+table.gk thead th { background: var(--paper2); font-size: 13px; font-weight: 700; text-align: center; vertical-align: bottom; line-height: 1.35; }
+table.gk thead th small { display: block; font-weight: 400; font-size: 11.5px; color: var(--mut); }
 table.gk td.d { text-align: left; font-weight: 700; }
 table.gk td.d small { font-weight: 400; color: var(--mut); margin-left: 3px; }
 table.gk tr.we td.d small { color: var(--shu); }
-table.gk td.z { color: #b5ad9b; }
+table.gk td.z { color: #b0a894; }
 table.gk td.tx { color: #9c3520; }
 table.gk tfoot td { font-weight: 700; background: var(--paper2); border-top: 2px solid var(--ai); }
-table.gk tr.has td { background: #fffdf6; }
-.copy { border: 1px solid var(--rule); background: #fff; }
-.copy h3 { margin: 0; padding: 10px 14px; background: var(--ai); color: #fff; font-size: 15px; }
-.copy h3 .ic { color: #e3c48a; }
-.copy table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.copy td, .copy th { padding: 7px 12px; border-bottom: 1px solid var(--rule2); text-align: right; }
-.copy th { text-align: left; font-weight: 400; }
-.copy tr.tot th, .copy tr.tot td { font-weight: 700; font-size: 16px; border-top: 2px solid var(--ai); }
-.copy tr.tot td { color: var(--shu); }
-.copy .foot { padding: 10px 14px; font-size: 12.5px; color: var(--mut); line-height: 1.6; }
-.due { display: flex; gap: 8px; align-items: flex-start; padding: 10px 14px; border-top: 1px solid var(--rule2); font-size: 13.5px; }
-.due .ic { color: var(--shu); margin-top: 2px; }
-.recon { margin-top: 16px; }
-.disc { font-size: 12.5px; color: var(--mut); line-height: 1.7; border-top: 1px solid var(--rule); padding-top: 10px; margin-top: 14px; }
 
-/* ---------- ルール ---------- */
-.rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.rule h3 { font-family: var(--fd); font-size: 18px; font-weight: 800; }
-.rule .rt { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 8px 0; }
-.rule .rt td { border-bottom: 1px solid var(--rule2); padding: 4px 6px; }
+/* ---------- メニューの画面 ---------- */
+.sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--rule); background: #fff; border-radius: 6px; margin-bottom: 14px; }
+.sum div { padding: 12px 14px; border-right: 1px solid var(--rule2); min-width: 0; }
+.sum div:last-child { border-right: 0; }
+.sum small { display: block; font-size: 14px; color: var(--mut); font-weight: 700; }
+.sum b { display: block; font-size: 26px; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sum b span { font-size: 15px; margin-left: 2px; }
+.per { font-size: 16px; margin-bottom: 12px; }
+.rule h3 { font-family: var(--fd); font-size: 20px; font-weight: 800; }
+.rule .rt { width: 100%; border-collapse: collapse; font-size: 16px; margin: 6px 0 4px; }
+.rule .rt td { border-bottom: 1px solid var(--rule2); padding: 6px 4px; }
 .rule .rt td:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
-.rule ul { margin: 6px 0 0; padding-left: 1.2em; font-size: 13.5px; }
-.rule li { margin: 2px 0; }
-.rule .src-l { font-size: 12.5px; margin-top: 8px; word-break: break-all; }
-.rule .per { font-size: 12.5px; font-weight: 700; color: var(--ai); margin-top: 8px; }
+.rule .pt { font-size: 15px; font-weight: 700; color: var(--ai); margin-top: 10px; }
+.rule .src-l { font-size: 15px; margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.rule .src-l a { padding: 4px 0; }
+details.rule-d { border: 1px solid var(--rule); background: var(--card); border-radius: 6px; padding: 0 16px; margin-bottom: 10px; }
+details.rule-d > summary { min-height: 56px; display: flex; align-items: center; cursor: pointer; font-weight: 700; font-size: 17px; color: var(--ai); list-style: none; }
+details.rule-d > summary::-webkit-details-marker { display: none; }
+details.rule-d > summary::after { content: ""; margin-left: auto; width: 9px; height: 9px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+details.rule-d[open] > summary::after { transform: rotate(-135deg); }
+details.rule-d .rule { padding-bottom: 14px; }
+details.rule-d .rule h3 { display: none; }
 
 /* ---------- ダイアログ ---------- */
-dialog { border: 0; padding: 0; border-radius: 3px; width: min(860px, calc(100vw - 24px)); max-height: calc(100vh - 24px); background: var(--card); color: var(--ink); box-shadow: 0 24px 60px -20px rgba(0,0,0,.5); }
+dialog { border: 0; padding: 0; border-radius: 8px; width: min(640px, calc(100vw - 24px)); max-height: calc(100vh - 24px); background: var(--card); color: var(--ink); box-shadow: 0 24px 60px -20px rgba(0,0,0,.5); }
 dialog::backdrop { background: rgba(20,37,56,.55); }
-.dlg-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; background: var(--ai); color: #fff; position: sticky; top: 0; z-index: 2; }
-.dlg-h h2 { font-family: var(--fd); font-size: 18px; font-weight: 800; }
-.dlg-h .iconbtn { color: #fff; }
-.dlg-h .iconbtn:hover { background: var(--ai2); border-color: transparent; }
-.dlg-b { padding: 16px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 16px; }
-.dlg-f { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--rule); background: var(--paper); position: sticky; bottom: 0; }
-.dlg-b .calc { margin: 0; background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--shu); }
-.dlg-b .calc h4 { margin: 0 0 4px; font-size: 14px; }
-fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
-legend { font-size: 13px; font-weight: 700; padding: 0; margin-bottom: 6px; color: var(--ai); }
+.dlg-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 8px 6px 18px; background: var(--ai); color: #fff; position: sticky; top: 0; z-index: 2; }
+.dlg-h h2 { font-family: var(--fd); font-size: 19px; font-weight: 800; }
+.iconbtn { appearance: none; border: 0; background: transparent; width: 52px; height: 52px; display: inline-grid; place-items: center; border-radius: 4px; cursor: pointer; color: #fff; }
+.iconbtn:hover { background: var(--ai2); }
+.dlg-b { padding: 16px 18px; }
+.dlg-f { display: flex; justify-content: flex-end; gap: 10px; padding: 10px 18px; border-top: 1px solid var(--rule); background: var(--paper); position: sticky; bottom: 0; }
+.res { margin-top: 14px; padding: 12px 14px; background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--shu); border-radius: 4px; font-size: 16px; }
+.res b { font-size: 20px; color: var(--shu); }
+.res .more { margin-top: 6px; }
 
-.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 2px; font-size: 14px; z-index: 90; transition: opacity .2s, transform .2s; max-width: calc(100vw - 32px); }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 6px; font-size: 16px; z-index: 90; transition: opacity .2s, transform .2s; max-width: calc(100vw - 32px); }
 .toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-footer { border-top: 2px solid var(--ai); background: var(--paper2); font-size: 13px; color: var(--mut); }
-footer .wrap { padding-block: 16px 22px; display: grid; gap: 6px; }
+.disc { font-size: 14px; color: var(--mut); border-top: 1px solid var(--rule); padding-top: 10px; margin-top: 18px; }
+.disc details > summary { cursor: pointer; color: var(--ai2); font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
+footer { border-top: 1px solid var(--rule); background: var(--paper2); font-size: 14px; color: var(--mut); }
+footer .wrap { padding-block: 14px 20px; display: grid; gap: 4px; }
 footer b { color: var(--ink); }
-
 #printArea { display: none; }
 
 /* ---------- 画面幅 ---------- */
-@media (max-width: 1080px) {
-  .mgrid { grid-template-columns: minmax(0, 1fr); }
-  .split { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 860px) {
-  .bar { position: static; }
-  .intro .wrap { grid-template-columns: minmax(0, 1fr); }
-  .hero-art { max-width: 340px; }
-  .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .g3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .rules { grid-template-columns: minmax(0, 1fr); }
-  .dlg-b { grid-template-columns: minmax(0, 1fr); }
-  .tabs { width: 100%; grid-template-columns: repeat(5, minmax(0, 1fr)); }
-  .tab { padding: 4px 2px; font-size: 13px; flex-direction: column; gap: 1px; min-height: 48px; }
+@media (max-width: 900px) {
+  #gkBody { grid-template-columns: minmax(0, 1fr); grid-template-areas: "top" "act" "daily" "rest"; }
   .sum { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .sum div:nth-child(2) { border-right: 0; }
   .sum div:nth-child(-n+2) { border-bottom: 1px solid var(--rule2); }
 }
 @media (max-width: 640px) {
-  body { font-size: 15px; }
-  .intro .wrap { padding-block: 14px 10px; }
-  .hero-art { display: none; }
-  .steps { font-size: 12px; }
-  .g4, .g3, .g2 { grid-template-columns: minmax(0, 1fr); }
-  .span2 { grid-column: auto; }
-  .ctx { flex-basis: 100%; }
-  .ctx select { max-width: 100%; flex: 1 1 auto; }
-  .ctx label { flex: 1 1 auto; }
-  .ctx label > span { white-space: nowrap; }
-  .month { flex: 1 1 auto; justify-content: space-between; }
-  .card { padding: 14px 12px; }
-  .sample .btn { margin-left: 0; width: 100%; }
-  .drop { grid-template-columns: minmax(0, 1fr); text-align: center; }
-  .drop .big { grid-row: auto; justify-self: center; }
-  /* 予約一覧はカード状に */
-  table.bk thead { display: none; }
-  table.bk, table.bk tbody, table.bk tr, table.bk td { display: block; width: 100%; }
-  table.bk tr.bkrow { border-bottom: 1px solid var(--rule); padding: 10px 12px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; }
-  table.bk tr.bkrow td { border: 0; padding: 1px 0; }
-  table.bk td[data-l]::before { content: attr(data-l) "："; color: var(--mut); font-size: 12px; }
-  table.bk td.c-src { grid-column: 1; }
-  table.bk td.c-act { grid-column: 2; grid-row: 1 / span 2; }
-  table.bk td.c-wide { grid-column: 1 / -1; }
-  table.bk td.r { text-align: left; }
-  table.bk tfoot { display: block; }
-  table.bk tfoot tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; padding: 8px 12px; }
-  table.bk tfoot td { padding: 2px 0; border: 0; background: transparent; }
-  table.bk tfoot td:empty { display: none; }
-  .calc { margin-left: 0; }
-  dialog { width: 100vw; max-width: 100vw; max-height: 100dvh; height: 100dvh; margin: 0; border-radius: 0; }
-  .dlg-b { padding: 12px; }
-  table.gk { font-size: 12.5px; }
+  .stepbar { position: static; }
+  .step { flex-direction: column; gap: 2px; font-size: 15px; min-height: 64px; padding: 6px 2px; }
+  .step .n { width: 22px; height: 22px; font-size: 13px; }
+  .card { padding: 16px 14px; }
+  .g2.m1 { grid-template-columns: minmax(0, 1fr); }
+  .ctx .chip { flex-basis: 100%; max-width: none; }
+  .ctx .month { flex: 1 1 100%; justify-content: space-between; }
+  .month output { flex: 1; }
+  .drop small .pc { display: none; }
+  .total-n b { font-size: 42px; }
+  table.gk { font-size: 13px; }
   table.gk thead th small { display: none; }
   table.gk thead th { white-space: normal; }
   table.gk th, table.gk td { padding: 3px 5px; }
-  .sum b { font-size: 21px; }
+  details.daily { padding: 0 10px; }
+  dialog { width: 100vw; max-width: 100vw; max-height: 100dvh; height: 100dvh; margin: 0; border-radius: 0; }
+  .dlg-b { padding: 14px; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
@@ -372,266 +340,212 @@ footer b { color: var(--ink); }
 <header class="top"><div class="wrap top-in">
   <a class="logo" href="./" aria-label="宿泊税 月計表メーカー 試作版">
     <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="3" fill="#f6f1e4"/><rect x="8" y="6" width="22" height="28" rx="1" fill="#fff" stroke="#1f3550" stroke-width="1.6"/><path d="M12 12h14M12 16.5h14M12 21h14M12 25.5h9" stroke="#b9a77e" stroke-width="1.4"/><path d="M16 9v23" stroke="#c4472d" stroke-width="1"/><circle cx="29.5" cy="29" r="5.5" fill="#c4472d"/><path d="M27.2 29.2l1.6 1.6 3-3.4" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span><b>宿泊税 月計表メーカー</b><small>試作版・民泊と小さな宿の計算補助</small></span>
+    <b>宿泊税 月計表メーカー</b>
   </a>
-  <span class="free">無料・登録不要</span>
+  <div class="menu">
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="menuList">メニュー</button>
+    <ul class="menu-list" id="menuList" hidden>
+      <li><button type="button" id="tab-rp" data-tab="rp"><svg class="ic"><use href="#i-clipboard-text"/></svg>定期報告（民泊）</button></li>
+      <li><button type="button" id="tab-ru" data-tab="ru"><svg class="ic"><use href="#i-scales"/></svg>ルールと出典</button></li>
+      <li><button type="button" id="tab-sv" data-tab="sv"><svg class="ic"><use href="#i-floppy-disk"/></svg>保存・バックアップ</button></li>
+    </ul>
+  </div>
 </div></header>
-<div class="notice"><div class="wrap"><svg class="ic"><use href="#i-info"/></svg><span>入力した予約データは、この端末のブラウザの中だけに保存されます。どこにも送信しません。別の端末に移すときは「保存」タブのバックアップを使ってください。</span></div></div>
 
 <section class="intro"><div class="wrap">
-  <div>
-    <h1>予約データから、宿泊税の<em>月計表</em>を。</h1>
-    <p>AirbnbやBooking.comの予約CSV、または手入力から、清掃料を含めた1人1泊の宿泊料金を計算し、宿泊日ごとに数えます。予約ごとの計算も確かめられます。</p>
-    <ol class="steps">
-      <li><span>1</span>施設と自治体を選ぶ</li>
-      <li><span>2</span>予約を入れる</li>
-      <li><span>3</span>月計表を印刷・CSV保存</li>
-      <li><span>4</span>申告書に書き写して自分で提出</li>
-    </ol>
-  </div>
-  <svg class="hero-art" viewBox="0 0 360 150" role="img" aria-label="宿帳の罫線と鍵札のイラスト">
-    <rect x="18" y="14" width="210" height="128" rx="2" fill="#fff" stroke="#1f3550" stroke-width="1.5"/>
-    <rect x="18" y="14" width="210" height="18" fill="#1f3550"/>
-    <text x="30" y="27" fill="#fff" font-size="9.5" font-weight="700" font-family="BIZ UDPGothic, sans-serif">日　課税　免除　合計　税額</text>
-    <g stroke="#d9cdb0" stroke-width="1">
-      <path d="M18 46h210M18 60h210M18 74h210M18 88h210M18 102h210M18 116h210M18 130h210"/>
-      <path d="M46 32v110M90 32v110M134 32v110M176 32v110"/>
-    </g>
-    <path class="draw" d="M24 141 L24 32" stroke="#c4472d" stroke-width="1"/>
-    <g font-family="BIZ UDPGothic, sans-serif" font-size="9" fill="#1c2229" text-anchor="end">
-      <text x="40" y="43">1</text><text x="40" y="57">2</text><text x="40" y="71">3</text><text x="40" y="85">4</text><text x="40" y="99">5</text><text x="40" y="113">6</text><text x="40" y="127">7</text>
-      <text x="84" y="43">2</text><text x="84" y="57">0</text><text x="84" y="71">1</text><text x="84" y="85">1</text><text x="84" y="99">0</text><text x="84" y="113">3</text><text x="84" y="127">3</text>
-      <text x="128" y="43">0</text><text x="128" y="57">0</text><text x="128" y="71">1</text><text x="128" y="85">1</text><text x="128" y="99">0</text><text x="128" y="113">0</text><text x="128" y="127">0</text>
-      <text x="170" y="43">2</text><text x="170" y="57">0</text><text x="170" y="71">2</text><text x="170" y="85">2</text><text x="170" y="99">0</text><text x="170" y="113">3</text><text x="170" y="127">3</text>
-      <text x="220" y="43" fill="#c4472d">780</text><text x="220" y="57" fill="#b5ad9b">0</text><text x="220" y="71" fill="#c4472d">429</text><text x="220" y="85" fill="#c4472d">429</text><text x="220" y="99" fill="#b5ad9b">0</text><text x="220" y="113" fill="#c4472d">1,287</text><text x="220" y="127" fill="#c4472d">1,287</text>
-    </g>
-    <path class="draw" d="M134 116 h42" stroke="#c4472d" stroke-width="1.2" fill="none"/>
-    <g class="tag">
-      <path d="M262 0 V30" stroke="#8a7a58" stroke-width="1.2"/>
-      <rect x="240" y="30" width="44" height="74" rx="10" fill="#c4472d"/>
-      <circle cx="262" cy="42" r="5" fill="#fbf8f0"/>
-      <text x="262" y="72" fill="#fbf8f0" font-size="15" font-weight="800" text-anchor="middle" font-family="Shippori Mincho B1, serif">201</text>
-      <path d="M248 84 h28" stroke="#fbf8f0" stroke-width="1" opacity=".6"/>
-      <g transform="translate(250 106) rotate(8)">
-        <circle cx="12" cy="9" r="8" fill="none" stroke="#b08d45" stroke-width="3.4"/>
-        <path d="M12 17 V40 M12 30 h6 M12 36 h5" stroke="#b08d45" stroke-width="3.4" stroke-linecap="round"/>
-      </g>
-    </g>
-    <g transform="translate(298 62)">
-      <rect width="54" height="56" rx="2" fill="#fff" stroke="#1f3550" stroke-width="1.3"/>
-      <rect width="54" height="12" fill="#1f3550"/>
-      <text x="27" y="9.2" fill="#fff" font-size="7.5" font-weight="700" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif">4月</text>
-      <g fill="#e6ebf1">
-        <rect x="4" y="16" width="6" height="6"/><rect x="11.5" y="16" width="6" height="6"/><rect x="19" y="16" width="6" height="6" fill="#1f3550"/><rect x="26.5" y="16" width="6" height="6" fill="#1f3550"/><rect x="34" y="16" width="6" height="6"/><rect x="41.5" y="16" width="6" height="6"/>
-        <rect x="4" y="24" width="6" height="6"/><rect x="11.5" y="24" width="6" height="6" fill="#c4472d"/><rect x="19" y="24" width="6" height="6" fill="#c4472d"/><rect x="26.5" y="24" width="6" height="6"/><rect x="34" y="24" width="6" height="6"/><rect x="41.5" y="24" width="6" height="6" fill="#1f3550"/>
-        <rect x="4" y="32" width="6" height="6" fill="#1f3550"/><rect x="11.5" y="32" width="6" height="6"/><rect x="19" y="32" width="6" height="6"/><rect x="26.5" y="32" width="6" height="6"/><rect x="34" y="32" width="6" height="6" fill="#1f3550"/><rect x="41.5" y="32" width="6" height="6" fill="#1f3550"/>
-        <rect x="4" y="40" width="6" height="6"/><rect x="11.5" y="40" width="6" height="6"/><rect x="19" y="40" width="6" height="6"/><rect x="26.5" y="40" width="6" height="6"/><rect x="34" y="40" width="6" height="6"/><rect x="41.5" y="40" width="6" height="6"/>
-      </g>
-    </g>
-  </svg>
+  <h1>予約から、宿泊税の<em>月計表</em>を。</h1>
+  <p>無料・登録不要。データはこの端末だけに保存。</p>
 </div></section>
 
-<div class="bar"><div class="wrap bar-in">
-  <div class="ctx">
-    <label><span>施設</span><select id="facSel" aria-label="施設を選ぶ"></select></label>
-    <span class="mchip" id="muniChip"><svg class="ic" style="width:15px;height:15px"><use href="#i-map-pin"/></svg><span></span></span>
+<nav class="stepbar" aria-label="手順"><div class="wrap">
+  <ol class="steps">
+    <li><button class="step" type="button" id="tab-fac" data-tab="fac"><span class="n">1</span><span>施設と自治体</span></button></li>
+    <li><button class="step" type="button" id="tab-bk" data-tab="bk"><span class="n">2</span><span>予約を入れる</span></button></li>
+    <li><button class="step" type="button" id="tab-gk" data-tab="gk"><span class="n">3</span><span>月計表</span></button></li>
+  </ol>
+</div></nav>
+
+<main><div class="wrap">
+  <div class="sample" id="sampleBar" hidden>
+    <span><b>見本を表示中</b></span>
+    <button class="btn" type="button" id="clearSample">見本を閉じる</button>
+  </div>
+  <div class="ctx" id="ctxBar">
+    <button class="chip" type="button" id="facChip" aria-label="施設と自治体を変更"><svg class="ic"><use href="#i-house-line"/></svg><span id="chipTxt"></span><span class="chg">変更</span></button>
     <div class="month" role="group" aria-label="対象月">
       <button type="button" id="mPrev" aria-label="前の月">‹</button>
       <output id="mOut" aria-live="polite"></output>
       <button type="button" id="mNext" aria-label="次の月">›</button>
     </div>
   </div>
-  <div class="tabs" role="tablist" aria-label="画面">
-    <button class="tab" role="tab" id="tab-bk" aria-controls="v-bk" data-tab="bk"><svg class="ic"><use href="#i-book-open-text"/></svg>予約</button>
-    <button class="tab" role="tab" id="tab-gk" aria-controls="v-gk" data-tab="gk"><svg class="ic"><use href="#i-table"/></svg>月計表</button>
-    <button class="tab" role="tab" id="tab-rp" aria-controls="v-rp" data-tab="rp"><svg class="ic"><use href="#i-clipboard-text"/></svg>定期報告</button>
-    <button class="tab" role="tab" id="tab-ru" aria-controls="v-ru" data-tab="ru"><svg class="ic"><use href="#i-scales"/></svg>ルール</button>
-    <button class="tab" role="tab" id="tab-sv" aria-controls="v-sv" data-tab="sv"><svg class="ic"><use href="#i-floppy-disk"/></svg>保存</button>
-  </div>
-</div></div>
 
-<main><div class="wrap">
-  <div class="sample" id="sampleBar" hidden>
-    <span><b>いま表示しているのはサンプルです。</b>架空の施設と予約で、東京都の2027年4月からのルール（3％）を試算しています。</span>
-    <button class="btn sm" type="button" id="clearSample"><svg class="ic"><use href="#i-arrow-counter-clockwise"/></svg>サンプルを消して自分のデータで始める</button>
-  </div>
-
-  <!-- ============ 予約 ============ -->
-  <section class="view" id="v-bk" role="tabpanel" aria-labelledby="tab-bk">
-    <div class="card" id="facCard">
-      <h3><svg class="ic"><use href="#i-house-line"/></svg>施設の設定<span class="dim" style="font-weight:400;margin-left:auto" id="facSavedMsg"></span></h3>
-      <form class="grid g4" id="facForm" autocomplete="off">
-        <label class="f span2"><span>施設名</span><input name="name" placeholder="例：〇〇ハウス"></label>
+  <!-- ============ ① 施設と自治体 ============ -->
+  <section class="view" id="v-fac" aria-labelledby="facH">
+    <div class="card narrow">
+      <h2 class="h2" id="facH">施設と自治体</h2>
+      <label class="f" id="facPick" style="margin-bottom:14px"><span>施設</span><select id="facSel"></select></label>
+      <form class="grid" id="facForm" autocomplete="off">
         <label class="f"><span>自治体</span><select name="muni" id="muniSel"></select></label>
         <label class="f"><span>施設の種類</span><select name="type">
-          <option value="minpaku">住宅宿泊事業（民泊新法）</option>
+          <option value="minpaku">民泊（住宅宿泊事業）</option>
           <option value="tokku">特区民泊</option>
           <option value="kanni">簡易宿所</option>
-          <option value="hotel">旅館・ホテル営業</option>
+          <option value="hotel">旅館・ホテル</option>
         </select></label>
-        <label class="f"><span id="noLabel">証票番号など</span><input name="no" placeholder="自治体から通知された番号"></label>
-        <label class="f"><span>届出番号 <em>定期報告用</em></span><input name="todoke" placeholder="例：M130000000"></label>
-        <label class="f"><span>特別徴収義務者 <em>氏名・法人名</em></span><input name="owner" placeholder="例：山田 太郎"></label>
-        <label class="f"><span>料金と消費税</span><select name="vat">
-          <option value="none">消費税を含まない（免税事業者など）</option>
-          <option value="incl">消費税込みの料金（10/110を除く）</option>
-        </select></label>
-        <label class="f span2"><span>料金のかからない乳幼児</span><select name="infants">
-          <option value="skip">人数に入れない・月計表にも数えない</option>
-          <option value="exempt">人数に入れない・月計表の課税免除に数える</option>
-          <option value="count">ほかの宿泊者と同じく人数に入れる</option>
-        </select></label>
-        <p class="hint span2" style="align-self:end">乳幼児・消費税の扱いは自治体の手引きで確かめてください。迷ったら担当窓口に確認を。</p>
-      </form>
-      <div class="btns" style="margin-top:12px">
-        <button class="btn sm" type="button" id="addFac"><svg class="ic"><use href="#i-plus"/></svg>施設を追加</button>
-        <button class="btn sm danger" type="button" id="delFac"><svg class="ic"><use href="#i-trash"/></svg>この施設を削除</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3><svg class="ic"><use href="#i-upload-simple"/></svg>予約データを入れる</h3>
-      <div class="split">
-        <div>
-          <label class="drop" id="drop" for="csvFile">
-            <span class="big"><svg class="ic"><use href="#i-file-csv"/></svg></span>
-            <b>CSVファイルを選ぶ（ここにドロップも可）</b>
-            <span>Airbnbの予約一覧・収益レポート、Booking.comの予約一覧、そのほかの表計算のCSV</span>
-          </label>
-          <input type="file" id="csvFile" accept=".csv,.tsv,.txt,text/csv" class="vh">
-          <div class="btns" style="margin-top:10px">
-            <button class="btn pri" type="button" id="addBk"><svg class="ic"><use href="#i-pencil-simple"/></svg>手入力で予約を追加</button>
+        <label class="f"><span>施設名 <em>任意</em></span><input name="name" placeholder="例：〇〇ハウス"></label>
+        <details class="more" id="facMore">
+          <summary>印刷に載せる番号・消費税・乳幼児</summary>
+          <div class="grid" style="padding-bottom:6px">
+            <label class="f"><span id="noLabel">証票番号など</span><input name="no"></label>
+            <label class="f"><span>特別徴収義務者 <em>氏名・法人名</em></span><input name="owner"></label>
+            <label class="f"><span>届出番号 <em>定期報告用</em></span><input name="todoke" placeholder="例：M130000000"></label>
+            <label class="f"><span>料金と消費税</span><select name="vat">
+              <option value="none">消費税を含まない</option>
+              <option value="incl">消費税込み（10/110を除く）</option>
+            </select></label>
+            <label class="f"><span>料金のかからない乳幼児</span><select name="infants">
+              <option value="skip">数えない</option>
+              <option value="exempt">課税免除として数える</option>
+              <option value="count">ほかの人と同じく数える</option>
+            </select></label>
+            <p class="hint">乳幼児・消費税の扱いは自治体の手引きで確認を。</p>
           </div>
-        </div>
-        <div class="hint">
-          <p><b>取り込める形式</b>：列の名前から自動で判定し、取り込む前に列の対応を確かめられます。Excelの場合は「CSV UTF-8」で保存してください（Shift_JISのCSVも読めます）。</p>
-          <p style="margin-top:6px"><b>Airbnb</b>の予約一覧の「Earnings（収益）」は、ホストサービス料を引いた<b>受取額</b>です。宿泊税の宿泊料金はOTAの手数料を引く前の金額なので、取り込み時に手数料率で割り戻します。</p>
-          <p style="margin-top:6px">キャンセル済みの予約は自動で外します。同じ予約番号は上書きします。</p>
-        </div>
+        </details>
+      </form>
+      <button class="btn pri big" type="button" id="facNext" style="margin-top:14px">次へ：予約を入れる</button>
+      <div class="btns" style="gap:4px 18px;margin-top:6px">
+        <button class="link" type="button" id="trySample">見本で試す</button>
+        <button class="link" type="button" id="addFac">施設を追加</button>
+        <button class="link danger" type="button" id="delFac">この施設を削除</button>
       </div>
-      <div id="mapArea"></div>
-    </div>
-
-    <div class="card">
-      <div class="tools">
-        <h3 style="margin:0"><svg class="ic"><use href="#i-list-checks"/></svg>予約一覧<span class="dim" id="bkCount" style="font-weight:400"></span></h3>
-        <label class="chk"><input type="checkbox" id="onlyMonth" checked>この月にかかる予約だけ表示</label>
-      </div>
-      <div id="bkList"></div>
     </div>
   </section>
 
-  <!-- ============ 月計表 ============ -->
-  <section class="view" id="v-gk" role="tabpanel" aria-labelledby="tab-gk">
-    <div class="sec-h">
-      <h2><svg class="ic"><use href="#i-calendar-blank"/></svg><span id="gkTitle">月計表</span></h2>
-      <div class="btns">
-        <button class="btn pri" type="button" id="printGk"><svg class="ic"><use href="#i-printer"/></svg>A4で印刷</button>
-        <button class="btn" type="button" id="csvGk"><svg class="ic"><use href="#i-download-simple"/></svg>月計表CSV</button>
-        <button class="btn" type="button" id="csvDetail"><svg class="ic"><use href="#i-download-simple"/></svg>予約ごとの明細CSV</button>
+  <!-- ============ ② 予約 ============ -->
+  <section class="view" id="v-bk" aria-label="予約を入れる">
+    <div class="card">
+      <label class="drop" id="drop" for="csvFile">
+        <svg class="ic" aria-hidden="true"><use href="#i-file-csv"/></svg>
+        <span><b>予約のファイルを読み込む</b><small>Airbnb・Booking.comのCSV（形式は自動判定）<span class="pc">。ドロップも可</span></small></span>
+      </label>
+      <input type="file" id="csvFile" accept=".csv,.tsv,.txt,text/csv" class="vh">
+      <div class="or">
+        <button class="btn" type="button" id="addBk"><svg class="ic"><use href="#i-pencil-simple"/></svg>手で入力する</button>
       </div>
+      <details class="more">
+        <summary>くわしく（読み込めるファイル）</summary>
+        <div class="more-b">
+          <p>Airbnbの予約一覧・収益レポート、Booking.comの予約一覧、そのほかの表計算のCSV。Excelは「CSV UTF-8」で保存（Shift_JISも可）。</p>
+          <p>Airbnbの予約一覧の「収益」は手数料を引いた受取額なので、手数料率で割り戻します。キャンセル済みは外し、同じ予約番号は上書きします。</p>
+        </div>
+      </details>
+      <div id="mapArea"></div>
     </div>
-    <div id="gkBody"></div>
+    <div class="card">
+      <div class="lh"><h2 class="h3" id="bkHead">予約</h2><span class="dim" id="bkCount"></span></div>
+      <div id="bkList"></div>
+      <button class="btn pri big" type="button" id="toGk" style="margin-top:14px">次へ：月計表を見る</button>
+    </div>
+  </section>
+
+  <!-- ============ ③ 月計表 ============ -->
+  <section class="view" id="v-gk" aria-label="月計表">
+    <div id="gkBody">
+      <div id="gkTop"></div>
+      <div id="gkActions">
+        <button class="btn pri big" type="button" id="printGk"><svg class="ic"><use href="#i-printer"/></svg>A4で印刷</button>
+        <button class="btn" type="button" id="csvGk"><svg class="ic"><use href="#i-download-simple"/></svg>月計表CSV</button>
+        <button class="btn" type="button" id="csvDetail"><svg class="ic"><use href="#i-download-simple"/></svg>明細CSV</button>
+      </div>
+      <div id="gkDaily"></div>
+      <div id="gkRest"></div>
+    </div>
   </section>
 
   <!-- ============ 定期報告 ============ -->
-  <section class="view" id="v-rp" role="tabpanel" aria-labelledby="tab-rp">
-    <div class="sec-h">
-      <h2><svg class="ic"><use href="#i-clipboard-text"/></svg>住宅宿泊事業法の定期報告</h2>
-      <div class="btns">
-        <button class="btn" type="button" id="printRp"><svg class="ic"><use href="#i-printer"/></svg>印刷</button>
-        <button class="btn" type="button" id="csvRp"><svg class="ic"><use href="#i-download-simple"/></svg>CSV</button>
-      </div>
-    </div>
+  <section class="view" id="v-rp" aria-labelledby="rpH">
+    <h2 class="h2" id="rpH">定期報告（民泊新法）</h2>
     <div id="rpBody"></div>
+    <div class="btns">
+      <button class="btn" type="button" id="printRp"><svg class="ic"><use href="#i-printer"/></svg>印刷</button>
+      <button class="btn" type="button" id="csvRp"><svg class="ic"><use href="#i-download-simple"/></svg>CSV</button>
+    </div>
   </section>
 
   <!-- ============ ルール ============ -->
-  <section class="view" id="v-ru" role="tabpanel" aria-labelledby="tab-ru">
-    <div class="sec-h">
-      <h2><svg class="ic"><use href="#i-scales"/></svg>このツールが使うルールと出典</h2>
-      <p>2026年10月21日に各自治体の公式ページ・手引きで確認した内容です。</p>
-    </div>
+  <section class="view" id="v-ru" aria-labelledby="ruH">
+    <h2 class="h2" id="ruH" style="margin-bottom:2px">ルールと出典</h2>
+    <p class="hint" style="margin-bottom:14px">2026年10月21日に各自治体の公式ページで確認。</p>
     <div id="ruBody"></div>
   </section>
 
   <!-- ============ 保存 ============ -->
-  <section class="view" id="v-sv" role="tabpanel" aria-labelledby="tab-sv">
-    <div class="sec-h"><h2><svg class="ic"><use href="#i-floppy-disk"/></svg>保存とバックアップ</h2></div>
-    <div class="grid g2">
-      <div class="card">
-        <h3><svg class="ic"><use href="#i-check-circle"/></svg>この端末への保存</h3>
-        <p class="hint" id="storeStatus"></p>
-        <p class="hint" style="margin-top:8px">ブラウザの履歴やサイトデータを消すと、保存した内容も消えます。月に一度はバックアップを取っておくと安心です。</p>
+  <section class="view" id="v-sv" aria-labelledby="svH">
+    <div class="card narrow">
+      <h2 class="h2" id="svH">保存・バックアップ</h2>
+      <p id="storeStatus"></p>
+      <div class="btns" style="margin-top:14px">
+        <button class="btn pri" type="button" id="bkExport"><svg class="ic"><use href="#i-download-simple"/></svg>バックアップを書き出す</button>
+        <label class="btn" for="bkImport"><svg class="ic"><use href="#i-upload-simple"/></svg>バックアップから戻す</label>
+        <input type="file" id="bkImport" accept=".json,application/json" class="vh">
       </div>
-      <div class="card">
-        <h3><svg class="ic"><use href="#i-download-simple"/></svg>バックアップ</h3>
-        <p class="hint">施設と予約をまとめて1つのファイル（JSON）に書き出します。別の端末では「バックアップから戻す」で読み込めます。</p>
-        <div class="btns" style="margin-top:12px">
-          <button class="btn pri" type="button" id="bkExport"><svg class="ic"><use href="#i-download-simple"/></svg>バックアップを書き出す</button>
-          <label class="btn" for="bkImport"><svg class="ic"><use href="#i-upload-simple"/></svg>バックアップから戻す</label>
-          <input type="file" id="bkImport" accept=".json,application/json" class="vh">
-        </div>
-        <p class="hint" id="bkMsg" style="margin-top:8px"></p>
-      </div>
-      <div class="card span2" style="grid-column:1/-1">
-        <h3><svg class="ic"><use href="#i-trash"/></svg>すべて消す</h3>
-        <p class="hint">この端末に保存した施設と予約をすべて消して、最初の状態（サンプル）に戻します。</p>
-        <div class="btns" style="margin-top:10px"><button class="btn danger" type="button" id="wipe"><svg class="ic"><use href="#i-trash"/></svg>すべて消す</button></div>
-      </div>
+      <p class="hint" id="bkMsg" style="margin-top:8px" aria-live="polite"></p>
+      <p class="hint" style="margin-top:8px">ブラウザのデータを消すと消えます。月に一度は書き出しを。</p>
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--rule2)"><button class="btn danger" type="button" id="wipe"><svg class="ic"><use href="#i-trash"/></svg>すべて消す</button></div>
     </div>
   </section>
 
-  <p class="disc"><b>このツールは計算と集計の補助です。</b>申告書・月計表の作成と提出は、施設の経営者（特別徴収義務者）がご自身で行ってください。印刷される表は各自治体の月計表の記載事項に沿った集計表で、公式の様式ではありません（東京都・福岡市・札幌市・北海道は「記載事項が同じなら任意の様式で可」としています）。税率やルールは2026年10月21日時点の公式情報によります。個別の扱いは自治体の宿泊税担当、または税理士などの専門家に確認してください。</p>
+  <div class="disc">
+    <p>計算の補助です。申告・提出はご自身で。印刷する表は公式の様式ではありません。</p>
+    <details><summary>くわしく</summary>
+      <p>申告書・月計表の作成と提出は、施設の経営者（特別徴収義務者）が行ってください。印刷される表は各自治体の月計表の記載事項に沿った集計表です（東京都・福岡市・札幌市・北海道は「記載事項が同じなら任意の様式で可」）。税率やルールは2026年10月21日時点の公式情報によります。個別の扱いは自治体の宿泊税担当、または税理士などに確認してください。</p>
+    </details>
+  </div>
 </div></main>
 
 <footer><div class="wrap">
-  <span><b>宿泊税 月計表メーカー（試作版）</b>　無料でお使いいただけます。計算結果の正しさは保証しません。</span>
-  <span><b>ご意見をください。</b>「この自治体にも対応してほしい」「こうなったら使う」を info@site-forge.jp へ。いただいた内容に合わせて調整します。</span>
-  <span>運営：柴田裕将　お問い合わせ：info@site-forge.jp</span>
-  <span><a href="/privacy.html">プライバシーポリシー</a></span>
+  <span><b>ご意見をください。</b>「この自治体にも対応してほしい」「こうなったら使う」を info@site-forge.jp へ。</span>
+  <span>宿泊税 月計表メーカー（試作版）・無料・計算結果の正しさは保証しません。運営：柴田裕将　お問い合わせ：info@site-forge.jp　<a href="/privacy.html">プライバシーポリシー</a></span>
 </div></footer>
 
 <dialog id="bkDlg" aria-labelledby="bkDlgTitle">
   <form method="dialog" id="bkForm" autocomplete="off" novalidate>
-    <div class="dlg-h"><h2 id="bkDlgTitle">予約を追加</h2><button class="iconbtn" value="cancel" aria-label="閉じる" formnovalidate><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="dlg-h"><h2 id="bkDlgTitle">予約を入力</h2><button class="iconbtn" value="cancel" aria-label="閉じる" formnovalidate><svg class="ic"><use href="#i-x"/></svg></button></div>
     <div class="dlg-b">
       <div class="grid g2">
-        <label class="f"><span>予約経路</span><select name="src">
-          <option>Airbnb</option><option>Booking.com</option><option>楽天トラベル</option><option>じゃらん</option><option>Agoda</option><option>Expedia</option><option>Vrbo</option><option>直接予約</option><option>その他</option>
-        </select></label>
-        <label class="f"><span>予約番号</span><input name="ref" placeholder="例：HMABCD1234"></label>
         <label class="f"><span>チェックイン</span><input name="ci" type="date" required></label>
         <label class="f"><span>チェックアウト</span><input name="co" type="date" required></label>
-        <fieldset class="span2" style="grid-column:1/-1"><legend>人数</legend>
-          <div class="grid g3">
-            <label class="f"><span>大人</span><input name="ad" type="number" min="0" step="1" inputmode="numeric" value="2"></label>
-            <label class="f"><span>子ども</span><input name="ch" type="number" min="0" step="1" inputmode="numeric" value="0"></label>
-            <label class="f"><span>乳幼児 <em>料金なし</em></span><input name="inf" type="number" min="0" step="1" inputmode="numeric" value="0"></label>
-          </div>
-        </fieldset>
-        <fieldset class="span2" style="grid-column:1/-1"><legend>料金（この予約の合計・円）</legend>
-          <div class="grid g2">
-            <label class="f"><span>宿泊料 <em>全泊の合計</em></span><input name="room" class="r" inputmode="numeric" placeholder="0"></label>
-            <label class="f"><span>清掃料</span><input name="clean" class="r" inputmode="numeric" placeholder="0"></label>
-            <label class="f"><span>その他の必ずかかる料金 <em>寝具・追加人数など</em></span><input name="other" class="r" inputmode="numeric" placeholder="0"></label>
-            <label class="f"><span>除く金額 <em>食事・駐車場・宿泊税など</em></span><input name="excl" class="r" inputmode="numeric" placeholder="0"></label>
-          </div>
-          <p class="hint" style="margin-top:6px">OTAの手数料を引く前の金額を入れます。OTAのポイントやクーポンで割り引かれた分も、宿泊料金に含めるのが原則です（自治体の手引き）。</p>
-        </fieldset>
-        <label class="f"><span>受け取った宿泊税 <em>円・任意</em></span><input name="taxGot" class="r" inputmode="numeric" placeholder="未入力"></label>
-        <label class="f"><span>受け取り方</span><select name="taxHow">
-          <option value="">—</option><option value="ota">OTA経由（ホストへ送金）</option><option value="site">現地で受け取り</option><option value="incl">料金に含めた</option><option value="none">受け取っていない</option>
-        </select></label>
-        <label class="f"><span>国籍 <em>定期報告用</em></span><input name="nat" list="natList" placeholder="例：日本"></label>
-        <label class="f"><span>メモ</span><input name="memo"></label>
-        <label class="chk" style="grid-column:1/-1"><input type="checkbox" name="exempt">課税免除にあたる宿泊（修学旅行・外国大使等の証明がある場合など）</label>
+        <label class="f"><span>大人</span><input name="ad" type="number" min="0" step="1" inputmode="numeric" value="2"></label>
+        <label class="f"><span>子ども</span><input name="ch" type="number" min="0" step="1" inputmode="numeric" value="0"></label>
+        <label class="f"><span>宿泊料 <em>全泊の合計</em></span><input name="room" class="r" inputmode="numeric" placeholder="0"></label>
+        <label class="f"><span>清掃料</span><input name="clean" class="r" inputmode="numeric" placeholder="0"></label>
       </div>
-      <div class="calc" id="dlgCalc" aria-live="polite"></div>
+      <p class="hint" style="margin-top:6px">OTAの手数料を引く前の金額（円）。</p>
+      <details class="more" id="dlgMore">
+        <summary>そのほか（予約番号・乳幼児・受け取った税など）</summary>
+        <div class="grid g2" style="padding-bottom:8px">
+          <label class="f"><span>予約経路</span><select name="src">
+            <option>Airbnb</option><option>Booking.com</option><option>楽天トラベル</option><option>じゃらん</option><option>Agoda</option><option>Expedia</option><option>Vrbo</option><option>直接予約</option><option>その他</option>
+          </select></label>
+          <label class="f"><span>予約番号</span><input name="ref" placeholder="例：HMABCD1234"></label>
+          <label class="f"><span>乳幼児 <em>料金なし</em></span><input name="inf" type="number" min="0" step="1" inputmode="numeric" value="0"></label>
+          <label class="f"><span>その他の必須料金</span><input name="other" class="r" inputmode="numeric" placeholder="0"></label>
+          <label class="f full"><span>除く金額 <em>食事・駐車場・宿泊税など</em></span><input name="excl" class="r" inputmode="numeric" placeholder="0"></label>
+          <label class="f"><span>受け取った宿泊税</span><input name="taxGot" class="r" inputmode="numeric" placeholder="未入力"></label>
+          <label class="f"><span>受け取り方</span><select name="taxHow">
+            <option value="">—</option><option value="ota">OTA経由</option><option value="site">現地で</option><option value="incl">料金に含めた</option><option value="none">受け取っていない</option>
+          </select></label>
+          <label class="f"><span>国籍 <em>定期報告用</em></span><input name="nat" list="natList" placeholder="例：日本"></label>
+          <label class="f"><span>メモ</span><input name="memo"></label>
+          <label class="chk full"><input type="checkbox" name="exempt">課税免除の宿泊（修学旅行など証明がある場合）</label>
+          <p class="hint full">OTAのポイント・クーポンで割り引いた分も宿泊料金に含めるのが原則です。</p>
+        </div>
+      </details>
+      <div id="dlgCalc" aria-live="polite"></div>
     </div>
     <div class="dlg-f">
       <button class="btn ghost" value="cancel" formnovalidate>やめる</button>
-      <button class="btn pri" value="ok" id="bkSave">この内容で保存</button>
+      <button class="btn pri" value="ok" id="bkSave">保存する</button>
     </div>
   </form>
 </dialog>
@@ -872,12 +786,16 @@ footer b { color: var(--ink); }
   function sget(k) { try { return canStore ? localStorage.getItem(k) : (memory[k] || null); } catch (e) { return memory[k] || null; } }
   function sset(k, v) { try { if (canStore) localStorage.setItem(k, v); else memory[k] = v; return true; } catch (e) { memory[k] = v; return false; } }
   function sdel(k) { try { if (canStore) localStorage.removeItem(k); } catch (e) {} delete memory[k]; }
+  var TYPE_SHORT = { minpaku: "民泊", tokku: "特区民泊", kanni: "簡易宿所", hotel: "旅館・ホテル" };
+  var TABS = ["fac", "bk", "gk", "rp", "ru", "sv"];
 
+  /* 状態の形：{ v: 2, sample, facilities: [{…, ok}], bookings: [], ui: { fid, month, tab } }
+     v1（旧版）からの違いは facility.ok（①を済ませたか）と ui.tab の "fac" だけ。 */
   function sampleState() {
-    var f = { id: "f_sample", name: "サンプル：押上の家（架空）", muni: "tokyo", type: "minpaku", no: "", todoke: "M130000000", owner: "（サンプル）", vat: "none", infants: "skip", sample: true };
+    var f = { id: "f_sample", name: "見本：押上の家（架空）", muni: "tokyo", type: "minpaku", no: "", todoke: "M130000000", owner: "（見本）", vat: "none", infants: "skip", sample: true, ok: true };
     var B = function (o) { o.id = uid() + o.ref; o.fid = f.id; o.sample = true; return o; };
     return {
-      v: 1, sample: true,
+      v: 2, sample: true,
       facilities: [f],
       bookings: [
         B({ src: "Airbnb", ref: "HMSAMPLE01", ci: "2027-03-29", co: "2027-04-02", ad: 2, ch: 0, inf: 0, room: 96000, clean: 8000, other: 0, excl: 0, memo: "3月と4月にまたがる連泊" }),
@@ -888,32 +806,38 @@ footer b { color: var(--ink); }
         B({ src: "Booking.com", ref: "4012345679", ci: "2027-04-24", co: "2027-04-27", ad: 2, ch: 0, inf: 0, room: 78000, clean: 0, other: 0, excl: 0, nat: "韓国" }),
         B({ src: "Airbnb", ref: "HMSAMPLE04", ci: "2027-04-29", co: "2027-05-03", ad: 2, ch: 0, inf: 0, room: 140000, clean: 8000, other: 0, excl: 0, nat: "日本", memo: "4月と5月にまたがる連泊" })
       ],
-      ui: { fid: f.id, month: "2027-04", tab: "bk" }
+      ui: { fid: f.id, month: "2027-04", tab: "gk" }
     };
   }
-  function blankFacility() { return { id: "f" + Date.now().toString(36), name: "", muni: "tokyo", type: "minpaku", no: "", todoke: "", owner: "", vat: "none", infants: "skip" }; }
+  function blankFacility() { return { id: "f" + Date.now().toString(36), name: "", muni: "tokyo", type: "minpaku", no: "", todoke: "", owner: "", vat: "none", infants: "skip", ok: false }; }
   function thisMonth() { var d = new Date(); return d.getFullYear() + "-" + pad(d.getMonth() + 1); }
+  function freshState(month) { var nf = blankFacility(); return { v: 2, sample: false, facilities: [nf], bookings: [], ui: { fid: nf.id, month: month || thisMonth(), tab: "fac" } }; }
 
   var S;
   function loadState() {
     var raw = sget(KEY.data);
-    if (raw) { try { var o = JSON.parse(raw); if (o && o.facilities && o.facilities.length) return normalize(o); } catch (e) {} }
-    return sampleState();
+    if (raw) { try { var o = JSON.parse(raw); if (o && o.facilities && o.facilities.length) { var n = normalize(o); if (n) return n; } } catch (e) {} }
+    return freshState();
   }
   function normalize(o) {
+    var ver = +o.v || 1;
+    /* 旧版は初回に見本を自動で保存していた。見本しかないなら、最初の画面から始める */
+    if (ver < 2 && o.sample) return null;
     o.bookings = Array.isArray(o.bookings) ? o.bookings : [];
     o.facilities = o.facilities.filter(function (f) { return f && f.id; }).map(function (f) {
       if (!MUNIS[f.muni]) f.muni = "tokyo";
       if (!TYPE_NAME[f.type]) f.type = "minpaku";
       if (["none", "incl"].indexOf(f.vat) < 0) f.vat = "none";
       if (["skip", "exempt", "count"].indexOf(f.infants) < 0) f.infants = "skip";
+      if (ver < 2) f.ok = true; /* 旧版で作った施設は設定済みとして扱う */
       return f;
     });
     if (!o.facilities.length) o.facilities = [blankFacility()];
+    o.v = 2;
     o.ui = o.ui || {};
     if (!o.facilities.some(function (f) { return f.id === o.ui.fid; })) o.ui.fid = o.facilities[0].id;
     if (!/^\d{4}-\d{2}$/.test(o.ui.month || "")) o.ui.month = thisMonth();
-    if (["bk", "gk", "rp", "ru", "sv"].indexOf(o.ui.tab) < 0) o.ui.tab = "bk";
+    if (TABS.indexOf(o.ui.tab) < 0) o.ui.tab = "bk";
     return o;
   }
   var saveTimer = null;
@@ -957,23 +881,33 @@ footer b { color: var(--ink); }
   }
 
   /* ================= 画面：共通 ================= */
+  var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function renderBar() {
-    var f = fac();
+    var f = fac(), t = S.ui.tab;
     $("#facSel").innerHTML = S.facilities.map(function (x) { return '<option value="' + esc(x.id) + '"' + (x.id === f.id ? " selected" : "") + ">" + esc(x.name || "（名前なし）") + "</option>"; }).join("");
-    $("#muniChip span").textContent = MUNIS[f.muni].name + "・" + TYPE_NAME[f.type].replace(/（.*）/, "");
+    $("#chipTxt").textContent = (f.name ? f.name + "・" : "") + MUNIS[f.muni].name.replace(/（.*）/, "") + "・" + TYPE_SHORT[f.type];
     $("#mOut").textContent = mLabel(S.ui.month);
     $("#sampleBar").hidden = !S.sample;
+    $("#ctxBar").hidden = !(t === "bk" || t === "gk" || t === "rp");
+    $$(".step").forEach(function (b) { if (b.dataset.tab === t) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
+    $$("#menuList button").forEach(function (b) { if (b.dataset.tab === t) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   }
-  function setTab(t) {
+  function setTab(t, keepScroll) {
+    var prev = S.ui.tab;
+    if (prev === "fac" && t !== "fac") fac().ok = true;
     S.ui.tab = t;
-    $$(".tab").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.tab === t ? "true" : "false"); b.tabIndex = b.dataset.tab === t ? 0 : -1; });
     $$(".view").forEach(function (v) { v.classList.toggle("on", v.id === "v-" + t); });
-    renderView();
+    renderAll();
     persist();
+    if (!keepScroll && prev !== t) {
+      var y = $(".stepbar").getBoundingClientRect().top + window.scrollY;
+      if (window.scrollY > y) window.scrollTo({ top: y, behavior: "auto" });
+    }
   }
   function renderView() {
     var t = S.ui.tab;
-    if (t === "bk") { renderFacForm(); renderList(); }
+    if (t === "fac") renderFacForm();
+    if (t === "bk") renderList();
     if (t === "gk") renderGk();
     if (t === "rp") renderRp();
     if (t === "ru") renderRules();
@@ -981,13 +915,30 @@ footer b { color: var(--ink); }
   }
   function renderAll() { renderBar(); renderView(); }
 
-  /* ================= 施設フォーム ================= */
+  $$(".step").forEach(function (b) { b.addEventListener("click", function () { setTab(b.dataset.tab); }); });
+  $("#facChip").addEventListener("click", function () { setTab("fac"); });
+  $("#toGk").addEventListener("click", function () { setTab("gk"); });
+  $("#mPrev").addEventListener("click", function () { S.ui.month = addMonth(S.ui.month, -1); persist(); renderAll(); });
+  $("#mNext").addEventListener("click", function () { S.ui.month = addMonth(S.ui.month, 1); persist(); renderAll(); });
+
+  /* メニュー（定期報告・ルール・保存） */
+  var menuBtn = $("#menuBtn"), menuList = $("#menuList");
+  function menu(open) { menuList.hidden = !open; menuBtn.setAttribute("aria-expanded", open ? "true" : "false"); }
+  menuBtn.addEventListener("click", function () { menu(menuList.hidden); if (!menuList.hidden) menuList.querySelector("button").focus(); });
+  $$("#menuList button").forEach(function (b) { b.addEventListener("click", function () { menu(false); setTab(b.dataset.tab); }); });
+  document.addEventListener("click", function (e) { if (!menuList.hidden && !e.target.closest(".menu")) menu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menuList.hidden) { menu(false); menuBtn.focus(); } });
+
+  /* ================= ① 施設と自治体 ================= */
   function renderFacForm() {
     var f = fac(), fm = $("#facForm");
     $("#muniSel").innerHTML = MUNI_ORDER.map(function (k) { return '<option value="' + k + '">' + esc(MUNIS[k].name) + "</option>"; }).join("");
     ["name", "muni", "type", "no", "todoke", "owner", "vat", "infants"].forEach(function (k) { if (fm.elements[k] && document.activeElement !== fm.elements[k]) fm.elements[k].value = f[k] || ""; });
     $("#noLabel").textContent = MUNIS[f.muni].noLabel;
+    $("#facPick").hidden = S.facilities.length < 2;
     $("#delFac").hidden = S.facilities.length < 2;
+    $("#trySample").hidden = S.sample || S.bookings.length > 0;
+    $("#addFac").hidden = S.sample || !f.ok;
   }
   $("#facForm").addEventListener("input", function (e) {
     var f = fac(), el = e.target; if (!el.name) return;
@@ -995,13 +946,12 @@ footer b { color: var(--ink); }
     if (el.name === "muni") $("#noLabel").textContent = MUNIS[f.muni].noLabel;
     persist();
     renderBar();
-    if (el.tagName === "SELECT") renderList();
-    else { clearTimeout(this._t); this._t = setTimeout(renderList, 250); }
-    $("#facSavedMsg").textContent = "保存しました";
   });
+  $("#facForm").addEventListener("submit", function (e) { e.preventDefault(); });
+  $("#facNext").addEventListener("click", function () { fac().ok = true; setTab("bk"); });
   $("#addFac").addEventListener("click", function () {
-    if (ensureReal()) { persist(true); renderAll(); toast("サンプルを片付けて、新しい施設を作りました"); }
-    else { var nf = blankFacility(); nf.name = "施設" + (S.facilities.length + 1); nf.muni = fac().muni; S.facilities.push(nf); S.ui.fid = nf.id; persist(true); renderAll(); }
+    var nf = blankFacility(); nf.name = "施設" + (S.facilities.length + 1); nf.muni = fac().muni; S.facilities.push(nf); S.ui.fid = nf.id;
+    persist(true); setTab("fac");
     $("#facForm").elements.name.focus(); $("#facForm").elements.name.select();
   });
   $("#delFac").addEventListener("click", function () {
@@ -1012,41 +962,25 @@ footer b { color: var(--ink); }
     S.ui.fid = S.facilities[0].id; persist(true); renderAll(); toast("施設を削除しました");
   });
   $("#facSel").addEventListener("change", function () { S.ui.fid = this.value; persist(); renderAll(); });
-  $("#mPrev").addEventListener("click", function () { S.ui.month = addMonth(S.ui.month, -1); persist(); renderAll(); });
-  $("#mNext").addEventListener("click", function () { S.ui.month = addMonth(S.ui.month, 1); persist(); renderAll(); });
-  $$(".tab").forEach(function (b) { b.addEventListener("click", function () { setTab(b.dataset.tab); }); });
-  $(".tabs").addEventListener("keydown", function (e) {
-    var tabs = $$(".tab"), i = tabs.indexOf(document.activeElement); if (i < 0) return;
-    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { e.preventDefault(); var j = (i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length; tabs[j].focus(); setTab(tabs[j].dataset.tab); }
-  });
 
-  /* サンプル表示中に自分の予約を入れたら、サンプルを片付けて新しい施設に入れる */
+  /* 見本 */
+  $("#trySample").addEventListener("click", function () { S = sampleState(); persist(true); setTab("gk"); toast("見本を表示しました"); });
+  /* 見本の表示中に自分の予約を入れたら、見本を片付けて新しい施設に入れる */
   function ensureReal() {
     if (!S.sample) return false;
     var o = fac(), nf = blankFacility();
     ["muni", "type", "vat", "infants"].forEach(function (k) { nf[k] = o[k]; });
-    nf.name = "施設1";
-    S = { v: 1, sample: false, facilities: [nf], bookings: [], ui: { fid: nf.id, month: S.ui.month, tab: S.ui.tab } };
+    nf.name = "施設1"; nf.ok = true;
+    S = { v: 2, sample: false, facilities: [nf], bookings: [], ui: { fid: nf.id, month: S.ui.month, tab: S.ui.tab } };
     $("#sampleBar").hidden = true;
     return true;
   }
   $("#clearSample").addEventListener("click", function () {
-    var nf = blankFacility();
-    S = { v: 1, sample: false, facilities: [nf], bookings: [], ui: { fid: nf.id, month: thisMonth(), tab: "bk" } };
-    persist(true); setTab("bk"); renderAll();
-    toast("サンプルを消しました。施設名と自治体を入れてください");
-    setTimeout(function () { $("#facForm").elements.name.focus(); }, 50);
+    S = freshState(); persist(true); setTab("fac");
+    setTimeout(function () { $("#muniSel").focus(); }, 50);
   });
 
-  /* ================= 予約一覧 ================= */
-  function srcClass(s) { s = String(s || "").toLowerCase(); return s.indexOf("airbnb") >= 0 ? "s-airbnb" : s.indexOf("booking") >= 0 ? "s-booking" : s.indexOf("直接") >= 0 ? "s-direct" : ""; }
-  function clsChip(c) {
-    if (!c.ok) return '<span class="cls out">' + esc(c.err) + "</span>";
-    var inM = c.list.filter(function (e) { return e.date.slice(0, 7) === S.ui.month; });
-    var e = inM[0] || c.list[0];
-    if (e.cls === "out") return '<span class="cls out">' + (e.out === "type" ? "この種類は課税対象外の期間" : "制度の開始前") + "</span>";
-    return '<span class="cls ' + (e.cls === "ex" ? "ex" : "t") + '">' + esc(e.label) + "</span>";
-  }
+  /* ================= ② 予約一覧 ================= */
   function explainHTML(b, f, c) {
     if (!c.ok) return '<div class="calc"><p>' + esc(c.err) + "</p></div>";
     var mu = MUNIS[f.muni], h = '<ol>';
@@ -1083,51 +1017,44 @@ footer b { color: var(--ink); }
   function diffText(d) { d = Math.round(d); if (d === 0) return '<span class="diff-ok">0円</span>'; return '<span class="diff-bad">' + (d > 0 ? "＋" : "−") + yen(Math.abs(d)) + "円</span>"; }
 
   var openRows = {};
+  function hasGot(b) { return b.taxGot !== undefined && b.taxGot !== null && b.taxGot !== ""; }
   function renderList() {
-    var f = fac(), all = facBookings(f), m = S.ui.month, only = $("#onlyMonth").checked;
+    var f = fac(), all = facBookings(f), m = S.ui.month;
     var mStart = m + "-01", mEnd = addMonth(m, 1) + "-01";
-    var list = only ? all.filter(function (b) { return b.ci < mEnd && b.co > mStart; }) : all;
-    $("#bkCount").textContent = "（" + (only ? mLabel(m) + "にかかる " + list.length + "件／" : "") + "全" + all.length + "件）";
+    var list = all.filter(function (b) { return b.ci < mEnd && b.co > mStart; });
+    $("#bkHead").textContent = mLabel(m) + "の予約";
+    $("#bkCount").textContent = list.length + "件" + (all.length !== list.length ? "（全" + all.length + "件）" : "");
     if (!list.length) {
-      $("#bkList").innerHTML = '<div class="empty">' + (all.length ? mLabel(m) + "にかかる予約はありません。" : "まだ予約がありません。CSVを取り込むか、手入力で追加してください。") + "<br>宿泊がない月も、月計表タブで0件の集計を出せます。</div>";
+      $("#bkList").innerHTML = '<p class="empty">' + (all.length ? "この月の予約はありません。" : "まだ予約がありません。") + "<br>宿泊がない月も、③で0件の月計表を出せます。</p>";
       return;
     }
-    var sumTax = 0, sumN = 0, sumGot = 0, gotAny = false;
+    var sumTax = 0, sumN = 0;
     var rows = list.map(function (b) {
-      var c = calcBooking(b, f);
-      var mt = 0, mn = 0;
-      if (c.ok) c.list.forEach(function (e) { if (e.date.slice(0, 7) === m && e.cls !== "out") { mt += e.tax; mn += e.persons + e.infEx; } });
+      var c = calcBooking(b, f), mt = 0, mn = 0, inM = [];
+      if (c.ok) c.list.forEach(function (e) { if (e.date.slice(0, 7) === m) { inM.push(e); if (e.cls !== "out") { mt += e.tax; mn += e.persons + e.infEx; } } });
       sumTax += mt; sumN += mn;
-      var got = b.taxGot !== undefined && b.taxGot !== null && b.taxGot !== "";
-      if (got) { gotAny = true; sumGot += toNum(b.taxGot); }
+      var flag = "", bad = false;
+      if (!c.ok) flag = "入力を確認";
+      else if (hasGot(b) && Math.round(toNum(b.taxGot) - c.total) !== 0) { bad = true; flag = "受取 " + (toNum(b.taxGot) > c.total ? "＋" : "−") + yen(Math.abs(toNum(b.taxGot) - c.total)) + "円"; }
+      else if (inM.length && inM.every(function (e) { return e.cls === "out"; })) flag = "対象外";
+      else if (inM.length && inM.every(function (e) { return e.cls === "ex" || e.cls === "out"; })) flag = "課税免除";
       var open = !!openRows[b.id];
-      return '<tr class="bkrow" data-id="' + esc(b.id) + '">' +
-        '<td class="c-src"><span class="src ' + srcClass(b.src) + '">' + esc(b.src || "—") + '</span><span class="ref">' + esc(b.ref || "") + "</span></td>" +
-        '<td class="nw" data-l="日程">' + (c.ok ? dLabel(b.ci) + "〜" + dLabel(b.co) + ' <span class="dim">' + c.nights + "泊</span>" : esc(b.ci) + "〜" + esc(b.co)) + "</td>" +
-        '<td class="nw" data-l="人数">' + (c.ok ? c.persons + '人<span class="dim">' + (c.inf ? "（乳幼児" + c.inf + "）" : "") + "</span>" : "") + "</td>" +
-        '<td class="r" data-l="宿泊料金">' + yen(c.gross || 0) + "円</td>" +
-        '<td class="r" data-l="1人1泊">' + (c.ok ? yen1(c.pp) + "円" : "") + "</td>" +
-        '<td class="c-wide">' + clsChip(c) + "</td>" +
-        '<td class="r" data-l="この月の延べ">' + mn + "泊</td>" +
-        '<td class="r" data-l="この月の税額"><b>' + yen(mt) + "円</b></td>" +
-        '<td class="r" data-l="受け取り">' + (got ? yen(toNum(b.taxGot)) + "円" + (c.ok && Math.round(toNum(b.taxGot) - c.total) !== 0 ? '<br><span class="dim">差 ' + diffText(toNum(b.taxGot) - c.total) + "</span>" : "") : '<span class="dim">—</span>') + "</td>" +
-        '<td class="c-act"><div class="rowbtns">' +
-          '<button class="iconbtn" data-act="exp" aria-expanded="' + open + '" title="計算を見る" aria-label="計算を見る"><svg class="ic"><use href="#i-calculator"/></svg></button>' +
-          '<button class="iconbtn" data-act="edit" title="編集" aria-label="編集"><svg class="ic"><use href="#i-pencil-simple"/></svg></button>' +
-          '<button class="iconbtn del" data-act="del" title="削除" aria-label="削除"><svg class="ic"><use href="#i-trash"/></svg></button>' +
-        "</div></td></tr>" +
-        (open ? '<tr class="expl"><td colspan="10">' + explainHTML(b, f, c) + "</td></tr>" : "");
+      return '<li class="bkrow" data-id="' + esc(b.id) + '"><button type="button" class="bk-main" data-act="exp" aria-expanded="' + open + '">' +
+        '<span class="bk-d">' + (c.ok ? dLabel(b.ci) + "（" + WD[wd(b.ci)] + "）〜 " + dLabel(b.co) : esc(b.ci) + "〜" + esc(b.co)) + "</span>" +
+        '<span class="bk-t">' + yen(mt) + "円</span>" +
+        '<span class="bk-m">' + (c.ok ? c.nights + "泊・" + c.persons + "人" : esc(c.err)) + "　" + esc(b.src || "") + (b.ref ? " " + esc(b.ref) : "") + "</span>" +
+        '<span class="bk-f' + (bad || !c.ok ? " bad" : "") + '">' + flag + "</span>" +
+        "</button>" +
+        (open ? '<div class="bk-x"><p class="bk-ref">' + esc(b.src || "") + (b.ref ? "　" + esc(b.ref) : "") + (b.memo ? "　" + esc(b.memo) : "") + "</p>" + explainHTML(b, f, c) + '<div class="btns"><button class="btn" type="button" data-act="edit"><svg class="ic"><use href="#i-pencil-simple"/></svg>編集</button><button class="btn danger" type="button" data-act="del"><svg class="ic"><use href="#i-trash"/></svg>削除</button></div></div>' : "") +
+        "</li>";
     }).join("");
-    $("#bkList").innerHTML = '<div class="tbl-scroll"><table class="led bk"><thead><tr><th>予約経路・番号</th><th>日程</th><th>人数</th><th class="r">宿泊料金</th><th class="r">1人1泊</th><th>区分</th><th class="r">この月の延べ</th><th class="r">この月の税額</th><th class="r">受け取った税</th><th><span class="vh">操作</span></th></tr></thead><tbody>' + rows +
-      '</tbody><tfoot><tr><td colspan="6">' + mLabel(m) + 'の合計</td><td class="r">' + sumN + '泊</td><td class="r">' + yen(sumTax) + '円</td><td class="r">' + (gotAny ? yen(sumGot) + "円" : "") + "</td><td></td></tr></tfoot></table></div>" +
-      '<p class="hint" style="margin-top:8px">「受け取った税」は予約全体で受け取った額です。月をまたぐ予約は、計算上の税額を宿泊日ごとに各月へ分けています。計算機のボタンで、予約ごとの計算の過程を確かめられます。</p>';
+    $("#bkList").innerHTML = '<ul class="bklist">' + rows + '</ul><p class="bk-sum"><span>' + (+m.slice(5)) + "月の合計</span><b>" + sumN + "泊・" + yen(sumTax) + "円</b></p>";
   }
-  $("#onlyMonth").addEventListener("change", renderList);
   $("#bkList").addEventListener("click", function (e) {
-    var btn = e.target.closest("button[data-act]"); if (!btn) return;
-    var id = btn.closest("tr").dataset.id, b = S.bookings.filter(function (x) { return x.id === id; })[0]; if (!b) return;
+    var btn = e.target.closest("[data-act]"); if (!btn) return;
+    var id = btn.closest(".bkrow").dataset.id, b = S.bookings.filter(function (x) { return x.id === id; })[0]; if (!b) return;
     var act = btn.dataset.act;
-    if (act === "exp") { openRows[id] = !openRows[id]; renderList(); var nb = $('tr[data-id="' + CSS.escape(id) + '"] button[data-act="exp"]'); if (nb) nb.focus(); }
+    if (act === "exp") { openRows[id] = !openRows[id]; renderList(); var nb = $('.bkrow[data-id="' + CSS.escape(id) + '"] .bk-main'); if (nb) nb.focus(); }
     if (act === "edit") openDlg(b);
     if (act === "del") {
       if (!confirm((b.src || "") + " " + (b.ref || "") + "（" + b.ci + "〜" + b.co + "）を削除します。よろしいですか？")) return;
@@ -1140,16 +1067,17 @@ footer b { color: var(--ink); }
   var NUMF = ["room", "clean", "other", "excl", "taxGot"];
   function openDlg(b) {
     editing = b || null;
-    $("#bkDlgTitle").textContent = b ? "予約を編集" : "予約を追加";
+    $("#bkDlgTitle").textContent = b ? "予約を編集" : "予約を入力";
     var el = bkForm.elements, m = S.ui.month;
-    var d = b || { src: "Airbnb", ref: "", ci: m + "-01", co: m + "-02", ad: 2, ch: 0, inf: 0, room: "", clean: "", other: "", excl: "", taxGot: "", taxHow: "", nat: "", memo: "", exempt: false };
+    var d = b || { src: "直接予約", ref: "", ci: m + "-01", co: m + "-02", ad: 2, ch: 0, inf: 0, room: "", clean: "", other: "", excl: "", taxGot: "", taxHow: "", nat: "", memo: "", exempt: false };
     ["src", "ref", "ci", "co", "ad", "ch", "inf", "taxHow", "nat", "memo"].forEach(function (k) { el[k].value = d[k] == null ? "" : d[k]; });
     NUMF.forEach(function (k) { el[k].value = d[k] === "" || d[k] == null ? "" : yen(toNum(d[k])); });
     if (![].slice.call(el.src.options).some(function (o) { return o.value === d.src; })) { var o = document.createElement("option"); o.textContent = d.src; el.src.appendChild(o); el.src.value = d.src; }
     el.exempt.checked = !!d.exempt;
+    $("#dlgMore").open = !!(b && (b.ref || toNum(b.inf) || toNum(b.other) || toNum(b.excl) || hasGot(b) || b.nat || b.memo || b.exempt));
     dlgCalc();
     if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
-    setTimeout(function () { (b ? el.room : el.ref).focus(); }, 30);
+    setTimeout(function () { (b ? el.room : el.ci).focus(); }, 30);
   }
   function formBooking() {
     var el = bkForm.elements, o = {};
@@ -1160,7 +1088,15 @@ footer b { color: var(--ink); }
     o.exempt = el.exempt.checked;
     return o;
   }
-  function dlgCalc() { var o = formBooking(), f = fac(), c = calcBooking(o, f); $("#dlgCalc").innerHTML = "<h4>計算の過程</h4>" + explainHTML(o, f, c).replace(/^<div class="calc">|<\/div>$/g, ""); return c; }
+  var calcOpen = false;
+  function dlgCalc() {
+    var o = formBooking(), f = fac(), c = calcBooking(o, f), box = $("#dlgCalc");
+    var d = box.querySelector("details"); if (d) calcOpen = d.open;
+    box.innerHTML = c.ok
+      ? '<div class="res">この予約の宿泊税 <b>' + yen(c.total) + "円</b>　<span class=\"dim\">1人1泊 " + yen1(c.pp) + '円</span><details class="more"' + (calcOpen ? " open" : "") + "><summary>計算の過程</summary>" + explainHTML(o, f, c) + "</details></div>"
+      : '<p class="msg err">' + esc(c.err) + "</p>";
+    return c;
+  }
   bkForm.addEventListener("input", dlgCalc);
   NUMF.forEach(function (k) {
     bkForm.elements[k].addEventListener("blur", function () { if (this.value.trim() !== "") this.value = yen(toNum(this.value)); });
@@ -1271,12 +1207,12 @@ footer b { color: var(--ink); }
     var fr = new FileReader();
     fr.onload = function () {
       var text = decodeText(fr.result), rows = parseCSV(text);
-      if (rows.length < 2) { $("#mapArea").innerHTML = '<p class="msg err">データの行が見つかりませんでした。CSV形式のファイルか確かめてください。</p>'; return; }
+      if (rows.length < 2) { $("#mapArea").innerHTML = '<p class="msg err">データの行が見つかりませんでした。CSVファイルか確かめてください。</p>'; return; }
       var headers = rows[0].map(function (h) { return String(h).replace(/^﻿/, "").trim(); });
       var fmt = detect(headers), p = PRESET[fmt];
       imp = { name: file.name, headers: headers, rows: rows.slice(1), fmt: fmt, map: autoMap(headers), src: p.src, amt: p.amt, fee: p.fee, cleanIn: p.cleanIn, order: "auto", skipCancel: true, listings: null };
       renderMap();
-      $("#mapArea").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+      $("#mapArea").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" });
     };
     fr.readAsArrayBuffer(file);
   }
@@ -1330,36 +1266,36 @@ footer b { color: var(--ink); }
       if (!imp.listings) imp.listings = listingVals.slice();
     }
     var pr = parseRows(), f = fac();
-    var h = '<div class="mapbox"><h3 style="margin-bottom:6px"><svg class="ic"><use href="#i-table"/></svg>取り込む前の確認：' + esc(imp.name) + "</h3>" +
-      '<p class="hint">判定した形式：<b>' + esc(PRESET[imp.fmt].name) + "</b>（" + imp.rows.length + "行）。列の対応が違うときは選び直してください。取り込み先：<b>" + esc(f.name || "（名前なし）") + "</b></p>" +
-      '<div class="grid g4" style="margin-top:12px">' +
-        '<label class="f"><span>予約経路</span><select data-imp="src">' + ["Airbnb", "Booking.com", "楽天トラベル", "じゃらん", "Agoda", "Expedia", "Vrbo", "直接予約", "その他"].map(function (s) { return "<option" + (s === imp.src ? " selected" : "") + ">" + s + "</option>"; }).join("") + "</select></label>" +
-        '<label class="f"><span>金額の列の中身</span><select data-imp="amt"><option value="gross"' + (imp.amt === "gross" ? " selected" : "") + '>ゲストの支払額（手数料を引く前）</option><option value="net"' + (imp.amt === "net" ? " selected" : "") + ">受取額（OTA手数料を引いた後）</option></select></label>" +
-        '<label class="f"' + (imp.amt === "net" ? "" : " hidden") + '><span>割り戻す手数料率 <em>％</em></span><input data-imp="fee" type="number" min="0" max="50" step="0.1" value="' + imp.fee + '"><span class="sub">Airbnbは多くの個人ホストが3％、一律15.5％の場合も。明細で確認を。</span></label>' +
-        '<label class="f"><span>日付の並び</span><select data-imp="order"><option value="auto">自動</option><option value="mdy"' + (imp.order === "mdy" ? " selected" : "") + '>月/日/年</option><option value="dmy"' + (imp.order === "dmy" ? " selected" : "") + ">日/月/年</option></select></label>" +
-      "</div>" +
-      '<div class="btns" style="margin:10px 0 4px;gap:6px 18px">' +
-        '<label class="chk"><input type="checkbox" data-imp="skipCancel"' + (imp.skipCancel ? " checked" : "") + ">キャンセル済みの行を外す</label>" +
-        (imp.map.clean != null ? '<label class="chk"><input type="checkbox" data-imp="cleanIn"' + (imp.cleanIn ? " checked" : "") + ">金額の列に清掃料が含まれている</label>" : "") +
-      "</div>" +
-      '<details style="margin-top:6px"' + (imp.fmt === "generic" ? " open" : "") + '><summary style="cursor:pointer;font-weight:700;font-size:14px">列の対応（' + Object.keys(imp.map).length + "項目を自動で判定）</summary>" +
-      '<div class="mapgrid" style="margin-top:10px">' + FIELDS.map(function (fd) { return '<label class="f"><span>' + esc(fd.l) + (fd.req ? " <em>必須</em>" : "") + '</span><select data-map="' + fd.k + '">' + opts(fd.k) + "</select></label>"; }).join("") + "</div></details>";
+    var needMap = imp.fmt === "generic" || imp.map.ci == null || imp.map.amount == null;
+    var h = '<div class="imp"><p class="imp-h"><b>' + esc(PRESET[imp.fmt].name) + "</b><span>" + esc(imp.name) + "</span></p>";
+    if (S.facilities.length > 1) h += '<p class="hint">取り込み先：' + esc(f.name || "（名前なし）") + "</p>";
+    if (imp.amt === "net") h += '<label class="fee"><span class="fee-l">受取額を割り戻す手数料率</span><input data-imp="fee" type="number" min="0" max="50" step="0.1" value="' + imp.fee + '"><span>％</span><span class="hint">多くの個人ホストは3％。明細で確認を。</span></label>';
     if (listingVals.length > 1) {
-      h += '<div style="margin-top:12px"><p class="hint"><b>物件名で絞り込む</b>（この施設の分だけ選んでください）</p><div class="listing-pick">' + listingVals.map(function (v) { return '<label class="chk"><input type="checkbox" data-listing="' + esc(v) + '"' + (imp.listings.indexOf(v) >= 0 ? " checked" : "") + ">" + esc(v) + "</label>"; }).join("") + "</div></div>";
+      h += '<fieldset><legend>この施設の物件だけ選ぶ</legend>' + listingVals.map(function (v) { return '<label class="chk"><input type="checkbox" data-listing="' + esc(v) + '"' + (imp.listings.indexOf(v) >= 0 ? " checked" : "") + ">" + esc(v) + "</label>"; }).join("") + "</fieldset>";
     }
+    if (pr.cur.length) h += '<p class="msg warn">円以外の通貨（' + esc(pr.cur.join("、")) + "）があります。宿泊日の為替相場で円に直してから入れてください。</p>";
+    var sk = pr.skipped, notes = [];
+    if (sk.cancel) notes.push("キャンセル " + sk.cancel);
+    if (sk.type) notes.push("予約以外 " + sk.type);
+    if (sk.listing) notes.push("ほかの物件 " + sk.listing);
+    if (sk.bad) notes.push("日付を読めない " + sk.bad);
+    h += '<p class="imp-n">取り込む予約 <b>' + pr.list.length + "件</b>" + (notes.length ? '<br><span class="hint">外す行：' + notes.join("・") + "</span>" : "") + "</p>";
+    h += '<div class="btns"><button class="btn pri" type="button" id="impGo"' + (pr.list.length ? "" : " disabled") + '><svg class="ic"><use href="#i-check-circle"/></svg>' + pr.list.length + '件を取り込む</button><button class="btn ghost" type="button" id="impCancel">やめる</button></div>';
     var prev = pr.list.slice(0, 6).map(function (b) {
       var c = calcBooking(b, f);
-      return "<tr><td>" + esc(b.ref) + "</td><td>" + b.ci + "〜" + b.co + "</td><td class=\"r\">" + (c.ok ? c.nights : "") + "泊</td><td class=\"r\">" + (c.ok ? c.persons : "") + '人</td><td class="r">' + yen(b.room + b.clean - b.excl) + '円</td><td class="r">' + (c.ok ? yen1(c.pp) : "") + "円</td></tr>";
+      return "<tr><td>" + esc(b.ref) + "</td><td>" + b.ci + "〜" + b.co + "</td><td class=\"r\">" + (c.ok ? c.persons : "") + '人</td><td class="r">' + yen(b.room + b.clean - b.excl) + '円</td><td class="r">' + (c.ok ? yen1(c.pp) : "") + "円</td></tr>";
     }).join("");
-    h += '<div class="tbl-scroll" style="margin-top:12px"><table class="led"><thead><tr><th>予約番号</th><th>日程</th><th class="r">泊数</th><th class="r">人数</th><th class="r">宿泊料金</th><th class="r">1人1泊</th></tr></thead><tbody>' + (prev || '<tr><td colspan="6" class="empty">取り込める行がありません。列の対応を確かめてください。</td></tr>') + "</tbody></table></div>";
-    var sk = pr.skipped, notes = [];
-    if (sk.cancel) notes.push("キャンセル " + sk.cancel + "行");
-    if (sk.type) notes.push("予約以外の行（入金など） " + sk.type + "行");
-    if (sk.listing) notes.push("ほかの物件 " + sk.listing + "行");
-    if (sk.bad) notes.push("日付を読めない行 " + sk.bad + "行");
-    h += '<p class="hint" style="margin-top:8px">取り込む予約：<b>' + pr.list.length + "件</b>" + (notes.length ? "　外す行：" + notes.join("、") : "") + "</p>";
-    if (pr.cur.length) h += '<p class="msg warn">円以外の通貨（' + esc(pr.cur.join("、")) + "）の金額があります。宿泊日の為替相場（仲値）で円に直してから入れてください。</p>";
-    h += '<div class="btns" style="margin-top:12px"><button class="btn pri" type="button" id="impGo"' + (pr.list.length ? "" : " disabled") + '><svg class="ic"><use href="#i-check-circle"/></svg>' + pr.list.length + '件を取り込む</button><button class="btn ghost" type="button" id="impCancel">やめる</button></div></div>';
+    h += '<details class="more"' + (needMap ? " open" : "") + '><summary>くわしい設定（列の対応・中身の確認）</summary><div class="more-b">' +
+      '<div class="mapgrid">' +
+        '<label class="f"><span>予約経路</span><select data-imp="src">' + ["Airbnb", "Booking.com", "楽天トラベル", "じゃらん", "Agoda", "Expedia", "Vrbo", "直接予約", "その他"].map(function (s) { return "<option" + (s === imp.src ? " selected" : "") + ">" + s + "</option>"; }).join("") + "</select></label>" +
+        '<label class="f"><span>金額の列の中身</span><select data-imp="amt"><option value="gross"' + (imp.amt === "gross" ? " selected" : "") + '>手数料を引く前</option><option value="net"' + (imp.amt === "net" ? " selected" : "") + ">受取額（手数料を引いた後）</option></select></label>" +
+        '<label class="f"><span>日付の並び</span><select data-imp="order"><option value="auto">自動</option><option value="mdy"' + (imp.order === "mdy" ? " selected" : "") + '>月/日/年</option><option value="dmy"' + (imp.order === "dmy" ? " selected" : "") + ">日/月/年</option></select></label>" +
+      "</div>" +
+      '<label class="chk"><input type="checkbox" data-imp="skipCancel"' + (imp.skipCancel ? " checked" : "") + ">キャンセル済みの行を外す</label>" +
+      (imp.map.clean != null ? '<label class="chk"><input type="checkbox" data-imp="cleanIn"' + (imp.cleanIn ? " checked" : "") + ">金額の列に清掃料が含まれている</label>" : "") +
+      '<p style="margin:10px 0 6px;font-weight:700">列の対応</p><div class="mapgrid">' + FIELDS.map(function (fd) { return '<label class="f"><span>' + esc(fd.l) + (fd.req ? " <em>必須</em>" : "") + '</span><select data-map="' + fd.k + '">' + opts(fd.k) + "</select></label>"; }).join("") + "</div>" +
+      '<p style="margin:12px 0 6px;font-weight:700">取り込む中身（先頭6件）</p><div class="tbl-scroll"><table class="led"><thead><tr><th>予約番号</th><th>日程</th><th class="r">人数</th><th class="r">宿泊料金</th><th class="r">1人1泊</th></tr></thead><tbody>' + (prev || '<tr><td colspan="5">取り込める行がありません。列の対応を確かめてください。</td></tr>') + "</tbody></table></div>" +
+      "</div></details></div>";
     $("#mapArea").innerHTML = h;
   }
   $("#mapArea").addEventListener("change", function (e) {
@@ -1373,6 +1309,7 @@ footer b { color: var(--ink); }
     if (open && $("#mapArea details")) $("#mapArea details").open = true;
   });
   $("#mapArea").addEventListener("click", function (e) {
+    if (e.target.closest("[data-go]")) { setTab(e.target.closest("[data-go]").dataset.go); return; }
     if (e.target.closest("#impCancel")) { imp = null; renderMap(); return; }
     if (!e.target.closest("#impGo")) return;
     var pr = parseRows(), wasSample = ensureReal(), f = fac(), add = 0, upd = 0, months = {};
@@ -1386,36 +1323,37 @@ footer b { color: var(--ink); }
     var hasCur = pr.list.some(function (b) { return b.ci.slice(0, 7) <= S.ui.month && b.co.slice(0, 7) >= S.ui.month; });
     if (!hasCur && best) S.ui.month = best;
     imp = null; persist(true); renderAll();
-    $("#mapArea").innerHTML = '<p class="msg ok">' + (wasSample ? "サンプルを片付けて、新しい施設「施設1」に取り込みました。施設名を入れてください。" : "") + add + "件を追加、" + upd + "件を更新しました。対象月を" + mLabel(S.ui.month) + "にしています。</p>";
+    $("#mapArea").innerHTML = '<div class="msg ok">' + (wasSample ? "見本を片付けて「施設1」に入れました。" : "") + add + "件を追加" + (upd ? "、" + upd + "件を更新" : "") + "しました（" + mLabel(S.ui.month) + "を表示中）。<br>" +
+      '<button class="btn" type="button" data-go="gk">月計表を見る</button></div>';
   });
 
-  /* ================= 月計表 ================= */
+  /* ================= ③ 月計表 ================= */
+  var dailyOpen = matchMedia("(min-width: 901px)").matches;
   function renderGk() {
-    var f = fac(), m = S.ui.month, T = tally(f, m), mu = MUNIS[f.muni];
-    $("#gkTitle").textContent = mu.sheet + "　" + mLabel(m);
-    var h = "";
+    var f = fac(), m = S.ui.month, T = tally(f, m), mu = MUNIS[f.muni], top = "";
     if (T.r.none) {
-      var why = T.r.none === "type" ? esc(mu.name) + "では、この月の宿泊について" + esc(TYPE_NAME[f.type]) + "は課税対象外です。" : esc(mu.name) + "の宿泊税はまだ始まっていません。";
+      var why = T.r.none === "type" ? esc(mu.name) + "では、この月の宿泊は" + esc(TYPE_NAME[f.type]) + "は課税対象外です。" : esc(mu.name) + "の宿泊税はまだ始まっていません。";
       var next = "";
-      if (T.r.none === "type" || T.r.none === "before") {
-        var rg = mu.regimes.filter(function (r) { return r.types.indexOf(f.type) >= 0; }).map(function (r) { return r.from; }).sort()[0];
-        if (rg && rg > m + "-01") next = "この施設の種類は <b>" + dLong(rg) + "</b> の宿泊分から課税されます。";
-      }
-      h += '<div class="zero"><svg class="ic"><use href="#i-info"/></svg><div><b>この月は集計の対象外です</b>' + why + next + "<br>対象月を切り替えてください（上の ‹ › ）。</div></div>";
-      if (T.outNights) h += '<p class="hint">この月にかかる宿泊（延べ' + T.outNights + "泊）は、課税されない宿泊として扱っています。</p>";
-      $("#gkBody").innerHTML = h + rulesSummary(f.muni);
+      var rg = mu.regimes.filter(function (r) { return r.types.indexOf(f.type) >= 0; }).map(function (r) { return r.from; }).sort()[0];
+      if (rg && rg > m + "-01") next = "<b>" + dLong(rg) + "</b>の宿泊分から課税されます。";
+      top = '<div class="zero"><svg class="ic"><use href="#i-info"/></svg><div><b>' + esc(mLabel(m)) + "は集計の対象外です</b>" + why + next + "</div></div>";
+      if (T.outNights) top += '<p class="hint" style="margin-bottom:14px">この月の宿泊（延べ' + T.outNights + "泊）は課税されない宿泊として扱っています。</p>";
+      $("#gkActions").hidden = true; $("#gkTop").innerHTML = top; $("#gkDaily").innerHTML = "";
+      $("#gkRest").innerHTML = rulesBox(f, T);
       return;
     }
-    var fi = filingInfo(f.muni, m);
-    h += '<div class="regime"><b>' + esc(mu.name) + "</b><span>" + esc(T.r.title) + "</span><span class=\"dim\">" + esc(T.r.desc || "") + "</span></div>";
-    var ex = T.tot.ex || 0, tx = T.totalNights - ex;
-    h += '<div class="sum"><div><small>課税対象の延べ宿泊数</small><b>' + tx + '<span>泊</span></b></div><div><small>課税免除の延べ宿泊数</small><b>' + ex + '<span>泊</span></b></div><div><small>延べ宿泊数の合計</small><b>' + T.totalNights + '<span>泊</span></b></div><div class="tax"><small>納める宿泊税（計算上）</small><b>' + yen(T.tax) + "<span>円</span></b></div></div>";
-    if (T.totalNights === 0) h += '<div class="zero"><svg class="ic"><use href="#i-warning-circle"/></svg><div><b>この月は宿泊がありません（0泊・0円）</b>' + esc(mu.zero) + "<br>申告期限：" + dLong(fi.due) + "（" + esc(fi.text) + "）</div></div>";
-    h += '<div class="mgrid"><div><div class="tbl-scroll">' + gkTable(T, false) + "</div>" +
-      '<p class="hint" style="margin-top:8px">宿泊数は延べ人数（2人で1泊＝2泊、1人で2泊＝2泊）。月をまたぐ連泊は、宿泊日ごとにその月へ数えています。土日の色付きは確認用です。</p></div>';
-    h += '<div>' + copyBox(T, f, fi) + reconBox(T) + "</div></div>";
-    h += rulesSummary(f.muni);
-    $("#gkBody").innerHTML = h;
+    $("#gkActions").hidden = false;
+    var fi = filingInfo(f.muni, m), ex = T.tot.ex || 0, tx = T.totalNights - ex;
+    top += '<div class="total"><p class="total-l">' + esc(mLabel(m)) + "分　納める宿泊税</p>" +
+      '<p class="total-n"><b>' + yen(T.tax) + "</b>円</p>" +
+      '<p class="total-s">課税 ' + tx + "泊・免除 " + ex + "泊・合計 " + T.totalNights + "泊</p>" +
+      '<p class="due">申告・納入の期限 <b>' + dLong(fi.due) + "</b><span>" + esc(fi.text) + "</span></p></div>";
+    if (T.totalNights === 0) top += '<div class="zero"><svg class="ic"><use href="#i-warning-circle"/></svg><div><b>この月は宿泊がありません（0泊・0円）</b>' + esc(mu.zero) + "</div></div>";
+    top += copyBox(T, f);
+    $("#gkTop").innerHTML = top;
+    $("#gkDaily").innerHTML = '<details class="daily" id="dailyBox"' + (dailyOpen ? " open" : "") + '><summary>日ごとの表を見る</summary><p class="hint">印刷される表と同じです。2人で1泊＝2泊と数えます。</p><div class="tbl-scroll">' + gkTable(T, false) + "</div></details>";
+    $("#dailyBox").addEventListener("toggle", function () { dailyOpen = this.open; });
+    $("#gkRest").innerHTML = reconBox(T) + rulesBox(f, T);
   }
   function gkTable(T, forPrint) {
     var cols = T.cols, rate = T.r.kind === "rate";
@@ -1431,38 +1369,38 @@ footer b { color: var(--ink); }
     var foot = '<tfoot><tr><td class="d">計</td>' + cols.map(function (c) { return "<td>" + yen(T.tot[c.k] || 0) + "</td>"; }).join("") + "<td>" + yen(T.totalNights) + "</td>" + (rate ? "<td>" + yen(T.base) + "</td>" : "") + "<td>" + yen(T.tax) + "</td></tr></tfoot>";
     return '<table class="gk">' + head + "<tbody>" + body + "</tbody>" + foot + "</table>";
   }
-  function copyBox(T, f, fi) {
+  function copyBox(T, f) {
     var mu = MUNIS[f.muni], rows = "";
     if (T.r.kind === "tier") {
-      T.cols.forEach(function (c) { if (c.k === "ex") return; var n = T.tot[c.k] || 0; rows += "<tr><th>" + esc(c.s) + "</th><td>" + yen(n) + "泊 × " + yen(c.tax) + "円</td><td>" + yen(n * c.tax) + "円</td></tr>"; });
+      T.cols.forEach(function (c) { if (c.k === "ex") return; var n = T.tot[c.k] || 0; rows += "<tr><th>" + esc(c.s) + "<small>" + yen(n) + "泊 × " + yen(c.tax) + "円</small></th><td>" + yen(n * c.tax) + "円</td></tr>"; });
     } else {
-      rows += "<tr><th>課税対象（" + T.r.pct + "％）</th><td>" + yen(T.tot.t || 0) + "泊／課税標準 " + yen(T.base) + "円</td><td>" + yen(T.tax) + "円</td></tr>";
+      rows += "<tr><th>課税対象（" + T.r.pct + "％）<small>" + yen(T.tot.t || 0) + "泊・課税標準 " + yen(T.base) + "円</small></th><td>" + yen(T.tax) + "円</td></tr>";
     }
-    rows += "<tr><th>課税免除</th><td>" + yen(T.tot.ex || 0) + "泊</td><td></td></tr>";
-    rows += "<tr><th>合計</th><td>" + yen(T.totalNights) + "泊</td><td></td></tr>";
-    rows += '<tr class="tot"><th>納入すべき税額</th><td></td><td>' + yen(T.tax) + "円</td></tr>";
+    rows += "<tr><th>課税免除</th><td>" + yen(T.tot.ex || 0) + "泊</td></tr>";
+    rows += "<tr><th>宿泊数の合計</th><td>" + yen(T.totalNights) + "泊</td></tr>";
+    rows += '<tr class="tot"><th>納入すべき税額</th><td>' + yen(T.tax) + "円</td></tr>";
     var split = "";
-    if (mu.split && T.tax) split = '<p class="foot">内訳（参考）：' + esc(mu.split[0]) + "分 " + yen(T.split[0]) + "円・" + esc(mu.split[1]) + "分 " + yen(T.split[1]) + "円。どちらも" + esc(mu.split[0]) + "へまとめて申告・納入します。</p>";
-    return '<div class="copy"><h3><svg class="ic"><use href="#i-copy"/></svg>申告書に書き写す数字</h3><table>' + rows + "</table>" + split +
-      '<div class="due"><svg class="ic"><use href="#i-calendar-blank"/></svg><div>申告・納入の期限：<b>' + dLong(fi.due) + "</b><br><span class=\"dim\">" + esc(fi.text) + "。祝日は考慮していません。3か月特例の承認を受けている場合は期限が変わります。</span></div></div>" +
-      '<p class="foot">' + esc(mu.sheet) + "：" + esc(mu.need) + "</p></div>";
+    if (mu.split && T.tax) split = '<p class="foot">内訳：' + esc(mu.split[0]) + "分 " + yen(T.split[0]) + "円・" + esc(mu.split[1]) + "分 " + yen(T.split[1]) + "円（まとめて" + esc(mu.split[0]) + "へ）</p>";
+    return '<div class="copy"><h3>申告書に書き写す数字</h3><table>' + rows + "</table>" + split + "</div>";
   }
   function reconBox(T) {
-    var withGot = T.bookings.filter(function (x) { var g = x.b.taxGot; return g !== undefined && g !== null && g !== ""; });
-    if (!T.bookings.length) return "";
+    var withGot = T.bookings.filter(function (x) { return hasGot(x.b); });
+    if (!withGot.length) return "";
     var bad = withGot.filter(function (x) { return Math.round(toNum(x.b.taxGot) - x.c.total) !== 0; });
-    var h = '<div class="copy recon"><h3><svg class="ic"><use href="#i-scales"/></svg>受け取った宿泊税との照合</h3><div class="foot" style="color:var(--ink)">';
-    if (!withGot.length) h += "受け取った宿泊税が入力された予約はありません。OTAのカスタム税金機能や現地で受け取っている場合は、予約の編集で入れると差を確かめられます。";
-    else {
-      h += "受け取った額を入れた予約 " + withGot.length + "件のうち、計算と合わない予約：<b>" + bad.length + "件</b>";
-      if (bad.length) h += "<ul style=\"margin:6px 0 0;padding-left:1.2em\">" + bad.map(function (x) { return "<li>" + esc(x.b.src) + " " + esc(x.b.ref) + "：受け取り " + yen(toNum(x.b.taxGot)) + "円／計算 " + yen(x.c.total) + "円（" + diffText(toNum(x.b.taxGot) - x.c.total) + "）</li>"; }).join("") + "</ul>";
-      h += '<p style="margin-top:6px" class="dim">納める額は、受け取った額ではなく宿泊にもとづく計算上の額です（受け取れなかった分も納める必要があります）。</p>';
-    }
-    return h + "</div></div>";
+    var h = '<div class="recon"><b>受け取った宿泊税</b>：' + withGot.length + "件中 " + (bad.length ? '<span class="diff-bad">' + bad.length + "件が計算と違います</span>" : '<span class="diff-ok">すべて計算どおり</span>');
+    if (bad.length) h += "<ul>" + bad.map(function (x) { return "<li>" + esc(x.b.src) + " " + esc(x.b.ref) + "：受取 " + yen(toNum(x.b.taxGot)) + "円／計算 " + yen(x.c.total) + "円（" + diffText(toNum(x.b.taxGot) - x.c.total) + "）</li>"; }).join("") + "</ul>";
+    return h + '<p class="hint" style="margin-top:4px">納めるのは計算上の額です。</p></div>';
+  }
+  function rulesBox(f, T) {
+    var mu = MUNIS[f.muni], r = T.r;
+    var h = '<details class="more"><summary>この月のルールと出典</summary><div class="more-b">';
+    if (!r.none) h += "<p><b>" + esc(mu.name) + "</b>　" + esc(r.title) + "</p>" + (r.desc ? "<p>" + esc(r.desc) + "</p>" : "");
+    h += "<p>" + esc(mu.sheet) + "：" + esc(mu.need) + "</p><p>期限は土日を翌月曜にずらしています（祝日は考慮なし）。3か月特例の承認を受けている場合は期限が変わります。</p>";
+    return h + rulesSummary(f.muni) + "</div></details>";
   }
   function rulesSummary(k) {
     var mu = MUNIS[k];
-    return '<p class="hint" style="margin-top:16px">出典：' + mu.links.map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + esc(mu.name + " " + l[0]) + "</a>"; }).join("　") + "（2026年10月21日確認）</p>";
+    return '<p>出典：' + mu.links.map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + esc(mu.name + " " + l[0]) + "</a>"; }).join("　") + "（2026年10月21日確認）</p>";
   }
 
   /* ================= 印刷・CSV ================= */
@@ -1569,11 +1507,16 @@ footer b { color: var(--ink); }
     var f = fac(), P = periodOf(S.ui.month), R = rpCalc(f, P);
     var nat = Object.keys(R.byNat).sort(function (a, b) { return a === "未入力" ? 1 : b === "未入力" ? -1 : R.byNat[b] - R.byNat[a]; });
     var h = "";
-    if (f.type !== "minpaku") h += '<p class="msg warn" style="margin:0 0 14px">この報告は住宅宿泊事業（民泊新法）の届出住宅が対象です。施設の種類が「' + esc(TYPE_NAME[f.type]) + "」になっています。</p>";
-    h += '<div class="regime"><b>' + mLabel(P.s) + "・" + (+P.e.slice(5)) + "月分</b><span>報告期限：" + dLong(P.due) + "</span><span class=\"dim\">偶数月の15日までに、前の2か月分を都道府県知事（保健所設置市などは市）へ。対象月を切り替えると期間が変わります。</span></div>";
-    h += '<div class="sum"><div><small>宿泊させた日数</small><b>' + R.days + '<span>日</span></b></div><div><small>宿泊者数</small><b>' + R.guests + '<span>人</span></b></div><div><small>延べ宿泊者数</small><b>' + R.nobe + '<span>人</span></b></div><div><small>届出番号</small><b style="font-size:17px">' + esc(f.todoke || "—") + "</b></div></div>";
-    h += '<div class="mgrid"><div class="copy"><h3><svg class="ic"><use href="#i-users"/></svg>国籍別の宿泊者数</h3><table>' + (nat.length ? nat.map(function (k) { return "<tr><th>" + esc(k) + "</th><td>" + R.byNat[k] + "人</td></tr>"; }).join("") : '<tr><th>宿泊者なし</th><td>0人</td></tr>') + '</table><p class="foot">予約ごとに入れた国籍で数えています（同じ予約の人は同じ国籍として数えます）。「未入力」は予約の編集で国籍を入れてください。Booking.comのCSVは予約者の国を取り込みます。</p></div>' +
-      '<div class="copy"><h3><svg class="ic"><use href="#i-info"/></svg>数え方</h3><div class="foot" style="color:var(--ink)"><ul style="margin:0;padding-left:1.2em"><li>宿泊させた日数：期間内で宿泊者がいた日（泊）の数</li><li>宿泊者数：期間内に1泊以上した予約の人数の合計（乳幼児を含む）</li><li>延べ宿泊者数：人数 × 期間内の泊数</li><li>期間をまたぐ予約の宿泊者数の数え方は、報告先の案内で確かめてください</li></ul><p style="margin-top:8px">根拠：住宅宿泊事業法第14条、同法施行規則第12条（<a href="https://laws.e-gov.go.jp/law/429M60000900002" target="_blank" rel="noopener">e-Gov法令検索</a>）</p></div></div></div>';
+    if (f.type !== "minpaku") h += '<p class="msg warn" style="margin:0 0 14px">民泊新法の届出住宅が対象です（いまの種類：' + esc(TYPE_NAME[f.type]) + "）。</p>";
+    h += '<p class="per"><b>' + mLabel(P.s) + "・" + (+P.e.slice(5)) + "月分</b>　期限 <b>" + dLong(P.due) + "</b></p>";
+    h += '<div class="sum"><div><small>宿泊させた日数</small><b>' + R.days + '<span>日</span></b></div><div><small>宿泊者数</small><b>' + R.guests + '<span>人</span></b></div><div><small>延べ宿泊者数</small><b>' + R.nobe + '<span>人</span></b></div><div><small>届出番号</small><b style="font-size:18px">' + esc(f.todoke || "—") + "</b></div></div>";
+    h += '<div class="copy"><h3>国籍別の宿泊者数</h3><table>' + (nat.length ? nat.map(function (k) { return "<tr><th>" + esc(k) + "</th><td>" + R.byNat[k] + "人</td></tr>"; }).join("") : '<tr><th>宿泊者なし</th><td>0人</td></tr>') + "</table></div>";
+    h += '<details class="more" style="margin-bottom:14px"><summary>くわしく（数え方・根拠）</summary><div class="more-b"><ul>' +
+      "<li>偶数月の15日までに、前の2か月分を都道府県知事（保健所設置市などは市）へ。月を切り替えると期間が変わります</li>" +
+      "<li>宿泊させた日数：期間内で宿泊者がいた日（泊）の数</li><li>宿泊者数：期間内に1泊以上した予約の人数（乳幼児を含む）</li><li>延べ宿泊者数：人数 × 期間内の泊数</li>" +
+      "<li>国籍は予約ごとに入れた国籍で数えます（Booking.comのCSVは予約者の国）。「未入力」は予約の編集で入れてください</li>" +
+      "<li>期間をまたぐ予約の数え方は報告先の案内で確認を</li></ul>" +
+      '<p>根拠：住宅宿泊事業法第14条、同法施行規則第12条（<a href="https://laws.e-gov.go.jp/law/429M60000900002" target="_blank" rel="noopener">e-Gov法令検索</a>）</p></div></details>';
     $("#rpBody").innerHTML = h;
   }
   function rpPrintHTML() {
@@ -1595,41 +1538,42 @@ footer b { color: var(--ink); }
   });
 
   /* ================= ルール ================= */
+  function ruleCard(k) {
+    var mu = MUNIS[k];
+    var regs = mu.regimes.map(function (r) {
+      var t = '<p class="pt">' + esc(r.title) + (r.types.length < 4 ? "（対象：" + r.types.map(function (x) { return TYPE_NAME[x]; }).join("・") + "）" : "") + "</p>";
+      if (r.kind === "tier") t += '<table class="rt">' + r.tiers.map(function (x, i) { return "<tr><td>1人1泊 " + tierLabel(r.tiers, i) + "</td><td>" + (x.ex ? "課税されない" : yen(x.tax) + "円" + (x.sp ? '<span class="dim">（' + esc(mu.split[0]) + x.sp[0] + "＋" + esc(mu.split[1]) + x.sp[1] + "）</span>" : "")) + "</td></tr>"; }).join("") + "</table>";
+      else t += '<table class="rt">' + (r.min ? "<tr><td>1人1泊 " + yen(r.min) + "円未満</td><td>課税されない</td></tr>" : "") + "<tr><td>" + (r.min ? yen(r.min) + "円以上" : "1人1泊の宿泊料金") + "</td><td>" + r.pct + "％</td></tr></table>";
+      if (r.desc) t += '<p class="hint">' + esc(r.desc) + "</p>";
+      return t;
+    }).join("");
+    return '<div class="rule"><h3>' + esc(mu.name) + "</h3>" + regs +
+      '<details class="more"><summary>注意点</summary><div class="more-b"><ul>' + mu.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "<li>" + esc(mu.sheet) + "：" + esc(mu.need) + "</li><li>" + esc(mu.zero) + "</li></ul></div></details>" +
+      '<p class="src-l"><span>出典：</span>' + mu.links.map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + esc(l[0]) + "</a>"; }).join("") + "</p></div>";
+  }
   function renderRules() {
     var cur = fac().muni;
-    var cards = MUNI_ORDER.map(function (k) {
-      var mu = MUNIS[k];
-      var regs = mu.regimes.map(function (r) {
-        var t = '<p class="per">' + esc(r.title) + (r.types.length < 4 ? "（対象：" + r.types.map(function (x) { return TYPE_NAME[x]; }).join("・") + "）" : "") + "</p>";
-        if (r.kind === "tier") t += '<table class="rt">' + r.tiers.map(function (x, i) { return "<tr><td>1人1泊 " + tierLabel(r.tiers, i) + "</td><td>" + (x.ex ? "課税されない" : yen(x.tax) + "円" + (x.sp ? '<span class="dim">（' + esc(mu.split[0]) + x.sp[0] + "＋" + esc(mu.split[1]) + x.sp[1] + "）</span>" : "")) + "</td></tr>"; }).join("") + "</table>";
-        else t += '<table class="rt"><tr><td>' + (r.min ? "1人1泊 " + yen(r.min) + "円未満" : "") + "</td><td>" + (r.min ? "課税されない" : "") + "</td></tr><tr><td>" + (r.min ? yen(r.min) + "円以上" : "1人1泊の宿泊料金") + "</td><td>" + r.pct + "％</td></tr></table>";
-        if (r.desc) t += '<p class="hint">' + esc(r.desc) + "</p>";
-        return t;
-      }).join("");
-      return '<div class="card rule"' + (k === cur ? ' style="border-top-color:var(--shu)"' : "") + "><h3>" + esc(mu.name) + (k === cur ? ' <span class="cls t" style="font-family:var(--fb)">選択中</span>' : "") + "</h3>" + regs +
-        "<ul>" + mu.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "<li>" + esc(mu.sheet) + "：" + esc(mu.need) + "</li><li>" + esc(mu.zero) + "</li></ul>" +
-        '<p class="src-l">出典：' + mu.links.map(function (l) { return '<a href="' + l[1] + '" target="_blank" rel="noopener">' + esc(l[0]) + "</a>"; }).join("　") + "</p></div>";
-    }).join("");
-    var common = '<div class="card"><h3><svg class="ic"><use href="#i-info"/></svg>どの自治体にも共通する考え方</h3><ul class="hint" style="margin:0;padding-left:1.2em">' +
-      "<li>宿泊税を納めるのは宿泊者ですが、申告・納入するのは施設の経営者（特別徴収義務者）です。AirbnbなどのOTAは、2026年10月時点で日本の宿泊税を代わりに納める仕組みを公表していません（Airbnbの<a href=\"https://www.airbnb.jp/help/article/2509\" target=\"_blank\" rel=\"noopener\">税徴収・納付代行の地域一覧</a>に日本はありません）。</li>" +
-      "<li>Airbnbの「カスタム税金」でゲストから集めた税は、ホストに送金され、ホストが納めます。計算方法は定率・定額のみで、段階税率や「13,000円未満は非課税」は表せません。受け取った額と納める額がずれることがあります。</li>" +
-      "<li>1人1泊の宿泊料金＝（宿泊料＋清掃料など必ず払う料金−食事代など）÷泊数÷宿泊者数。このツールは清掃料を泊数で均等に分けます（福岡市・札幌市の手引きに明記。ほかの自治体も連泊の一括料金は日数で割る扱い）。</li>" +
-      "<li>料金のかからない乳幼児（寝具の追加なし）は人数から外すのが手引きの計算例です。月計表の課税免除欄に数えるかどうかは自治体に確認してください。</li>" +
+    var common = '<details class="rule-d"><summary>どの自治体にも共通する考え方</summary><div class="more-b" style="padding-bottom:14px"><ul>' +
+      "<li>申告・納入するのは施設の経営者（特別徴収義務者）です。AirbnbなどのOTAは、2026年10月時点で日本の宿泊税を代わりに納める仕組みを公表していません（Airbnbの<a href=\"https://www.airbnb.jp/help/article/2509\" target=\"_blank\" rel=\"noopener\">税徴収・納付代行の地域一覧</a>に日本はありません）。</li>" +
+      "<li>Airbnbの「カスタム税金」で集めた税はホストに送金され、ホストが納めます。定率・定額のみで段階税率や「13,000円未満は非課税」は表せないため、受け取った額と納める額がずれることがあります。</li>" +
+      "<li>1人1泊の宿泊料金＝（宿泊料＋清掃料など必ず払う料金−食事代など）÷泊数÷宿泊者数。清掃料は泊数で均等に分けます（福岡市・札幌市の手引きに明記）。</li>" +
+      "<li>料金のかからない乳幼児は人数から外すのが手引きの計算例です。課税免除欄に数えるかは自治体に確認を。</li>" +
       "<li>境目の金額は円未満も含めて比べます（例：19,999.5円は2万円未満）。</li>" +
-      "<li>宿泊がない月も申告書の提出が必要です（各自治体）。</li></ul></div>";
-    $("#ruBody").innerHTML = common + '<div class="rules">' + cards + "</div>";
+      "<li>宿泊がない月も申告書の提出が必要です（各自治体）。</li></ul></div></details>";
+    var others = MUNI_ORDER.filter(function (k) { return k !== cur; }).map(function (k) { return '<details class="rule-d"><summary>' + esc(MUNIS[k].name) + "</summary>" + ruleCard(k) + "</details>"; }).join("");
+    $("#ruBody").innerHTML = '<div class="card">' + ruleCard(cur) + "</div>" + '<h3 class="h3" style="margin-top:6px">ほかの自治体</h3>' + others + common;
   }
 
   /* ================= 保存 ================= */
   function renderSave() {
     var nB = S.bookings.length, nF = S.facilities.length;
-    $("#storeStatus").innerHTML = (canStore ? "この端末のブラウザに自動で保存しています。" : "<b>このブラウザでは保存できません</b>（プライベートモードなど）。閉じる前にバックアップを書き出してください。") + "<br>施設 " + nF + "件・予約 " + nB + "件" + (S.sample ? "（サンプル）" : "");
+    $("#storeStatus").innerHTML = (canStore ? "この端末に自動で保存しています。" : "<b>このブラウザでは保存できません</b>（プライベートモードなど）。閉じる前に書き出してください。") + "<br>施設 " + nF + "件・予約 " + nB + "件" + (S.sample ? "（見本）" : "");
   }
   $("#bkExport").addEventListener("click", function () {
     var o = { app: "minpaku-tax", v: 1, exportedAt: new Date().toISOString(), facilities: S.facilities, bookings: S.bookings };
     var d = new Date(), stamp = d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate());
     download("宿泊税月計表_バックアップ_" + stamp + ".json", JSON.stringify(o, null, 1), "application/json");
-    $("#bkMsg").textContent = "書き出しました。ファイルは大切に保管してください。";
+    $("#bkMsg").textContent = "書き出しました。大切に保管してください。";
   });
   $("#bkImport").addEventListener("change", function () {
     var file = this.files[0]; this.value = ""; if (!file) return;
@@ -1639,22 +1583,23 @@ footer b { color: var(--ink); }
         var o = JSON.parse(fr.result);
         if (!o || o.app !== "minpaku-tax" || !Array.isArray(o.facilities) || !Array.isArray(o.bookings)) throw new Error("x");
         if (!confirm("いまの施設と予約を、バックアップの内容（施設" + o.facilities.length + "件・予約" + o.bookings.length + "件）に置き換えます。よろしいですか？")) return;
-        S = normalize({ v: 1, sample: false, facilities: o.facilities, bookings: o.bookings, ui: { fid: (o.facilities[0] || {}).id, month: S.ui.month, tab: "sv" } });
+        o.facilities.forEach(function (f) { if (f) f.ok = true; });
+        S = normalize({ v: 2, sample: false, facilities: o.facilities, bookings: o.bookings, ui: { fid: (o.facilities[0] || {}).id, month: S.ui.month, tab: "sv" } });
         persist(true); renderAll();
         $("#bkMsg").textContent = "バックアップから戻しました。";
-      } catch (e) { $("#bkMsg").textContent = "このファイルは読み込めませんでした。このツールで書き出したバックアップ（JSON）を選んでください。"; }
+      } catch (e) { $("#bkMsg").textContent = "読み込めませんでした。このツールで書き出したバックアップ（JSON）を選んでください。"; }
     };
     fr.readAsText(file);
   });
   $("#wipe").addEventListener("click", function () {
     if (!confirm("この端末に保存した施設と予約をすべて消します。元に戻せません。よろしいですか？")) return;
-    sdel(KEY.data); S = sampleState(); persist(true); setTab("bk"); renderAll(); toast("すべて消しました");
+    sdel(KEY.data); S = freshState(); persist(true); setTab("fac"); toast("すべて消しました");
   });
 
   /* ================= 起動 ================= */
   S = loadState();
-  renderBar();
-  setTab(S.ui.tab);
+  if (!fac().ok && !S.sample) S.ui.tab = "fac";
+  setTab(S.ui.tab, true);
 })();
 </script>
 </body>

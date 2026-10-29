@@ -15,8 +15,8 @@
 <script src="/tracking.js"></script>
 <style>
 :root {
-  --y: #f2b705; --y2: #ffd34a; --y3: #fff4c7; --k: #1d1f22; --k2: #2a2c31; --k3: #14161a;
-  --paper: #fffdf6; --red: #c62a22; --mut: #5a5545; --line: #d8cfb2; --ok: #1f7a3a;
+  --y: #f2b705; --y3: #fff6d2; --k: #1d1f22; --k2: #2c2e33; --k3: #15171a;
+  --bg: #f3f0e6; --paper: #fff; --red: #b3261e; --mut: #4a463b; --line: #d6cfba; --ok: #1d6e35; --focus: #0b5fff;
   --fd: "Dela Gothic One", "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
   --fb: "BIZ UDPGothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
   --fm: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -26,191 +26,198 @@
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-  margin: 0; color: var(--k); font-family: var(--fb); font-size: 16px; line-height: 1.6;
-  background-color: var(--y);
-  background-image:
-    linear-gradient(rgba(29,31,34,.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29,31,34,.12) 1px, transparent 1px),
-    linear-gradient(rgba(29,31,34,.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29,31,34,.05) 1px, transparent 1px);
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
-  background-position: -1px -1px;
+  margin: 0; color: var(--k); font-family: var(--fb); font-size: 17px; line-height: 1.6;
+  background-color: var(--bg);
+  background-image: linear-gradient(rgba(29,31,34,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(29,31,34,.05) 1px, transparent 1px);
+  background-size: 24px 24px; background-position: -1px -1px;
   font-variant-numeric: tabular-nums;
 }
 button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
 a { color: inherit; }
 h1, h2, h3, p { margin: 0; }
 .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.wrap { max-width: 1160px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
-:focus-visible { outline: 3px solid #0b5fff; outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 [hidden] { display: none !important; }
 
-/* ---------- ヘッダー ---------- */
-.top { background: var(--y); border-bottom: 3px solid var(--k); }
-.top-in { display: flex; align-items: center; gap: 10px; padding-block: 10px; }
-.logo { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-family: var(--fd); font-size: 18px; line-height: 1.2; min-width: 0; }
-.logo svg { width: 34px; height: 34px; flex: none; }
-.badge { margin-left: auto; flex: none; font-weight: 700; font-size: 12.5px; background: var(--k); color: var(--y); padding: 4px 10px; border-radius: 2px; white-space: nowrap; }
-.notice { background: var(--k); color: #f4efe0; font-size: 12.5px; line-height: 1.5; }
-.notice .wrap { padding-block: 7px; display: flex; gap: 8px; align-items: flex-start; }
-.notice svg { flex: none; width: 16px; height: 16px; margin-top: 1px; color: var(--y); }
-.notice b { color: var(--y); }
-
-/* ---------- タブ ---------- */
-.tabs { position: sticky; top: 0; z-index: 40; background: var(--k3); border-bottom: 3px solid var(--k); }
-.tabs .wrap { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding-block: 6px; }
-.tab { appearance: none; border: 0; background: transparent; color: #e9e5d8; font-weight: 700; font-size: 13.5px; min-height: 46px; border-radius: 3px; cursor: pointer; padding: 4px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; line-height: 1.2; white-space: nowrap; }
-.tab svg { width: 20px; height: 20px; }
-.tab[aria-selected="true"] { background: var(--y); color: var(--k); }
-.tab:hover:not([aria-selected="true"]) { background: var(--k2); }
+/* ---------- ヘッダー・ナビ ---------- */
+.top { background: var(--y); }
+.top-in { display: flex; align-items: center; gap: 10px; min-height: 52px; padding-block: 6px; }
+.logo { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--fd); font-size: 18px; line-height: 1.2; min-width: 0; }
+.logo svg { width: 30px; height: 30px; flex: none; }
+.trial { margin-left: auto; font-size: 14px; font-weight: 700; border: 2px solid var(--k); border-radius: 3px; padding: 0 6px; }
+.priv { background: var(--k); color: #f1ecdd; font-size: 14.5px; line-height: 1.4; }
+.priv .wrap { padding-block: 6px; }
+.tabs { position: sticky; top: 0; z-index: 40; background: var(--k3); }
+.tabs-in { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 6px; padding-block: 6px; }
+.tab, .menu-btn { appearance: none; border: 0; background: transparent; color: #f1ecdd; font-weight: 700; font-size: 17px; min-height: 52px; border-radius: 6px; padding: 4px 12px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; }
+.tab[aria-current="page"] { background: var(--y); color: var(--k); }
+.menu-btn { border: 2px solid #55575c; }
+.menu-btn.on { border-color: var(--y); color: var(--y); }
+.menu-btn svg { width: 20px; height: 20px; }
+.menu { position: absolute; right: var(--gr); top: calc(100% + 2px); z-index: 50; min-width: 230px; background: var(--paper); border: 2px solid var(--k); border-radius: 6px; padding: 6px; box-shadow: 0 10px 28px rgba(0,0,0,.28); display: grid; gap: 2px; }
+.menu button { appearance: none; border: 0; background: #fff; min-height: 54px; text-align: left; font-weight: 700; font-size: 17px; padding: 8px 14px; border-radius: 4px; }
+.menu button:hover { background: var(--y3); }
+.menu hr { border: 0; border-top: 1px solid var(--line); margin: 4px 6px; }
 
 /* ---------- 画面 ---------- */
-main { padding-block: 18px 32px; }
+main { padding-block: 12px 28px; }
 .view { display: none; }
 .view.on { display: block; }
-.vhead { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; margin-bottom: 14px; }
-.vtitle { font-family: var(--fd); font-weight: 400; font-size: 24px; line-height: 1.3; }
-.vtitle .docno { display: block; font-family: var(--fm); font-weight: 700; font-size: 13px; letter-spacing: .04em; margin-top: 2px; }
-.vhead .btns { align-items: center; }
-.vtitle small { display: block; font-family: var(--fb); font-weight: 700; font-size: 13px; letter-spacing: .02em; }
-.status { font-size: 13px; font-weight: 700; background: var(--paper); border: 2px solid var(--k); padding: 3px 10px; border-radius: 2px; }
-.status.warn { background: #fff; color: var(--red); border-color: var(--red); }
+.vhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 6px 0 12px; }
+.vtitle { font-size: 22px; font-weight: 700; line-height: 1.35; }
+.docrow { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; min-height: 52px; }
+.kind { font-weight: 700; font-size: 15px; background: var(--k); color: var(--y); padding: 2px 8px; border-radius: 3px; white-space: nowrap; }
+.kind.est { background: #fff; color: var(--k); border: 2px solid var(--k); padding: 0 6px; }
+.docno { font-family: var(--fm); font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.status { font-size: 14.5px; color: var(--mut); white-space: nowrap; }
+.status.warn { color: var(--red); font-weight: 700; }
+.docrow .btn { margin-left: auto; flex: none; }
 
-.card { background: var(--paper); border: 3px solid var(--k); box-shadow: 5px 5px 0 var(--k); border-radius: 3px; padding: 18px 16px 20px; margin-bottom: 22px; }
-.chead { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-.chead .no { font-family: var(--fm); font-weight: 700; font-size: 13px; background: var(--k); color: var(--y); padding: 2px 8px; letter-spacing: .08em; border-radius: 2px; }
-.chead h2 { font-family: var(--fd); font-weight: 400; font-size: 20px; line-height: 1.3; }
-.chead .aside { margin-left: auto; font-size: 13px; color: var(--mut); font-weight: 700; }
-.hint { font-size: 13px; color: var(--mut); line-height: 1.6; }
-.hint + .hint { margin-top: 4px; }
+.card { background: var(--paper); border: 2px solid var(--k); border-radius: 8px; padding: 14px 14px 16px; margin-bottom: 14px; }
+.card > h2, .ghead h2 { font-size: 19px; font-weight: 700; line-height: 1.35; }
+.ghead { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.gsum { margin-left: auto; font-family: var(--fd); font-weight: 400; font-size: 18px; white-space: nowrap; }
+.hint { font-size: 15px; color: var(--mut); line-height: 1.5; }
 
-.banner { display: flex; gap: 10px; align-items: flex-start; border: 3px solid var(--k); background: #fff; padding: 12px 14px; margin-bottom: 18px; border-radius: 3px; font-size: 14px; font-weight: 700; line-height: 1.6; }
-.banner::before { content: ""; flex: none; width: 22px; align-self: stretch; min-height: 22px; background: repeating-linear-gradient(-45deg, var(--k) 0 5px, var(--y) 5px 10px); border-radius: 2px; }
-.banner button.link { appearance: none; background: none; border: 0; padding: 6px 0 2px; min-height: 36px; font-weight: 700; font-size: 14.5px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; color: var(--k); }
+.banner { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; border: 2px solid var(--k); border-left: 10px solid var(--k); background: #fff; padding: 8px 12px; margin-bottom: 12px; border-radius: 6px; font-size: 16px; font-weight: 700; line-height: 1.45; }
 .banner.red { border-color: var(--red); color: var(--red); }
-.banner.red::before { background: repeating-linear-gradient(-45deg, var(--red) 0 5px, #fff 5px 10px); }
+.link { appearance: none; background: none; border: 0; padding: 0; min-height: 40px; font-weight: 700; font-size: 16px; text-decoration: underline; text-underline-offset: 3px; color: inherit; }
+.banner .link { margin-left: auto; }
 
 /* ---------- フォーム ---------- */
-.fgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-.f { display: grid; gap: 5px; min-width: 0; }
-.f > span, .flabel { font-size: 14px; font-weight: 700; }
-.f > span em, .flabel em { font-style: normal; font-weight: 400; color: var(--mut); font-size: 12.5px; margin-left: 4px; }
-.in, .f input, .f select, .f textarea {
-  width: 100%; min-height: 50px; padding: 10px 12px; font-size: 17px; background: #fff;
-  border: 2px solid var(--k); border-radius: 4px; -webkit-appearance: none; appearance: none;
+.fgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.f { display: grid; gap: 4px; min-width: 0; }
+.f > span, .lbl { font-size: 16px; font-weight: 700; }
+.f > span em, .lbl em { font-style: normal; font-weight: 400; color: var(--mut); font-size: 15px; margin-left: 4px; }
+.f input, .f textarea, .in, .qp input {
+  width: 100%; min-height: 54px; padding: 10px 12px; font-size: 18px; background: #fff;
+  border: 2px solid var(--k); border-radius: 6px; -webkit-appearance: none; appearance: none;
 }
-.f textarea { min-height: 110px; line-height: 1.6; resize: vertical; font-size: 16px; }
-.f input[type="date"] { min-height: 50px; }
+.f textarea { min-height: 120px; line-height: 1.6; resize: vertical; font-size: 17px; }
 .f input.bad { border-color: var(--red); background: #fff6f5; }
-.err { color: var(--red); font-size: 13px; font-weight: 700; }
-.ok { color: var(--ok); font-size: 13px; font-weight: 700; }
-.sfx { position: relative; display: block; }
-.sfx input { padding-right: 46px; text-align: right; }
-.sfx i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-style: normal; font-weight: 700; color: var(--mut); pointer-events: none; font-size: 15px; }
-.num { text-align: right; }
+.err { color: var(--red); font-size: 15px; font-weight: 700; }
+.ok { color: var(--ok); font-size: 15px; font-weight: 700; }
+.sfx { position: relative; display: block; min-width: 0; }
+.sfx input { padding-right: 44px; text-align: right; }
+.sfx i { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-style: normal; font-weight: 700; color: var(--mut); pointer-events: none; font-size: 16px; }
 
-.seg { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); border: 2px solid var(--k); border-radius: 4px; overflow: hidden; background: #fff; }
-.seg button { appearance: none; border: 0; border-left: 2px solid var(--k); background: #fff; min-height: 50px; font-weight: 700; font-size: 16px; cursor: pointer; padding: 4px 6px; }
-.seg button:first-child { border-left: 0; }
-.seg button[aria-pressed="true"] { background: var(--k); color: var(--y); }
-.seg.sm button { min-height: 50px; font-size: 15px; }
+.struct { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.struct button, .seg button { appearance: none; border: 2px solid var(--k); background: #fff; border-radius: 6px; min-height: 60px; font-weight: 700; font-size: 20px; padding: 4px; }
+.struct button[aria-pressed="true"], .seg button[aria-pressed="true"] { background: var(--k); color: var(--y); }
+.area-row { display: grid; grid-template-columns: minmax(0, 1fr) 128px; gap: 8px; }
+#area { min-height: 60px; font-size: 26px; font-weight: 700; padding-right: 48px; }
+#areaUnitLabel { font-size: 18px; }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.seg button { border-radius: 0; font-size: 18px; }
+.seg button:first-child { border-radius: 6px 0 0 6px; }
+.seg button:last-child { border-radius: 0 6px 6px 0; border-left: 0; }
+.conv { font-weight: 400; color: var(--mut); font-size: 15px; margin-left: 6px; }
+.bldline { margin-top: 12px; display: flex; align-items: baseline; gap: 4px 10px; flex-wrap: wrap; background: var(--y3); border-radius: 6px; padding: 10px 12px; font-size: 15.5px; }
+.bldline .amt { margin-left: auto; font-family: var(--fd); font-weight: 400; font-size: 22px; }
 
-.area-row { display: grid; grid-template-columns: minmax(0, 1fr) 118px; gap: 8px; align-items: stretch; }
-.stepper { display: grid; grid-template-columns: 50px minmax(0, 1fr) 50px; border: 2px solid var(--k); border-radius: 4px; overflow: hidden; background: #fff; }
-.stepper button { appearance: none; border: 0; background: var(--k); color: var(--y); font-size: 24px; font-weight: 700; cursor: pointer; min-height: 50px; }
-.stepper input { border: 0; text-align: center; font-size: 18px; font-weight: 700; min-width: 0; width: 100%; background: #fff; }
+details.more { margin-top: 8px; }
+details.more > summary, details.box > summary { list-style: none; display: flex; align-items: center; gap: 8px; min-height: 52px; font-weight: 700; font-size: 16px; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details.more > summary::after, details.box > summary::after { content: ""; width: 10px; height: 10px; border-right: 3px solid var(--k); border-bottom: 3px solid var(--k); transform: rotate(45deg); margin: -4px 4px 0 auto; flex: none; }
+details[open].more > summary::after, details[open].box > summary::after { transform: rotate(-135deg); margin-top: 4px; }
+details.more .fgrid { padding-bottom: 4px; }
+details.box { padding: 0 14px; }
+details.box > summary { min-height: 58px; font-size: 18px; }
+details.box > summary .sv { font-weight: 400; color: var(--mut); font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+details.box[open] { padding-bottom: 16px; }
 
-.calc-line { margin-top: 14px; display: flex; align-items: baseline; gap: 6px 12px; flex-wrap: wrap; background: var(--y3); border: 2px dashed var(--k); padding: 10px 12px; border-radius: 3px; font-size: 14.5px; }
-.calc-line b { font-size: 17px; }
-.calc-line .amt { margin-left: auto; font-family: var(--fd); font-weight: 400; font-size: 20px; }
+.stepper { display: grid; grid-template-columns: 54px minmax(0, 1fr) 54px; border: 2px solid var(--k); border-radius: 6px; overflow: hidden; background: #fff; }
+.stepper button { appearance: none; border: 0; background: var(--k); color: var(--y); font-size: 24px; font-weight: 700; min-height: 54px; }
+.stepper input { border: 0; text-align: center; font-size: 19px; font-weight: 700; min-width: 0; width: 100%; background: #fff; }
 
-/* 項目（チェックして数量） */
-.items { display: grid; gap: 8px; }
-.item { position: relative; border: 2px solid var(--k); border-radius: 4px; background: #fff; }
-.item.on { background: var(--y3); box-shadow: inset 6px 0 0 var(--y); }
-.irow { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 6px 12px; cursor: pointer; user-select: none; }
-.irow input[type="checkbox"] { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.box { flex: none; width: 28px; height: 28px; border: 2px solid var(--k); border-radius: 3px; background: #fff; display: grid; place-items: center; }
-.box svg { width: 20px; height: 20px; opacity: 0; }
-.item.on .box { background: var(--k); }
-.item.on .box svg { opacity: 1; }
-.irow:has(input:focus-visible) { outline: 3px solid #0b5fff; outline-offset: 2px; border-radius: 3px; }
-.iname { font-weight: 700; font-size: 16px; line-height: 1.4; min-width: 0; }
-.iname small { display: block; font-weight: 400; font-size: 12.5px; color: var(--mut); }
-.ihint { margin-left: auto; font-size: 13px; color: var(--mut); white-space: nowrap; text-align: right; }
-.item.on .ihint { font-family: var(--fd); font-size: 16px; color: var(--k); }
-.ibody { display: none; padding: 0 12px 12px; }
-.item.on .ibody { display: block; }
-.ibody .igrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
-.ibody .f > span { font-size: 12.5px; }
-.inote { margin-top: 8px; font-size: 12.5px; color: var(--mut); line-height: 1.55; }
-.inote.warn { color: var(--red); font-weight: 700; }
-.legal { font-size: 12.5px; color: var(--mut); line-height: 1.55; padding: 0 12px 10px 52px; margin-top: -4px; }
-.item.on .legal { padding-bottom: 4px; }
+/* 項目 */
+.sel-item { border-top: 1px solid var(--line); padding: 10px 0 12px; }
+.sel-item:first-child { border-top: 0; padding-top: 2px; }
+.sel-top { display: flex; align-items: center; gap: 6px; }
+.iname { font-weight: 700; font-size: 17px; line-height: 1.35; min-width: 0; flex: 1; }
+.iamt { font-family: var(--fd); font-weight: 400; font-size: 17px; white-space: nowrap; }
+.iamt.need { font-family: var(--fb); font-weight: 700; font-size: 15px; color: var(--red); }
+.x { appearance: none; flex: none; width: 52px; height: 52px; margin-right: -10px; border: 0; background: none; display: grid; place-items: center; border-radius: 6px; color: var(--mut); }
+.x svg { width: 22px; height: 22px; }
+.qp { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr); gap: 8px; align-items: center; margin-top: 4px; }
+.qp .times { font-weight: 700; color: var(--mut); }
+.qp input { min-height: 52px; }
+.addbtn { appearance: none; width: 100%; min-height: 54px; margin-top: 8px; border: 2px dashed var(--k); background: #fff; border-radius: 6px; font-weight: 700; font-size: 17px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.addbtn[aria-expanded="true"] { border-style: solid; background: var(--y3); }
+.picks { display: grid; gap: 6px; margin-top: 8px; }
+.pick { appearance: none; width: 100%; display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 6px 10px 6px 14px; border: 2px solid var(--k); border-radius: 6px; background: #fff; font-weight: 700; font-size: 17px; text-align: left; line-height: 1.35; }
+.pick small { margin-left: auto; color: var(--mut); font-size: 15px; font-weight: 400; white-space: nowrap; }
+.pick .plus { flex: none; width: 32px; height: 32px; border-radius: 50%; background: var(--y); display: grid; place-items: center; font-size: 22px; line-height: 1; }
+.note { font-size: 15.5px; line-height: 1.5; border-left: 4px solid var(--y); padding-left: 10px; margin: 4px 0 8px; }
+.note summary { cursor: pointer; list-style: none; padding: 4px 0; }
+.note summary span { text-decoration: underline; text-underline-offset: 3px; font-weight: 700; margin-left: 6px; white-space: nowrap; }
+.note p { color: var(--mut); padding-bottom: 4px; }
+.recy-warn { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; border: 2px solid var(--red); color: var(--red); background: #fff6f5; border-radius: 6px; padding: 6px 6px 6px 12px; font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+.recy-warn .btn { margin-left: auto; }
 
 .btn {
   appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 50px; padding: 10px 18px; font-weight: 700; font-size: 16px; line-height: 1.3; text-decoration: none; cursor: pointer;
-  background: #fff; color: var(--k); border: 2px solid var(--k); border-radius: 4px; box-shadow: 3px 3px 0 var(--k);
-  transition: transform .12s, box-shadow .12s;
+  min-height: 52px; padding: 10px 18px; font-weight: 700; font-size: 17px; line-height: 1.3; text-decoration: none;
+  background: #fff; color: var(--k); border: 2px solid var(--k); border-radius: 6px;
 }
-.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--k); }
+.btn:active { transform: translateY(1px); }
 .btn svg { width: 20px; height: 20px; flex: none; }
-.btn.pri { background: var(--k); color: var(--y); font-family: var(--fd); font-weight: 400; letter-spacing: .03em; }
+.btn.pri { background: var(--k); color: var(--y); }
 .btn.yel { background: var(--y); }
-.btn.danger { color: var(--red); border-color: var(--red); box-shadow: 3px 3px 0 var(--red); }
-.btn.sm { min-height: 44px; padding: 6px 12px; font-size: 14px; }
-.btn.sm.pri { font-family: var(--fb); font-weight: 700; letter-spacing: 0; }
+.btn.danger { color: var(--red); border-color: var(--red); }
+.btn.sm { padding: 6px 14px; font-size: 16px; }
 .btn.block { width: 100%; }
-.btns { display: flex; flex-wrap: wrap; gap: 10px; }
-.auto-box { display: grid; gap: 8px; margin-bottom: 12px; padding: 12px; border: 2px solid var(--k); background: var(--y); border-radius: 4px; }
-.auto-box .hint { color: var(--k); }
+.btn.big { min-height: 58px; font-size: 18px; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* 自由入力の行 */
-.crow { border: 2px solid var(--k); border-radius: 4px; background: #fff; padding: 10px 12px 12px; display: grid; gap: 8px; }
-.crow .cgrid { display: grid; grid-template-columns: minmax(0, 1fr) 84px; gap: 8px; }
-.crow .cgrid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
-.crow .cfoot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.crow .cfoot b { font-family: var(--fd); font-weight: 400; font-size: 17px; }
-.crow input { min-height: 48px; }
+.crow { border-top: 1px solid var(--line); padding: 10px 0 12px; display: grid; gap: 6px; }
+.crow:first-child { border-top: 0; padding-top: 2px; }
+.crow .ctop { display: flex; align-items: center; gap: 6px; }
+.crow .ctop input { flex: 1; min-width: 0; }
+.crow .cgrid { display: grid; grid-template-columns: minmax(0, 1fr) 76px minmax(0, 1.3fr); gap: 8px; }
+.crow .f > span { font-size: 14.5px; color: var(--mut); }
+.crow .camt { text-align: right; font-family: var(--fd); font-size: 17px; }
 
 /* 合計 */
-.sum-tbl { width: 100%; border-collapse: collapse; font-size: 15px; }
-.sum-tbl td { padding: 7px 0; border-bottom: 1px dashed var(--line); }
-.sum-tbl td:first-child { white-space: nowrap; }
+.sum-tbl { width: 100%; border-collapse: collapse; font-size: 16px; }
+.sum-tbl td { padding: 6px 0; border-bottom: 1px solid var(--line); }
 .sum-tbl td:last-child { text-align: right; font-weight: 700; white-space: nowrap; padding-left: 10px; }
-.sum-tbl tr.total td { border-bottom: 0; border-top: 3px solid var(--k); padding-top: 10px; font-size: 16px; }
+.sum-tbl tr.total td { border-bottom: 0; border-top: 3px solid var(--k); padding-top: 10px; font-size: 17px; font-weight: 700; }
 .sum-tbl tr.total td:last-child { font-family: var(--fd); font-weight: 400; font-size: 26px; }
 .sum-tbl tr.disc td:last-child { color: var(--red); }
-.tax-note { font-size: 12.5px; color: var(--mut); margin-top: 8px; }
-.sum-lines { list-style: none; margin: 0 0 10px; padding: 0; font-size: 13.5px; }
-.sum-lines li { display: flex; justify-content: space-between; gap: 10px; padding: 4px 0; border-bottom: 1px dotted var(--line); }
+.sum-lines { display: none; list-style: none; margin: 0 0 10px; padding: 0; font-size: 14.5px; }
+.sum-lines li { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; border-bottom: 1px dotted var(--line); }
 .sum-lines li span:last-child { white-space: nowrap; }
-.sum-empty { font-size: 14px; color: var(--mut); padding: 4px 0 10px; }
+.sum-empty { font-size: 15px; color: var(--mut); padding: 0 0 8px; }
+#sumCard > h2 { margin-bottom: 6px; }
 
 /* 下部の合計バー */
-.bar { position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: rgba(20,22,26,.96); border-top: 4px solid var(--y); color: #fff; padding: 8px var(--gr) calc(8px + env(safe-area-inset-bottom, 0px)) var(--gl); }
-.bar-in { max-width: 1160px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.bar { position: fixed; z-index: 45; left: 0; right: 0; bottom: 0; background: var(--k3); border-top: 3px solid var(--y); color: #fff; padding: 8px var(--gr) calc(8px + env(safe-area-inset-bottom, 0px)) var(--gl); }
+.bar-in { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
 .bar-total { min-width: 0; line-height: 1.2; }
-.bar-total small { display: block; font-size: 12px; font-weight: 700; color: #d9d3c0; }
-.bar-total b { font-family: var(--fd); font-weight: 400; font-size: 24px; color: var(--y); white-space: nowrap; }
-.bar .btn { margin-left: auto; background: var(--y); color: var(--k); border-color: var(--y); box-shadow: none; font-family: var(--fd); font-weight: 400; white-space: nowrap; padding-inline: 16px; }
-body.has-bar { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+.bar-total small { display: block; font-size: 14px; font-weight: 700; color: #ddd7c4; }
+.bar-total b { font-family: var(--fd); font-weight: 400; font-size: 26px; color: var(--y); white-space: nowrap; }
+.bar .btn { margin-left: auto; background: var(--y); border-color: var(--y); white-space: nowrap; font-size: 18px; min-height: 54px; }
+body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
 
-/* 入力画面の2カラム（PC） */
-.form-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 28px; align-items: start; }
+.form-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 24px; align-items: start; }
 .side { display: none; }
 
 /* ---------- 書類プレビュー ---------- */
-.doc-tools { display: grid; gap: 10px; margin-bottom: 16px; }
-.doc-tools .btns .btn { flex: 1 1 auto; }
-.doc-kind { display: inline-flex; font-weight: 700; font-size: 12px; padding: 2px 8px; border: 2px solid var(--k); border-radius: 2px; background: #fff; white-space: nowrap; }
+.doc-tools { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; margin-bottom: 8px; }
+.doc-tools #printBtn { grid-column: 1 / -1; }
+.doc-tools .btn { width: 100%; }
+.doc-hint { font-size: 15px; color: var(--mut); margin-bottom: 10px; }
+.doc-kind { display: inline-flex; font-weight: 700; font-size: 14px; padding: 0 7px; border: 2px solid var(--k); border-radius: 3px; background: #fff; white-space: nowrap; }
 .doc-kind.inv { background: var(--k); color: var(--y); }
 .sheet-fit { position: relative; width: 100%; overflow: hidden; }
 .sheet-fit .sheet { transform-origin: 0 0; margin: 0 auto; }
 .sheet {
   width: 794px; min-height: 1123px; background: #fff; color: #111; padding: 56px 58px 48px;
-  font-family: var(--fb); font-size: 12.5px; line-height: 1.55; box-shadow: 0 8px 0 rgba(29,31,34,.25); border: 1px solid #cfc7ad;
+  font-family: var(--fb); font-size: 12.5px; line-height: 1.55; box-shadow: 0 6px 18px rgba(29,31,34,.18); border: 1px solid #cfc7ad;
   font-variant-numeric: tabular-nums;
 }
 .s-title { text-align: center; font-family: var(--fd); font-weight: 400; font-size: 30px; letter-spacing: .6em; padding-left: .6em; line-height: 1.2; padding-bottom: 10px; border-bottom: 4px double #111; }
@@ -256,89 +263,98 @@ body.has-bar { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
 .s-box { border: 1px solid #111; padding: 8px 10px; font-size: 12px; white-space: pre-wrap; word-break: break-word; min-height: 64px; }
 .s-box + .s-label { margin-top: 10px; }
 .s-label { font-weight: 700; font-size: 12px; margin-bottom: 3px; }
-.s-sample { margin-top: 18px; font-size: 10.5px; color: #777; text-align: right; }
 
 /* ---------- 一覧 ---------- */
 .list { display: grid; gap: 12px; }
-.ent { background: var(--paper); border: 3px solid var(--k); border-radius: 3px; box-shadow: 4px 4px 0 var(--k); padding: 12px 14px 14px; }
-.ent.cur { box-shadow: 4px 4px 0 var(--k), inset 0 0 0 3px var(--y); }
-.ent-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 12.5px; color: var(--mut); font-weight: 700; }
-.ent h3 { font-size: 17px; margin-top: 6px; line-height: 1.4; word-break: break-word; }
-.ent p { font-size: 13.5px; color: var(--mut); word-break: break-word; }
-.ent .amt { font-family: var(--fd); font-weight: 400; font-size: 22px; margin-top: 4px; }
-.ent .btns { margin-top: 10px; }
-.ent .btns .btn { flex: 1 1 0; min-width: 0; padding-inline: 8px; }
-.empty-list { background: var(--paper); border: 3px dashed var(--k); padding: 28px 18px; text-align: center; border-radius: 3px; }
+.ent { background: var(--paper); border: 2px solid var(--k); border-radius: 8px; padding: 12px 14px 14px; }
+.ent.cur { border-width: 3px; box-shadow: inset 0 0 0 3px var(--y); }
+.ent-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 15px; color: var(--mut); }
+.ent h3 { font-size: 18px; margin-top: 6px; line-height: 1.4; word-break: break-word; }
+.ent .amt { font-family: var(--fd); font-weight: 400; font-size: 22px; }
+.ent .sub { font-size: 15px; color: var(--mut); word-break: break-word; }
+.ent .btns { margin-top: 10px; display: grid; grid-template-columns: 1.3fr 1fr 1fr; }
+.empty-list { background: var(--paper); border: 2px dashed var(--k); padding: 24px 16px; text-align: center; border-radius: 8px; font-weight: 700; }
 
 /* ---------- 単価マスタ ---------- */
-.mtbl { width: 100%; border-collapse: collapse; }
-.mtbl th { text-align: left; font-size: 12.5px; font-weight: 700; color: var(--mut); padding: 0 6px 6px 0; }
-.mtbl td { padding: 4px 6px 4px 0; vertical-align: middle; border-top: 1px dashed var(--line); }
-.mtbl td:last-child, .mtbl th:last-child { padding-right: 0; }
-.mtbl input { width: 100%; min-height: 46px; padding: 8px 10px; border: 2px solid var(--k); border-radius: 4px; background: #fff; font-size: 16px; }
-.mtbl input.chg { background: #eef6ff; border-color: #0b5fff; }
-.mtbl .mn { font-weight: 700; font-size: 14.5px; line-height: 1.35; }
-.mrows { display: grid; gap: 0; }
-.mrow { display: grid; grid-template-columns: minmax(0, 1fr) 84px minmax(0, 1.1fr); grid-template-areas: "n n n" ". u p"; gap: 6px 8px; padding: 10px 0; border-top: 1px dashed var(--line); align-items: end; }
-.mrow:first-child { border-top: 0; padding-top: 0; }
-.mrow .f > span { font-size: 12px; color: var(--mut); }
-.mrow input { width: 100%; min-height: 46px; padding: 8px 10px; border: 2px solid var(--k); border-radius: 4px; background: #fff; font-size: 16px; }
-.mrow input.chg { background: #eef6ff; border-color: #0b5fff; }
+.msec { background: var(--paper); border: 2px solid var(--k); border-radius: 8px; margin-bottom: 10px; }
+.mhead { font-size: 14.5px; color: var(--mut); font-weight: 700; padding-bottom: 2px; }
+.msec .sfx input { padding-right: 40px; }
+.mrow { display: grid; grid-template-columns: 80px minmax(0, 1fr); grid-template-areas: "n n" "u p"; gap: 6px 8px; padding: 10px 0; border-top: 1px solid var(--line); }
+.mrow:first-of-type { border-top: 0; }
 .mrow .mn2 { grid-area: n; } .mrow .mu2 { grid-area: u; } .mrow .mp2 { grid-area: p; }
-@media (min-width: 720px) { .mrow { grid-template-columns: minmax(0, 1fr) 96px 150px; grid-template-areas: "n u p"; } }
-.mtbl .mu { width: 76px; }
-.mtbl .mp { width: 124px; }
-.mtbl .mc { width: 25%; }
-.legend-chg { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--mut); font-weight: 700; }
-.legend-chg i { width: 18px; height: 14px; border: 2px solid #0b5fff; background: #eef6ff; border-radius: 3px; }
+.msec input { width: 100%; min-height: 52px; padding: 8px 10px; border: 2px solid var(--k); border-radius: 6px; background: #fff; font-size: 17px; }
+.msec input.chg { background: #eef4ff; border-color: var(--focus); }
+.mtbl { width: 100%; border-collapse: collapse; }
+.mtbl th { text-align: left; font-size: 14.5px; font-weight: 700; color: var(--mut); padding: 0 6px 6px 0; }
+.mtbl td { padding: 4px 6px 4px 0; vertical-align: middle; border-top: 1px solid var(--line); }
+.mtbl td:last-child, .mtbl th:last-child { padding-right: 0; }
+.mtbl .mn { font-weight: 700; font-size: 16px; line-height: 1.35; }
+.mtbl .mn small { display: block; font-weight: 400; color: var(--mut); font-size: 14px; }
+.mtbl .mp { width: 150px; }
+.mtbl .mc { width: 23%; }
+.mtbl .mc input { padding: 8px 6px; text-align: right; }
+@media (min-width: 720px) {
+  .mrow { grid-template-columns: minmax(0, 1fr) 96px 160px; grid-template-areas: "n u p"; }
+}
+
+/* ---------- 自社情報シート ---------- */
+dialog.sheetdlg { border: 0; padding: 0; width: min(560px, 100%); max-width: 100%; max-height: 92vh; margin: auto auto 0; border-radius: 14px 14px 0 0; border-top: 6px solid var(--y); background: var(--paper); color: var(--k); }
+dialog.sheetdlg::backdrop { background: rgba(15,16,18,.55); }
+dialog.sheetdlg form { padding: 18px var(--gr) calc(18px + env(safe-area-inset-bottom, 0px)) var(--gl); display: grid; gap: 12px; }
+dialog.sheetdlg h2 { font-size: 20px; }
+@media (min-width: 600px) { dialog.sheetdlg { margin: auto; border-radius: 10px; } }
 
 /* ---------- トースト ---------- */
-.toast { position: fixed; z-index: 60; left: 50%; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; pointer-events: none; background: var(--k); color: #fff; border: 2px solid var(--y); font-weight: 700; font-size: 14.5px; padding: 10px 16px; border-radius: 4px; max-width: calc(100vw - 32px); transition: opacity .2s, transform .2s; text-align: center; }
+.toast { position: fixed; z-index: 60; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 16px); opacity: 0; pointer-events: none; background: var(--k); color: #fff; border: 2px solid var(--y); font-weight: 700; font-size: 16px; padding: 10px 16px; border-radius: 6px; max-width: calc(100vw - 32px); transition: opacity .2s, transform .2s; text-align: center; }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 /* ---------- フッター ---------- */
-footer { background: var(--k3); color: #e9e5d8; font-size: 13px; padding-block: 28px 32px; border-top: 8px solid transparent; border-image: repeating-linear-gradient(-45deg, var(--y) 0 10px, var(--k) 10px 20px) 8; }
+footer { background: var(--k3); color: #e9e5d8; font-size: 15px; padding-block: 24px 28px; border-top: 6px solid var(--y); }
 footer .wrap { display: grid; gap: 10px; }
 footer .fl { font-family: var(--fd); font-size: 16px; color: var(--y); }
-footer .fcta { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 46px; background: var(--y); color: var(--k); font-weight: 700; font-size: 15px; text-decoration: none; padding: 8px 16px; border-radius: 3px; }
-footer .fsub { color: #bdb8a8; font-size: 12.5px; }
+footer .fcta { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 52px; background: var(--y); color: var(--k); font-weight: 700; font-size: 16px; text-decoration: none; padding: 8px 16px; border-radius: 6px; }
+footer .fsub { color: #c9c4b3; font-size: 14.5px; }
 
 /* ---------- PC ---------- */
 @media (min-width: 720px) {
   .fgrid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .fgrid .wide { grid-column: 1 / -1; }
-  .card { padding: 22px 24px 24px; }
-  .tab { flex-direction: row; gap: 8px; font-size: 15px; }
-  .doc-tools { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+  .card { padding: 18px 20px 20px; }
+  .tabs-in { grid-template-columns: 160px 160px minmax(0, 1fr); }
+  .menu-btn { justify-self: end; }
+  .doc-tools { grid-template-columns: auto auto auto; justify-content: start; }
+  .doc-tools #printBtn { grid-column: auto; }
   .list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ent .btns .btn { flex: 0 1 auto; padding-inline: 14px; }
-  .ibody .igrid { grid-template-columns: 1fr 1fr; max-width: 440px; }
+  .qp { max-width: 460px; }
+  .area-row { max-width: 460px; }
+  .struct { max-width: 520px; }
 }
 @media (min-width: 1024px) {
   .form-layout { grid-template-columns: minmax(0, 1fr) 340px; }
   .side { display: block; position: sticky; top: 80px; }
   .side .card { margin-bottom: 0; }
+  .side .sum-lines { display: block; max-height: 40vh; overflow: auto; }
   .side .btn { margin-top: 14px; }
-  .side .sum-tbl tr.total td:last-child { font-size: 22px; }
-  .sum-lines { max-height: 40vh; overflow: auto; }
+  #form #sumCard { display: none; }
   body.has-bar { padding-bottom: 0; }
   .bar { display: none; }
   .toast { bottom: 28px; }
   .list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
-@media (max-width: 380px) {
+@media (max-width: 370px) {
   .logo { font-size: 16px; }
-  .bar-total b { font-size: 21px; }
-  .mtbl .mp { width: 108px; }
+  .bar-total b { font-size: 22px; }
+  .bar .btn { padding-inline: 12px; font-size: 16px; }
+  .struct button { font-size: 18px; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
 
 /* ---------- 印刷 ---------- */
 @page { size: A4 portrait; margin: 12mm; }
 @media print {
   html, body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .top, .notice, .tabs, .bar, footer, .toast, .doc-tools, #printHint, .vhead, .banner, .view:not(#v-doc) { display: none !important; }
+  .top, .priv, .tabs, .bar, footer, .toast, .doc-tools, .doc-hint, .vhead, .banner, dialog, .menu, .view:not(#v-doc) { display: none !important; }
   main { padding: 0 !important; }
   main > .wrap { max-width: none; padding: 0; }
   #v-doc { display: block !important; }
@@ -364,35 +380,39 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
 
 <header class="top"><div class="wrap top-in">
   <a class="logo" href="./" aria-label="解体見積メーカー 試作版">
-    <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" fill="#1d1f22"/><path d="M10 8h14l6 6v18H10z" fill="#f2b705"/><path d="M24 8v6h6" fill="none" stroke="#1d1f22" stroke-width="2"/><path d="M14 19h12M14 23h12M14 27h7" stroke="#1d1f22" stroke-width="2.2"/><path d="M4 36 L12 30" stroke="#f2b705" stroke-width="3"/></svg>
+    <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" fill="#1d1f22"/><path d="M10 8h14l6 6v18H10z" fill="#f2b705"/><path d="M24 8v6h6" fill="none" stroke="#1d1f22" stroke-width="2"/><path d="M14 19h12M14 23h12M14 27h7" stroke="#1d1f22" stroke-width="2.2"/></svg>
     <span>解体見積メーカー</span>
   </a>
-  <span class="badge">試作版（無料）</span>
+  <span class="trial">試作版</span>
 </div></header>
-<div class="notice"><div class="wrap">
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6z" fill="currentColor"/><path d="M8 12l3 3 5-6" fill="none" stroke="#1d1f22" stroke-width="2.4"/></svg>
-  <p>入力したデータは<b>この端末のブラウザにだけ</b>保存されます。サーバーには送信されません。ブラウザのデータを消すと見積も消えます。</p>
-</div></div>
+<div class="priv"><div class="wrap">データはこの端末にだけ保存（送信しません）</div></div>
 
-<nav class="tabs" aria-label="画面の切り替え"><div class="wrap" role="tablist">
-  <button class="tab" role="tab" data-view="input" aria-selected="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M13 7l4 4" stroke="currentColor" stroke-width="2.2"/></svg>入力</button>
-  <button class="tab" role="tab" data-view="doc" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l4 4v16H6z" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9 11h7M9 15h7M9 19h4" stroke="currentColor" stroke-width="2"/></svg>見積書</button>
-  <button class="tab" role="tab" data-view="list" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h4v4H3zM3 15h4v4H3zM10 7h11M10 17h11" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>一覧</button>
-  <button class="tab" role="tab" data-view="master" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4zM4 10h16M10 10v10" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>単価</button>
-  <button class="tab" role="tab" data-view="company" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V9l6-4v16M9 21V3h12v18M3 21h18M13 8h4M13 12h4M13 16h4" fill="none" stroke="currentColor" stroke-width="2"/></svg>自社情報</button>
+<nav class="tabs" aria-label="画面の切り替え"><div class="wrap tabs-in">
+  <button class="tab" type="button" data-view="input" aria-current="page">作る</button>
+  <button class="tab" type="button" data-view="doc" id="docTab">見積書</button>
+  <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.6"/></svg>メニュー</button>
+  <div class="menu" id="menu" hidden>
+    <button type="button" data-new>＋ 新しい見積</button>
+    <hr>
+    <button type="button" data-go="list">保存した見積</button>
+    <button type="button" data-go="master">単価</button>
+    <button type="button" data-go="company">自社情報</button>
+  </div>
 </div></nav>
 
 <main><div class="wrap">
-  <div class="banner red" id="noStore" hidden>この端末のブラウザでは保存ができません（プライベートモードなど）。ページを閉じると入力内容は消えます。</div>
+  <div class="banner red" id="noStore" hidden>この端末では保存できません。閉じると消えます。</div>
 
-  <!-- ================= 入力 ================= -->
+  <!-- ================= 作る ================= -->
   <section class="view on" id="v-input" aria-labelledby="t-input">
-    <div class="vhead">
-      <h1 class="vtitle" id="t-input"><small id="kindLabel">見積書をつくる</small><span id="docNoLabel">新しい見積</span></h1>
-      <div class="btns"><span class="status" id="saveStatus">自動で保存されます</span><button class="btn sm" id="newDoc" type="button">＋ 新規作成</button></div>
+    <h1 class="vh" id="t-input">見積を作る</h1>
+    <div class="docrow">
+      <span class="kind est" id="kindLabel">見積書</span>
+      <span class="docno" id="docNoLabel"></span>
+      <span class="status" id="saveStatus"></span>
+      <button class="btn sm" id="newDoc" type="button">＋ 新規</button>
     </div>
-    <div class="banner" id="sampleBanner"><div>単価はサンプルです。必ず自社の単価に変更してください。<br><button type="button" class="link" data-go="master">単価マスタを開く →</button></div></div>
-    <div class="banner" id="coBanner" hidden><div>自社情報（会社名・登録番号など）が未入力です。見積書に載せるため、一度だけ入力してください。<br><button type="button" class="link" data-go="company">自社情報を入力する →</button></div></div>
+    <div class="banner" id="sampleBanner"><span>単価はサンプルです</span><button type="button" class="link" data-go="master">自社の単価にする →</button></div>
     <div class="form-layout">
       <div id="form"></div>
       <aside class="side" aria-label="合計"><div class="card" id="sideSum"></div></aside>
@@ -401,62 +421,51 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
 
   <!-- ================= 見積書プレビュー ================= -->
   <section class="view" id="v-doc" aria-labelledby="t-doc">
+    <h1 class="vh" id="t-doc"><span id="docTitle">見積書</span></h1>
     <div class="doc-tools">
-      <div class="vhead" style="margin:0"><h1 class="vtitle" id="t-doc"><small>A4縦・印刷イメージ</small><span id="docTitle">見積書</span></h1></div>
-      <div class="btns">
-        <button class="btn pri" id="printBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H3v-8h18v8h-3M6 14h12v8H6z" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>印刷 / PDFで保存</button>
-        <button class="btn yel" id="toInvoice" type="button">請求書に変換</button>
-        <button class="btn" id="openSource" type="button" hidden>元の見積書を開く</button>
-        <button class="btn" type="button" data-go="input">入力に戻る</button>
-      </div>
+      <button class="btn pri big" id="printBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H3v-8h18v8h-3M6 14h12v8H6z" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>印刷・PDF</button>
+      <button class="btn yel" id="toInvoice" type="button">請求書にする</button>
+      <button class="btn" id="openSource" type="button" hidden>元の見積書</button>
+      <button class="btn" id="editCo" type="button" data-go="company">自社情報</button>
     </div>
-    <p class="hint" id="printHint" style="margin-bottom:12px">「印刷 / PDFで保存」を押すと印刷画面が開きます。PDFにするときは、送信先（プリンター）で「PDFに保存」を選んでください。</p>
+    <p class="banner red" id="coHint" hidden><span id="coHintText">自社情報が未入力です</span><button type="button" class="link" id="coHintBtn">入力する →</button></p>
+    <p class="doc-hint">PDFは印刷画面で「PDFに保存」を選びます</p>
     <div class="sheet-fit" id="sheetFit"><div class="sheet" id="sheet"></div></div>
   </section>
 
   <!-- ================= 一覧 ================= -->
   <section class="view" id="v-list" aria-labelledby="t-list">
     <div class="vhead">
-      <h1 class="vtitle" id="t-list"><small>この端末に保存</small>保存した見積・請求書</h1>
-      <button class="btn sm" type="button" data-new>＋ 新規作成</button>
+      <h1 class="vtitle" id="t-list">保存した見積</h1>
+      <button class="btn sm" type="button" data-new>＋ 新規</button>
     </div>
     <div class="list" id="list"></div>
   </section>
 
   <!-- ================= 単価マスタ ================= -->
   <section class="view" id="v-master" aria-labelledby="t-master">
-    <div class="vhead">
-      <h1 class="vtitle" id="t-master"><small>新しく追加する行に使われます</small>単価マスタ</h1>
-      <span class="legend-chg"><i></i>既定値から変更した欄</span>
-    </div>
-    <div class="banner red">最初に入っている単価・係数はサンプルです。必ず自社の単価に変更してください。</div>
-    <p class="hint" style="margin:-6px 0 16px">入力すると自動で保存されます。すでに保存した見積の単価は変わりません（見積ごとに入力画面で直せます）。</p>
+    <div class="vhead"><h1 class="vtitle" id="t-master">単価</h1></div>
+    <div class="banner red" id="mstSample">今の単価・係数はサンプルです</div>
+    <p class="hint" style="margin:-4px 0 12px">変えた欄は青。保存済みの見積は変わりません。</p>
     <div id="masterForm"></div>
   </section>
 
   <!-- ================= 自社情報 ================= -->
   <section class="view" id="v-company" aria-labelledby="t-company">
-    <div class="vhead">
-      <h1 class="vtitle" id="t-company"><small>最初に一度だけ。あとから編集できます</small>自社情報</h1>
-    </div>
+    <div class="vhead"><h1 class="vtitle" id="t-company">自社情報</h1></div>
     <form class="card" id="coForm" novalidate>
       <div class="fgrid two">
         <label class="f wide"><span>会社名・屋号</span><input name="name" autocomplete="organization" placeholder="例：〇〇解体工業"></label>
-        <label class="f wide"><span>住所</span><input name="addr" autocomplete="street-address" placeholder="例：〒000-0000 〇〇県〇〇市〇〇1-2-3"></label>
+        <label class="f wide"><span>住所</span><input name="addr" autocomplete="street-address" placeholder="例：〇〇県〇〇市1-2-3"></label>
         <label class="f"><span>電話</span><input name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="例：090-0000-0000"></label>
         <label class="f"><span>担当者</span><input name="person" autocomplete="name" placeholder="例：山田"></label>
         <div class="f wide">
-          <label class="f"><span>適格請求書発行事業者の登録番号 <em>T＋13桁</em></span><input name="reg" id="coReg" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="例：T1234567890123"></label>
-          <p class="hint" id="regMsg">登録していない場合は空欄のままで構いません（見積書・請求書に表示されません）。</p>
+          <label class="f"><span>登録番号 <em>T＋13桁・なければ空欄</em></span><input name="reg" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="例：T1234567890123"></label>
+          <p class="hint" data-regmsg aria-live="polite"></p>
         </div>
-        <label class="f wide"><span>振込先 <em>請求書に表示</em></span><textarea name="bank" placeholder="例：〇〇銀行 〇〇支店 普通 1234567 カ）マルマルカイタイ"></textarea></label>
+        <label class="f wide"><span>振込先 <em>請求書に表示</em></span><textarea name="bank" placeholder="例：〇〇銀行 〇〇支店 普通 1234567"></textarea></label>
       </div>
-      <p class="hint" style="margin-top:14px">見積書・請求書には印影（ハンコの画像）を入れません。必要な場合は、印刷したあとに押印してください。</p>
-      <div class="btns" style="margin-top:16px">
-        <button class="btn pri" type="submit" style="flex:1 1 200px">保存する</button>
-        <button class="btn" type="button" data-go="input" style="flex:1 1 200px">見積の入力へ</button>
-      </div>
-      <p class="ok" id="coSaved" style="margin-top:10px" hidden>保存しました。</p>
+      <button class="btn pri block big" type="submit" style="margin-top:16px">保存する</button>
     </form>
   </section>
 </div></main>
@@ -464,14 +473,32 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
 <footer><div class="wrap">
   <span class="fl">解体見積メーカー（試作版）</span>
   <a class="fcta" href="/kaitai#signup">ご意見を送る（御社専用版を無料でお作りします） →</a>
-  <span>ご意見・不具合のご連絡は info@site-forge.jp へ</span>
-  <span class="fsub">この試作版は無料でお使いいただけます。表示される単価・係数はサンプルで、金額の正しさは保証しません。見積書の内容は必ずご自身でご確認ください。　<a href="/privacy">プライバシーポリシー</a></span>
+  <span>ご連絡は info@site-forge.jp へ</span>
+  <span class="fsub">単価・係数はサンプルです。金額は必ずご確認ください。　<a href="/privacy">プライバシーポリシー</a></span>
 </div></footer>
 
 <div class="bar" id="bar"><div class="bar-in">
   <div class="bar-total"><small>合計（税込）</small><b id="barTotal">¥0</b></div>
-  <button class="btn" type="button" id="barBtn">見積書を見る →</button>
+  <button class="btn" type="button" id="barBtn">見積書を見る</button>
 </div></div>
+
+<dialog class="sheetdlg" id="coSheet" aria-labelledby="coSheetTitle">
+  <form id="coQuick" novalidate>
+    <h2 id="coSheetTitle">見積書に載せる自社情報</h2>
+    <label class="f"><span>会社名・屋号</span><input name="name" autocomplete="organization" placeholder="例：〇〇解体工業"></label>
+    <p class="err" id="coNameErr" hidden>会社名を入れてください</p>
+    <label class="f"><span>住所</span><input name="addr" autocomplete="street-address" placeholder="例：〇〇県〇〇市1-2-3"></label>
+    <label class="f"><span>電話</span><input name="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="例：090-0000-0000"></label>
+    <div class="f">
+      <label class="f"><span>登録番号 <em>任意・T＋13桁</em></span><input name="reg" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="例：T1234567890123"></label>
+      <p class="hint" data-regmsg aria-live="polite"></p>
+    </div>
+    <div class="btns" style="display:grid;grid-template-columns:1fr 2fr">
+      <button class="btn" type="button" id="coLater">あとで</button>
+      <button class="btn pri" type="submit">保存する</button>
+    </div>
+  </form>
+</dialog>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -492,12 +519,12 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
 
   /* ============ サンプル単価・係数（必ず自社の単価に変更してもらう前提） ============ */
   var STRUCT = [
-    { k: "wood", label: "木造", price: 35000 },
-    { k: "steel", label: "鉄骨造", price: 45000 },
-    { k: "rc", label: "RC造", price: 60000 }
+    { k: "wood", label: "木造", short: "木造", price: 35000 },
+    { k: "steel", label: "鉄骨造", short: "鉄骨", price: 45000 },
+    { k: "rc", label: "RC造", short: "RC", price: 60000 }
   ];
   var GROUPS = [
-    { id: "extra", no: "03", title: "付帯工事", hint: "チェックして数量を入れます。", items: [
+    { id: "extra", title: "付帯工事", add: "付帯工事を追加", items: [
       { k: "block", name: "ブロック塀撤去", unit: "m", price: 4000 },
       { k: "fence", name: "フェンス撤去", unit: "m", price: 2000 },
       { k: "doma", name: "土間コンクリート撤去", unit: "㎡", price: 3000 },
@@ -509,7 +536,7 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
       { k: "septic", name: "浄化槽撤去", unit: "基", price: 80000 },
       { k: "well", name: "井戸埋め戻し", unit: "式", price: 50000, dq: 1 }
     ] },
-    { id: "waste", no: "04", title: "産業廃棄物", hint: "処分費です。運搬は「諸経費」の運搬車両で計上します。", items: [
+    { id: "waste", title: "産廃", add: "品目を選んで追加", items: [
       { k: "w_wood", name: "木くず処分", unit: "m³", price: 6000 },
       { k: "w_con", name: "コンクリートがら処分", unit: "t", price: 5000 },
       { k: "w_gyp", name: "石膏ボード処分", unit: "t", price: 25000 },
@@ -518,7 +545,7 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
       { k: "w_tile", name: "瓦処分", unit: "t", price: 10000 },
       { k: "w_glass", name: "ガラス・陶磁器くず処分", unit: "t", price: 10000 }
     ] },
-    { id: "misc", no: "05", title: "諸経費・手続き", hint: "必要なものだけ追加します。", items: [
+    { id: "misc", title: "諸経費", add: "諸経費を追加", items: [
       { k: "asb", name: "アスベスト（石綿）事前調査", unit: "式", price: 50000, dq: 1, note: "解体工事の前には、石綿（アスベスト）の有無の事前調査が必要とされています。対象や手続きの詳細は、自治体などの案内をご確認ください。" },
       { k: "recy", name: "建設リサイクル法の届出手続き", unit: "式", price: 20000, dq: 1, note: "一般的に、床面積の合計が80㎡以上の建築物の解体では、建設リサイクル法の届出が必要になります。" },
       { k: "yojo", name: "養生シート・足場", unit: "式", price: 150000, dq: 1 },
@@ -542,7 +569,8 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
   function structOf(k) { for (var i = 0; i < STRUCT.length; i++) if (STRUCT[i].k === k) return STRUCT[i]; return STRUCT[0]; }
 
   /* マスタ = 既定値 + 保存された変更 */
-  var mstOv = load(KEY.mst, {}) || {};
+  var mstOv = load(KEY.mst, {});
+  if (!mstOv || typeof mstOv !== "object" || Array.isArray(mstOv)) mstOv = {};
   function M() {
     var o = mstOv, r = { struct: {}, items: {}, coef: {} };
     STRUCT.forEach(function (s) { var v = o.struct && o.struct[s.k]; r.struct[s.k] = isNum(v) ? v : s.price; });
@@ -585,6 +613,7 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
   var docs = load(KEY.list, []) || [];
   if (!Array.isArray(docs)) docs = [];
   var co = load(KEY.co, {}) || {};
+  if (typeof co !== "object" || Array.isArray(co)) co = {};
   var doc;
 
   function nextNo(date) {
@@ -598,6 +627,20 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
       struct: "wood", area: "", areaUnit: "tsubo", floors: "2", bldPrice: String(m.struct.wood), items: {}, custom: [], discount: "",
       notes: DEFAULT_NOTE, invDate: "", dueDate: "", fromId: "", created: Date.now(), updated: Date.now() };
   }
+  // 以前の版で保存したデータも読めるよう、足りない項目を補う（形は旧版と同じ）
+  function normDoc(d) {
+    var base = { kind: "estimate", no: "", client: "", siteAddr: "", date: today(), validDays: "30", subject: "", subjectAuto: true,
+      struct: "wood", area: "", areaUnit: "tsubo", floors: "2", bldPrice: "", items: {}, custom: [], discount: "",
+      notes: "", invDate: "", dueDate: "", fromId: "", created: Date.now(), updated: Date.now() };
+    if (!d || typeof d !== "object") d = {};
+    Object.keys(base).forEach(function (k) { if (d[k] == null) d[k] = base[k]; });
+    if (!d.id) d.id = uid();
+    if (typeof d.items !== "object" || Array.isArray(d.items)) d.items = {};
+    if (!Array.isArray(d.custom)) d.custom = [];
+    if (d.bldPrice === "") d.bldPrice = String(M().struct[structOf(d.struct).k]);
+    return d;
+  }
+  docs = docs.filter(function (d) { return d && typeof d === "object"; }).map(normDoc);
   function tsubo(d) { var a = num(d.area); if (a <= 0) return 0; return d.areaUnit === "m2" ? a / TSUBO : a; }
   function m2(d) { var a = num(d.area); if (a <= 0) return 0; return d.areaUnit === "m2" ? a : a * TSUBO; }
   function autoSubject(d) { return structOf(d.struct).label + (num(d.floors) > 0 ? Math.round(num(d.floors)) + "階建て" : "") + "解体工事"; }
@@ -632,108 +675,128 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
   function persist(now) {
     clearTimeout(saveTimer);
     var run = function () {
-      if (!hasContent(doc) && !docs.some(function (x) { return x.id === doc.id; })) { setStatus("入力すると自動で保存されます"); return; }
+      if (!hasContent(doc) && !docs.some(function (x) { return x.id === doc.id; })) { setStatus("自動で保存します"); return; }
       doc.updated = Date.now();
       var i = -1; docs.forEach(function (x, j) { if (x.id === doc.id) i = j; });
       var copy = JSON.parse(JSON.stringify(doc));
       if (i >= 0) docs[i] = copy; else docs.unshift(copy);
       var ok = save(KEY.list, docs); save(KEY.cur, doc.id);
-      setStatus(ok && canStore ? "保存しました" : "この端末に保存できません", !(ok && canStore));
+      setStatus(ok && canStore ? "保存済み" : "保存できません", !(ok && canStore));
     };
     if (now) run(); else { setStatus("保存中…"); saveTimer = setTimeout(run, 350); }
   }
   function setStatus(t, warn) { var s = $("#saveStatus"); s.textContent = t; s.classList.toggle("warn", !!warn); }
   function openDoc(d) {
-    doc = JSON.parse(JSON.stringify(d));
-    doc.items = doc.items || {}; doc.custom = doc.custom || [];
+    doc = normDoc(JSON.parse(JSON.stringify(d)));
     save(KEY.cur, doc.id);
-    renderForm(); setStatus(docs.some(function (x) { return x.id === doc.id; }) ? "保存済み" : "入力すると自動で保存されます");
+    renderForm(); setStatus(docs.some(function (x) { return x.id === doc.id; }) ? "保存済み" : "自動で保存します");
   }
 
-  /* ============ 入力画面 ============ */
-  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#f2b705" stroke-width="3.4"/></svg>';
+  /* ============ 作る画面 ============ */
+  var XICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6"/></svg>';
+  var pickOpen = {};
   function inp(attrs) { return "<input " + attrs + ">"; }
   function val(v) { return 'value="' + esc(v) + '"'; }
   function yenVal(v) { var n = String(v) === "" ? "" : fmt(yen(v)); return 'value="' + esc(n) + '"'; }
+  function isOn(k) { var s = doc.items[k]; return !!(s && s.on); }
 
-  function itemRow(it, m) {
-    var s = doc.items[it.k] || {}, mi = m.items[it.k], on = !!s.on;
-    var name = on ? (s.name || mi.name) : mi.name, unit = on ? (s.unit || mi.unit) : mi.unit, price = on ? s.price : mi.price;
-    var legal = it.note ? '<p class="legal">' + esc(it.note) + (it.k === "recy" ? ' <span class="inote warn" id="recyWarn" hidden></span>' : "") + "</p>" : "";
-    return '<div class="item' + (on ? " on" : "") + '" data-k="' + it.k + '">' +
-      '<label class="irow"><input type="checkbox" data-ik="' + it.k + '" data-p="on"' + (on ? " checked" : "") + '><span class="box">' + CHECK + '</span>' +
-      '<span class="iname">' + esc(name) + "<small>" + fmt(yen(price)) + "円 / " + esc(unit) + "</small></span>" +
-      '<span class="ihint" data-amt="' + it.k + '">' + (on ? "" : "追加") + "</span></label>" + legal +
-      '<div class="ibody"><div class="igrid">' +
-        '<label class="f"><span>数量（' + esc(unit) + '）</span><span class="sfx">' + inp('type="text" inputmode="decimal" autocomplete="off" data-ik="' + it.k + '" data-p="qty" ' + val(on ? s.qty : "") + ' placeholder="0"') + "<i>" + esc(unit) + "</i></span></label>" +
-        '<label class="f"><span>単価</span><span class="sfx">' + inp('type="text" inputmode="decimal" autocomplete="off" class="yen" data-ik="' + it.k + '" data-p="price" ' + yenVal(price)) + "<i>円</i></span></label>" +
-      "</div></div></div>";
+  // 追加済みの行（数量×単価）
+  function selRow(it) {
+    var s = doc.items[it.k], name = s.name || it.name, unit = s.unit || it.unit;
+    return '<div class="sel-item item on" data-k="' + it.k + '">' +
+      '<div class="sel-top"><span class="iname">' + esc(name) + '</span><b class="iamt" data-amt="' + it.k + '"></b>' +
+      '<button type="button" class="x" data-remove="' + it.k + '" aria-label="' + esc(name) + 'を外す">' + XICON + "</button></div>" +
+      '<div class="qp"><span class="sfx">' + inp('type="text" inputmode="decimal" autocomplete="off" data-ik="' + it.k + '" data-p="qty" ' + val(s.qty) + ' placeholder="0" aria-label="' + esc(name) + 'の数量（' + esc(unit) + '）"') + "<i>" + esc(unit) + "</i></span>" +
+      '<span class="times" aria-hidden="true">×</span>' +
+      '<span class="sfx">' + inp('type="text" inputmode="decimal" autocomplete="off" class="yen" data-ik="' + it.k + '" data-p="price" ' + yenVal(s.price) + ' aria-label="' + esc(name) + 'の単価（円）"') + "<i>円</i></span></div></div>";
+  }
+  // まだ追加していない行（タップで追加）
+  function pickRow(it, m) {
+    var mi = m.items[it.k];
+    return '<button type="button" class="pick item" data-k="' + it.k + '" data-add="' + it.k + '"><span>' + esc(mi.name) + "</span><small>" + fmt(mi.price) + "円/" + esc(mi.unit) + '</small><span class="plus" aria-hidden="true">＋</span></button>';
+  }
+  function groupHTML(g, m) {
+    var sel = g.items.filter(function (it) { return isOn(it.k); }), rest = g.items.filter(function (it) { return !isOn(it.k); });
+    var h = '<section class="card grp" id="grp-' + g.id + '" aria-labelledby="gt-' + g.id + '"><div class="ghead"><h2 id="gt-' + g.id + '">' + g.title + '</h2><b class="gsum" data-gsum="' + g.id + '"></b></div>';
+    if (g.id === "waste") {
+      h += '<button type="button" class="btn pri block big" id="autoWaste">産廃を自動で入れる</button>' +
+        '<details class="note" style="margin-top:8px"><summary>構造と延床から数量を概算します<span>くわしく</span></summary>' +
+        '<p>産廃の数量と運搬車両（4t車）の台数を入れます。係数は概算用のサンプルで、単価画面で変えられます。数量はあとで手で直せます。運搬費は諸経費に入ります。</p></details>';
+    }
+    if (g.id === "misc") {
+      h += '<div class="recy-warn" id="recyWarn" hidden><span id="recyWarnText"></span><button type="button" class="btn sm" data-add="recy" aria-label="建設リサイクル法の届出手続きを追加">＋ 追加</button></div>' +
+        '<details class="note"><summary>解体前にアスベスト調査が必要<span>くわしく</span></summary><p>' + esc(ITEM.asb.note) + "</p></details>" +
+        '<details class="note"><summary>80㎡以上はリサイクル法の届出<span>くわしく</span></summary><p>' + esc(ITEM.recy.note) + "</p></details>";
+    }
+    h += '<div class="sels">' + sel.map(selRow).join("") + "</div>";
+    if (rest.length) {
+      var open = !!pickOpen[g.id];
+      h += '<button type="button" class="addbtn" data-pick="' + g.id + '" aria-expanded="' + open + '" aria-controls="picks-' + g.id + '">＋ ' + g.add + "</button>" +
+        '<div class="picks" id="picks-' + g.id + '"' + (open ? "" : " hidden") + ">" + rest.map(function (it) { return pickRow(it, m); }).join("") + "</div>";
+    }
+    return h + "</section>";
+  }
+  function rerenderGroup(gid) {
+    var g = GROUPS.filter(function (x) { return x.id === gid; })[0], el = $("#grp-" + gid);
+    var tmp = document.createElement("div"); tmp.innerHTML = groupHTML(g, M());
+    el.parentNode.replaceChild(tmp.firstChild, el);
   }
 
   function renderForm() {
     var m = M(), d = doc, isInv = d.kind === "invoice";
     var h = "";
-    if (isInv) {
-      h += '<div class="card"><div class="chead"><span class="no">請求</span><h2>請求書の設定</h2></div><div class="fgrid two">' +
-        '<label class="f"><span>請求日</span>' + inp('type="date" data-f="invDate" ' + val(d.invDate)) + "</label>" +
-        '<label class="f"><span>支払期限</span>' + inp('type="date" data-f="dueDate" ' + val(d.dueDate)) + "</label></div>" +
-        '<p class="hint" style="margin-top:10px">振込先は「自社情報」の内容が表示されます。</p></div>';
-    }
-    // 01 現場情報
-    h += '<div class="card"><div class="chead"><span class="no">01</span><h2>現場情報</h2></div><div class="fgrid two">' +
-      '<label class="f"><span>宛名（施主名）<em>「様」は自動で付きます</em></span>' + inp('data-f="client" autocomplete="off" placeholder="例：山田 太郎" ' + val(d.client)) + "</label>" +
-      '<label class="f"><span>' + (isInv ? "請求番号" : "見積番号") + "</span>" + inp('data-f="no" autocomplete="off" ' + val(d.no)) + "</label>" +
-      '<label class="f wide"><span>現場住所</span>' + inp('data-f="siteAddr" autocomplete="off" placeholder="例：〇〇県〇〇市〇〇町1-2-3" ' + val(d.siteAddr)) + "</label>" +
-      '<label class="f wide"><span>件名</span>' + inp('data-f="subject" id="subject" autocomplete="off" placeholder="' + esc(autoSubject(d)) + '" ' + val(d.subject)) + "</label>" +
+    // 建物（最初の画面）
+    h += '<section class="card" aria-label="建物"><div class="fgrid">' +
+      '<div class="f"><span class="lbl" id="lb-struct">構造</span><div class="struct" role="group" aria-labelledby="lb-struct">' +
+      STRUCT.map(function (s) { return '<button type="button" data-struct="' + s.k + '" aria-pressed="' + (d.struct === s.k) + '" aria-label="' + s.label + '">' + s.short + "</button>"; }).join("") + "</div></div>" +
+      '<div class="f"><label class="lbl" for="area">延床<span class="conv" id="areaConv"></span></label><div class="area-row">' +
+        '<span class="sfx">' + inp('id="area" type="text" inputmode="decimal" autocomplete="off" data-f="area" placeholder="0" ' + val(d.area)) + '<i id="areaUnitLabel">' + (d.areaUnit === "m2" ? "㎡" : "坪") + "</i></span>" +
+        '<div class="seg" role="group" aria-label="面積の単位"><button type="button" data-unit="tsubo" aria-pressed="' + (d.areaUnit !== "m2") + '">坪</button><button type="button" data-unit="m2" aria-pressed="' + (d.areaUnit === "m2") + '">㎡</button></div>' +
+      "</div></div></div>" +
+      '<div class="bldline"><span id="bldName">建物解体</span><b id="bldQty"></b><span class="amt" id="bldAmt">¥0</span></div>' +
+      '<details class="more"><summary>坪単価・階数</summary><div class="fgrid two">' +
+        '<label class="f"><span>坪単価 <em>この見積だけ</em></span><span class="sfx">' + inp('type="text" inputmode="decimal" class="yen" data-f="bldPrice" ' + yenVal(d.bldPrice)) + "<i>円</i></span></label>" +
+        '<div class="f"><label class="lbl" for="floors">階数</label><div class="stepper"><button type="button" data-step="-1" aria-label="階数を減らす">−</button>' + inp('id="floors" type="text" inputmode="decimal" data-f="floors" ' + val(d.floors)) + '<button type="button" data-step="1" aria-label="階数を増やす">＋</button></div></div>' +
+      "</div></details></section>";
+    // 宛名・現場（たたむ）
+    h += '<details class="card box" id="siteBox"><summary>' + (isInv ? "宛名・請求日" : "宛名・現場") + ' <span class="sv" id="siteSum"></span></summary><div class="fgrid two">' +
+      (isInv ? '<label class="f"><span>請求日</span>' + inp('type="date" data-f="invDate" ' + val(d.invDate)) + "</label>" +
+               '<label class="f"><span>支払期限</span>' + inp('type="date" data-f="dueDate" ' + val(d.dueDate)) + "</label>" : "") +
+      '<label class="f"><span>宛名 <em>「様」は自動</em></span>' + inp('data-f="client" autocomplete="off" placeholder="例：山田 太郎" ' + val(d.client)) + "</label>" +
+      '<label class="f wide"><span>現場住所</span>' + inp('data-f="siteAddr" autocomplete="off" placeholder="例：〇〇市〇〇町1-2-3" ' + val(d.siteAddr)) + "</label>" +
+      '<label class="f wide"><span>件名 <em>空欄なら自動</em></span>' + inp('data-f="subject" id="subject" autocomplete="off" placeholder="' + esc(autoSubject(d)) + '" ' + val(d.subject)) + "</label>" +
       '<label class="f"><span>見積日</span>' + inp('type="date" data-f="date" ' + val(d.date)) + "</label>" +
       '<label class="f"><span>有効期限 <em id="validTo"></em></span><span class="sfx">' + inp('type="text" inputmode="decimal" data-f="validDays" ' + val(d.validDays)) + "<i>日</i></span></label>" +
-      "</div></div>";
-    // 02 建物
-    h += '<div class="card"><div class="chead"><span class="no">02</span><h2>建物</h2></div><div class="fgrid">' +
-      '<div class="f"><span class="flabel">構造</span><div class="seg" role="group" aria-label="構造">' +
-      STRUCT.map(function (s) { return '<button type="button" data-struct="' + s.k + '" aria-pressed="' + (d.struct === s.k) + '">' + s.label + "</button>"; }).join("") + "</div></div>" +
-      '<div class="f"><label class="flabel" for="area">延床面積 <em id="areaConv"></em></label><div class="area-row">' +
-        '<span class="sfx">' + inp('id="area" type="text" inputmode="decimal" autocomplete="off" data-f="area" placeholder="0" ' + val(d.area)) + '<i id="areaUnitLabel">' + (d.areaUnit === "m2" ? "㎡" : "坪") + "</i></span>" +
-        '<div class="seg sm" role="group" aria-label="面積の単位"><button type="button" data-unit="tsubo" aria-pressed="' + (d.areaUnit !== "m2") + '">坪</button><button type="button" data-unit="m2" aria-pressed="' + (d.areaUnit === "m2") + '">㎡</button></div>' +
-      "</div><p class=\"hint\">1坪＝3.30579㎡で換算します。見積書の数量は坪で表示します。</p></div>" +
-      '<div class="fgrid two"><div class="f"><label class="flabel" for="floors">階数</label><div class="stepper"><button type="button" data-step="-1" aria-label="階数を減らす">−</button>' + inp('id="floors" type="text" inputmode="decimal" data-f="floors" ' + val(d.floors)) + '<button type="button" data-step="1" aria-label="階数を増やす">＋</button></div></div>' +
-      '<label class="f"><span>坪単価 <em>この見積だけ変更できます</em></span><span class="sfx">' + inp('type="text" inputmode="decimal" class="yen" data-f="bldPrice" ' + yenVal(d.bldPrice)) + "<i>円</i></span></label></div>" +
-      '</div><div class="calc-line"><span id="bldName">建物解体</span><b id="bldQty"></b><span class="amt" id="bldAmt">¥0</span></div></div>';
-    // 03-05 グループ
-    GROUPS.forEach(function (g) {
-      h += '<div class="card" id="grp-' + g.id + '"><div class="chead"><span class="no">' + g.no + "</span><h2>" + g.title + '</h2><span class="aside" data-gsum="' + g.id + '"></span></div>';
-      if (g.id === "waste") {
-        h += '<div class="auto-box"><button type="button" class="btn pri" id="autoWaste">構造×延床から自動で概算</button>' +
-          '<p class="hint">産廃の数量と、運搬車両（4t車）の台数を概算して入れます。<b>概算用のサンプル係数</b>を使っています（係数は単価マスタで変更できます）。数量は手で直せます。</p></div>';
-      }
-      h += '<p class="hint" style="margin-bottom:10px">' + g.hint + '</p><div class="items">' + g.items.map(function (it) { return itemRow(it, m); }).join("") + "</div></div>";
-    });
-    // 06 その他
-    h += '<div class="card"><div class="chead"><span class="no">06</span><h2>その他の項目</h2></div><p class="hint" style="margin-bottom:10px">一覧にない項目を自由に追加できます。</p><div class="items" id="customRows">' +
-      d.custom.map(function (c, i) { return customRow(c, i); }).join("") + '</div><button type="button" class="btn block" id="addCustom" style="margin-top:10px">＋ 項目を追加</button></div>';
-    // 07 値引き・備考
-    h += '<div class="card"><div class="chead"><span class="no">07</span><h2>値引き・備考</h2></div><div class="fgrid two">' +
-      '<label class="f"><span>値引き <em>任意・金額（税抜）</em></span><span class="sfx">' + inp('type="text" inputmode="decimal" class="yen" data-f="discount" placeholder="0" ' + yenVal(d.discount)) + "<i>円</i></span></label>" +
-      '<label class="f wide"><span>備考</span><textarea data-f="notes">' + esc(d.notes) + "</textarea></label></div></div>";
+      '<label class="f"><span>' + (isInv ? "請求番号" : "見積番号") + "</span>" + inp('data-f="no" autocomplete="off" ' + val(d.no)) + "</label>" +
+      "</div></details>";
+    // 付帯工事・産廃・諸経費
+    GROUPS.forEach(function (g) { h += groupHTML(g, m); });
+    // 自由入力
+    h += '<section class="card" aria-labelledby="gt-custom"><div class="ghead"><h2 id="gt-custom">その他の項目</h2><b class="gsum" data-gsum="custom"></b></div><div id="customRows">' +
+      d.custom.map(function (c, i) { return customRow(c, i); }).join("") + '</div><button type="button" class="addbtn" id="addCustom">＋ 自由に追加</button></section>';
+    // 値引き・備考（たたむ）
+    h += '<details class="card box" id="discBox"' + (yen(d.discount) > 0 ? " open" : "") + '><summary>値引き・備考 <span class="sv" id="discSum"></span></summary><div class="fgrid two">' +
+      '<label class="f"><span>値引き <em>税抜</em></span><span class="sfx">' + inp('type="text" inputmode="decimal" class="yen" data-f="discount" placeholder="0" ' + yenVal(d.discount)) + "<i>円</i></span></label>" +
+      '<label class="f wide"><span>備考</span><textarea data-f="notes">' + esc(d.notes) + "</textarea></label></div></details>";
     // 合計（スマホ用。PCは右側）
-    h += '<div class="card" id="sumCard"></div>';
+    h += '<section class="card" id="sumCard"></section>';
     $("#form").innerHTML = h;
-    $("#kindLabel").textContent = isInv ? "請求書をつくる" : "見積書をつくる";
     updateComputed();
   }
 
   function customRow(c, i) {
     return '<div class="crow" data-ci="' + i + '">' +
-      '<div class="cgrid"><label class="f"><span>項目名</span>' + inp('data-ci="' + i + '" data-p="name" autocomplete="off" placeholder="例：仮設トイレ" ' + val(c.name)) + "</label>" +
-      '<label class="f"><span>単位</span>' + inp('data-ci="' + i + '" data-p="unit" autocomplete="off" placeholder="式" ' + val(c.unit)) + "</label></div>" +
-      '<div class="cgrid2"><label class="f"><span>数量</span>' + inp('class="num" type="text" inputmode="decimal" autocomplete="off" data-ci="' + i + '" data-p="qty" placeholder="0" ' + val(c.qty)) + "</label>" +
-      '<label class="f"><span>単価（円）</span>' + inp('class="num yen" type="text" inputmode="decimal" autocomplete="off" data-ci="' + i + '" data-p="price" placeholder="0" ' + yenVal(c.price)) + "</label></div>" +
-      '<div class="cfoot"><b data-camt="' + i + '">¥0</b><button type="button" class="btn sm danger" data-cdel="' + i + '">削除</button></div></div>';
+      '<div class="ctop">' + inp('class="in" data-ci="' + i + '" data-p="name" autocomplete="off" placeholder="項目名（例：仮設トイレ）" aria-label="項目名" ' + val(c.name)) +
+      '<button type="button" class="x" data-cdel="' + i + '" aria-label="この行を削除">' + XICON + "</button></div>" +
+      '<div class="cgrid"><label class="f"><span>数量</span>' + inp('style="text-align:right" type="text" inputmode="decimal" autocomplete="off" data-ci="' + i + '" data-p="qty" placeholder="0" ' + val(c.qty)) + "</label>" +
+      '<label class="f"><span>単位</span>' + inp('data-ci="' + i + '" data-p="unit" autocomplete="off" placeholder="式" ' + val(c.unit)) + "</label>" +
+      '<label class="f"><span>単価（円）</span>' + inp('style="text-align:right" class="yen" type="text" inputmode="decimal" autocomplete="off" data-ci="' + i + '" data-p="price" placeholder="0" ' + yenVal(c.price)) + "</label></div>" +
+      '<b class="camt" data-camt="' + i + '">¥0</b></div>';
   }
 
-  function sumHTML(c, withBtn) {
-    var h = '<div class="chead"><span class="no">' + (doc.kind === "invoice" ? "請求" : "合計") + "</span><h2>合計</h2></div>";
-    if (!c.lines.length) h += '<p class="sum-empty">延床面積や項目を入れると、ここに内訳と合計が出ます。</p>';
+  function sumHTML(c, label) {
+    var h = "<h2>合計</h2>";
+    if (!c.lines.length) h += '<p class="sum-empty">延床を入れると金額が出ます</p>';
     else h += '<ul class="sum-lines">' + c.lines.map(function (l) { return "<li><span>" + esc(l.name) + " " + fmtQ(l.qty) + esc(l.unit) + "</span><span>¥" + fmt(l.amt) + "</span></li>"; }).join("") + "</ul>";
     h += '<table class="sum-tbl"><tbody>' +
       "<tr><td>工事費計</td><td>¥" + fmt(c.gross) + "</td></tr>" +
@@ -741,45 +804,46 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
       "<tr><td>小計（税抜）</td><td>¥" + fmt(c.sub) + "</td></tr>" +
       "<tr><td>消費税（10%）</td><td>¥" + fmt(c.tax) + "</td></tr>" +
       '<tr class="total"><td>合計（税込）</td><td>¥' + fmt(c.total) + "</td></tr></tbody></table>" +
-      '<p class="tax-note">10%対象 ¥' + fmt(c.sub) + "（消費税 ¥" + fmt(c.tax) + "）。消費税の1円未満は切り捨てています。</p>";
-    if (withBtn) h += '<button type="button" class="btn pri block" data-go="doc">' + (doc.kind === "invoice" ? "請求書を見る" : "見積書を見る") + " →</button>";
+      '<button type="button" class="btn pri block" data-go="doc">' + label + "</button>";
     return h;
   }
 
   function updateComputed() {
-    var d = doc, c = calc(d), m = M();
+    var d = doc, c = calc(d), isInv = d.kind === "invoice", label = isInv ? "請求書を見る" : "見積書を見る";
     // 建物
     var ts = r2(tsubo(d)), sq = m2(d);
     $("#bldName").textContent = "建物解体（" + structOf(d.struct).label + "）";
-    $("#bldQty").textContent = ts > 0 ? fmtQ(ts) + "坪 × " + fmt(yen(d.bldPrice)) + "円" : "延床面積を入れてください";
+    $("#bldQty").textContent = ts > 0 ? fmtQ(ts) + "坪 × " + fmt(yen(d.bldPrice)) + "円" : "";
     $("#bldAmt").textContent = "¥" + fmt(ts > 0 ? lineAmount(ts, yen(d.bldPrice)) : 0);
     $("#areaConv").textContent = num(d.area) > 0 ? (d.areaUnit === "m2" ? "＝ " + fmtQ(r2(tsubo(d))) + "坪" : "＝ " + fmtQ(r2(sq)) + "㎡") : "";
     $("#validTo").textContent = "→ " + jp(addDays(d.date, Math.max(0, Math.round(num(d.validDays)))));
     var subj = $("#subject"); if (subj) subj.placeholder = autoSubject(d);
+    $("#siteSum").textContent = String(d.client).trim() ? d.client.trim() + " 様" : "未入力";
+    var ds = $("#discSum"); if (ds) ds.textContent = c.disc ? "−¥" + fmt(c.disc) : "";
     // 各項目
     var gsum = {};
     c.lines.forEach(function (l) { gsum[l.grp] = (gsum[l.grp] || 0) + l.amt; });
-    GROUPS.forEach(function (g) {
-      var el = $('[data-gsum="' + g.id + '"]'); if (el) el.textContent = gsum[g.id] ? "¥" + fmt(gsum[g.id]) : "";
-      g.items.forEach(function (it) {
-        var s = d.items[it.k], el2 = $('[data-amt="' + it.k + '"]');
-        if (!el2) return;
-        if (s && s.on) { var q = num(s.qty); el2.textContent = q > 0 ? "¥" + fmt(lineAmount(q, yen(s.price))) : "数量を入力"; }
-        else el2.textContent = "追加";
-      });
+    $$("[data-gsum]").forEach(function (el) { var g = el.dataset.gsum; el.textContent = gsum[g] ? "¥" + fmt(gsum[g]) : ""; });
+    $$("[data-amt]").forEach(function (el) {
+      var s = d.items[el.dataset.amt]; if (!s) return;
+      var q = num(s.qty);
+      el.textContent = q > 0 ? "¥" + fmt(lineAmount(q, yen(s.price))) : "数量を入れて";
+      el.classList.toggle("need", !(q > 0));
     });
     (d.custom || []).forEach(function (cc, i) { var el = $('[data-camt="' + i + '"]'); if (el) el.textContent = "¥" + fmt(lineAmount(num(cc.qty), yen(cc.price))); });
-    // 建設リサイクル法の目安
+    // 建設リサイクル法の目安（延床80㎡以上で、届出がまだ入っていないとき）
     var rw = $("#recyWarn");
-    if (rw) { var need = sq >= 80, on = d.items.recy && d.items.recy.on; rw.hidden = !(need && !on); rw.textContent = "延床が " + fmtQ(r2(sq)) + "㎡ です。"; }
+    if (rw) { rw.hidden = !(sq >= 80 && !isOn("recy")); $("#recyWarnText").textContent = fmtQ(r2(sq)) + "㎡：届出が必要"; }
     // 合計
-    $("#sumCard").innerHTML = sumHTML(c, true);
-    $("#sideSum").innerHTML = sumHTML(c, true);
+    $("#sumCard").innerHTML = sumHTML(c, label);
+    $("#sideSum").innerHTML = sumHTML(c, label);
     $("#barTotal").textContent = "¥" + fmt(c.total);
-    $("#barBtn").textContent = (d.kind === "invoice" ? "請求書を見る" : "見積書を見る") + " →";
-    $("#docNoLabel").innerHTML = esc(String(d.client).trim() ? d.client.trim() + " 様" : (d.kind === "invoice" ? "新しい請求書" : "新しい見積")) + (d.no ? '<span class="docno">No.' + esc(d.no) + "</span>" : "");
+    $("#barBtn").textContent = label;
+    $("#docTab").textContent = isInv ? "請求書" : "見積書";
+    $("#kindLabel").textContent = isInv ? "請求書" : "見積書";
+    $("#kindLabel").classList.toggle("est", !isInv);
+    $("#docNoLabel").textContent = d.no ? "No." + d.no : "";
     $("#sampleBanner").hidden = !masterIsDefault();
-    $("#coBanner").hidden = !!String(co.name || "").trim();
   }
 
   // 入力イベント（委譲）
@@ -789,7 +853,7 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
     if (t.dataset.f) {
       d[t.dataset.f] = t.value;
       if (t.dataset.f === "subject") d.subjectAuto = t.value.trim() === "";
-    } else if (t.dataset.ik && t.dataset.p !== "on") {
+    } else if (t.dataset.ik) {
       var s = d.items[t.dataset.ik] || (d.items[t.dataset.ik] = {});
       s[t.dataset.p] = t.value;
     } else if (t.dataset.ci != null && t.dataset.p) {
@@ -797,28 +861,27 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
     } else return;
     updateComputed(); persist();
   });
-  form.addEventListener("change", function (e) {
-    var t = e.target;
-    if (t.type === "checkbox" && t.dataset.ik) {
-      var k = t.dataset.ik, mi = M().items[k], s = doc.items[k] || (doc.items[k] = {});
-      s.on = t.checked;
-      if (t.checked) {
-        // 追加した時点のマスタの名前・単位・単価を見積に写す（あとでマスタを変えても保存済みの見積は変わらない）
-        s.name = mi.name; s.unit = mi.unit; s.price = String(mi.price);
-        if ((s.qty == null || s.qty === "") && ITEM[k].dq) s.qty = String(ITEM[k].dq);
-      }
-      var row = t.closest(".item"), tmp = document.createElement("div");
-      tmp.innerHTML = itemRow(ITEM[k], M());
-      var nr = tmp.firstChild; row.parentNode.replaceChild(nr, row);
-      if (t.checked) { var q = nr.querySelector('[data-p="qty"]'); if (q && !q.value) q.focus(); else nr.querySelector('input[type="checkbox"]').focus(); }
-      else nr.querySelector('input[type="checkbox"]').focus();
-      updateComputed(); persist();
-    }
-  });
   // 金額欄：入力欄から離れたら3桁区切りに整える（カンマ入りのままでも計算できる）
   form.addEventListener("focusout", function (e) { var t = e.target; if (t.classList && t.classList.contains("yen") && t.value !== "") t.value = fmt(yen(t.value)); });
+
+  function addItem(k) {
+    var mi = M().items[k], s = doc.items[k] || (doc.items[k] = {});
+    // 追加した時点のマスタの名前・単位・単価を見積に写す（あとでマスタを変えても保存済みの見積は変わらない）
+    s.on = true; s.name = mi.name; s.unit = mi.unit; s.price = String(mi.price);
+    if ((s.qty == null || s.qty === "") && ITEM[k].dq) s.qty = String(ITEM[k].dq);
+    var g = ITEM[k].grp; pickOpen[g] = false;
+    rerenderGroup(g); updateComputed(); persist();
+    var q = $('[data-ik="' + k + '"][data-p="qty"]');
+    if (q) { if (!q.value) q.focus(); else q.closest(".sel-item").querySelector(".x").focus(); }
+  }
+  function removeItem(k) {
+    var s = doc.items[k]; if (s) s.on = false;
+    var g = ITEM[k].grp; rerenderGroup(g); updateComputed(); persist();
+    var b = $("#grp-" + g + " .addbtn"); if (b) b.focus();
+  }
+
   form.addEventListener("click", function (e) {
-    var b = e.target.closest("button"); if (!b) return;
+    var b = e.target.closest("button"); if (!b || !form.contains(b)) return;
     var d = doc;
     if (b.dataset.struct) {
       d.struct = b.dataset.struct; d.bldPrice = String(M().struct[d.struct]);
@@ -836,6 +899,15 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
     } else if (b.dataset.step) {
       var f = Math.min(99, Math.max(1, Math.round(num(d.floors)) + (+b.dataset.step)));
       d.floors = String(f); $("#floors").value = d.floors; updateComputed(); persist();
+    } else if (b.dataset.pick) {
+      var open = b.getAttribute("aria-expanded") !== "true";
+      pickOpen[b.dataset.pick] = open;
+      b.setAttribute("aria-expanded", open);
+      $("#picks-" + b.dataset.pick).hidden = !open;
+    } else if (b.dataset.add) {
+      addItem(b.dataset.add);
+    } else if (b.dataset.remove) {
+      removeItem(b.dataset.remove);
     } else if (b.id === "autoWaste") {
       autoWaste();
     } else if (b.id === "addCustom") {
@@ -847,12 +919,13 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
       d.custom.splice(+b.dataset.cdel, 1);
       $("#customRows").innerHTML = d.custom.map(function (c, i) { return customRow(c, i); }).join("");
       updateComputed(); persist();
+      $("#addCustom").focus();
     }
   });
 
   function autoWaste() {
     var ts = tsubo(doc);
-    if (!(ts > 0)) { toast("先に延床面積を入れてください"); $("#area").focus(); return; }
+    if (!(ts > 0)) { toast("先に延床を入れてください"); $("#area").focus(); return; }
     var m = M(), cf = m.coef[doc.struct], n = 0;
     COEF_KEYS.forEach(function (k) {
       var q = k === "truck" ? Math.ceil(r2(cf[k] * ts)) : r1(cf[k] * ts);
@@ -862,8 +935,8 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
         s.on = true; s.qty = String(q); n++;
       } else if (s.on) { s.on = false; }
     });
-    var y = window.scrollY; renderForm(); window.scrollTo(0, y);
-    persist();
+    rerenderGroup("waste"); rerenderGroup("misc");
+    updateComputed(); persist();
     toast(structOf(doc.struct).label + " " + fmtQ(r2(ts)) + "坪で概算しました（" + n + "項目）");
   }
 
@@ -918,6 +991,10 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
     $("#docTitle").textContent = isInv ? "請求書" : "見積書";
     $("#toInvoice").hidden = isInv;
     $("#openSource").hidden = !(isInv && doc.fromId && docs.some(function (x) { return x.id === doc.fromId; }));
+    var noName = !String(co.name || "").trim(), noBank = isInv && !String(co.bank || "").trim();
+    $("#coHint").hidden = !(noName || noBank);
+    $("#coHintText").textContent = noName ? "自社情報が未入力です" : "振込先が未入力です";
+    $("#editCo").hidden = noName || noBank;
     fitSheet();
   }
   function fitSheet() {
@@ -947,25 +1024,27 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
     inv.created = inv.updated = Date.now();
     openDoc(inv); persist(true);
     renderSheet(); window.scrollTo(0, 0);
-    toast("請求書を作りました（見積書はそのまま残っています）");
+    toast("請求書を作りました（見積書も残っています）");
   });
   $("#openSource").addEventListener("click", function () {
     var src = docs.filter(function (x) { return x.id === doc.fromId; })[0];
     if (src) { openDoc(src); renderSheet(); window.scrollTo(0, 0); }
   });
+  $("#coHintBtn").addEventListener("click", function () {
+    if (!String(co.name || "").trim()) openCoSheet(); else show("company");
+  });
 
   /* ============ 一覧 ============ */
   function renderList() {
     var el = $("#list");
-    if (!docs.length) { el.innerHTML = '<div class="empty-list"><p style="font-weight:700">まだ保存した見積はありません。</p><p class="hint" style="margin-top:6px">入力画面で入力すると、自動でここに保存されます。</p></div>'; return; }
+    if (!docs.length) { el.innerHTML = '<div class="empty-list">まだありません。入力すると自動で保存されます。</div>'; return; }
     var sorted = docs.slice().sort(function (a, b) { return (b.updated || 0) - (a.updated || 0); });
     el.innerHTML = sorted.map(function (d) {
-      var c = calc(d), isInv = d.kind === "invoice", u = new Date(d.updated || Date.now());
-      return '<article class="ent' + (doc && d.id === doc.id ? " cur" : "") + '"><div class="ent-top"><span class="doc-kind' + (isInv ? " inv" : "") + '">' + (isInv ? "請求書" : "見積書") + "</span><span>No." + esc(d.no) + "</span><span>" + jp(isInv ? d.invDate : d.date) + "</span></div>" +
+      var c = calc(d), isInv = d.kind === "invoice";
+      return '<article class="ent' + (doc && d.id === doc.id ? " cur" : "") + '"><div class="ent-top"><span class="doc-kind' + (isInv ? " inv" : "") + '">' + (isInv ? "請求書" : "見積書") + "</span><span>" + jp(isInv ? d.invDate : d.date) + "</span></div>" +
         "<h3>" + (esc(String(d.client).trim()) ? esc(d.client) + " 様" : "（宛名なし）") + "</h3>" +
-        "<p>" + esc(String(d.subject).trim() || autoSubject(d)) + (d.siteAddr ? "／" + esc(d.siteAddr) : "") + "</p>" +
-        '<div class="amt">¥' + fmt(c.total) + '<span style="font-family:var(--fb);font-size:12px;font-weight:700">（税込）</span></div>' +
-        '<p style="font-size:12px">更新 ' + (u.getMonth() + 1) + "/" + u.getDate() + " " + p2(u.getHours()) + ":" + p2(u.getMinutes()) + "</p>" +
+        '<div class="amt">¥' + fmt(c.total) + "</div>" +
+        '<p class="sub">' + esc(String(d.subject).trim() || autoSubject(d)) + "</p>" +
         '<div class="btns"><button class="btn sm pri" data-open="' + d.id + '">開く</button><button class="btn sm" data-dup="' + d.id + '">複製</button><button class="btn sm danger" data-del="' + d.id + '">削除</button></div></article>';
     }).join("");
   }
@@ -980,7 +1059,7 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
       if (n.kind === "estimate") { n.date = t; n.no = nextNo(t); } else { n.invDate = t; n.dueDate = endOfNextMonth(t); }
       docs.unshift(n); save(KEY.list, docs); openDoc(n); show("input"); toast("複製しました");
     } else if (b.dataset.del) {
-      if (!window.confirm((d.client ? d.client + " 様の" : "") + (d.kind === "invoice" ? "請求書" : "見積書") + "（No." + d.no + "）を削除します。元に戻せません。よろしいですか？")) return;
+      if (!window.confirm((d.client ? d.client + " 様の" : "") + (d.kind === "invoice" ? "請求書" : "見積書") + "を削除します。元に戻せません。")) return;
       docs = docs.filter(function (x) { return x.id !== id; }); save(KEY.list, docs);
       if (doc && doc.id === id) openDoc(newDoc());
       renderList(); toast("削除しました");
@@ -988,41 +1067,47 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
   });
 
   /* ============ 単価マスタ ============ */
+  var mOpen = { struct: true };
   function renderMaster() {
     var m = M(), h = "";
     function ariaFor(path) {
       var q = path.split(".");
       if (q[0] === "struct") return ' aria-label="' + esc(structOf(q[1]).label + "の坪単価（円）") + '"';
       if (q[0] === "coef") return ' aria-label="' + esc(structOf(q[1]).label + "：" + m.items[q[2]].name + "の係数（1坪あたり）") + '"';
-      return "";
+      var lb = { name: "の項目名", unit: "の単位", price: "の単価（円）" }[q[2]];
+      return ' aria-label="' + esc(ITEM[q[1]].name + lb) + '"';
     }
-    function cell(path, v, def, cls, mode) {
+    function cell(path, v, def, mode) {
       var chg = String(v) !== String(def);
-      return '<input class="' + (cls || "") + (chg ? " chg" : "") + '" data-m="' + path + '" ' + (mode === "text" ? "" : 'inputmode="decimal" style="text-align:right" ') + 'autocomplete="off" value="' + esc(mode === "yen" ? fmt(v) : v) + '"' + ariaFor(path) + ">";
+      var h = '<input class="' + (chg ? "chg" : "") + '" data-m="' + path + '" ' + (mode === "text" ? "" : 'inputmode="decimal" style="text-align:right" ') + 'autocomplete="off" value="' + esc(mode === "yen" ? fmt(v) : v) + '"' + ariaFor(path) + ">";
+      return mode === "yen" ? '<span class="sfx">' + h + "<i>円</i></span>" : h;
     }
-    h += '<div class="card"><div class="chead"><span class="no">02</span><h2>建物解体（坪単価）</h2></div><table class="mtbl"><thead><tr><th>構造</th><th class="mp">円 / 坪</th></tr></thead><tbody>' +
-      STRUCT.map(function (s) { return '<tr><td class="mn">' + s.label + '</td><td class="mp">' + cell("struct." + s.k, m.struct[s.k], s.price, "", "yen") + "</td></tr>"; }).join("") + "</tbody></table></div>";
+    function sec(id, title, body) {
+      return '<details class="msec box" data-sec="' + id + '"' + (mOpen[id] ? " open" : "") + "><summary>" + title + "</summary>" + body + "</details>";
+    }
+    h += sec("struct", "建物（坪単価）", '<table class="mtbl"><tbody>' +
+      STRUCT.map(function (s) { return '<tr><td class="mn">' + s.label + '</td><td class="mp">' + cell("struct." + s.k, m.struct[s.k], s.price, "yen") + "</td></tr>"; }).join("") + "</tbody></table>");
     GROUPS.forEach(function (g) {
-      h += '<div class="card"><div class="chead"><span class="no">' + g.no + "</span><h2>" + g.title + '</h2></div><div class="mrows">' +
+      h += sec(g.id, g.title, '<div class="mhead" aria-hidden="true"><span>項目名 ／ 単位・単価</span></div>' +
         g.items.map(function (it) {
           var mi = m.items[it.k];
-          return '<div class="mrow"><label class="f mn2"><span>項目名</span>' + cell("items." + it.k + ".name", mi.name, it.name, "", "text") + '</label>' +
-            '<label class="f mu2"><span>単位</span>' + cell("items." + it.k + ".unit", mi.unit, it.unit, "", "text") + '</label>' +
-            '<label class="f mp2"><span>単価（円）</span>' + cell("items." + it.k + ".price", mi.price, it.price, "", "yen") + "</label></div>";
-        }).join("") + "</div></div>";
+          return '<div class="mrow"><div class="mn2">' + cell("items." + it.k + ".name", mi.name, it.name, "text") + "</div>" +
+            '<div class="mu2">' + cell("items." + it.k + ".unit", mi.unit, it.unit, "text") + "</div>" +
+            '<div class="mp2">' + cell("items." + it.k + ".price", mi.price, it.price, "yen") + "</div></div>";
+        }).join(""));
     });
-    h += '<div class="card"><div class="chead"><span class="no">係数</span><h2>産廃の概算係数（延床1坪あたり）</h2></div>' +
-      '<p class="banner" style="margin-bottom:12px">概算用のサンプル係数です。自社の実績に合わせて変更してください。</p>' +
-      '<div style="overflow-x:auto"><table class="mtbl" style="min-width:320px"><thead><tr><th>品目</th>' + STRUCT.map(function (s) { return '<th class="mc">' + s.label + "</th>"; }).join("") + "</tr></thead><tbody>" +
+    h += sec("coef", "係数（産廃の自動概算）", '<p class="hint" style="margin-bottom:8px">延床1坪あたりの量。運搬車両は切り上げ。</p>' +
+      '<table class="mtbl"><thead><tr><th>品目</th>' + STRUCT.map(function (s) { return '<th class="mc">' + s.short + "</th>"; }).join("") + "</tr></thead><tbody>" +
       COEF_KEYS.map(function (k) {
-        return '<tr><td class="mn">' + esc(m.items[k].name.replace(/処分$/, "")) + ' <small style="font-weight:400;color:var(--mut)">' + esc(m.items[k].unit) + "/坪</small></td>" +
-          STRUCT.map(function (s) { return '<td class="mc">' + cell("coef." + s.k + "." + k, m.coef[s.k][k], COEF[s.k][k], "", "dec") + "</td>"; }).join("") + "</tr>";
-      }).join("") + "</tbody></table></div>" +
-      '<p class="hint" style="margin-top:8px">運搬車両は計算結果を切り上げて台数にします。</p></div>';
-    h += '<div class="card"><div class="chead"><h2>既定値に戻す</h2></div><p class="hint" style="margin-bottom:12px">変更した単価・係数をすべてサンプル値に戻します。</p><button type="button" class="btn danger block" id="resetMaster">すべて既定値（サンプル）に戻す</button></div>';
+        return '<tr><td class="mn">' + esc(m.items[k].name.replace(/処分$/, "")) + "<small>" + esc(m.items[k].unit) + "/坪</small></td>" +
+          STRUCT.map(function (s) { return '<td class="mc">' + cell("coef." + s.k + "." + k, m.coef[s.k][k], COEF[s.k][k], "dec") + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody></table>");
+    h += '<button type="button" class="btn danger block" id="resetMaster" style="margin-top:8px">サンプル値に戻す</button>';
     $("#masterForm").innerHTML = h;
+    $("#mstSample").hidden = !masterIsDefault();
   }
   var mf = $("#masterForm");
+  mf.addEventListener("toggle", function (e) { var t = e.target; if (t.dataset && t.dataset.sec) mOpen[t.dataset.sec] = t.open; }, true);
   mf.addEventListener("input", function (e) {
     var t = e.target, p = t.dataset.m; if (!p) return;
     var parts = p.split("."), o = mstOv;
@@ -1038,56 +1123,92 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
     if (t.value.trim() === "" || v === def) delete o[last]; else o[last] = v;
     t.classList.toggle("chg", t.value.trim() !== "" && v !== def);
     save(KEY.mst, mstOv);
+    $("#mstSample").hidden = !masterIsDefault();
   });
   mf.addEventListener("focusout", function (e) { var t = e.target; if (t.dataset.m && /price$|^struct/.test(t.dataset.m) && t.value !== "") t.value = fmt(yen(t.value)); });
   mf.addEventListener("click", function (e) {
     if (e.target.id !== "resetMaster") return;
-    if (!window.confirm("単価・係数をすべてサンプル値に戻します。よろしいですか？（保存済みの見積は変わりません）")) return;
-    mstOv = {}; save(KEY.mst, mstOv); renderMaster(); toast("既定値に戻しました");
+    if (!window.confirm("単価・係数をすべてサンプル値に戻します。（保存済みの見積は変わりません）")) return;
+    mstOv = {}; save(KEY.mst, mstOv); renderMaster(); toast("サンプル値に戻しました");
   });
 
   /* ============ 自社情報 ============ */
   function normReg(s) { return toHalf(s).replace(/[\s\-‐−]/g, "").toUpperCase().replace(/^Ｔ/, "T"); }
   function validReg(s) { return /^T\d{13}$/.test(normReg(s)); }
-  var cf = $("#coForm");
-  function fillCo() { ["name", "addr", "tel", "person", "reg", "bank"].forEach(function (k) { cf.elements[k].value = co[k] || ""; }); checkReg(); }
-  function checkReg() {
-    var el = cf.elements.reg, v = el.value.trim(), msg = $("#regMsg");
-    if (!v) { el.classList.remove("bad"); msg.className = "hint"; msg.textContent = "登録していない場合は空欄のままで構いません（見積書・請求書に表示されません）。"; return true; }
-    if (validReg(v)) { el.classList.remove("bad"); msg.className = "ok"; msg.textContent = "形式OK：" + normReg(v); return true; }
-    el.classList.add("bad"); msg.className = "err"; msg.textContent = "「T」のあとに数字13桁で入力してください（例：T1234567890123）。今は数字が" + (normReg(v).replace(/\D/g, "").length) + "桁です。";
+  // 登録番号のチェック（自社情報画面と、見積書を開いたときのシートで共用）
+  function checkReg(f) {
+    var el = f.elements.reg, v = el.value.trim(), msg = f.querySelector("[data-regmsg]");
+    if (!v) { el.classList.remove("bad"); msg.className = "hint"; msg.textContent = ""; return true; }
+    if (validReg(v)) { el.classList.remove("bad"); msg.className = "ok"; msg.textContent = "OK：" + normReg(v); return true; }
+    el.classList.add("bad"); msg.className = "err"; msg.textContent = "T＋数字13桁で入れてください（今は" + (normReg(v).replace(/\D/g, "").length) + "桁）";
     return false;
   }
-  cf.elements.reg.addEventListener("input", checkReg);
+  function saveCo(f, keys) {
+    keys.forEach(function (k) { co[k] = f.elements[k].value.trim(); });
+    co.reg = f.elements.reg.value.trim() ? normReg(f.elements.reg.value) : "";
+    f.elements.reg.value = co.reg;
+    save(KEY.co, co);
+  }
+  var cf = $("#coForm");
+  function fillCo(f, keys) { keys.forEach(function (k) { f.elements[k].value = co[k] || ""; }); checkReg(f); }
+  cf.elements.reg.addEventListener("input", function () { checkReg(cf); });
   cf.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (!checkReg()) { cf.elements.reg.focus(); return; }
-    ["name", "addr", "tel", "person", "bank"].forEach(function (k) { co[k] = cf.elements[k].value.trim(); });
-    co.reg = cf.elements.reg.value.trim() ? normReg(cf.elements.reg.value) : "";
-    cf.elements.reg.value = co.reg;
-    save(KEY.co, co);
-    $("#coSaved").hidden = false; setTimeout(function () { $("#coSaved").hidden = true; }, 2500);
+    if (!checkReg(cf)) { cf.elements.reg.focus(); return; }
+    saveCo(cf, ["name", "addr", "tel", "person", "bank"]);
     toast("自社情報を保存しました");
-    show("input");
+    show(prevView === "doc" ? "doc" : "input");
   });
 
+  // 見積書を初めて開いたとき、会社名が空ならシートで聞く
+  var cq = $("#coQuick"), dlg = $("#coSheet"), coAsked = false;
+  function openCoSheet() {
+    coAsked = true;
+    fillCo(cq, ["name", "addr", "tel", "reg"]);
+    $("#coNameErr").hidden = true;
+    if (dlg.showModal) { try { dlg.showModal(); } catch (e) { dlg.setAttribute("open", ""); } } else dlg.setAttribute("open", "");
+    setTimeout(function () { cq.elements.name.focus(); }, 30);
+  }
+  function closeCoSheet() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  cq.elements.reg.addEventListener("input", function () { checkReg(cq); });
+  cq.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!cq.elements.name.value.trim()) { $("#coNameErr").hidden = false; cq.elements.name.focus(); return; }
+    $("#coNameErr").hidden = true;
+    if (!checkReg(cq)) { cq.elements.reg.focus(); return; }
+    saveCo(cq, ["name", "addr", "tel"]);
+    closeCoSheet(); renderSheet(); toast("自社情報を保存しました");
+  });
+  $("#coLater").addEventListener("click", closeCoSheet);
+
   /* ============ 画面切り替え ============ */
-  var current = "input";
+  var current = "input", prevView = "input";
+  var menu = $("#menu"), menuBtn = $("#menuBtn");
+  function setMenu(open) { menu.hidden = !open; menuBtn.setAttribute("aria-expanded", open); }
   function show(v) {
+    if (v !== current) prevView = current;
     current = v;
+    setMenu(false);
     $$(".view").forEach(function (x) { x.classList.toggle("on", x.id === "v-" + v); });
-    $$(".tab").forEach(function (x) { x.setAttribute("aria-selected", x.dataset.view === v); });
+    $$(".tab").forEach(function (x) { if (x.dataset.view === v) x.setAttribute("aria-current", "page"); else x.removeAttribute("aria-current"); });
+    menuBtn.classList.toggle("on", v === "list" || v === "master" || v === "company");
     document.body.classList.toggle("has-bar", v === "input");
     $("#bar").hidden = v !== "input";
-    if (v === "doc") { persist(true); renderSheet(); if (calc(doc).lines.length) trackOnce(); }
+    if (v === "doc") {
+      persist(true); renderSheet(); if (calc(doc).lines.length) trackOnce();
+      if (!String(co.name || "").trim() && !coAsked) openCoSheet();
+    }
     if (v === "list") renderList();
     if (v === "master") renderMaster();
-    if (v === "company") fillCo();
+    if (v === "company") fillCo(cf, ["name", "addr", "tel", "person", "reg", "bank"]);
     if (v === "input") updateComputed();
     window.scrollTo(0, 0);
   }
   $$(".tab").forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.view); }); });
+  menuBtn.addEventListener("click", function () { setMenu(menu.hidden); if (!menu.hidden) menu.querySelector("button").focus(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { setMenu(false); menuBtn.focus(); } });
   document.addEventListener("click", function (e) {
+    if (!menu.hidden && !e.target.closest("#menu") && !e.target.closest("#menuBtn")) setMenu(false);
     var g = e.target.closest("[data-go]"); if (g) { show(g.dataset.go); return; }
     if (e.target.closest("[data-new]") || e.target.closest("#newDoc")) { startNew(); }
   });
@@ -1101,7 +1222,7 @@ footer .fsub { color: #bdb8a8; font-size: 12.5px; }
   if (!canStore) $("#noStore").hidden = false;
   var curId = load(KEY.cur, ""), start = docs.filter(function (x) { return x.id === curId; })[0];
   openDoc(start || newDoc());
-  if (!String(co.name || "").trim() && !docs.length) show("company"); else show("input");
+  show("input");
 })();
 </script>
 </body>
