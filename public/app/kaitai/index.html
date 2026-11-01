@@ -13,6 +13,8 @@
 <!-- 計測タグ：IDは tracking-config.js で設定 -->
 <script src="/tracking-config.js"></script>
 <script src="/tracking.js"></script>
+<!-- ひとこと調査の送信先（全LP共通） -->
+<script src="/form-config.js"></script>
 <style>
 :root {
   --y: #f2b705; --y3: #fff6d2; --k: #1d1f22; --k2: #2c2e33; --k3: #15171a;
@@ -212,6 +214,28 @@ body.has-bar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
 .doc-tools #printBtn { grid-column: 1 / -1; }
 .doc-tools .btn { width: 100%; }
 .doc-hint { font-size: 15px; color: var(--mut); margin-bottom: 10px; }
+
+/* ひとこと調査（見積書の上に出る小さなカード。画面はふさがない） */
+.survey { background: var(--paper); border: 2px solid var(--k); border-left: 10px solid var(--y); border-radius: 8px; padding: 12px 14px 10px; margin-bottom: 12px; }
+.sv-top { display: flex; align-items: flex-start; gap: 6px; }
+.sv-top h2 { flex: 1; min-width: 0; font-size: 18px; font-weight: 700; line-height: 1.4; padding-top: 3px; }
+.sv-x { appearance: none; flex: none; width: 52px; height: 52px; margin: -10px -12px -8px 0; border: 0; background: none; border-radius: 6px; display: grid; place-items: center; color: var(--mut); }
+.sv-x svg { width: 20px; height: 20px; }
+.sv-opts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1fr); gap: 6px; margin-top: 10px; }
+.sv-opts .btn { min-height: 56px; padding: 6px; line-height: 1.25; flex-wrap: wrap; gap: 0 .3em; }
+.sv-top h2 span, .sv-opts .btn span { display: inline-block; white-space: nowrap; }
+.sv-form { display: grid; gap: 10px; }
+.sv-got { font-weight: 700; font-size: 16px; }
+.sv-got:focus { outline: none; }
+.sv-act { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 8px; }
+.sv-thanks { font-weight: 700; font-size: 17px; line-height: 1.5; }
+.sv-thanks:focus { outline: none; }
+.sv-note { font-size: 14px; color: var(--mut); margin-top: 8px; }
+@media (min-width: 720px) { .survey { max-width: 640px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .survey.pop { animation: svIn .25s ease-out; }
+  @keyframes svIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+}
 .doc-kind { display: inline-flex; font-weight: 700; font-size: 14px; padding: 0 7px; border: 2px solid var(--k); border-radius: 3px; background: #fff; white-space: nowrap; }
 .doc-kind.inv { background: var(--k); color: var(--y); }
 .sheet-fit { position: relative; width: 100%; overflow: hidden; }
@@ -357,7 +381,7 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
 @media print {
   html, body { background: #fff !important; padding: 0 !important; margin: 0 !important; }
   body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .top, .priv, .tabs, .bar, footer, .toast, .doc-tools, .doc-hint, .vhead, .banner, dialog, .menu, .view:not(#v-doc) { display: none !important; }
+  .top, .priv, .tabs, .bar, footer, .toast, .survey, .doc-tools, .doc-hint, .vhead, .banner, dialog, .menu, .view:not(#v-doc) { display: none !important; }
   main { padding: 0 !important; }
   main > .wrap { max-width: none; padding: 0; }
   #v-doc { display: block !important; }
@@ -425,6 +449,31 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
   <!-- ================= 見積書プレビュー ================= -->
   <section class="view" id="v-doc" aria-labelledby="t-doc">
     <h1 class="vh" id="t-doc"><span id="docTitle">見積書</span></h1>
+    <section class="survey" id="survey" aria-labelledby="svQ" hidden>
+      <div id="svStep1">
+        <div class="sv-top">
+          <h2 id="svQ"><span>この見積書、</span><span>そのまま使えそうですか？</span></h2>
+          <button type="button" class="sv-x" id="svX" aria-label="答えずに閉じる"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6"/></svg></button>
+        </div>
+        <div class="sv-opts" role="group" aria-labelledby="svQ">
+          <button type="button" class="btn" data-sv="使える">使える</button>
+          <button type="button" class="btn" data-sv="少し直せば使える"><span>少し直せば</span><span>使える</span></button>
+          <button type="button" class="btn" data-sv="使えない">使えない</button>
+        </div>
+      </div>
+      <form class="sv-form" id="svForm" novalidate hidden>
+        <p class="sv-got" id="svGot" tabindex="-1"></p>
+        <label class="f"><span>どこを直せば使えますか？（任意）</span><input name="comment" maxlength="500" autocomplete="off"></label>
+        <label class="f"><span>返事がほしい方はメール（任意）</span><input name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" aria-describedby="svErr"></label>
+        <p class="err" id="svErr" hidden>メールアドレスの形を確かめてください</p>
+        <div class="sv-act">
+          <button type="button" class="btn" id="svClose">閉じる</button>
+          <button type="submit" class="btn pri">送る</button>
+        </div>
+      </form>
+      <p class="sv-thanks" id="svThanks" tabindex="-1" hidden>ありがとうございます。いただいた声で直していきます。</p>
+      <p class="sv-note">送られるのは、この回答だけです</p>
+    </section>
     <div class="doc-tools">
       <button class="btn pri big" id="printBtn" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9V2h12v7M6 18H3v-8h18v8h-3M6 14h12v8H6z" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>印刷・PDF</button>
       <button class="btn yel" id="toInvoice" type="button">請求書にする</button>
@@ -509,7 +558,7 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
   "use strict";
 
   /* ============ 保存（localStorage は失敗してもアプリを止めない） ============ */
-  var KEY = { co: "kaitai.company.v1", mst: "kaitai.master.v1", list: "kaitai.docs.v1", cur: "kaitai.currentId.v1", lead: "kaitai.leadTracked.v1" };
+  var KEY = { co: "kaitai.company.v1", mst: "kaitai.master.v1", list: "kaitai.docs.v1", cur: "kaitai.currentId.v1", lead: "kaitai.leadTracked.v1", survey: "kaitai.survey.v1" };
   var memory = {};
   var canStore = (function () { try { var t = "__kt"; localStorage.setItem(t, t); localStorage.removeItem(t); return true; } catch (e) { return false; } })();
   function load(k, d) {
@@ -1019,7 +1068,9 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
     if (calc(doc).lines.length) trackOnce();
     persist(true);
     window.print();
+    surveyMaybe("print");
   });
+  window.addEventListener("afterprint", function () { surveyMaybe("print"); });
   $("#toInvoice").addEventListener("click", function () {
     persist(true);
     var inv = JSON.parse(JSON.stringify(doc)), t = today();
@@ -1035,6 +1086,70 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
   });
   $("#coHintBtn").addEventListener("click", function () {
     if (!String(co.name || "").trim()) openCoSheet(); else show("company");
+  });
+
+  /* ============ ひとこと調査（この見積書が使えそうか） ============ */
+  // 送るのは「3択の答え・任意の一言・任意のメール」だけ。見積の中身・宛名・金額・自社情報は送らない。
+  // 1台につき1回だけ出す（出した時点で記録）。答えたり閉じたりしたら二度と出さない。
+  var NOREPLY = "no-reply@site-forge.jp"; // メールなしの回答。シート上で匿名とわかるように入れる
+  var sv = load(KEY.survey, {}) || {};
+  if (typeof sv !== "object" || Array.isArray(sv)) sv = {};
+  var svBox = $("#survey"), svForm = $("#svForm"), svAnswer = "";
+  function svSave() { save(KEY.survey, sv); }
+  // reason: "print"（印刷・PDFのあと）か "open"（行のある見積書画面を開いた。2回目で出す）
+  function surveyMaybe(reason) {
+    if (sv.shown || sv.done || !calc(doc).lines.length) return;
+    if (reason === "open") { sv.opens = (sv.opens || 0) + 1; svSave(); if (sv.opens < 2) return; }
+    sv.shown = true; svSave();
+    svBox.hidden = false; svBox.classList.add("pop");
+  }
+  function svSend(comment, email) {
+    var ep = window.FORM_ENDPOINT;
+    if (!ep || !window.fetch) return;
+    var data = {
+      service: "kaitai", type: "feedback", email: email || NOREPLY,
+      feedback: { company: "", method: "", wants: svAnswer, custom: "", comment: comment || "" },
+      answer: "[試作版の評価] " + svAnswer + (comment ? " / " + comment : ""),
+      page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString()
+    };
+    try {
+      fetch(ep, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) }).catch(function () {});
+    } catch (e) {}
+  }
+  function svFocusAway(el) { if (svBox.contains(document.activeElement)) el.focus(); }
+  function svThanks() {
+    var had = svBox.contains(document.activeElement);
+    $("#svStep1").hidden = true; svForm.hidden = true;
+    $(".sv-note", svBox).hidden = true;
+    $("#svThanks").hidden = false;
+    if (had) $("#svThanks").focus();
+  }
+  svBox.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.sv) {
+      // 答えはすぐ送る（一言を書かずに離れても記録される）
+      svAnswer = b.dataset.sv; sv.done = true; sv.answer = svAnswer; svSave();
+      svSend("", "");
+      $("#svStep1").hidden = true; svForm.hidden = false;
+      $("#svGot").textContent = "「" + svAnswer + "」で受け付けました";
+      // キーボードなら入力欄へ。タップならキーボードを勝手に出さない
+      if (e.detail === 0) svForm.elements.comment.focus(); else $("#svGot").focus();
+    } else if (b.id === "svX") {
+      sv.done = true; svSave();
+      svFocusAway($("#printBtn")); svBox.hidden = true;
+    } else if (b.id === "svClose") {
+      svThanks();
+    }
+  });
+  svForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var c = svForm.elements.comment.value.trim().slice(0, 500), m = svForm.elements.email.value.trim(), em = svForm.elements.email;
+    if (m && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)) {
+      $("#svErr").hidden = false; em.classList.add("bad"); em.setAttribute("aria-invalid", "true"); em.focus(); return;
+    }
+    $("#svErr").hidden = true; em.classList.remove("bad"); em.removeAttribute("aria-invalid");
+    if (c || m) svSend(c, m);
+    svThanks();
   });
 
   /* ============ 一覧 ============ */
@@ -1191,6 +1306,7 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
   function show(v) {
     if (v !== current) prevView = current;
     current = v;
+    if (!$("#svThanks").hidden) svBox.hidden = true; // お礼は一度見せたら片づける
     setMenu(false);
     $$(".view").forEach(function (x) { x.classList.toggle("on", x.id === "v-" + v); });
     $$(".tab").forEach(function (x) { if (x.dataset.view === v) x.setAttribute("aria-current", "page"); else x.removeAttribute("aria-current"); });
@@ -1199,6 +1315,7 @@ footer .fsub { color: #c9c4b3; font-size: 14.5px; }
     $("#bar").hidden = v !== "input";
     if (v === "doc") {
       persist(true); renderSheet(); if (calc(doc).lines.length) trackOnce();
+      surveyMaybe("open");
       if (!String(co.name || "").trim() && !coAsked) openCoSheet();
     }
     if (v === "list") renderList();
