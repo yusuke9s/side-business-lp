@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>贈答送り状メーカー（無料）｜LINEの贈答注文を、打ち直さずに送り状へ。</title>
+<meta name="description" content="LINEやメールで届いたお歳暮・贈答の注文を貼るだけ。届け先ごとに分けて、ヤマト B2クラウド・佐川 e飛伝Ⅲ・ゆうパックに取り込むファイルを作る無料ツールです。登録不要、名前や住所はお使いの端末の中だけに保存されます。">
+<link rel="canonical" href="https://lp.site-forge.jp/okurijo">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="贈答送り状メーカー">
+<meta property="og:url" content="https://lp.site-forge.jp/okurijo">
+<meta property="og:title" content="贈答送り状メーカー｜LINEの贈答注文を、打ち直さずに送り状へ。">
+<meta property="og:description" content="届いた注文の文を貼るだけ。ヤマト・佐川・ゆうパックに取り込むファイルを作る無料ツール。登録不要・スマホで使えます。">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#2a2017">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M8 4h18l8 8v24H8z' fill='%23d9b680' stroke='%232a2017' stroke-width='2.5'/%3E%3Ccircle cx='17' cy='12' r='3' fill='%23fffcf5' stroke='%232a2017' stroke-width='2'/%3E%3Cpath d='M13 21h14M13 26h14M13 31h9' stroke='%232a2017' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=BIZ+UDGothic:wght@700&family=Yusei+Magic&display=swap">
+<!-- 計測タグ：IDは tracking-config.js で設定 -->
+<script src="tracking-config.js"></script>
+<script src="tracking.js"></script>
+<script>
+/* 動きを減らす設定でなければ .js を付ける（アニメーションの初期状態は .js のときだけ） */
+(function (d) { try { if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) d.documentElement.classList.add("js"); } catch (e) {} })(document);
+</script>
+<style>
+:root {
+  --kraft: #cfad7a; --kraft-d: #a98250; --kraft-dd: #8a6537; --kraft-l: #ead9b6; --kraft-ll: #f5ecd9;
+  --paper: #fffcf5; --paper2: #f8f1e3; --ink: #2a2017; --ink2: #4a3b2a; --mut: #5e4c37; --line: #dccaa6; --line2: #c9b38a;
+  --shu: #b5381d; --shu-d: #8f2a14; --shu-l: #fbebe5; --ok: #2a5f30; --ok-l: #e7f1e3; --warn: #7a4900; --warn-l: #fff2d3;
+  --line-bg: #8ea8c6; --line-top: #26303d;
+  --fd: "Yusei Magic", "BIZ UDPGothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+  --fb: "BIZ UDPGothic", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  --fm: "BIZ UDGothic", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gl: max(16px, env(safe-area-inset-left, 0px)); --gr: max(16px, env(safe-area-inset-right, 0px));
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .24 0 0 0 0 .1 0 0 0 .2 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme: light;
+}
+* , *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; color: var(--ink); font-family: var(--fb); font-size: 18px; line-height: 1.8; word-break: auto-phrase; overflow-x: clip; background: var(--kraft); font-variant-numeric: tabular-nums; }
+img, svg { max-width: 100%; }
+a { color: inherit; }
+p, h1, h2, h3, ul, ol, figure, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1, h2, h3 { font-family: var(--fd); font-weight: 400; line-height: 1.4; word-break: auto-phrase; text-wrap: balance; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: var(--gl); padding-right: var(--gr); }
+.vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 1em; height: 1em; fill: currentColor; flex: none; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #2b5f8e; outline-offset: 3px; }
+.nw { white-space: nowrap; }
+[hidden] { display: none !important; }
+
+/* ---------- 地（段ボール・紙・こげ茶） ---------- */
+.kraft { background-color: var(--kraft); background-image: radial-gradient(ellipse at 50% 30%, rgba(255,240,205,.28), rgba(255,240,205,0) 60%), var(--noise), repeating-linear-gradient(90deg, rgba(90,60,20,.05) 0 3px, transparent 3px 9px); }
+.kraft-l { background-color: var(--kraft-ll); background-image: var(--noise); }
+.paperbg { background-color: var(--paper); background-image: linear-gradient(rgba(169,130,80,.12) 1px, transparent 1px); background-size: 100% 36px; }
+.inkbg { background-color: var(--ink); color: var(--kraft-ll); background-image: var(--noise), radial-gradient(ellipse at 20% 0%, rgba(207,173,122,.12), transparent 60%); }
+
+/* ---------- 共通パーツ ---------- */
+.cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 14px;
+  min-height: 72px; padding: 14px 34px 14px 38px; font-family: var(--fb); font-weight: 700; font-size: 23px; letter-spacing: .06em; line-height: 1.25;
+  text-decoration: none; color: #fff; background: var(--shu); border: 2px solid var(--shu-d); border-radius: 6px;
+  box-shadow: 0 5px 0 var(--shu-d), 0 16px 26px -14px rgba(60,25,5,.75);
+  transition: transform .12s, box-shadow .12s, background-color .15s; position: relative; isolation: isolate;
+}
+.cta svg { width: 26px; height: 26px; fill: #fff; transition: transform .2s; }
+.cta:hover { background: #c4421f; }
+.cta:hover svg { transform: translateX(5px); }
+.cta:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--shu-d), 0 8px 14px -10px rgba(60,25,5,.7); }
+.js .cta.nudge svg { animation: nudgeX 1.8s ease-in-out 2.4s infinite; }
+@keyframes nudgeX { 0%, 60%, 100% { transform: none; } 30% { transform: translateX(6px); } }
+.cta-sub { display: block; margin-top: 12px; font-size: 15px; font-weight: 700; color: var(--ink2); }
+
+.tagk { /* 荷札の見出しラベル */
+  position: relative; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: .14em; color: var(--ink);
+  background: var(--kraft-l); border: 2px solid var(--ink); padding: 3px 16px 3px 30px; border-radius: 4px 14px 14px 4px; box-shadow: 0 2px 0 var(--ink);
+}
+.tagk::before { content: ""; position: absolute; left: 10px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); }
+.inkbg .tagk { background: var(--kraft); }
+.h2 { font-size: clamp(30px, 4.4vw, 50px); margin-top: 18px; }
+.inkbg .h2 { color: #fff; }
+.h2 em { font-style: normal; color: var(--shu); }
+.inkbg .h2 em { color: #f0a58c; }
+.mk { background: linear-gradient(transparent 60%, rgba(255,252,245,.9) 60% 92%, transparent 92%); padding: 0 .06em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.lead { margin-top: 18px; font-size: 18px; max-width: 34em; }
+.sec { position: relative; padding-block: clamp(76px, 9vw, 124px); }
+.sec-head { max-width: 46em; }
+.center { text-align: center; margin-inline: auto; }
+
+.rei { display: inline-block; font-weight: 700; color: var(--shu); background: #fff; border: 2px solid var(--shu); border-radius: 3px; padding: 1px 9px 2px; font-size: 13px; letter-spacing: .14em; line-height: 1.3; }
+
+/* 届け先カード（ツールの .rec と同じ見た目） */
+.rec { position: relative; background: var(--paper); border: 2px solid var(--ink); border-radius: 4px; box-shadow: 0 10px 16px -10px rgba(60,40,10,.75);
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 10px; align-items: start; padding: 15px 12px 11px; font-size: 16px; }
+.rec::before { content: ""; position: absolute; left: 0; right: 0; top: -2px; height: 7px; background: radial-gradient(circle at 5px 0, var(--rec-hole, var(--kraft)) 2.6px, transparent 3.2px) 0 0 / 11px 7px repeat-x; }
+.rec::after { content: ""; position: absolute; left: 8px; right: 8px; top: 8px; border-top: 1.5px dashed var(--line2); }
+.rno { font-family: var(--fm); font-size: 11px; font-weight: 700; color: var(--shu); border: 2px solid var(--shu); border-radius: 2px; padding: 0 4px; line-height: 1.5; margin-top: 4px; background: #fff; }
+.rname { display: block; font-size: 18px; font-weight: 700; line-height: 1.35; white-space: nowrap; }
+.rname small { font-size: 12px; margin-left: 3px; color: var(--ink2); }
+.raddr { display: flex; flex-wrap: wrap; row-gap: 3px; align-items: center; font-size: 12.5px; color: var(--ink2); line-height: 1.4; margin-top: 5px; white-space: nowrap; overflow: hidden; }
+.raddr > span:last-child { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.zip { display: inline-flex; align-items: center; gap: 1.5px; font-family: var(--fm); font-size: 12.5px; margin-right: 7px; flex: none; }
+.zip i { font-style: normal; display: inline-grid; place-items: center; width: 15px; height: 19px; border: 1.3px solid var(--shu); color: var(--ink); background: #fff; line-height: 1; }
+.zip s { text-decoration: none; color: var(--shu); margin: 0 1px; }
+.tag { position: relative; display: inline-flex; align-items: center; margin-top: 7px; padding: 1px 9px 1px 18px; background: var(--kraft-l); border: 1px solid var(--kraft-d); border-radius: 3px 10px 10px 3px; font-size: 11.5px; font-weight: 700; line-height: 1.4; white-space: nowrap; }
+.tag::before { content: ""; position: absolute; left: 6px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: var(--paper); border: 1px solid var(--kraft-d); }
+.badge { display: inline-flex; align-items: center; gap: 3px; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 12px; white-space: nowrap; line-height: 1.35; }
+.badge svg { width: 13px; height: 13px; fill: currentColor; }
+.badge.err { background: var(--shu); color: #fff; }
+.badge.wrn { background: var(--warn-l); color: var(--warn); border: 1.5px solid var(--warn); }
+.badge.ok { background: var(--ok-l); color: var(--ok); border: 1.5px solid #9cc39b; }
+.iss { grid-column: 1 / -1; font-size: 12px; font-weight: 700; line-height: 1.4; display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; margin-top: 8px; min-height: 26px; padding-top: 6px; border-top: 1px dashed var(--line2); }
+.iss.err { color: var(--shu-d); } .iss.wrn { color: var(--warn); }
+.iss svg { width: 14px; height: 14px; fill: currentColor; flex: none; }
+.badch { display: inline-grid; place-items: center; width: 1.3em; height: 1.3em; border: 2px solid var(--shu); border-radius: 2px; background: var(--shu-l); margin-right: 1px; line-height: 1; vertical-align: -.12em; }
+
+/* ---------- ヘッダー ---------- */
+.top { position: relative; z-index: 20; background: var(--kraft-l); border-bottom: 2px solid var(--ink); }
+.top-in { display: flex; align-items: center; gap: 12px; min-height: 64px; padding-block: 8px; }
+.logo { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; min-width: 0; }
+.logo svg { width: 36px; height: 36px; flex: none; }
+.logo b { font-family: var(--fd); font-weight: 400; font-size: 21px; line-height: 1.2; white-space: nowrap; }
+.top-free { margin-left: auto; font-size: 13px; font-weight: 700; color: var(--shu); border: 2px solid var(--shu); outline: 1px solid var(--shu); outline-offset: 2px; padding: 0 8px; border-radius: 3px; transform: rotate(-3deg); background: var(--paper); white-space: nowrap; line-height: 1.6; }
+.top-cta { font-weight: 700; font-size: 15px; text-decoration: none; color: #fff; background: var(--ink); border: 2px solid var(--ink); border-radius: 4px; padding: 7px 16px; box-shadow: 0 3px 0 #000; white-space: nowrap; transition: transform .1s, box-shadow .1s; }
+.top-cta:active { transform: translateY(3px); box-shadow: none; }
+
+/* ---------- ヒーロー ---------- */
+.hero { position: relative; overflow: hidden; padding-block: clamp(34px, 5vw, 72px) clamp(70px, 8vw, 110px); }
+.hero .gum { position: absolute; left: -70px; top: 26px; width: 300px; height: 58px; transform: rotate(-38deg); }
+.gum { background: rgba(250,240,205,.62); box-shadow: 0 1px 3px rgba(60,40,10,.25); border-left: 2px dashed rgba(120,90,40,.25); border-right: 2px dashed rgba(120,90,40,.25);
+  background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 2px, transparent 2px 7px); pointer-events: none; }
+.fold { position: absolute; left: 0; right: 0; height: 0; border-top: 3px solid rgba(110,75,30,.26); box-shadow: 0 3px 0 rgba(255,240,210,.35); pointer-events: none; }
+.hero .fold { bottom: 46px; }
+.hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr); column-gap: clamp(24px, 3vw, 44px); align-items: center; }
+.stamp { display: inline-flex; align-items: center; color: var(--shu); font-weight: 700; line-height: 1; white-space: nowrap; border: 3px solid var(--shu); outline: 1.5px solid var(--shu); outline-offset: 3px; border-radius: 4px; padding: 8px 14px 9px; background: rgba(255,252,245,.8); transform: rotate(-6deg); letter-spacing: .08em; font-size: 19px; }
+.h1 { margin-top: 26px; font-size: clamp(34px, 3.9vw, 50px); line-height: 1.28; letter-spacing: .01em; text-wrap: initial; }
+.h1 .ln { display: block; width: fit-content; white-space: nowrap; }
+.h1 .ln3 { color: var(--shu); font-size: 1.22em; line-height: 1.2; position: relative; }
+.h1 .ln3::after { /* 水引ひもの下線 */ content: ""; position: absolute; left: .05em; right: .3em; bottom: -.06em; height: .13em; background: var(--shu); border-radius: 99px; box-shadow: inset 0 0 0 .035em var(--shu), inset 0 .045em 0 0 rgba(255,252,245,.0); background-image: linear-gradient(transparent 40%, rgba(255,252,245,.9) 40% 60%, transparent 60%); }
+.sub { margin-top: 24px; font-size: 19px; font-weight: 700; line-height: 1.75; max-width: 25em; color: var(--ink); }
+.sub .hl { background: rgba(250,240,205,.85); padding: 1px 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hero-cta { margin-top: 30px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.chips li { display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 700; background: var(--paper); border: 2px solid var(--ink); border-radius: 3px; padding: 2px 12px 2px 9px; line-height: 1.6; }
+.chips li svg { width: 17px; height: 17px; fill: var(--ok); }
+
+/* ヒーローの絵（表示例） */
+.vis { position: relative; display: grid; grid-template-columns: minmax(0, .92fr) 46px minmax(0, 1fr); grid-template-areas: "chat cord cards" "sheet sheet sheet"; align-items: start; padding-top: 30px; }
+.vis > .rei { position: absolute; right: 0; top: 0; z-index: 6; transform: rotate(2deg); }
+.vlab { display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; color: var(--ink); background: rgba(250,240,205,.9); padding: 2px 10px 3px 4px; transform: rotate(-1.5deg); box-shadow: 0 1px 2px rgba(60,40,10,.3); border-left: 2px dashed rgba(120,90,40,.3); border-right: 2px dashed rgba(120,90,40,.3); white-space: nowrap; margin-bottom: 10px; }
+.vlab i { font-style: normal; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--shu); color: #fff; font-family: var(--fm); font-size: 13px; }
+.v-chat { grid-area: chat; position: relative; z-index: 2; }
+.chat { border: 2.5px solid var(--ink); border-radius: 16px; overflow: hidden; background: var(--line-bg); box-shadow: 0 18px 26px -16px rgba(40,25,5,.8); transform: rotate(-2deg); }
+.chat-top { display: flex; align-items: center; gap: 8px; background: var(--line-top); color: #fff; padding: 8px 12px; font-weight: 700; font-size: 14px; }
+.chat-top .back { width: 9px; height: 9px; border-left: 2.5px solid #fff; border-bottom: 2.5px solid #fff; transform: rotate(45deg); margin: 0 3px 0 2px; }
+.chat-top .dots { margin-left: auto; display: flex; gap: 3px; } .chat-top .dots i { width: 4px; height: 4px; border-radius: 50%; background: #c9d3de; }
+.chat-body { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 7px; padding: 12px 11px 12px 9px; }
+.av { width: 30px; height: 30px; border-radius: 50%; background: #efe3c9; display: grid; place-items: center; color: var(--mut); }
+.av svg { width: 18px; height: 18px; fill: currentColor; }
+.bubs { display: grid; gap: 7px; justify-items: start; min-width: 0; }
+.bub { position: relative; background: #fff; border-radius: 13px; padding: 7px 10px 8px; font-size: 13px; line-height: 1.55; color: #222; max-width: 100%; }
+.bub:first-child::before { content: ""; position: absolute; left: -6px; top: 8px; border: 5px solid transparent; border-right: 8px solid #fff; border-left: 0; }
+.tm { font-size: 10.5px; color: #eef3f8; margin-top: -2px; }
+.hlt { white-space: nowrap; }
+.hlt.wr { white-space: normal; }
+
+.v-cord { grid-area: cord; position: relative; z-index: 3; align-self: center; width: 76px; height: 120px; margin-left: -18px; overflow: visible; margin-top: -40px; }
+.v-cards { grid-area: cards; position: relative; z-index: 3; display: grid; gap: 12px; padding-top: 4px; }
+.v-cards .rec:nth-of-type(1) { transform: rotate(-.8deg); }
+.v-cards .rec:nth-of-type(2) { transform: rotate(.6deg); margin-left: 8px; }
+.v-cards .rec:nth-of-type(3) { transform: rotate(-.4deg); }
+.v-sheet { grid-area: sheet; position: relative; z-index: 4; margin: 26px 0 0 14%; }
+.v-sheet .vlab { position: relative; z-index: 2; margin-bottom: 34px; }
+
+/* 1件目：使えない字 → 直す（.js のときだけ繰り返し） */
+.fixw { position: relative; display: inline-grid; }
+.fixw > * { grid-area: 1 / 1; }
+.ch-ok, .st-ok, .iss-ok { visibility: hidden; }
+.fixbtn { margin-left: auto; flex: none; font-size: 11.5px; font-weight: 700; color: var(--ink); background: var(--paper); border: 1.5px solid var(--ink); border-radius: 3px; box-shadow: 0 2px 0 var(--ink); padding: 1px 7px; white-space: nowrap; }
+.iss-w { grid-column: 1 / -1; display: grid; }
+.iss-w > .iss { grid-area: 1 / 1; }
+.iss.okm { color: var(--ok); }
+
+/* CSV の表 */
+.sheet { position: relative; background: #fff; border: 2px solid var(--ink); border-radius: 4px; box-shadow: 0 18px 26px -16px rgba(40,25,5,.8); }
+.stabs { position: absolute; left: 10px; bottom: 100%; display: flex; gap: 4px; }
+.stab { font-size: 12.5px; font-weight: 700; padding: 5px 11px 4px; background: var(--kraft-ll); border: 2px solid var(--ink); border-bottom: 0; border-radius: 6px 6px 0 0; color: var(--ink2); white-space: nowrap; line-height: 1.4; }
+.stab.on { background: #fff; color: var(--ink); box-shadow: inset 0 4px 0 var(--shu); position: relative; top: 2px; padding-bottom: 6px; }
+.sheet-h { display: flex; align-items: center; gap: 7px; padding: 7px 10px; line-height: 1.4; background: var(--paper2); border-bottom: 1px solid var(--line2); font-weight: 700; font-size: 13px; white-space: nowrap; }
+.sheet-h svg { width: 20px; height: 20px; fill: var(--ok); flex: none; }
+.fname { display: inline-grid; min-width: 0; font-family: var(--fm); font-size: 12.5px; }
+.fname > span { grid-area: 1 / 1; overflow: hidden; text-overflow: ellipsis; }
+.fname > span + span { visibility: hidden; }
+.sheet-h .dl { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; color: #fff; background: var(--shu); border-radius: 3px; padding: 1px 8px 2px; font-size: 12px; }
+.sheet-h .dl svg { width: 13px; height: 13px; fill: #fff; }
+.sheet table { border-collapse: collapse; width: 100%; font-family: var(--fm); font-size: 12.5px; table-layout: fixed; }
+.sheet th, .sheet td { border: 1px solid var(--line); padding: 5px 8px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.4; }
+.sheet th { background: var(--paper2); color: var(--ink2); font-family: var(--fb); font-weight: 700; font-size: 12px; }
+.sheet .n { width: 30px; color: var(--mut); text-align: center; background: var(--paper2); }
+.sheet .c-name { width: 28%; } .sheet .c-zip { width: 21%; }
+.sheet tr:first-child th { border-top: 0; }
+.sheet th:first-child, .sheet td:first-child { border-left: 0; } .sheet th:last-child, .sheet td:last-child { border-right: 0; }
+.sheet tr:last-child td { border-bottom: 0; }
+.fruit { position: absolute; pointer-events: none; filter: drop-shadow(0 6px 5px rgba(60,30,5,.4)); }
+.vis .apple { width: 74px; left: -2%; bottom: -26px; z-index: 5; transform: rotate(-8deg); }
+.vis .mikan { width: 62px; left: 7%; bottom: -36px; z-index: 5; }
+
+/* ---------- 荷造りテープ（流れる帯） ---------- */
+.ptape-wrap { position: relative; z-index: 3; overflow: hidden; padding-block: 14px; margin-block: -30px; }
+.ptape { position: relative; z-index: 3; overflow: hidden; background: #e3c48c; border-block: 2px solid rgba(110,75,30,.45); box-shadow: 0 3px 6px rgba(60,40,10,.25); transform: rotate(-1.2deg); margin: 0 -2%; width: 104%; }
+.ptape::before { content: ""; position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.16) 0 2px, transparent 2px 8px); }
+.ptape-track { position: relative; display: flex; width: max-content; }
+.js .ptape-track { animation: marq 46s linear infinite; }
+.ptape span { font-family: var(--fd); font-size: clamp(17px, 2vw, 22px); color: var(--shu); white-space: nowrap; padding: 9px 0; letter-spacing: .1em; display: inline-flex; align-items: center; }
+.ptape span::after { content: ""; width: 9px; height: 9px; background: var(--shu); transform: rotate(45deg); margin: 0 26px; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* ---------- お悩み ---------- */
+.pains { overflow: hidden; }
+.pains .sec-head { text-align: center; margin-inline: auto; }
+.pain-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; margin-top: 64px; }
+.pain { position: relative; background: var(--paper); color: var(--ink); border-radius: 3px; padding: 22px 24px 26px; box-shadow: 0 22px 30px -18px rgba(0,0,0,.8); background-image: linear-gradient(rgba(169,130,80,.16) 1px, transparent 1px); background-size: 100% 34px; background-position: 0 14px; }
+.pain:nth-child(1) { transform: rotate(-1.6deg); }
+.pain:nth-child(2) { transform: rotate(1.2deg) translateY(18px); }
+.pain:nth-child(3) { transform: rotate(-.8deg); }
+.pain .pt { position: absolute; top: -14px; left: 50%; width: 110px; height: 30px; margin-left: -55px; transform: rotate(-4deg); }
+.pain:nth-child(2) .pt { transform: rotate(5deg); }
+.pain .pill { display: block; width: 100%; height: auto; margin: 8px 0 10px; }
+.pain .pno { position: absolute; right: 16px; top: 18px; font-family: var(--fm); font-size: 13px; font-weight: 700; color: var(--shu); border: 2px solid var(--shu); border-radius: 50%; width: 34px; height: 34px; display: grid; place-items: center; transform: rotate(8deg); background: var(--paper); }
+.pain h3 { font-size: clamp(21px, 2vw, 24px); line-height: 1.5; }
+.pain h3 b { font-weight: 400; background: linear-gradient(transparent 62%, rgba(181,56,29,.24) 62%); }
+.pain p { margin-top: 10px; font-size: 16px; color: var(--ink2); }
+.turn { margin-top: 96px; text-align: center; }
+.turn svg { display: block; width: 70px; height: 92px; margin: 0 auto 14px; overflow: visible; }
+.turn p { font-family: var(--fd); font-size: clamp(28px, 4vw, 46px); line-height: 1.45; color: #fff; }
+.turn p em { font-style: normal; color: var(--kraft); }
+
+/* ---------- 使い方 ---------- */
+.steps .sec-head { text-align: center; margin-inline: auto; }
+.step-list { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; margin-top: 60px; counter-reset: st; }
+.step-cord { position: absolute; left: 8%; right: 8%; top: 58px; height: 40px; width: 84%; z-index: 0; overflow: visible; }
+.step { --rec-hole: var(--paper); position: relative; z-index: 1; background: #fff; border: 2px solid var(--ink); border-radius: 5px; padding: 26px 22px 24px; box-shadow: 0 16px 24px -16px rgba(60,40,10,.7); }
+.step::before { content: ""; position: absolute; left: 0; right: 0; top: -2px; height: 8px; background: radial-gradient(circle at 6px 0, var(--paper) 3px, transparent 3.6px) 0 0 / 13px 8px repeat-x; }
+.step-top { display: flex; align-items: center; gap: 12px; }
+.sn { display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--shu); color: #fff; font-family: var(--fm); font-size: 24px; box-shadow: 0 3px 0 var(--shu-d); flex: none; }
+.step h3 { font-size: clamp(25px, 2.4vw, 30px); line-height: 1.3; }
+.step .sill { display: block; width: 100%; height: auto; margin: 16px 0 12px; background: var(--paper2); border: 1.5px dashed var(--line2); border-radius: 4px; }
+.step p { font-size: 17px; font-weight: 700; }
+.step small { display: block; margin-top: 8px; font-size: 15px; color: var(--mut); font-weight: 400; line-height: 1.6; }
+.steps .after { text-align: center; margin-top: 52px; }
+
+/* ---------- 対応・チェック ---------- */
+.sup { overflow: hidden; }
+.carriers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px; margin-top: 70px; }
+.ctag { position: relative; background: var(--paper); border: 2px solid var(--ink); border-radius: 6px 6px 6px 6px; padding: 34px 18px 18px; text-align: center; box-shadow: 0 14px 20px -14px rgba(60,40,10,.8); transform-origin: 50% -36px; clip-path: polygon(22% 0, 78% 0, 100% 14%, 100% 100%, 0 100%, 0 14%); }
+.ctag-w { position: relative; filter: drop-shadow(0 12px 10px rgba(60,40,10,.25)); }
+.ctag-w::before { /* ひも */ content: ""; position: absolute; left: 50%; top: -44px; width: 2px; height: 56px; background: var(--shu); z-index: 2; transform: rotate(var(--sr, 6deg)); transform-origin: top center; }
+.ctag-w:nth-child(2) { --sr: -5deg; } .ctag-w:nth-child(3) { --sr: 4deg; } .ctag-w:nth-child(4) { --sr: -7deg; }
+.ctag::before { content: ""; position: absolute; left: 50%; top: 10px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--kraft); border: 2px solid var(--ink); }
+.ctag::after { content: ""; position: absolute; left: 50%; top: 6px; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; border: 2px solid var(--kraft-d); }
+.ctag .co { display: block; font-size: 14px; font-weight: 700; color: var(--mut); letter-spacing: .1em; }
+.ctag b { display: block; font-family: var(--fd); font-weight: 400; font-size: clamp(22px, 2.2vw, 27px); line-height: 1.3; margin-top: 4px; }
+.ctag small { display: block; font-size: 14px; color: var(--ink2); margin-top: 6px; line-height: 1.5; font-weight: 700; }
+.ctag .fmt { display: inline-block; margin-top: 10px; font-family: var(--fm); font-size: 12px; color: var(--ok); border: 1.5px solid #9cc39b; background: var(--ok-l); border-radius: 3px; padding: 0 7px; }
+.js .ctag-w.in .ctag { animation: sway 5s ease-in-out infinite; animation-delay: var(--sd, 0s); }
+@keyframes sway { 0%, 100% { transform: rotate(-1.4deg); } 50% { transform: rotate(1.4deg); } }
+
+.chk { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(30px, 5vw, 70px); align-items: center; margin-top: clamp(80px, 9vw, 120px); }
+.label-big { position: relative; max-width: 540px; width: 100%; justify-self: center; }
+.okuri { position: relative; background: var(--paper); border: 2.5px solid var(--ink); border-radius: 6px; box-shadow: 0 24px 34px -20px rgba(40,25,5,.85); padding: 22px 20px 18px; transform: rotate(-1.2deg); }
+.okuri::before { content: ""; position: absolute; left: 0; right: 0; top: -2px; height: 10px; background: radial-gradient(circle at 7px 0, var(--kraft) 3.6px, transparent 4.2px) 0 0 / 15px 10px repeat-x; }
+.ok-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.ok-h b { font-family: var(--fd); font-weight: 400; font-size: 22px; letter-spacing: .14em; }
+.ok-h span { font-size: 12px; font-weight: 700; color: var(--shu); border: 1.5px solid var(--shu); padding: 0 6px; border-radius: 2px; }
+.ok-row { position: relative; display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; align-items: center; border-bottom: 1px dashed var(--line2); padding: 11px 0; }
+.ok-row > span:first-child { font-size: 13px; font-weight: 700; color: var(--mut); }
+.ok-row .val { font-size: 18px; font-weight: 700; min-width: 0; }
+.ok-row .zip i { width: 22px; height: 28px; font-size: 17px; }
+.ok-row .zip { font-size: 17px; gap: 3px; }
+.ok-row .tel { font-family: var(--fm); font-size: 18px; letter-spacing: .04em; }
+.ok-row .addr { font-size: 16px; line-height: 1.55; }
+.long { background: linear-gradient(transparent 58%, rgba(181,56,29,.22) 58%); white-space: nowrap; }
+.ok-row.nm .val { font-size: 25px; }
+.ok-row.nm .val small { font-size: 15px; margin-left: 4px; }
+.ok-ft { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.tgt { position: relative; display: inline-block; }
+.circ { position: absolute; z-index: 3; left: -14px; right: -14px; top: -10px; bottom: -10px; width: calc(100% + 28px); height: calc(100% + 20px); pointer-events: none; overflow: visible; }
+.tgt.sq .circ { left: -12px; right: -12px; top: -12px; bottom: -12px; width: calc(100% + 24px); height: calc(100% + 24px); }
+.circ path { fill: none; stroke: var(--shu); stroke-width: 3; stroke-linecap: round; }
+.pin { position: absolute; z-index: 4; right: -26px; top: -22px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--shu); color: #fff; font-family: var(--fm); font-size: 16px; box-shadow: 0 3px 0 var(--shu-d); }
+.js .label-big .circ path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .8s cubic-bezier(.6,.1,.3,1); transition-delay: var(--d); }
+.js .label-big.in .circ path { stroke-dashoffset: 0; }
+.js .label-big .pin { opacity: 0; transform: scale(.2); transition: opacity .2s, transform .45s cubic-bezier(.2,.9,.3,1.5); transition-delay: var(--d); }
+.js .label-big.in .pin { opacity: 1; transform: none; }
+.chk-list { display: grid; gap: 14px; margin-top: 30px; }
+.chk-list li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; align-items: start; background: var(--paper); border: 2px solid var(--ink); border-radius: 5px; padding: 14px 16px; box-shadow: 0 3px 0 var(--ink); }
+.chk-list .pn { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--shu); color: #fff; font-family: var(--fm); font-size: 18px; margin-top: 2px; }
+.chk-list b { display: block; font-size: 20px; line-height: 1.4; }
+.chk-list span { display: block; font-size: 16px; color: var(--ink2); line-height: 1.6; margin-top: 2px; }
+
+.more-feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: clamp(70px, 8vw, 110px); }
+.mf { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 22px; align-items: center; background: var(--paper); border: 2px solid var(--ink); border-radius: 6px; padding: 20px 22px 20px 16px; box-shadow: 0 16px 24px -16px rgba(60,40,10,.75); }
+.mf svg { display: block; width: 100%; height: auto; }
+.mf h3 { font-size: clamp(22px, 2.2vw, 27px); line-height: 1.4; }
+.mf p { margin-top: 8px; font-size: 16.5px; color: var(--ink2); }
+
+/* ---------- あんしん ---------- */
+.safe { overflow: hidden; }
+.safe-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(30px, 5vw, 72px); align-items: center; }
+.safe .h2 { font-size: clamp(28px, 3.2vw, 40px); line-height: 1.55; }
+.nwd { display: block; }
+@media (min-width: 901px) { .nwd { white-space: nowrap; } }
+.safe-note { margin-top: 22px; font-size: 15px; line-height: 1.75; color: #e6d6b8; max-width: 34em; }
+.safe-note + .safe-note { margin-top: 8px; }
+.safe-ill svg { display: block; width: 100%; height: auto; max-width: 520px; margin: 0 auto; overflow: visible; }
+.js .safe-ill .cards-in g { animation: cardin 3.6s ease-in-out infinite; }
+.memo { position: relative; margin-top: clamp(56px, 7vw, 86px); background: var(--paper); color: var(--ink); border-radius: 3px; padding: 30px 28px 26px 28px; max-width: 860px; margin-inline: auto; box-shadow: 0 22px 30px -18px rgba(0,0,0,.8); transform: rotate(-.6deg); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: center; background-image: linear-gradient(rgba(169,130,80,.16) 1px, transparent 1px); background-size: 100% 34px; background-position: 0 18px; }
+.memo .gum { position: absolute; width: 120px; height: 30px; top: -14px; }
+.memo .g1 { left: -22px; transform: rotate(-24deg); } .memo .g2 { right: -22px; transform: rotate(22deg); }
+.memo .one { display: grid; place-items: center; width: 92px; height: 92px; border-radius: 50%; border: 3px solid var(--shu); outline: 1.5px solid var(--shu); outline-offset: 3px; color: var(--shu); text-align: center; font-weight: 700; font-size: 14px; line-height: 1.25; transform: rotate(-10deg); }
+.memo .one b { display: block; font-family: var(--fd); font-weight: 400; font-size: 34px; line-height: 1; }
+.memo h3 { font-size: clamp(22px, 2.6vw, 29px); line-height: 1.45; }
+.memo p { margin-top: 8px; font-size: 16.5px; color: var(--ink2); }
+.memo p b { color: var(--ink); background: var(--kraft-l); padding: 0 4px; border-radius: 2px; }
+
+/* ---------- FAQ ---------- */
+.faq-list { max-width: 820px; margin: 46px auto 0; display: grid; gap: 14px; }
+.faq details { background: var(--paper); border: 2px solid var(--ink); border-radius: 5px; box-shadow: 0 3px 0 var(--ink); }
+.faq summary { cursor: pointer; list-style: none; display: flex; gap: 14px; align-items: center; padding: 16px 52px 16px 16px; font-weight: 700; font-size: 19px; position: relative; line-height: 1.5; min-height: 64px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; background: var(--shu); color: #fff; font-family: var(--fm); font-size: 17px; }
+.faq summary::after { content: ""; position: absolute; right: 20px; top: 50%; width: 12px; height: 12px; margin-top: -9px; border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink); transform: rotate(45deg); transition: transform .25s; }
+.faq details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
+.faq summary:hover { background: var(--paper2); }
+.faq .ans { padding: 0 20px 20px 66px; font-size: 17px; }
+.faq .ans a { font-weight: 700; color: var(--shu-d); }
+
+/* ---------- ガイド ---------- */
+.guides { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 40px; }
+.guide { position: relative; display: flex; flex-direction: column; gap: 8px; text-decoration: none; background: #fff; border: 2px solid var(--ink); border-radius: 4px; padding: 22px 20px 18px 26px; box-shadow: 0 3px 0 var(--ink); transition: transform .15s, box-shadow .15s; overflow: hidden; }
+.guide::before { /* 冊子の綴じ */ content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: var(--kraft); border-right: 2px solid var(--ink); background-image: radial-gradient(circle at 5px 50%, var(--ink) 1.6px, transparent 2.2px); background-size: 10px 18px; }
+.guide:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--ink); }
+.guide .gk { font-size: 13px; font-weight: 700; color: var(--shu); letter-spacing: .12em; }
+.guide b { font-size: 18px; line-height: 1.55; }
+.guide .go { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; color: var(--shu-d); }
+.guide .go svg { width: 18px; height: 18px; fill: currentColor; transition: transform .2s; }
+.guide:hover .go svg { transform: translateX(4px); }
+
+/* ---------- 有料版の先行登録 ---------- */
+.signup { overflow: hidden; }
+.signup-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(30px, 5vw, 70px); align-items: start; }
+.signup .h2 { font-size: clamp(30px, 4vw, 46px); }
+.signup .lead { color: #efe3c9; }
+.h2free { font-size: .6em; vertical-align: .12em; color: var(--kraft); }
+.price-tag { display: inline-flex; align-items: baseline; gap: 10px; margin-top: 22px; background: var(--kraft); color: var(--ink); border: 2px solid var(--kraft-ll); border-radius: 4px 18px 18px 4px; padding: 6px 22px 8px 34px; position: relative; font-weight: 700; }
+.price-tag::before { content: ""; position: absolute; left: 12px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px; border-radius: 50%; background: var(--ink); }
+.price-tag b { font-family: var(--fd); font-weight: 400; font-size: 30px; line-height: 1.2; }
+.price-tag small { font-size: 14px; }
+.perk { display: flex; gap: 10px; align-items: flex-start; margin-top: 22px; font-weight: 700; font-size: 17px; color: #fff; word-break: auto-phrase; text-wrap: balance; }
+.perk svg { width: 24px; height: 24px; fill: var(--kraft); flex: none; margin-top: 3px; }
+.sheet-form { --rec-hole: var(--ink); position: relative; background: var(--paper); color: var(--ink); border: 2px solid var(--kraft-ll); border-radius: 5px; padding: 40px 26px 26px; box-shadow: 0 26px 36px -20px rgba(0,0,0,.85); }
+.sheet-form::before { content: ""; position: absolute; left: 0; right: 0; top: -2px; height: 10px; background: radial-gradient(circle at 7px 0, var(--ink) 3.6px, transparent 4.2px) 0 0 / 15px 10px repeat-x; }
+.sheet-form .fhead { position: absolute; right: 18px; top: -18px; transform: rotate(5deg); }
+.sheet-form .fhead .stamp { font-size: 15px; padding: 6px 10px 7px; background: var(--paper); transform: none; }
+#signup-form fieldset { border: 0; margin: 0 0 20px; padding: 0; min-width: 0; }
+#signup-form legend, #signup-form .fl2 { display: block; font-weight: 700; font-size: 17px; padding: 0; margin-bottom: 10px; }
+#signup-form legend small, #signup-form .fl2 small { font-weight: 400; font-size: 14px; color: var(--mut); margin-left: 6px; }
+.wants { display: grid; gap: 8px; }
+.wants label { position: relative; display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 8px 14px; background: #fff; border: 2px solid var(--line2); border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 16.5px; line-height: 1.45; word-break: auto-phrase; transition: border-color .15s, background-color .15s; }
+.wants input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.wants .bx { flex: none; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 3px; background: #fff; display: grid; place-items: center; }
+.wants .bx svg { width: 18px; height: 18px; fill: #fff; opacity: 0; }
+.wants input:checked + .bx { background: var(--shu); border-color: var(--shu-d); }
+.wants input:checked + .bx svg { opacity: 1; }
+.wants label:has(input:checked) { border-color: var(--shu); background: var(--shu-l); }
+.wants input:focus-visible + .bx { outline: 3px solid #2b5f8e; outline-offset: 2px; }
+#signup-form input[type=email], #signup-form textarea { display: block; width: 100%; font: inherit; font-size: 18px; padding: 13px 14px; border: 2px solid var(--ink); border-radius: 4px; background: #fff; color: var(--ink); }
+#signup-form input[type=email] { min-height: 58px; }
+#signup-form textarea { min-height: 110px; resize: vertical; line-height: 1.7; margin-top: 10px; }
+#signup-form input:focus, #signup-form textarea:focus { outline: 3px solid rgba(43,95,142,.35); outline-offset: 0; border-color: #2b5f8e; }
+#signup-form .req { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: var(--shu); border-radius: 2px; padding: 0 6px; margin-left: 8px; vertical-align: 2px; }
+#signup-form details { margin: 16px 0 20px; }
+#signup-form summary { cursor: pointer; font-weight: 700; font-size: 16px; color: var(--ink2); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+#signup-form .cta { width: 100%; font-size: 21px; }
+#signup-form .cta[disabled] { opacity: .7; cursor: wait; }
+.ferr { color: var(--shu-d); font-weight: 700; font-size: 15px; margin-top: 8px; }
+.fpriv { font-size: 13.5px; margin-top: 14px; color: var(--mut); line-height: 1.7; }
+.thanks { text-align: center; padding: 10px 0 4px; }
+.thanks .ok-mark { display: grid; place-items: center; width: 76px; height: 76px; margin: 0 auto 14px; border-radius: 50%; background: var(--ok-l); border: 3px solid var(--ok); }
+.thanks .ok-mark svg { width: 40px; height: 40px; fill: var(--ok); }
+.thanks h3 { font-size: clamp(24px, 2.6vw, 30px); }
+.thanks p { margin-top: 10px; font-size: 17px; }
+.thanks .cta { margin-top: 20px; font-size: 19px; min-height: 60px; }
+.thanks small { display: block; margin-top: 12px; color: var(--mut); font-size: 13.5px; }
+.hero-sub-link { display: inline-block; margin-top: 12px; font-size: 16px; font-weight: 700; color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+.hero-sub-link:hover { color: var(--shu-d); }
+
+/* ---------- 最後のボタン ---------- */
+.final { overflow: hidden; }
+.final-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(30px, 5vw, 70px); align-items: center; }
+.final .h2 { font-size: clamp(32px, 4.6vw, 54px); line-height: 1.35; }
+.final .lead { font-weight: 700; }
+.final .cta { margin-top: 28px; }
+.box-ill svg { display: block; width: 100%; height: auto; max-width: 480px; margin: 0 auto; overflow: visible; }
+.js .box-ill .bob { animation: bob 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center bottom; }
+.js .box-ill .bob2 { animation: bob 3.6s ease-in-out -1.2s infinite; transform-box: fill-box; transform-origin: center bottom; }
+.js .box-ill .swing { animation: swingT 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0; }
+@keyframes bob { 50% { transform: translateY(-7px); } }
+@keyframes swingT { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(7deg); } }
+
+/* ---------- フッター ---------- */
+footer { background: var(--ink); color: #e9dfca; font-size: 14px; padding-block: 40px calc(40px + env(safe-area-inset-bottom, 0px)); border-top: 6px solid var(--shu); }
+footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; }
+footer .fl { font-family: var(--fd); font-size: 18px; color: var(--kraft); }
+
+/* ---------- スマホの追従ボタン ---------- */
+.sticky { display: none; }
+
+/* ---------- ヒーローの動き（.js のときだけ） ---------- */
+.js .h1 .ln { animation: wipe .75s cubic-bezier(.75,0,.2,1) both; animation-delay: calc(.15s + var(--i) * .14s); }
+.js .stamp { animation: stampIn .5s cubic-bezier(.2,.9,.3,1.3) .9s both; }
+.js .hero-copy .sub, .js .hero-copy .hero-cta, .js .hero-copy .chips { animation: up .7s ease both; }
+.js .hero-copy .sub { animation-delay: .7s; } .js .hero-copy .hero-cta { animation-delay: .85s; } .js .hero-copy .chips { animation-delay: 1s; }
+.js .chat { animation: chatIn .7s cubic-bezier(.2,.8,.2,1) .2s both; }
+.js .bub, .js .tm { animation: bubIn .45s cubic-bezier(.2,.9,.3,1.3) both; animation-delay: calc(.6s + var(--i) * .42s); transform-origin: 0 50%; }
+.js .hlt { background-size: 0 100%; background-repeat: no-repeat; background-image: linear-gradient(transparent 55%, rgba(255,214,90,.75) 55%); background-color: transparent; animation: hl .5s ease-out both; animation-delay: calc(2.5s + var(--j) * .12s); }
+.hlt { background-image: linear-gradient(transparent 55%, rgba(255,214,90,.75) 55%); background-repeat: no-repeat; background-size: 100% 100%; background-color: transparent; }
+.js .v-cord .cd { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .6s cubic-bezier(.6,.1,.3,1) 2.9s forwards; }
+.js .v-cord .hd { animation: pop .3s cubic-bezier(.2,.9,.3,1.5) 3.4s both; transform-box: fill-box; transform-origin: center; }
+.js .v-cards .vlab, .js .v-sheet .vlab, .js .v-chat .vlab { animation: pop .4s cubic-bezier(.2,.9,.3,1.4) both; }
+.js .v-chat .vlab { animation-delay: .4s; } .js .v-cards .vlab { animation-delay: 3.3s; } .js .v-sheet .vlab { animation-delay: 5.1s; }
+.js .v-cards .rec { animation: recIn .6s cubic-bezier(.2,.8,.2,1.15) both; animation-delay: calc(3.4s + var(--i) * .3s); }
+.js .v-cards .zip i { animation: digit .25s ease both; animation-delay: calc(3.7s + var(--i) * .3s + var(--k) * .05s); }
+.js .v-cards .badge { animation: stampIn .35s cubic-bezier(.2,.9,.3,1.4) both; animation-delay: calc(4.3s + var(--i) * .2s); }
+.js .v-sheet .sheet, .js .vis > .rei { animation: up .7s cubic-bezier(.2,.8,.2,1) 5.2s both; }
+.js .vis > .rei { animation-delay: .5s; }
+.js .v-sheet tbody tr { animation: rowIn .4s ease both; animation-delay: calc(5.6s + var(--k) * .18s); }
+.js .fruit { animation: up .6s ease both 1.2s; }
+/* 3社のタブが順に切りかわる */
+.js .stab, .js .fname > span { animation: 9s linear 6.6s infinite both; }
+.js .stab:nth-child(1) { animation-name: tabA; } .js .stab:nth-child(2) { animation-name: tabB; } .js .stab:nth-child(3) { animation-name: tabC; }
+.js .fname > span:nth-child(1) { animation-name: visA; } .js .fname > span:nth-child(2) { animation-name: visB; } .js .fname > span:nth-child(3) { animation-name: visC; }
+@keyframes tabA { 0%, 33.2% { background: #fff; color: var(--ink); box-shadow: inset 0 4px 0 var(--shu); top: 2px; padding-bottom: 6px; } 33.3%, 100% { background: var(--kraft-ll); color: var(--ink2); box-shadow: none; top: 0; padding-bottom: 4px; } }
+@keyframes tabB { 0%, 33.2%, 66.7%, 100% { background: var(--kraft-ll); color: var(--ink2); box-shadow: none; top: 0; padding-bottom: 4px; } 33.3%, 66.6% { background: #fff; color: var(--ink); box-shadow: inset 0 4px 0 var(--shu); top: 2px; padding-bottom: 6px; } }
+@keyframes tabC { 0%, 66.6% { background: var(--kraft-ll); color: var(--ink2); box-shadow: none; top: 0; padding-bottom: 4px; } 66.7%, 100% { background: #fff; color: var(--ink); box-shadow: inset 0 4px 0 var(--shu); top: 2px; padding-bottom: 6px; } }
+.stab { position: relative; }
+@keyframes visA { 0%, 33.2% { visibility: visible; } 33.3%, 100% { visibility: hidden; } }
+@keyframes visB { 0%, 33.2% { visibility: hidden; } 33.3%, 66.6% { visibility: visible; } 66.7%, 100% { visibility: hidden; } }
+@keyframes visC { 0%, 66.6% { visibility: hidden; } 66.7%, 100% { visibility: visible; } }
+/* 1件目の字を直す（くりかえし） */
+.js .r1 .ch-bad, .js .r1 .st-bad, .js .r1 .iss-bad { animation: fixOut 8s linear 6.2s infinite both; }
+.js .r1 .ch-ok, .js .r1 .st-ok, .js .r1 .iss-ok { animation: fixIn 8s linear 6.2s infinite both; }
+.js .r1 .fixbtn { animation: press 8s linear 6.2s infinite both; }
+.js .r1 .ch-ok { animation-name: fixInPop; }
+@keyframes fixOut { 0%, 34% { visibility: visible; } 34.1%, 96% { visibility: hidden; } 96.1%, 100% { visibility: visible; } }
+@keyframes fixIn { 0%, 34% { visibility: hidden; } 34.1%, 96% { visibility: visible; } 96.1%, 100% { visibility: hidden; } }
+@keyframes fixInPop { 0%, 34% { visibility: hidden; transform: scale(1.8); color: var(--ok); } 34.1% { visibility: visible; transform: scale(1.8); color: var(--ok); } 40% { transform: none; color: var(--ink); } 96% { visibility: visible; } 96.1%, 100% { visibility: hidden; } }
+@keyframes press { 0%, 27% { transform: none; box-shadow: 0 2px 0 var(--ink); background: var(--paper); } 29%, 33% { transform: translateY(2px); box-shadow: 0 0 0 var(--ink); background: var(--kraft-l); } 35%, 100% { transform: none; box-shadow: 0 2px 0 var(--ink); background: var(--paper); } }
+
+@keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(-20px -40px -20px -20px); } }
+@keyframes up { from { opacity: 0; transform: translateY(22px); } }
+@keyframes pop { from { opacity: 0; transform: scale(.5); } }
+@keyframes stampIn { from { opacity: 0; transform: rotate(8deg) scale(2.2); } }
+@keyframes chatIn { from { opacity: 0; transform: rotate(-8deg) translateY(30px) scale(.9); } }
+@keyframes bubIn { from { opacity: 0; transform: translateY(10px) scale(.85); } }
+@keyframes hl { from { background-size: 0 100%; } to { background-size: 100% 100%; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes recIn { from { opacity: 0; transform: translateX(-60px) rotate(-8deg) scale(.85); } }
+@keyframes digit { from { opacity: 0; transform: translateY(-6px); } }
+@keyframes rowIn { from { opacity: 0; transform: translateX(-14px); } }
+@keyframes cardin { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+/* ---------- スクロールで出る ---------- */
+.js .rv { opacity: 0; transform: translateY(34px); transition: opacity .7s ease, transform .8s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+.js .rv.in { opacity: 1; transform: none; }
+.js .pain.rv { transform: translateY(-40px) rotate(6deg); transition-duration: .5s, .7s; transition-timing-function: ease, cubic-bezier(.2,.9,.3,1.25); }
+.js .pain.rv.in:nth-child(1) { transform: rotate(-1.6deg); }
+.js .pain.rv.in:nth-child(2) { transform: rotate(1.2deg) translateY(18px); }
+.js .pain.rv.in:nth-child(3) { transform: rotate(-.8deg); }
+.js .draw .dl { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s cubic-bezier(.6,.1,.3,1) .2s; }
+.js .draw.in .dl { stroke-dashoffset: 0; }
+.js .turn.draw .dl { transition-duration: .9s; }
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width: 1020px) {
+  .carriers { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 76px; }
+  .more-feats { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); }
+  .vis { margin-top: 54px; max-width: 640px; }
+  .step-list { grid-template-columns: minmax(0, 1fr); gap: 34px; max-width: 560px; margin-inline: auto; }
+  .step-cord { display: none; }
+  .step:not(:last-child)::after { content: ""; position: absolute; left: 50%; bottom: -36px; width: 12px; height: 38px; margin-left: -6px; background: linear-gradient(90deg, var(--shu) 0 35%, #fffcf5 35% 65%, var(--shu) 65%); border-radius: 6px; z-index: 2; }
+  .chk, .safe-grid, .final-grid, .signup-grid { grid-template-columns: minmax(0, 1fr); }
+  .pain-list { grid-template-columns: minmax(0, 1fr); gap: 46px; max-width: 520px; margin-inline: auto; }
+  .pain:nth-child(2), .js .pain.rv.in:nth-child(2) { transform: rotate(1.2deg); }
+  .guides { grid-template-columns: minmax(0, 1fr); max-width: 560px; }
+  .box-ill { order: -1; max-width: 400px; width: 100%; margin: 0 auto; }
+  .sticky { display: block; position: fixed; z-index: 50; left: 0; right: 0; bottom: 0; padding: 10px var(--gr) calc(10px + env(safe-area-inset-bottom, 0px)) var(--gl); background: rgba(42,32,23,.94); border-top: 3px solid var(--kraft); transition: transform .3s; }
+  .sticky .cta { width: 100%; min-height: 60px; font-size: 21px; box-shadow: 0 4px 0 var(--shu-d); }
+  .sticky.hide { transform: translateY(115%); }
+  footer { padding-bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  .top-cta { display: none; }
+  .logo b { font-size: 19px; }
+  .logo svg { width: 32px; height: 32px; }
+  .stamp { font-size: 16px; padding: 7px 11px 8px; }
+  .h1 { font-size: clamp(30px, 9.3vw, 44px); margin-top: 20px; }
+  .sub { font-size: 18px; margin-top: 18px; }
+  .hero-cta .cta { width: 100%; padding-inline: 20px; font-size: 22px; }
+  .cta-sub { text-align: center; }
+  .chips { justify-content: center; }
+  .vis { grid-template-columns: minmax(0, 1fr); grid-template-areas: "chat" "cord" "cards" "sheet"; padding-top: 34px; }
+  .v-chat { width: 90%; }
+  .v-cord { width: 70px; height: 74px; margin: -6px 0 -8px 40%; transform: rotate(78deg); align-self: start; }
+  .v-cards { width: 96%; margin-left: 4%; }
+  .v-sheet { margin: 34px 0 0; }
+  .bub { font-size: 14.5px; }
+  .vis .apple { width: 60px; left: auto; right: -4px; bottom: -34px; }
+  .vis .mikan { display: none; }
+  .ptape { transform: rotate(-2deg); }
+  .pain { padding: 22px 20px 24px; }
+  .pain-list { margin-top: 56px; }
+  .pain:nth-child(even) { margin-left: 10px; } .pain:nth-child(odd) { margin-right: 10px; }
+  .turn { margin-top: 80px; }
+  .carriers { grid-template-columns: minmax(0, 1fr); row-gap: 64px; max-width: 360px; margin-inline: auto; }
+  .ok-row { grid-template-columns: 58px minmax(0, 1fr); }
+  .ok-row .zip i { width: 19px; height: 25px; font-size: 15px; }
+  .ok-row.nm .val { font-size: 22px; }
+  .ok-row .addr { font-size: 14px; }
+  .ok-row .tgt.long .pin { right: auto; left: -30px; top: -14px; }
+  .ok-row .tgt.long { margin-left: 4px; }
+  .okuri { padding: 20px 14px 16px; }
+  .mf { grid-template-columns: 92px minmax(0, 1fr); gap: 14px; padding: 18px 16px 18px 12px; }
+  .mf h3 { font-size: 21px; }
+  .mf p { font-size: 16px; }
+  .memo { grid-template-columns: minmax(0, 1fr); padding: 30px 20px 22px; }
+  .memo .one { width: 82px; height: 82px; }
+  .faq summary { font-size: 18px; padding: 14px 46px 14px 12px; gap: 12px; }
+  .faq .ans { padding: 0 16px 18px 16px; }
+  .final .cta { width: 100%; padding-inline: 20px; font-size: 22px; }
+  .sheet-form { padding: 38px 16px 20px; }
+  .wants label { padding: 8px 10px; gap: 10px; font-size: 16px; }
+  .hero-sub-link { display: block; text-align: center; }
+  .chk-list b { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 256 256"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 256 256"><path d="M240.26,186.1,152.81,34.23h0a28.74,28.74,0,0,0-49.62,0L15.74,186.1a27.45,27.45,0,0,0,0,27.71A28.31,28.31,0,0,0,40.55,228h174.9a28.31,28.31,0,0,0,24.79-14.19A27.45,27.45,0,0,0,240.26,186.1Zm-20.8,15.7a4.46,4.46,0,0,1-4,2.2H40.55a4.46,4.46,0,0,1-4-2.2,3.56,3.56,0,0,1,0-3.73L124,46.2a4.77,4.77,0,0,1,8,0l87.44,151.87A3.56,3.56,0,0,1,219.46,201.8ZM116,136V104a12,12,0,0,1,24,0v32a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,176Z"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 256 256"><path d="M176.49,95.51a12,12,0,0,1,0,17l-56,56a12,12,0,0,1-17,0l-24-24a12,12,0,1,1,17-17L112,143l47.51-47.52A12,12,0,0,1,176.49,95.51ZM236,128A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128Z"/></symbol>
+  <symbol id="i-csv" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40v72a8,8,0,0,0,16,0V40h88V88a8,8,0,0,0,8,8h48v16a8,8,0,0,0,16,0V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM64,179.84c0,6.09,4.49,12.16,12,12.16a11.39,11.39,0,0,0,7.88-3.09,8,8,0,0,1,11.12,11.5A27.25,27.25,0,0,1,76,208c-15.62,0-28-12.68-28-28.16S60.38,152,76,152a27.25,27.25,0,0,1,19,7.59,8,8,0,1,1-11.12,11.5A11.39,11.39,0,0,0,76,168C68.49,168,64,174,64,179.84Zm96.62,7.41C159.15,200.1,148.56,208,136.4,208a32.2,32.2,0,0,1-17-4.84,8,8,0,0,1,8.5-13.56,16.2,16.2,0,0,0,8.53,2.4c4,0,8.05-1.71,8.37-4.53.13-1.13-.21-2.18-3.7-3.88a62.74,62.74,0,0,0-8.48-3.07c-12.6-3.83-18.15-11.21-17-22.65,1.43-12.85,12-20.55,24.17-20.55a32.2,32.2,0,0,1,17,4.84,8,8,0,0,1-8.5,13.56A16.2,16.2,0,0,0,140.6,166c-4,0-8,1.71-8.37,4.53-.12,1.13.21,2.18,3.71,3.88a62.12,62.12,0,0,0,8.47,3.07C157.08,181.37,162.62,188.75,161.62,187.25ZM211.6,162.65l-20,40a8,8,0,0,1-14.31,0l-20-40a8,8,0,0,1,14.31-7.16L184,179.11l12.4-24.82a8,8,0,1,1,14.31,7.16Z"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 256 256"><path d="M228,144v64a20,20,0,0,1-20,20H48a20,20,0,0,1-20-20V144a12,12,0,0,1,24,0v60H204V144a12,12,0,0,1,24,0Zm-108.49,8.49a12,12,0,0,0,17,0l40-40a12,12,0,0,0-17-17L140,115V32a12,12,0,0,0-24,0v83L96.49,95.51a12,12,0,0,0-17,17Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></symbol>
+  <symbol id="logo" viewBox="0 0 40 40"><path d="M5 9.5 L13 3 H35 V37 H13 L5 30.5 Z" fill="#d9b680" stroke="#2a2017" stroke-width="2"/><circle cx="12" cy="20" r="3" fill="#fffcf5" stroke="#2a2017" stroke-width="1.8"/><path d="M12 17 C 6 10, 2 12, 1 6" fill="none" stroke="#b5381d" stroke-width="1.8" stroke-linecap="round"/><path d="M19 12h11M19 17h11M19 22h11M19 27h7" stroke="#2a2017" stroke-width="2"/><rect x="25.5" y="25" width="7" height="7" fill="none" stroke="#b5381d" stroke-width="1.6" transform="rotate(-8 29 28.5)"/></symbol>
+  <symbol id="apple" viewBox="0 0 100 100"><defs><radialGradient id="gap" cx="35%" cy="35%" r="70%"><stop offset="0" stop-color="#e4573a"/><stop offset=".55" stop-color="#b5281a"/><stop offset="1" stop-color="#7d170e"/></radialGradient></defs><path d="M50 26 C 40 18, 14 18, 12 46 C 10 72, 30 94, 44 92 C 48 91, 52 91, 56 92 C 70 94, 90 72, 88 46 C 86 18, 60 18, 50 26 Z" fill="url(#gap)"/><path d="M26 40 C 28 32, 34 29, 40 30" stroke="rgba(255,235,200,.75)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 27 C 50 18, 52 12, 56 7" stroke="#5a3a1a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M55 15 C 62 5, 76 6, 80 10 C 74 18, 62 20, 55 15 Z" fill="#3d7a3a"/></symbol>
+  <symbol id="mikan" viewBox="0 0 100 100"><defs><radialGradient id="gmk" cx="38%" cy="36%" r="70%"><stop offset="0" stop-color="#ffb347"/><stop offset=".6" stop-color="#ec7a12"/><stop offset="1" stop-color="#b8530a"/></radialGradient><pattern id="pmk" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r=".9" fill="rgba(160,70,0,.35)"/></pattern></defs><ellipse cx="50" cy="58" rx="40" ry="34" fill="url(#gmk)"/><ellipse cx="50" cy="58" rx="40" ry="34" fill="url(#pmk)"/><path d="M28 48 C 31 41, 37 38, 43 38" stroke="rgba(255,240,200,.7)" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="50" cy="26" r="4" fill="#4d6b2a"/><path d="M52 25 C 60 12, 76 12, 82 18 C 74 27, 60 29, 52 25 Z" fill="#3d7a3a"/><path d="M54 24 C 64 20, 72 19, 80 18" stroke="#2c5a2a" stroke-width="1.4" fill="none"/></symbol>
+</svg>
+
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="#top" aria-label="贈答送り状メーカー トップへ"><svg aria-hidden="true"><use href="#logo"/></svg><b>贈答送り状メーカー</b></a>
+  <span class="top-free">無料</span>
+  <a class="top-cta" href="/app/okurijo/" data-app>使ってみる</a>
+</div></header>
+
+<main>
+<!-- ================= ヒーロー ================= -->
+<section class="hero kraft" id="top">
+  <div class="gum" aria-hidden="true"></div>
+  <div class="fold" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="stamp">無料・登録不要</span>
+      <h1 class="h1"><span class="ln" style="--i:0">LINEの贈答注文を、</span><span class="ln" style="--i:1"><span class="mk">打ち直さずに</span></span><span class="ln ln3" style="--i:2">送り状へ。</span></h1>
+      <p class="sub">届いた注文の文を<span class="hl">貼るだけ</span>。ヤマト・佐川・ゆうパックに取り込むファイルを作る、無料のツールです。</p>
+      <div class="hero-cta">
+        <a class="cta nudge" href="/app/okurijo/" data-app id="heroCta">無料で使ってみる<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <span class="cta-sub">インストールなし。開けばすぐ使えます。</span>
+        <a class="hero-sub-link" href="#signup">有料版の先行登録（無料）はこちら</a>
+      </div>
+      <ul class="chips" aria-label="特長">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>無料</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>登録不要</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>スマホで使える</li>
+      </ul>
+    </div>
+
+    <div class="vis" role="img" aria-label="表示例：LINEで届いた注文の文が、届け先ごとのカードに分かれ、使えない字や文字数をチェックしたうえで、ヤマト・佐川・ゆうパック用の取り込みファイルになる様子">
+      <span class="rei">表示例</span>
+      <div class="v-chat">
+        <span class="vlab"><i>1</i>LINEで届いた注文</span>
+        <div class="chat">
+          <div class="chat-top"><span class="back"></span>佐藤 恵子<span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="chat-body">
+            <span class="av"><svg viewBox="0 0 256 256"><path d="M234.38,210a123.36,123.36,0,0,0-60.78-53.23,76,76,0,1,0-91.2,0A123.36,123.36,0,0,0,21.62,210a12,12,0,1,0,20.770,12c18.12-31.32,50.12-50,85.61-50s67.49,18.690,85.61,50a12,12,0,0,0,20.77-12ZM76,96a52,52,0,1,1,52,52A52.06,52.06,0,0,1,76,96Z"/></svg></span>
+            <div class="bubs">
+              <p class="bub" style="--i:0">今年もお歳暮お願いします！</p>
+              <p class="bub" style="--i:1"><span class="hlt" style="--j:0">髙橋誠さん</span> <span class="hlt" style="--j:1">〒1540001</span><br><span class="hlt" style="--j:2">世田谷区池尻2-31-24</span><br>5kgを1箱</p>
+              <p class="bub" style="--i:2"><span class="hlt" style="--j:3">山本由美子様</span> <span class="hlt" style="--j:4">〒5600082</span><br><span class="hlt" style="--j:5">豊中市新千里東町3-5-12</span><br>10kg 14時以降で</p>
+              <p class="bub" style="--i:3">あと<span class="hlt" style="--j:6">中村さくらさん</span>にも5kg<br><span class="hlt" style="--j:7">〒9000015</span> <span class="hlt" style="--j:7">那覇市久茂地2-22-10</span><br><span class="hlt wr" style="--j:8">コーポ久茂地ハイツ東棟1205号室</span></p>
+              <span class="tm" style="--i:4">既読 18:42</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <svg class="v-cord" viewBox="0 0 76 120" aria-hidden="true">
+        <path class="cd" pathLength="1" d="M6 104 C 18 50, 40 30, 58 40" fill="none" stroke="rgba(60,30,5,.25)" stroke-width="13" stroke-linecap="round" transform="translate(0 4)"/>
+        <path class="cd" pathLength="1" d="M6 104 C 18 50, 40 30, 58 40" fill="none" stroke="#b5381d" stroke-width="11" stroke-linecap="round"/>
+        <path class="cd" pathLength="1" d="M6 104 C 18 50, 40 30, 58 40" fill="none" stroke="#fffcf5" stroke-width="3" stroke-linecap="round"/>
+        <path class="hd" d="M50 22 L76 44 L46 56 Z" fill="#b5381d" stroke="#8f2a14" stroke-width="2.5" stroke-linejoin="round"/>
+      </svg>
+
+      <div class="v-cards">
+        <span class="vlab"><i>2</i>届け先ごとにチェック</span>
+        <div class="rec r1" style="--i:0">
+          <span class="rno">01</span>
+          <div style="min-width:0">
+            <b class="rname"><span class="fixw"><span class="ch-bad"><span class="badch">髙</span></span><span class="ch-ok">高</span></span>橋 誠<small>様</small></b>
+            <span class="raddr"><span class="zip"><i style="--k:0">1</i><i style="--k:1">5</i><i style="--k:2">4</i><s>-</s><i style="--k:3">0</i><i style="--k:4">0</i><i style="--k:5">0</i><i style="--k:6">1</i></span><span>東京都世田谷区池尻2-31-24</span></span>
+            <span class="tag">りんご サンふじ 5kg</span>
+          </div>
+          <span class="fixw"><span class="badge err st-bad"><svg aria-hidden="true"><use href="#i-warn"/></svg>要確認</span><span class="badge ok st-ok"><svg aria-hidden="true"><use href="#i-ok"/></svg>OK</span></span>
+          <div class="iss-w">
+            <p class="iss err iss-bad"><svg aria-hidden="true"><use href="#i-warn"/></svg><span>「髙」は使えない字です</span><span class="fixbtn">「高」にする</span></p>
+            <p class="iss okm iss-ok"><svg aria-hidden="true"><use href="#i-ok"/></svg><span>「高」に直しました</span></p>
+          </div>
+        </div>
+        <div class="rec" style="--i:1">
+          <span class="rno">02</span>
+          <div style="min-width:0">
+            <b class="rname">山本 由美子<small>様</small></b>
+            <span class="raddr"><span class="zip"><i style="--k:0">5</i><i style="--k:1">6</i><i style="--k:2">0</i><s>-</s><i style="--k:3">0</i><i style="--k:4">0</i><i style="--k:5">8</i><i style="--k:6">2</i></span><span>大阪府豊中市新千里東町3-5-12</span></span>
+            <span class="tag">りんご サンふじ 10kg</span>
+          </div>
+          <span class="badge ok"><svg aria-hidden="true"><use href="#i-ok"/></svg>OK</span>
+        </div>
+        <div class="rec" style="--i:2">
+          <span class="rno">03</span>
+          <div style="min-width:0">
+            <b class="rname">中村 さくら<small>様</small></b>
+            <span class="raddr"><span class="zip"><i style="--k:0">9</i><i style="--k:1">0</i><i style="--k:2">0</i><s>-</s><i style="--k:3">0</i><i style="--k:4">0</i><i style="--k:5">1</i><i style="--k:6">5</i></span><span>沖縄県那覇市久茂地2-22-10</span></span>
+            <span class="tag">りんご サンふじ 5kg</span>
+          </div>
+          <span class="badge wrn"><svg aria-hidden="true"><use href="#i-warn"/></svg>文字数</span>
+          <p class="iss wrn"><svg aria-hidden="true"><use href="#i-warn"/></svg>建物名が長すぎます（ヤマトは16文字まで）</p>
+        </div>
+      </div>
+
+      <div class="v-sheet">
+        <span class="vlab"><i>3</i>送り状ソフトに取り込むファイル</span>
+        <div class="sheet">
+          <div class="stabs"><span class="stab on">ヤマト B2クラウド</span><span class="stab">佐川 e飛伝Ⅲ</span><span class="stab">ゆうパック</span></div>
+          <div class="sheet-h"><svg aria-hidden="true"><use href="#i-csv"/></svg><span class="fname"><span>yamato-b2_20261103_3.csv</span><span>sagawa-ehiden3_20261103_3.csv</span><span>yupack-web_20261103_3.csv</span></span><span class="dl"><svg aria-hidden="true"><use href="#i-dl"/></svg>保存</span></div>
+          <table>
+            <thead><tr><th class="n"></th><th class="c-name">お届け先名</th><th class="c-zip">郵便番号</th><th>住所</th></tr></thead>
+            <tbody>
+              <tr style="--k:0"><td class="n">1</td><td>高橋 誠</td><td>154-0001</td><td>東京都世田谷区池尻2-31-24</td></tr>
+              <tr style="--k:1"><td class="n">2</td><td>山本 由美子</td><td>560-0082</td><td>大阪府豊中市新千里東町3-5-12</td></tr>
+              <tr style="--k:2"><td class="n">3</td><td>中村 さくら</td><td>900-0015</td><td>沖縄県那覇市久茂地2-22-10</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <svg class="fruit apple" viewBox="0 0 100 100" aria-hidden="true"><use href="#apple"/></svg>
+      <svg class="fruit mikan" viewBox="0 0 100 100" aria-hidden="true"><use href="#mikan"/></svg>
+    </div>
+  </div>
+</section>
+
+<div class="ptape-wrap" aria-hidden="true"><div class="ptape"><div class="ptape-track">
+  <span>贈答送り状メーカー</span><span>産地直送</span><span>無料・登録不要</span><span>ヤマト・佐川・ゆうパック</span><span>お歳暮・お中元に</span>
+  <span>贈答送り状メーカー</span><span>産地直送</span><span>無料・登録不要</span><span>ヤマト・佐川・ゆうパック</span><span>お歳暮・お中元に</span>
+</div></div></div>
+
+<!-- ================= お悩み ================= -->
+<section class="sec pains inkbg">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tagk">お悩み</span>
+      <h2 class="h2">こんなこと、ありませんか？</h2>
+    </div>
+    <ol class="pain-list">
+      <li class="pain rv" style="--d:0s">
+        <span class="gum pt" aria-hidden="true"></span>
+        <span class="pno">01</span>
+        <svg class="pill" viewBox="0 0 280 130" aria-hidden="true">
+          <!-- スマホ -->
+          <rect x="20" y="10" width="70" height="112" rx="11" fill="#2a2017"/>
+          <rect x="25" y="20" width="60" height="94" rx="3" fill="#8ea8c6"/>
+          <rect x="25" y="20" width="60" height="12" fill="#26303d"/>
+          <rect x="31" y="40" width="44" height="30" rx="7" fill="#fff"/><path d="M37 48h30M37 55h34M37 62h22" stroke="#b9c2cc" stroke-width="3" stroke-linecap="round"/>
+          <rect x="31" y="76" width="48" height="30" rx="7" fill="#fff"/><path d="M37 84h34M37 91h28M37 98h32" stroke="#b9c2cc" stroke-width="3" stroke-linecap="round"/>
+          <!-- 目で追う線 -->
+          <path d="M96 64 C 120 40, 140 40, 160 56" fill="none" stroke="#b5381d" stroke-width="3" stroke-dasharray="5 6" stroke-linecap="round"/>
+          <path d="M152 46 l10 10 -13 4" fill="none" stroke="#b5381d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- パソコン -->
+          <rect x="160" y="22" width="104" height="70" rx="5" fill="#2a2017"/>
+          <rect x="166" y="28" width="92" height="58" rx="2" fill="#fffcf5"/>
+          <rect x="172" y="36" width="36" height="9" fill="#ead9b6"/><rect x="212" y="36" width="40" height="9" fill="#fff" stroke="#c9b38a"/>
+          <rect x="172" y="50" width="36" height="9" fill="#ead9b6"/><rect x="212" y="50" width="40" height="9" fill="#fff" stroke="#c9b38a"/>
+          <rect x="172" y="64" width="36" height="9" fill="#ead9b6"/><rect x="212" y="64" width="22" height="9" fill="#fff" stroke="#b5381d" stroke-width="1.5"/>
+          <rect x="235" y="63" width="2" height="11" fill="#b5381d"/>
+          <path d="M150 104 h124 l-10 -12 h-104 z" fill="#4a3b2a"/>
+          <!-- くりかえし -->
+          <g fill="none" stroke="#7a4900" stroke-width="3" stroke-linecap="round"><path d="M128 104 a14 14 0 1 1 6 11"/><path d="M127 98 l1 7 7 -1"/></g>
+          <text x="112" y="128" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#7a4900">1件ずつ</text>
+        </svg>
+        <h3>LINEの住所を、送り状ソフトに<b>1件ずつ打ち直している</b></h3>
+        <p>1人のお客さまから、届け先が5件、10件。</p>
+      </li>
+      <li class="pain rv" style="--d:.15s">
+        <span class="gum pt" aria-hidden="true"></span>
+        <span class="pno">02</span>
+        <svg class="pill" viewBox="0 0 280 130" aria-hidden="true">
+          <!-- 送り状 -->
+          <g transform="rotate(-3 90 70)">
+            <rect x="22" y="18" width="150" height="100" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2.5"/>
+            <path d="M30 30 h134" stroke="#c9b38a" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <g fill="#fff" stroke="#b5381d" stroke-width="1.5"><rect x="32" y="38" width="11" height="14"/><rect x="45" y="38" width="11" height="14"/><rect x="58" y="38" width="11" height="14"/><rect x="77" y="38" width="11" height="14"/><rect x="90" y="38" width="11" height="14"/><rect x="103" y="38" width="11" height="14"/><rect x="116" y="38" width="11" height="14"/></g>
+            <path d="M32 64 h110" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            <rect x="32" y="76" width="30" height="30" fill="#fbebe5" stroke="#b5381d" stroke-width="2.5"/>
+            <text x="47" y="99" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="22" font-weight="700" fill="#2a2017">髙</text>
+            <text x="66" y="99" font-family="BIZ UDPGothic, sans-serif" font-size="22" font-weight="700" fill="#2a2017">橋</text>
+            <text x="96" y="99" font-family="BIZ UDPGothic, sans-serif" font-size="22" font-weight="700" fill="#2a2017">様</text>
+          </g>
+          <!-- エラーの窓 -->
+          <g transform="rotate(3 210 70)">
+            <rect x="150" y="34" width="116" height="74" rx="5" fill="#fff" stroke="#2a2017" stroke-width="2.5"/>
+            <rect x="150" y="34" width="116" height="16" rx="5" fill="#b5381d"/><rect x="150" y="44" width="116" height="6" fill="#b5381d"/>
+            <circle cx="172" cy="74" r="13" fill="#b5381d"/><path d="M166 68 l12 12 M178 68 l-12 12" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>
+            <text x="192" y="70" font-family="BIZ UDPGothic, sans-serif" font-size="12" font-weight="700" fill="#2a2017">取り込み</text>
+            <text x="192" y="86" font-family="BIZ UDPGothic, sans-serif" font-size="12" font-weight="700" fill="#2a2017">エラー</text>
+            <rect x="222" y="92" width="36" height="11" rx="2" fill="#ead9b6"/>
+          </g>
+          <path d="M60 116 C 70 124, 120 126, 150 112" fill="none" stroke="#b5381d" stroke-width="2.5" stroke-dasharray="4 5"/>
+        </svg>
+        <h3>「髙」「﨑」などの字で、<b>取り込みエラー</b>になる</h3>
+        <p>どの字がだめなのか、わかりにくい。</p>
+      </li>
+      <li class="pain rv" style="--d:.3s">
+        <span class="gum pt" aria-hidden="true"></span>
+        <span class="pno">03</span>
+        <svg class="pill" viewBox="0 0 280 130" aria-hidden="true">
+          <!-- 去年の控え -->
+          <g transform="rotate(-6 80 70)">
+            <rect x="26" y="20" width="104" height="96" rx="3" fill="#f5ecd9" stroke="#2a2017" stroke-width="2.5"/>
+            <rect x="26" y="20" width="104" height="22" fill="#a98250"/>
+            <text x="78" y="36" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="14" fill="#fffcf5">去年</text>
+            <path d="M38 56h80M38 70h70M38 84h80M38 98h56" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <!-- 今年 -->
+          <g transform="rotate(4 200 70)">
+            <rect x="150" y="20" width="104" height="96" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2.5"/>
+            <rect x="150" y="20" width="104" height="22" fill="#b5381d"/>
+            <text x="202" y="36" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="14" fill="#fffcf5">今年</text>
+            <path d="M162 56h80M162 70h70M162 84h44" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            <rect x="208" y="79" width="2" height="11" fill="#b5381d"/>
+          </g>
+          <!-- また入力 -->
+          <g fill="none" stroke="#7a4900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M118 104 C 132 120, 152 120, 164 108"/><path d="M156 106 l9 2 -1 -9"/></g>
+          <text x="124" y="16" font-family="BIZ UDPGothic, sans-serif" font-size="12" font-weight="700" fill="#7a4900">同じ人</text>
+        </svg>
+        <h3>毎年同じお客さまの届け先を、<b>また入力</b>している</h3>
+        <p>去年の控えを探すところから。</p>
+      </li>
+    </ol>
+
+    <div class="turn draw rv">
+      <svg viewBox="0 0 70 92" aria-hidden="true">
+        <path class="dl" pathLength="1" d="M35 4 C 10 30, 60 50, 35 78" fill="none" stroke="#b5381d" stroke-width="10" stroke-linecap="round"/>
+        <path class="dl" pathLength="1" d="M35 4 C 10 30, 60 50, 35 78" fill="none" stroke="#fffcf5" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M20 70 L35 90 L50 70 Z" fill="#b5381d"/>
+      </svg>
+      <p>その打ち直し、<br><em>貼るだけ</em>にしませんか。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 使い方 ================= -->
+<section class="sec steps paperbg" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tagk">使い方</span>
+      <h2 class="h2">やることは、<em>3つだけ</em>。</h2>
+    </div>
+    <div class="step-list draw">
+      <svg class="step-cord" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
+        <path class="dl" pathLength="1" d="M0 20 C 160 -6, 340 46, 500 20 S 840 -6, 1000 20" fill="none" stroke="#b5381d" stroke-width="10" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+        <path class="dl" pathLength="1" d="M0 20 C 160 -6, 340 46, 500 20 S 840 -6, 1000 20" fill="none" stroke="#fffcf5" stroke-width="2.6" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+      </svg>
+      <div class="step rv" style="--d:0s">
+        <div class="step-top"><span class="sn">1</span><h3>注文を貼る</h3></div>
+        <svg class="sill" viewBox="0 0 300 150" aria-hidden="true">
+          <rect x="24" y="12" width="76" height="128" rx="12" fill="#2a2017"/>
+          <rect x="29" y="23" width="66" height="106" rx="3" fill="#8ea8c6"/>
+          <rect x="29" y="23" width="66" height="13" fill="#26303d"/>
+          <rect x="35" y="44" width="46" height="13" rx="6" fill="#fff"/>
+          <rect x="35" y="62" width="54" height="34" rx="7" fill="#fff"/>
+          <rect x="39" y="67" width="46" height="24" fill="rgba(43,95,142,.28)"/>
+          <path d="M41 72h40M41 79h42M41 86h30" stroke="#8a99a8" stroke-width="3" stroke-linecap="round"/>
+          <rect x="35" y="101" width="50" height="20" rx="7" fill="#fff"/><path d="M41 111h36" stroke="#b9c2cc" stroke-width="3" stroke-linecap="round"/>
+          <g><rect x="52" y="40" width="52" height="20" rx="4" fill="#2a2017"/><path d="M70 60 l6 6 6 -6z" fill="#2a2017"/><text x="78" y="54" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#fff">コピー</text></g>
+          <path d="M112 78 C 134 60, 152 60, 170 74" fill="none" stroke="#b5381d" stroke-width="8" stroke-linecap="round"/>
+          <path d="M112 78 C 134 60, 152 60, 170 74" fill="none" stroke="#fffcf5" stroke-width="2" stroke-linecap="round"/>
+          <path d="M164 62 l14 15 -19 5z" fill="#b5381d"/>
+          <rect x="180" y="20" width="104" height="114" rx="4" fill="#fffcf5" stroke="#2a2017" stroke-width="2.5"/>
+          <rect x="189" y="30" width="86" height="58" fill="#fff" stroke="#2a2017" stroke-width="2"/>
+          <path d="M196 42h66M196 52h72M196 62h58M196 72h66" stroke="#4a3b2a" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+          <rect x="189" y="98" width="86" height="26" rx="3" fill="#b5381d"/><rect x="189" y="120" width="86" height="4" fill="#8f2a14"/>
+          <text x="232" y="116" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="13" font-weight="700" fill="#fff">読み取る</text>
+        </svg>
+        <p>LINEやメールの注文の文を、コピーしてそのまま貼ります。</p>
+        <small>電話・FAXの注文は、手で入れることもできます。</small>
+      </div>
+      <div class="step rv" style="--d:.15s">
+        <div class="step-top"><span class="sn">2</span><h3>届け先を確認</h3></div>
+        <svg class="sill" viewBox="0 0 300 150" aria-hidden="true">
+          <g transform="rotate(-2 150 50)">
+            <rect x="30" y="16" width="230" height="52" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2.5"/>
+            <path d="M38 24h214" stroke="#c9b38a" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <rect x="40" y="32" width="18" height="12" fill="#fff" stroke="#b5381d" stroke-width="1.6"/>
+            <path d="M66 38h70" stroke="#2a2017" stroke-width="5" stroke-linecap="round"/>
+            <path d="M66 54h120" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            <rect x="206" y="30" width="44" height="16" rx="8" fill="#e7f1e3" stroke="#9cc39b"/><text x="228" y="42" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#2a5f30">OK</text>
+          </g>
+          <g transform="rotate(1.5 150 110)">
+            <rect x="30" y="78" width="230" height="58" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2.5"/>
+            <path d="M38 86h214" stroke="#c9b38a" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <rect x="40" y="94" width="18" height="12" fill="#fff" stroke="#b5381d" stroke-width="1.6"/>
+            <rect x="66" y="92" width="16" height="16" fill="#fbebe5" stroke="#b5381d" stroke-width="2"/>
+            <path d="M88 100h48" stroke="#2a2017" stroke-width="5" stroke-linecap="round"/>
+            <g fill="#fff" stroke="#b5381d" stroke-width="1.3"><rect x="66" y="114" width="9" height="12"/><rect x="77" y="114" width="9" height="12"/><rect x="88" y="114" width="9" height="12"/><rect x="102" y="114" width="9" height="12"/><rect x="113" y="114" width="9" height="12"/><rect x="124" y="114" width="9" height="12"/><rect x="135" y="114" width="9" height="12"/></g>
+            <rect x="196" y="92" width="56" height="16" rx="8" fill="#b5381d"/><text x="224" y="104" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#fff">要確認</text>
+          </g>
+          <g transform="rotate(-12 110 112)">
+            <circle cx="104" cy="106" r="24" fill="rgba(255,255,255,.35)" stroke="#2a2017" stroke-width="5"/>
+            <path d="M122 124 l20 20" stroke="#2a2017" stroke-width="9" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <p>届け先ごとのカードに分かれます。直すところには印が出ます。</p>
+        <small>郵便番号・電話番号・使えない字・文字数を見ます。</small>
+      </div>
+      <div class="step rv" style="--d:.3s">
+        <div class="step-top"><span class="sn">3</span><h3>ファイルを作る</h3></div>
+        <svg class="sill" viewBox="0 0 300 150" aria-hidden="true">
+          <g>
+            <path d="M40 32 h56 v-12 h-50 z" fill="#fff" stroke="#2a2017" stroke-width="2"/>
+            <rect x="44" y="18" width="56" height="16" rx="3" fill="#fff" stroke="#2a2017" stroke-width="2"/><rect x="44" y="18" width="56" height="4" fill="#b5381d"/>
+            <rect x="102" y="20" width="48" height="14" rx="3" fill="#f5ecd9" stroke="#2a2017" stroke-width="2"/>
+            <rect x="152" y="20" width="48" height="14" rx="3" fill="#f5ecd9" stroke="#2a2017" stroke-width="2"/>
+            <rect x="34" y="32" width="186" height="100" rx="3" fill="#fff" stroke="#2a2017" stroke-width="2.5"/>
+            <rect x="34" y="32" width="186" height="18" fill="#f8f1e3"/><path d="M34 50h186" stroke="#c9b38a"/>
+            <g stroke="#dccaa6" stroke-width="1.2"><path d="M34 70h186M34 90h186M34 110h186M56 50v82M120 50v82M160 50v82"/></g>
+            <path d="M64 60h44M64 80h40M64 100h46M64 120h36" stroke="#4a3b2a" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+            <path d="M128 60h24M128 80h24M128 100h24M128 120h24" stroke="#4a3b2a" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+            <path d="M168 60h44M168 80h38M168 100h46M168 120h30" stroke="#4a3b2a" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+            <text x="44" y="45" font-family="BIZ UDGothic, monospace" font-size="10" font-weight="700" fill="#2a5f30">CSV</text>
+          </g>
+          <g>
+            <circle cx="252" cy="84" r="30" fill="#b5381d"/>
+            <circle cx="252" cy="84" r="30" fill="none" stroke="#8f2a14" stroke-width="3"/>
+            <path d="M252 66 v28 M240 84 l12 12 12 -12" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M238 104 h28" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <p>運送会社をえらんで保存。いつもの送り状ソフトに取り込みます。</p>
+        <small>見本の注文で、先に試すこともできます。</small>
+      </div>
+    </div>
+    <div class="after rv">
+      <a class="cta" href="/app/okurijo/" data-app>無料で使ってみる<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 対応・チェック ================= -->
+<section class="sec sup kraft" id="support">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="tagk">使える送り状ソフト</span>
+      <h2 class="h2">いつもの送り状ソフトに、<span class="nw">そのまま。</span></h2>
+      <p class="lead">それぞれのソフトが読み込める形のファイル（CSV）で作ります。</p>
+    </div>
+    <ul class="carriers">
+      <li class="ctag-w rv" style="--d:0s;--sd:0s"><div class="ctag"><span class="co">ヤマト運輸</span><b>B2クラウド</b><small>外部データから発行</small><span class="fmt">CSV</span></div></li>
+      <li class="ctag-w rv" style="--d:.1s;--sd:-1.2s"><div class="ctag"><span class="co">佐川急便</span><b>e飛伝Ⅲ</b><small>取り込み用ファイル</small><span class="fmt">CSV</span></div></li>
+      <li class="ctag-w rv" style="--d:.2s;--sd:-2.4s"><div class="ctag"><span class="co">ゆうパック</span><b>Webゆうパック<br>プリント・ゆうプリR</b><small>2種類から選べます</small><span class="fmt">CSV</span></div></li>
+      <li class="ctag-w rv" style="--d:.3s;--sd:-3.6s"><div class="ctag"><span class="co">そのほか</span><b>ふつうのCSV</b><small>Excelやほかのソフト用</small><span class="fmt">CSV</span></div></li>
+    </ul>
+
+    <div class="chk">
+      <div class="label-big rv" aria-hidden="true">
+        <div class="okuri">
+          <div class="ok-h"><b>お届け先</b><span>表示例</span></div>
+          <div class="ok-row"><span>郵便番号</span><span class="val"><span class="tgt"><span class="zip"><i>1</i><i>5</i><i>4</i><s>-</s><i>0</i><i>0</i><i>0</i><i style="background:#fbebe5">&nbsp;</i></span><svg class="circ" viewBox="0 0 100 40" preserveAspectRatio="none"><path pathLength="1" style="--d:0.3s" d="M10 24 C 4 8, 60 1, 90 9 C 104 16, 96 36, 52 37 C 18 38, 2 30, 14 13"/></svg><span class="pin" style="--d:0.5s">1</span></span></span></div>
+          <div class="ok-row"><span>電話番号</span><span class="val tel"><span class="tgt">090-1234-567<svg class="circ" viewBox="0 0 100 40" preserveAspectRatio="none"><path pathLength="1" style="--d:0.6s" d="M10 24 C 4 8, 60 1, 90 9 C 104 16, 96 36, 52 37 C 18 38, 2 30, 14 13"/></svg><span class="pin" style="--d:0.8s">2</span></span></span></div>
+          <div class="ok-row"><span>住所</span><span class="val addr">東京都世田谷区池尻2-31-24<br><span class="tgt long">グリーンハイツ池尻第二ビル東館203<svg class="circ" viewBox="0 0 100 40" preserveAspectRatio="none"><path pathLength="1" style="--d:1.2s" d="M10 24 C 4 8, 60 1, 90 9 C 104 16, 96 36, 52 37 C 18 38, 2 30, 14 13"/></svg><span class="pin" style="--d:1.4s">4</span></span></span></div>
+          <div class="ok-row nm"><span>お名前</span><span class="val"><span class="tgt sq"><span class="badch">髙</span><svg class="circ" viewBox="0 0 100 40" preserveAspectRatio="none"><path pathLength="1" style="--d:0.9s" d="M10 24 C 4 8, 60 1, 90 9 C 104 16, 96 36, 52 37 C 18 38, 2 30, 14 13"/></svg><span class="pin" style="--d:1.1s">3</span></span>橋 誠<small>様</small></span></div>
+          <div class="ok-ft"><span class="tag" style="margin:0">りんご サンふじ 5kg</span><span class="tag" style="margin:0">12月20日着</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="tagk">チェックすること</span>
+        <h2 class="h2">取り込む前に、<span class="nw">ここを見ます。</span></h2>
+        <ol class="chk-list">
+          <li class="rv" style="--d:0s"><span class="pn">1</span><div><b>郵便番号</b><span>7けたそろっているか</span></div></li>
+          <li class="rv" style="--d:.08s"><span class="pn">2</span><div><b>電話番号</b><span>けた数が合っているか</span></div></li>
+          <li class="rv" style="--d:.16s"><span class="pn">3</span><div><b>使えない字</b><span>「髙」「﨑」など。ふつうの字に直すボタンつき</span></div></li>
+          <li class="rv" style="--d:.24s"><span class="pn">4</span><div><b>文字数</b><span>運送会社ごとの上限をこえていないか</span></div></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="more-feats">
+      <div class="mf rv">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <!-- 名簿の箱 -->
+          <path d="M18 56 h124 v58 a6 6 0 0 1 -6 6 h-112 a6 6 0 0 1 -6 -6z" fill="#cfad7a" stroke="#2a2017" stroke-width="2.5"/>
+          <g stroke="#2a2017" stroke-width="2">
+            <rect x="30" y="30" width="100" height="60" rx="3" fill="#f5ecd9" transform="rotate(-4 80 60)"/>
+            <rect x="30" y="38" width="100" height="58" rx="3" fill="#fffcf5"/>
+          </g>
+          <rect x="40" y="26" width="22" height="16" rx="3" fill="#b5381d" stroke="#2a2017" stroke-width="2"/><text x="51" y="38.5" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#fff">あ</text>
+          <rect x="68" y="22" width="22" height="16" rx="3" fill="#ead9b6" stroke="#2a2017" stroke-width="2"/><text x="79" y="34.5" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#2a2017">か</text>
+          <rect x="96" y="26" width="22" height="16" rx="3" fill="#ead9b6" stroke="#2a2017" stroke-width="2"/><text x="107" y="38.5" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="11" font-weight="700" fill="#2a2017">さ</text>
+          <path d="M42 54h60M42 64h76M42 74h48" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+          <path d="M18 80 h124" stroke="#2a2017" stroke-width="2.5"/>
+          <rect x="66" y="92" width="28" height="10" rx="2" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+        </svg>
+        <div><h3>お客さま名簿で、来年もラク</h3><p>一度入れた届け先は名簿に残ります。次からは名簿から選ぶだけ。</p></div>
+      </div>
+      <div class="mf rv" style="--d:.12s">
+        <svg viewBox="0 0 160 130" aria-hidden="true">
+          <!-- 注文控え -->
+          <rect x="44" y="8" width="72" height="40" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+          <rect x="18" y="40" width="124" height="50" rx="8" fill="#4a3b2a" stroke="#2a2017" stroke-width="2.5"/>
+          <rect x="32" y="52" width="96" height="6" rx="3" fill="#1c150e"/>
+          <circle cx="126" cy="74" r="4" fill="#9cc39b"/>
+          <g transform="rotate(-3 80 100)">
+            <rect x="40" y="58" width="80" height="66" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+            <text x="80" y="76" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="12" fill="#2a2017">注文控え</text>
+            <path d="M50 82h60" stroke="#2a2017" stroke-width="1.5"/>
+            <path d="M50 92h44M50 101h52M50 110h36" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="104" cy="108" r="9" fill="none" stroke="#b5381d" stroke-width="2"/>
+          </g>
+        </svg>
+        <div><h3>注文控えを印刷</h3><p>お客さまごとに、届け先と品物の一覧を紙にできます。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= あんしん ================= -->
+<section class="sec safe inkbg" id="safe">
+  <div class="wrap">
+    <div class="safe-grid">
+      <div>
+        <span class="tagk">あんしん</span>
+        <h2 class="h2"><span class="nwd">名前や住所は、</span><span class="nwd">お使いの端末の中だけに保存。</span><em class="nwd">外には送りません。</em></h2>
+        <p class="safe-note">※「郵便番号から住所を入れる」を使うときだけ、7けたの郵便番号を郵便番号の検索サービスに問い合わせます。設定で切ることができます。</p>
+        <p class="safe-note">データはその端末だけにあるので、ときどき設定からバックアップを保存してください。</p>
+      </div>
+      <div class="safe-ill rv" aria-hidden="true">
+        <svg viewBox="0 0 420 300">
+          <!-- 雲（外のサーバー） -->
+          <g opacity=".9">
+            <path d="M300 92 a26 26 0 0 1 48 -10 a22 22 0 0 1 36 22 a20 20 0 0 1 -6 38 h-84 a24 24 0 0 1 6 -50z" fill="none" stroke="#a98250" stroke-width="3" stroke-dasharray="7 6"/>
+          </g>
+          <path d="M214 150 C 250 130, 280 130, 316 140" fill="none" stroke="#a98250" stroke-width="3" stroke-dasharray="5 7" stroke-linecap="round"/>
+          <g transform="translate(266 136)"><circle r="20" fill="#b5381d"/><path d="M-8 -8 L8 8 M8 -8 L-8 8" stroke="#fff" stroke-width="5" stroke-linecap="round"/></g>
+          <!-- スマホ（家） -->
+          <rect x="70" y="30" width="140" height="244" rx="22" fill="#14100b" stroke="#cfad7a" stroke-width="3"/>
+          <rect x="82" y="50" width="116" height="206" rx="6" fill="#f5ecd9"/>
+          <rect x="122" y="38" width="36" height="5" rx="2.5" fill="#4a3b2a"/>
+          <g class="cards-in">
+            <g style="animation-delay:-0s">
+              <rect x="92" y="62" width="96" height="46" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+              <path d="M98 70h84" stroke="#c9b38a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <path d="M100 82h46" stroke="#2a2017" stroke-width="4" stroke-linecap="round"/><path d="M100 96h70" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            </g>
+            <g style="animation-delay:-1.2s">
+              <rect x="92" y="116" width="96" height="46" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+              <path d="M98 124h84" stroke="#c9b38a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <path d="M100 136h56" stroke="#2a2017" stroke-width="4" stroke-linecap="round"/><path d="M100 150h62" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            </g>
+            <g style="animation-delay:-2.4s">
+              <rect x="92" y="170" width="96" height="46" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+              <path d="M98 178h84" stroke="#c9b38a" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <path d="M100 190h40" stroke="#2a2017" stroke-width="4" stroke-linecap="round"/><path d="M100 204h74" stroke="#c9b38a" stroke-width="3" stroke-linecap="round"/>
+            </g>
+          </g>
+          <!-- 盾と鍵 -->
+          <g transform="translate(176 206)">
+            <path d="M0 -44 L38 -30 V2 C 38 26, 20 40, 0 50 C -20 40, -38 26, -38 2 V-30 Z" fill="#2a5f30" stroke="#fffcf5" stroke-width="4"/>
+            <rect x="-14" y="-6" width="28" height="22" rx="3" fill="#fffcf5"/>
+            <path d="M-8 -6 v-8 a8 8 0 0 1 16 0 v8" fill="none" stroke="#fffcf5" stroke-width="4"/>
+            <circle cx="0" cy="4" r="3.4" fill="#2a5f30"/>
+          </g>
+          <text x="140" y="292" text-anchor="middle" font-family="BIZ UDPGothic, sans-serif" font-size="14" font-weight="700" fill="#cfad7a">お使いの端末</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="memo rv">
+      <span class="gum g1" aria-hidden="true"></span><span class="gum g2" aria-hidden="true"></span>
+      <span class="one" aria-hidden="true"><b>1</b>件で<br>ためす</span>
+      <div>
+        <h3>はじめての時は、1件だけで取り込みを試してください</h3>
+        <p>ツールの<b>「1件だけで試す」</b>で作ったファイルを送り状ソフトに取り込み、印刷する前に中身を確かめてから、残りを取り込みましょう。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec faq kraft-l" id="faq">
+  <div class="wrap">
+    <div class="sec-head center" style="text-align:center">
+      <span class="tagk">よくある質問</span>
+      <h2 class="h2">気になること</h2>
+    </div>
+    <div class="faq-list">
+      <details class="rv"><summary>本当に無料ですか？</summary><p class="ans">はい、無料です。お金の登録もありません。今後、有料の追加機能を考えていますが、今ある機能は無料のままです。</p></details>
+      <details class="rv"><summary>登録は必要ですか？</summary><p class="ans">いりません。メールアドレスも不要です。ページを開けば、すぐに使えます。</p></details>
+      <details class="rv"><summary>スマホでも使えますか？</summary><p class="ans">使えます。パソコンでも使えます。データは使った端末の中に保存されるので、続きは同じ端末で行ってください。</p></details>
+      <details class="rv"><summary>どの送り状ソフトに使えますか？</summary><p class="ans">ヤマト運輸の B2クラウド、佐川急便の e飛伝Ⅲ、ゆうパックの Webゆうパックプリント・ゆうプリR です。ほかのソフト用に、ふつうのCSVも作れます。</p></details>
+      <details class="rv"><summary>うまく取り込めない時は？</summary><p class="ans">ツールの「取り込み方を見る」で手順を確かめてください。それでもだめな時は <a href="mailto:info@site-forge.jp">info@site-forge.jp</a> へ。使っている送り状ソフトの名前と、出たエラーの文を書いてください（お客さまの名前や住所は書かないでください）。</p></details>
+    </div>
+
+    <div class="sec-head" style="margin-top:clamp(70px,8vw,100px)">
+      <span class="tagk">ガイド</span>
+      <h2 class="h2">くわしい手順は、ガイドで。</h2>
+    </div>
+    <div class="guides">
+      <a class="guide rv" href="/guide/oseibo-okurijo"><span class="gk">お歳暮の送り状</span><b>お歳暮の送り状を一括作成する方法｜ヤマト・佐川・ゆうパック別</b><span class="go">読む<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="guide rv" style="--d:.1s" href="/guide/b2-cloud-csv"><span class="gk">ヤマト B2クラウド</span><b>B2クラウドの外部データ取り込み：CSVの作り方とエラーの直し方</b><span class="go">読む<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="guide rv" style="--d:.2s" href="/guide/line-chumon-okurijo"><span class="gk">LINE・電話の注文</span><b>LINE・電話の贈答注文を打ち直さずに送り状にする方法</b><span class="go">読む<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 有料版の先行登録 ================= -->
+<section class="sec signup inkbg" id="signup">
+  <div class="wrap signup-grid">
+    <div>
+      <span class="tagk">先行登録</span>
+      <h2 class="h2">有料版の先行登録<span class="nw h2free">（無料）</span></h2>
+      <p class="lead">今の機能は無料のまま。家族との共有などを足した有料版を準備しています。</p>
+      <p class="price-tag"><b>年 6,800円</b><small>予定価格</small></p>
+      <p class="perk"><svg aria-hidden="true"><use href="#i-check"/></svg>先行登録の方には、公開時にお知らせします</p>
+    </div>
+    <div class="sheet-form">
+      <span class="fhead" aria-hidden="true"><span class="stamp">先行登録</span></span>
+      <form id="signup-form" novalidate>
+        <fieldset>
+          <legend>使いたい機能<small>いくつでも</small></legend>
+          <div class="wants" id="signup-wants">
+            <label><input type="checkbox" value="注文フォーム"><span class="bx"><svg aria-hidden="true"><use href="#i-check"/></svg></span>お客さまが自分で入れる注文フォーム</label>
+            <label><input type="checkbox" value="ネット保存・共有"><span class="bx"><svg aria-hidden="true"><use href="#i-check"/></svg></span>家族やパートさんと共有</label>
+            <label><input type="checkbox" value="請求・入金管理"><span class="bx"><svg aria-hidden="true"><use href="#i-check"/></svg></span>請求と入金の管理</label>
+            <label><input type="checkbox" value="今年の案内"><span class="bx"><svg aria-hidden="true"><use href="#i-check"/></svg></span>去年のお客さまに今年の案内</label>
+          </div>
+        </fieldset>
+        <label class="fl2" for="signup-email">メールアドレス<span class="req">必須</span></label>
+        <input type="email" id="signup-email" name="email" autocomplete="email" inputmode="email" placeholder="name@example.com" required>
+        <p class="ferr" id="signup-error" role="alert" hidden></p>
+        <details><summary>ご意見も書く（任意）</summary>
+          <label class="vh" for="signup-comment">ご意見</label>
+          <textarea id="signup-comment" maxlength="1000" placeholder="ほかに欲しい機能など"></textarea>
+        </details>
+        <button class="cta" type="submit">先行登録する（無料）</button>
+        <p class="fpriv">ご登録のメールアドレスは、公開のご案内とご意見へのご返信にのみ使います。<a class="nw" href="privacy.html">プライバシーポリシー</a></p>
+      </form>
+      <div class="thanks" id="signup-thanks" hidden tabindex="-1">
+        <span class="ok-mark" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+        <h3>ご登録ありがとうございます</h3>
+        <p>公開の準備ができたら、info@site-forge.jp からお知らせします。</p>
+        <a class="cta" href="/app/okurijo/" data-app>今の無料版を使ってみる<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <small id="signup-preview" hidden>確認用のページのため、今回の入力は送信されていません。</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 最後のボタン ================= -->
+<section class="sec final kraft" id="start">
+  <div class="fold" aria-hidden="true" style="top:38px"></div>
+  <div class="wrap final-grid">
+    <div>
+      <span class="tagk">はじめる</span>
+      <h2 class="h2">今年の送り状は、<br><em>貼るだけ</em>で。</h2>
+      <p class="lead">無料・登録なし。見本の注文で、すぐに試せます。</p>
+      <a class="cta nudge" href="/app/okurijo/" data-app id="finalCta">無料で使ってみる<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <ul class="chips">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>無料</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>登録不要</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>スマホで使える</li>
+      </ul>
+    </div>
+    <div class="box-ill rv" aria-hidden="true">
+      <svg viewBox="0 0 400 330">
+        <ellipse cx="200" cy="312" rx="170" ry="12" fill="rgba(60,40,10,.25)"/>
+        <!-- 後ろのふた -->
+        <path d="M70 120 L110 66 H290 L330 120 Z" fill="#b8915a" stroke="#2a2017" stroke-width="3" stroke-linejoin="round"/>
+        <!-- 中身 -->
+        <g class="bob"><use href="#apple" x="92" y="56" width="92" height="92"/></g>
+        <g class="bob2"><use href="#mikan" x="168" y="60" width="84" height="84"/></g>
+        <g class="bob"><use href="#apple" x="232" y="54" width="90" height="90"/></g>
+        <!-- 手前のふた -->
+        <path d="M60 124 L20 170 L60 176 L92 132 Z" fill="#d9b680" stroke="#2a2017" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M340 124 L380 170 L340 176 L308 132 Z" fill="#c49e66" stroke="#2a2017" stroke-width="3" stroke-linejoin="round"/>
+        <!-- 箱 -->
+        <rect x="60" y="120" width="280" height="186" fill="#cfad7a" stroke="#2a2017" stroke-width="3"/>
+        <path d="M60 120 h280 v14 h-280 z" fill="#b8915a" stroke="#2a2017" stroke-width="3"/>
+        <g stroke="rgba(110,75,30,.18)" stroke-width="2"><path d="M80 140v160M100 140v160M120 140v160M140 140v160M160 140v160M180 140v160M200 140v160M220 140v160M240 140v160M260 140v160M280 140v160M300 140v160M320 140v160"/></g>
+        <!-- テープ -->
+        <rect x="178" y="120" width="44" height="186" fill="rgba(250,240,205,.6)"/>
+        <!-- 送り状 -->
+        <g transform="rotate(-3 200 230)">
+          <rect x="96" y="172" width="208" height="108" rx="3" fill="#fffcf5" stroke="#2a2017" stroke-width="2.5"/>
+          <path d="M104 182 h192" stroke="#c9b38a" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <g fill="#fff" stroke="#b5381d" stroke-width="1.5"><rect x="108" y="190" width="13" height="17"/><rect x="123" y="190" width="13" height="17"/><rect x="138" y="190" width="13" height="17"/><rect x="159" y="190" width="13" height="17"/><rect x="174" y="190" width="13" height="17"/><rect x="189" y="190" width="13" height="17"/><rect x="204" y="190" width="13" height="17"/></g>
+          <g font-family="BIZ UDGothic, monospace" font-size="12" font-weight="700" fill="#2a2017" text-anchor="middle"><text x="114.5" y="203">1</text><text x="129.5" y="203">5</text><text x="144.5" y="203">4</text><text x="165.5" y="203">0</text><text x="180.5" y="203">0</text><text x="195.5" y="203">0</text><text x="210.5" y="203">1</text></g>
+          <path d="M108 222 h150" stroke="#c9b38a" stroke-width="3.5" stroke-linecap="round"/>
+          <text x="108" y="256" font-family="BIZ UDPGothic, sans-serif" font-size="22" font-weight="700" fill="#2a2017">高橋 誠<tspan font-size="13" dx="4">様</tspan></text>
+          <rect x="236" y="236" width="56" height="34" rx="3" fill="none" stroke="#b5381d" stroke-width="2" transform="rotate(-8 264 253)"/>
+          <text x="264" y="258" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="14" fill="#b5381d" transform="rotate(-8 264 253)">贈答品</text>
+        </g>
+        <!-- 産直の札 -->
+        <g class="swing">
+          <path d="M326 150 C 344 160, 352 176, 350 188" fill="none" stroke="#b5381d" stroke-width="2.5"/>
+          <g transform="translate(332 186) rotate(8)">
+            <path d="M0 6 L10 0 H52 V70 H10 L0 64 Z" fill="#ead9b6" stroke="#2a2017" stroke-width="2.5"/>
+            <circle cx="10" cy="35" r="3.5" fill="#fffcf5" stroke="#2a2017" stroke-width="2"/>
+            <text x="34" y="26" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="15" fill="#b5381d">産</text>
+            <text x="34" y="46" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="15" fill="#b5381d">地</text>
+            <text x="34" y="64" text-anchor="middle" font-family="Yusei Magic, BIZ UDPGothic, sans-serif" font-size="13" fill="#2a2017">直送</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <span class="fl">贈答送り状メーカー</span>
+  <span>運営：柴田裕将　お問い合わせ：info@site-forge.jp</span>
+  <span><a href="privacy.html" style="color:inherit">プライバシーポリシー</a></span>
+</div></footer>
+
+<div class="sticky hide" id="sticky"><a class="cta" href="/app/okurijo/" data-app>無料で使ってみる<svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+
+<script>
+(function () {
+  /* 広告のUTMなどを、ツールへのリンクにそのまま引き継ぐ */
+  var qs = location.search || "";
+  Array.prototype.forEach.call(document.querySelectorAll("a[data-app]"), function (a) { a.setAttribute("href", "/app/okurijo/" + qs); });
+
+  var animate = document.documentElement.classList.contains("js");
+  var targets = document.querySelectorAll(".rv, .draw");
+  function show(el) { el.classList.add("in"); }
+  if (!animate || !("IntersectionObserver" in window)) {
+    Array.prototype.forEach.call(targets, show);
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
+    Array.prototype.forEach.call(targets, function (el) { io.observe(el); });
+  }
+
+  /* スマホの追従ボタン：最初のボタンが見えなくなったら出し、最後のボタンが見えたら隠す */
+  var sticky = document.getElementById("sticky");
+  var hero = document.getElementById("heroCta"), fin = document.getElementById("start");
+  if (sticky && "IntersectionObserver" in window) {
+    var heroVis = true, finVis = false, formVis = false;
+    var upd = function () { sticky.classList.toggle("hide", heroVis || finVis || formVis); };
+    var su = document.getElementById("signup");
+    if (su) new IntersectionObserver(function (es) { es.forEach(function (e) { formVis = e.isIntersecting; }); upd(); }, { threshold: 0.05 }).observe(su);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { heroVis = e.isIntersecting || e.boundingClientRect.top > 0; }); upd(); }).observe(hero);
+    new IntersectionObserver(function (es) { es.forEach(function (e) { finVis = e.isIntersecting; }); upd(); }, { threshold: 0.2 }).observe(fin);
+  } else if (sticky) { sticky.classList.remove("hide"); }
+})();
+</script>
+<script src="form-config.js"></script>
+<script>
+/* 有料版の先行登録（メールアドレスと希望の機能だけを送る） */
+(function () {
+  var FORM_ENDPOINT = window.FORM_ENDPOINT || "";
+  var form = document.getElementById("signup-form");
+  var err = document.getElementById("signup-error");
+  var thanks = document.getElementById("signup-thanks");
+  var preview = document.getElementById("signup-preview");
+  var btn = form.querySelector("button[type=submit]");
+  var label = btn.textContent;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var emailEl = document.getElementById("signup-email");
+    var email = emailEl.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      err.textContent = "メールアドレスを確かめてください（例：name@example.com）。";
+      err.hidden = false; emailEl.setAttribute("aria-invalid", "true"); emailEl.focus();
+      return;
+    }
+    err.hidden = true; emailEl.removeAttribute("aria-invalid");
+    var wants = Array.prototype.map.call(document.querySelectorAll("#signup-wants input:checked"), function (c) { return c.value; });
+    var comment = document.getElementById("signup-comment").value.trim();
+    var fb = { company: "", method: "", wants: wants.join("、"), custom: "", comment: comment };
+    var summary = [fb.wants && "欲しい:" + fb.wants, comment && "意見:" + comment].filter(Boolean).join(" / ");
+    var data = { service: "okurijo", type: "feedback", feedback: fb, email: email, answer: ("[LP先行登録] " + summary).trim(), page: location.pathname, query: location.search, referrer: document.referrer, sentAt: new Date().toISOString() };
+    var done = function () {
+      form.hidden = true; thanks.hidden = false;
+      try { thanks.focus({ preventScroll: true }); } catch (x) {}
+      /* Lead はツールを実際に使ったとき（CSV保存）用。ここでは CompleteRegistration だけ送る */
+      try { if (window.fbq) window.fbq("track", "CompleteRegistration", { content_name: "okurijo-lp" }); } catch (x) {}
+    };
+    if (!FORM_ENDPOINT) { preview.hidden = false; done(); return; }
+    btn.disabled = true; btn.textContent = "送っています";
+    /* Google Apps Script は CORS の応答を返さないため no-cors で送る（送れれば完了） */
+    fetch(FORM_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) })
+      .then(done)
+      .catch(function () {
+        btn.disabled = false; btn.textContent = label;
+        err.textContent = "送れませんでした。通信を確かめて、もう一度お試しください。";
+        err.hidden = false;
+      });
+  });
+})();
+</script>
+</body>
+</html>
